@@ -1,0 +1,51 @@
+.group-workbench-home {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-color: #112551;
+    &-spin {
+        height: 100%;
+        .oss-ui-spin {
+            max-height: 100% !important;
+        }
+    }
+    .oss-ui-spin-container {
+        height: 100%;
+    }
+    .group-workbench-content {
+        position: absolute;
+        top: 0;
+        z-index: 9;
+        width: 100%;
+        background-color: #0b1d3a;
+    }
+    .group-workbench-gis {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: #101b39;
+    }
+    .group-time-line {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        color: white;
+        .time-line-header {
+            width: 18px;
+            margin-right: 10px;
+        }
+        .notice-detail {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        .group-notice-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+
+            .notice-timeline-time {
+                color: rgb(153, 201, 255);
+            }
+        }
+    }
+}

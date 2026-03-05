@@ -1,0 +1,56 @@
+// .maintenance-fuzzy-query-mode-wrapper {
+//     height: calc(70% - 100px);
+// }
+// .maintenance-fuzzy-query-mode-wrapper .oss-ui-table-body {
+//     max-height: 300px !important;
+// }
+.maintenance-quick-query-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    // overflow: hidden;
+}
+.maintenance-fuzzy-query-mode-select {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    background-color: @component-background;
+}
+.maintenance-fuzzy-query-mode-select .oss-ui-form-item {
+    margin-bottom: 0px;
+}
+.maintenance-fuzzy-query-mode-select .oss-ui-radio-button-wrapper {
+    background: none;
+    border: none;
+    &:not(:first-child):before {
+        width: 0;
+    }
+}
+.maintenance-fuzzy-query-mode-select .oss-ui-radio-button-wrapper-checked {
+    background: #fff;
+}
+.maintenance-fuzzy-query-mode-select {
+    .oss-ui-radio-button-wrapper {
+        border-radius: 20px !important;
+    }
+    .oss-ui-radio-button-wrapper:last-child {
+        border-radius: 20px !important;
+    }
+    .oss-ui-radio-button-wrapper:first-child {
+        border-radius: 20px !important;
+    }
+}
+.mainper-tab-ellipsis {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+//无数据提示
+.oss-imp-alarm-protable-empty-show {
+    .oss-imp-alarm-empty {
+        p.oss-imp-alarm-empty-show {
+            display: block !important;
+        }
+    }
+}

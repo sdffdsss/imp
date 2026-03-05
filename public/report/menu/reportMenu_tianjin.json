@@ -1,0 +1,13 @@
+﻿{
+    "menuItem": [
+        {
+            "fileName": "CMNET",
+            "menuItem": [
+                { "fileName": "省网IDC出口流量明细报表", "textName": "ProNetworkIDCExportDetails" },
+                { "fileName": "CMNETOUTQ", "textName": "CMNETOUTQ_Details" },
+                { "fileName": "腾讯专线 日报", "textName": "TencentLineDay" },
+                { "fileName": "腾讯专线 小时报", "textName": "TencentLineHour", "active": true }
+            ]
+        }
+    ]
+}

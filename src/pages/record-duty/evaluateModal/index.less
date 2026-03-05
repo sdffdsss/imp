@@ -1,0 +1,207 @@
+.evaluate-modal {
+    .oss-ui-modal-body {
+        height: calc(100% - 70px);
+        min-height: 430px;
+    }
+
+    .editable-cell {
+        position: relative;
+    }
+
+    .editable-cell-value-wrap {
+        position: relative;
+        z-index: 1;
+        display: block !important;
+        min-height: auto;
+        padding: 8px 12px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-break: break-word;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: border-color 0.3s, box-shadow 0.3s;
+
+        &:hover {
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
+        &.evaluator {
+            width: 100px;
+            text-align: center;
+        }
+
+        &-editing {
+            z-index: 3;
+            padding: 4px 11px !important;
+            background: #fff;
+            border: 1px solid #40a9ff !important;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+    }
+
+    .oss-ui-modal-content {
+        overflow: auto !important;
+        resize: both !important;
+    }
+
+    .re-load-height {
+        height: calc(100% - 70px);
+        min-height: 120px;
+    }
+
+    .oss-web-common-virtual-table {
+        .ant-table-thead > tr > th {
+            text-align: center;
+            background-color: #f5f5f5;
+        }
+
+        .ant-table-tbody > tr > td {
+            &:first-child {
+                font-weight: 500;
+                background-color: #fafafa;
+            }
+        }
+
+        .ant-table-cell-with-append {
+            background-color: #fafafa;
+        }
+
+        th.evaluate-column {
+            text-align: center !important;
+            background-color: #f5f5f5;
+        }
+
+        td.evaluate-column {
+            padding-left: 12px !important;
+            text-align: left;
+        }
+
+        table {
+            table-layout: fixed !important;
+        }
+
+        .ant-table-tbody > tr > td {
+            display: table-cell;
+            height: auto;
+            padding: 8px 12px !important;
+            vertical-align: middle !important;
+        }
+
+        .ant-table-cell {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            min-height: 52px;
+        }
+    }
+
+    .action-button {
+        position: relative;
+        z-index: 2;
+        min-width: 32px;
+        height: 32px;
+        padding: 0 8px;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 32px;
+
+        &:hover {
+            color: #1890ff;
+        }
+    }
+
+    .ant-input {
+        width: calc(100% - 20px);
+    }
+
+    .merged-cell {
+        background-color: #fafafa;
+        border-bottom: 1px solid #f0f0f0;
+
+        &:hover {
+            background-color: #f5f5f5;
+        }
+    }
+
+    .button-container {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 16px;
+    }
+
+    .duty-user-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background-color: #f5f5f5;
+        border-bottom: 1px solid #d9d9d9;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+    }
+
+    td[data-column='evaluator'] {
+        position: static;
+
+        > div > div:last-child {
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+        }
+    }
+
+    .ant-table-tbody td[data-column='evaluator'] {
+        .ant-btn {
+            position: relative;
+            z-index: 2;
+        }
+
+        &::after {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 1;
+            width: 40px;
+            background: inherit;
+            content: '';
+        }
+    }
+
+    .wrap-text-cell {
+        display: table-cell !important;
+        height: auto;
+        padding: 8px 12px !important;
+        vertical-align: middle;
+
+        &.evaluate-column {
+            text-align: left !important;
+        }
+    }
+
+    .ant-form-item {
+        width: 100%;
+        margin-bottom: 0 !important;
+
+        .ant-input-number,
+        .ant-input,
+        .ant-select {
+            width: 100% !important;
+            min-height: 36px !important;
+            border: 1px solid #40a9ff !important;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+        }
+
+        .ant-input-number-input,
+        .ant-input {
+            height: 36px !important;
+            line-height: 36px;
+        }
+    }
+}

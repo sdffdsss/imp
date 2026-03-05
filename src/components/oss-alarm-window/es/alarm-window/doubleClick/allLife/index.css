@@ -1,0 +1,110 @@
+.allLife .oss-ui-timeline-item-head {
+  background-color: transparent !important;
+}
+.allLife .timeLabel {
+  font-size: 12px;
+}
+.allLife .activeDot {
+  font-size: 13px;
+}
+.allLife .nonactivatedDot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.allLife .dotTitle {
+  font-size: 12px;
+  font-weight: bold;
+}
+.allLife .arrow {
+  font-size: 13px;
+  margin-left: 10px;
+}
+.allLife .childNodeContent {
+  border-radius: 2px;
+  padding: 4px 10px;
+}
+.allLife .childNodeContent_single {
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+.allLife .childNode + .childNode {
+  margin-top: 30px;
+}
+.allLife .oss-ui-timeline-item-label {
+  width: 22% !important;
+}
+.allLife .oss-ui-timeline-item-tail,
+.allLife .oss-ui-timeline-item-head.oss-ui-timeline-item-head-custom.oss-ui-timeline-item-head-blue,
+.allLife .oss-ui-timeline-item-head.oss-ui-timeline-item-head-gray {
+  left: 25% !important;
+}
+.allLife .oss-ui-timeline-item-content {
+  left: 25% !important ;
+  top: -6px;
+  width: calc(70% - 14px) !important;
+}
+.allLife.light .timeLabel {
+  color: #999999;
+}
+.allLife.light .activeDot {
+  color: #0fc14f;
+}
+.allLife.light .nonactivatedDot {
+  background: #e5e5e5;
+}
+.allLife.light .dotTitle {
+  color: #666666;
+}
+.allLife.light .arrow {
+  color: #cfcfcf;
+}
+.allLife.light .childNodeContent {
+  background-color: #fafafa;
+}
+.allLife.light .childNodeContent_single {
+  color: #999999;
+}
+.allLife.dark .timeLabel {
+  color: #bababa;
+}
+.allLife.dark .activeDot {
+  color: #33a25b;
+}
+.allLife.dark .nonactivatedDot {
+  background: #7a7a7a;
+}
+.allLife.dark .dotTitle {
+  color: #ffffff;
+}
+.allLife.dark .arrow {
+  color: #cfcfcf;
+}
+.allLife.dark .childNodeContent {
+  background-color: #282828;
+}
+.allLife.dark .childNodeContent_single {
+  color: #bababa;
+}
+.allLife.darkblue .timeLabel {
+  color: #b7d1f8;
+}
+.allLife.darkblue .activeDot {
+  color: #33a25b;
+}
+.allLife.darkblue .nonactivatedDot {
+  background: #3b5d90;
+}
+.allLife.darkblue .dotTitle {
+  color: #ffffff;
+}
+.allLife.darkblue .arrow {
+  color: #cfcfcf;
+}
+.allLife.darkblue .childNodeContent {
+  background-color: #073e77;
+}
+.allLife.darkblue .childNodeContent_single {
+  color: #b7d1f8;
+}

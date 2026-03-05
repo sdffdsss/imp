@@ -1,0 +1,324 @@
+.duty-calendar-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    .oss-ui-picker-cell-disabled {
+        // background-color: @disabled-bg;
+        // color: @disabled-color;
+        pointer-events: auto;
+        .date-info {
+            // color: @disabled-color!important;
+            font-weight: 700;
+            font-size: 12px;
+        }
+    }
+    .oss-ui-picker-calendar {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            box-sizing: content-box;
+            padding-right: 1vh !important;
+            .form-container-month {
+                margin-left: 24px;
+                font-weight: 700;
+                font-size: 16px;
+            }
+            .form-container-right {
+                display: flex;
+            }
+            .oss-ui-form-item-control-input-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-items: center;
+            }
+        }
+        .oss-ui-picker-panel {
+            flex: 1;
+            padding: 0 20px 0 70px;
+            .oss-ui-picker-date-panel {
+                height: 100%;
+                .oss-ui-picker-body {
+                    height: 100%;
+                    .oss-ui-picker-content {
+                        height: 100%;
+                        // height: calc(100% - 20px);
+                        // overflow-y: scroll;
+                        & > thead {
+                            tr {
+                                position: relative;
+                                display: flex;
+                                justify-content: space-between;
+                                &::before {
+                                    position: absolute;
+                                    left: -56px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    box-sizing: border-box;
+                                    width: 56px;
+                                    height: 40px;
+                                    color: #000;
+                                    border: 1px solid rgb(210, 221, 240);
+                                    content: '';
+                                }
+                                th {
+                                    width: 100%;
+                                    padding: 10px;
+                                    text-align: center;
+                                    border: 1px solid rgb(210, 221, 240);
+                                    &::before {
+                                        display: inline-block;
+                                        color: #000;
+                                        content: '星期';
+                                    }
+                                    &:nth-of-type(6) {
+                                        background-color: rgb(253, 248, 245);
+                                    }
+                                    &:nth-of-type(7) {
+                                        background-color: rgb(253, 248, 245);
+                                    }
+                                }
+                            }
+                        }
+                        & > tbody {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            height: 100%;
+                            & > tr {
+                                display: flex;
+                                justify-content: space-between;
+                                border: 1px solid rgb(210, 221, 240);
+                                & > td {
+                                    flex: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .schedule-list {
+                position: relative;
+                // overflow: hidden;
+                // z-index: 9;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                min-height: 92px;
+                border-right: 1px solid rgb(210, 221, 240);
+                // margin: 2px;
+                // border-radius: 8px;
+                // box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+                // box-shadow: 0px -2px 7px 0px rgba(219, 219, 219, 0.5);
+                &:hover {
+                    box-shadow: 4px -8px 28px 4px rgba(219, 219, 219, 0.7);
+                    box-shadow: 0, -2, 11, 0 rgba(75, 75, 75, 0.5);
+                    transition: all 0.3s;
+                }
+                .left-edge {
+                    position: absolute;
+                    top: -1px;
+                    left: -57px;
+                    z-index: 10;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    // border-left: 2px solid rgb(210, 221, 240);
+                    box-sizing: border-box;
+                    width: 57px;
+                    height: calc(100% + 2px);
+                    color: rgb(51, 51, 51);
+                    font-weight: 700;
+                    font-size: 12px;
+                    border: 1px solid rgb(210, 221, 240);
+                    &-shift {
+                        display: flex;
+                        flex: 1;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0 4px;
+                        text-align: center;
+                    }
+                }
+                .schedule-info-wrap {
+                    flex: 1;
+
+                    .schedule-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        height: 100%;
+                        & > section {
+                            display: flex;
+                            flex: 1;
+                            align-items: center;
+                            justify-content: flex-start;
+                            border-bottom: 1px solid rgb(210, 221, 240);
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                            & > span {
+                                font-size: 14px;
+                                &:nth-of-type(1) {
+                                    // color: @disabled-color;
+                                }
+                                &:nth-of-type(2) {
+                                    // flex: 1;
+                                    // max-width: 4vw;
+                                    // padding-left: 5px;
+                                    // overflow: hidden;
+                                    // white-space: nowrap;
+                                    // text-align: left;
+                                    // text-overflow: ellipsis;
+                                }
+                            }
+                        }
+                        .schedule-info-wrap-field {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            // min-height: 72px;
+                            padding: 4px;
+                            color: rgb(126, 126, 126);
+                            span {
+                                display: inline-block;
+                                max-width: 100%;
+                                margin: 1px 2px;
+                                // padding: 0 7px;
+                                font-size: 12px;
+                                text-align: center;
+                                background-color: rgba(140, 185, 237, 0.15);
+                            }
+                        }
+
+                        .schedule-info-wrap-field-before {
+                            display: flex;
+                            flex-wrap: wrap;
+                            color: rgb(51, 51, 51);
+                            background-color: @component-background;
+                            span {
+                                display: inline-block;
+                                flex: 1;
+                                //
+                                margin: 1px 2px;
+                                font-size: 10px;
+                                text-align: center;
+                                background-color: rgba(140, 185, 237, 0.15);
+                            }
+                        }
+                        .schedule-info-wrap-field-after {
+                            // background-color: @component-background;
+                            display: flex;
+                            flex-wrap: wrap;
+                            color: @disabled-color;
+                            span {
+                                display: inline-block;
+                                // flex: 1;
+                                min-width: 28%;
+                                margin: 1px 2px;
+                                font-size: 10px;
+                                letter-spacing: 0;
+                                text-align: center;
+                                background-color: rgba(140, 185, 237, 0.15);
+                            }
+                        }
+                    }
+                }
+                .date-info {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    // width: 25%;
+                    padding: 10px 8px;
+                    color: @primary-color;
+                    font-weight: 700;
+                    // font-weight: bold;
+                    font-size: 12px;
+                    text-align: center;
+                    border-right: 1px solid rgb(222, 222, 222);
+                }
+            }
+            .weekend {
+                background-color: rgb(253, 248, 245);
+                .schedule-info-wrap-field {
+                    span {
+                        background-color: rgba(233, 181, 125, 0.15) !important;
+                    }
+                }
+            }
+            .curDay {
+                border: 1px solid rgb(24, 144, 255);
+                border-radius: 4px;
+                .date-info {
+                    color: #fff !important;
+                    background-color: rgb(24, 144, 255);
+                }
+                .schedule-info-wrap-field {
+                    span {
+                        color: rgb(24, 144, 255) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.duty-title-calendar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1vh;
+}
+.calendar-tooltip {
+    .oss-ui-tooltip-inner {
+        padding: 20px 0 4px 30px;
+        font-size: 16px;
+        line-height: 30px;
+        background-color: #fff;
+        .tooltip-content {
+            width: 288px;
+            min-height: 160px;
+            > div {
+                display: flex;
+                align-items: baseline;
+                h3 {
+                    max-width: 115px;
+                }
+                .content-loginId {
+                    margin-left: 10px;
+                    color: rgb(153, 153, 153);
+                    font-weight: 400;
+                    font-size: 12px;
+                }
+            }
+            .content-item {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                img {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 9px;
+                }
+                div {
+                    display: inline-block;
+                    max-width: 180px;
+                    min-height: 42px;
+                    font-size: 12px;
+                    line-height: 16px;
+                }
+            }
+        }
+    }
+
+    .oss-ui-tooltip-arrow {
+        display: none;
+    }
+}

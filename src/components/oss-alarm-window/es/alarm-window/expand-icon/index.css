@@ -1,0 +1,12 @@
+.alarm-window-processer-expanded-span {
+  display: inline-flex;
+  position: absolute;
+  height: 100%;
+}
+.alarm-window-processer-expanded-span .alarm-window-processer-expanded-span-line-span {
+  display: inline-flex;
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background: #000;
+}

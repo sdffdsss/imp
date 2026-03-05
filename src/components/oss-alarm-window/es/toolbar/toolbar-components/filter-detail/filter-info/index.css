@@ -1,0 +1,26 @@
+.filter-show-content {
+  height: 100%;
+}
+.filter-show-content .filter-condition-line {
+  height: 3px;
+  width: 100%;
+  margin: 8px 0px;
+}
+.filter-show-content .oss-ui-card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.filter-show-content .filter-condition-show {
+  border: none;
+  display: flex;
+  border-radius: 5px;
+  flex: 1;
+  overflow: auto;
+}
+.filter-show-content .filter-condition-show .oss-ui-space {
+  margin-bottom: 16px;
+}
+.filter-show-content .filter-condition-show .ant-tree {
+  margin-top: 16px;
+}

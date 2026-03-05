@@ -1,0 +1,76 @@
+.BMap_cpyCtrl {
+    display: none;
+}
+.BMap_bubble_top {
+    display: none;
+}
+.BMap_bubble_pop {
+    .BMap_bubble_content {
+        overflow: hidden !important;
+    }
+    img {
+        top: calc(100% + 1px) !important;
+    }
+}
+.pop-div {
+    padding-top: 10px;
+    overflow: hidden;
+    p {
+        width: 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+.anchorBL {
+    display: none;
+}
+.check-box-container {
+    position: absolute;
+    bottom: 60px;
+    left: 5px;
+    z-index: 100;
+    width: 763px;
+    height: 160px;
+    padding: 5px;
+    background: #fff;
+    border-radius: 0px 4px 4px 0px;
+    opacity: 0.9;
+    transition: 1s;
+    .check-box-container-box {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 100%;
+        &-checkBox {
+            width: 150px;
+            height: 30px;
+            margin: 0;
+            .checkBox-box-name {
+                height: 20px;
+                font-size: 14px;
+            }
+        }
+    }
+}
+.hide {
+    left: -763px;
+    transition: 1s;
+}
+.taggle {
+    position: absolute;
+    top: 50%;
+    right: -15px;
+    width: 15px;
+    height: 36px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 36px;
+    text-align: center;
+    background-color: rgb(98, 123, 155);
+    border-radius: 0px 4px 4px 0px;
+
+    transform: translateY(-50%);
+    cursor: pointer;
+}

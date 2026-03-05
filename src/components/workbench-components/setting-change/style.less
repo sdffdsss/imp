@@ -1,0 +1,54 @@
+.setting-view-page {
+    .left-btn {
+        position: absolute;
+        top: 89px;
+        left: -9px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 40px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(90deg);
+        cursor: pointer;
+    }
+    .right-btn {
+        position: absolute;
+        top: 89px;
+        right: -8px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 40px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(270deg);
+        cursor: pointer;
+    }
+    &-field {
+        display: flex;
+        /* justify-content: center; */
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        text-align: center;
+        &-image {
+            width: 110px;
+            border-radius: 6px;
+            cursor: pointer;
+            &:hover {
+                background-color: #f6f8f9;
+            }
+        }
+        &-content {
+            margin-top: -25px;
+            font-size: 14px;
+        }
+    }
+}

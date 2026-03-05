@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="省网IDC出口流量明细报表" />
+  
+  <!--查询sql-->
+  <!--例子Start-->
+  <sql dbName="nmosdb" sqlId = "Select_ProNetIDCExDetails_ByPage">
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_ProNetIDCExDetails_Count">
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="时间粒度" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True"  DefaultValue="1"
+              sqlId = "Select_ProNetIDCExDetails_CondSumLevel">
+      日,1|周,2|月,3
+    </Condition> 
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DateTimePickerRange" DefaultValue="当日,当日">
+    </Condition>
+    <!--例子 End-->
+
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+    <ColumnItem FieldName="w1" DisplayName="时间" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="w2" DisplayName="省网IDC名称" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w3" DisplayName="带宽（Mbps）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w4" DisplayName="流入平均流速（Mbps）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w5" DisplayName="流入峰值流速（Mbps）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w6" DisplayName="流入平均带宽利用率（%）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w7" DisplayName="流入峰值带宽利用率（%）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w8" DisplayName="流出平均流速（Mbps）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w9" DisplayName="流出峰值流速（Mbps）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w9" DisplayName="流出平均带宽利用率（%）" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w9" DisplayName="流出峰值带宽利用率（%）" IsSort="false"></ColumnItem>
+  </Columns>
+</root>

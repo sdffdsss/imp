@@ -1,0 +1,682 @@
+{
+    "test": "1",
+    "timeout": 60000,
+    "clickLock": false,
+    "autoUnLock": true,
+    "unLockTime": 60,
+    "buttonAuthorize": "false",
+    "serviceDiscovery": "http://10.180.40.207:19090/znjk/canary/serviceDiscovery",
+    "topoXmlProxyUrl": "http://10.180.40.207:19090/znjk/canary/topuUrl",
+    "alarmWindowTopoUrl": " http://172.24.123.246:1500/#/layoutTopo/Topo_IframeSysTopo",
+    "alarmWindowTopoMMBUrl": " http://172.24.123.246:1500/#/layoutTopo/Topo_EomsWirIframeTopo",
+    "alarmWindowTopoErGanUrl": " http://172.24.123.246:1500/#/layoutTopo/Topo_EomsWirIframeTopo",
+    "emosUrl": "http://10.245.0.225/EOM_FM_WEB/base/page/wnmsEditAlarmToFault.jsp",
+    "iframeSrc": "http://localhost:3000/overview/failure-map",
+    "version-describe": "告警查询版本：联通版本alarm-query-version = unicom, 否则请置空！！",
+    "chatUrlWsUrl": "/chatOps/chatUrlWs/chatroom",
+    "chatUrlType": false,
+    "chatUrlWs": "ws://10.245.0.121:19011/chatOps/chatUrlWs/chatroom",
+    "infoImgListUrl": "http://10.180.40.207:19090/znjk/canary/failureSheetDownLoadUrl",
+    "gateWayBtn": true,
+    "defaultToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE3MjYyMjU5NzQyMDksImlhdCI6MTcyNjEzOTU3NCwidXNlcklkIjoiOTY4NjE3IiwianRpIjoiOWFlNzc3MWRjMTlhMWM0OTI4Yjg4MGMzNzVkNTIwOTc1ZjRjNTBkOSJ9.WoLpHb2UraYVVQFsxTiv-UzI7zjN7ahtxvxDDE9vBUo",
+    "iframeSetting": {
+        "protocol": "http",
+        "src": "overview/failure-map",
+        "port": "3000"
+    },
+    "version": "unicom",
+    "userInfolUrl": {
+        "describe1": "用户基本信息",
+        "describe-discover": "不支持服务发现--direct",
+        "direct": "http://10.180.40.207:19090/znjk/canary/securityManagerUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "userMangeUrl": {
+        "describe1": "用户列表",
+        "describe-discover": "不支持服务发现--direct",
+        "direct": "http://10.180.40.207:19090/znjk/canary/securityManagerUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "authorizeUrl": {
+        "describe1": "日志记录",
+        "describe-discover": "不支持服务发现--direct",
+        "direct": "http://10.180.40.207:19090/znjk/canary/authorizeUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "topuUrl": {
+        "describe1": "拓扑服务-树查询",
+        "direct": "http://10.180.40.207:19090/znjk/canary/topuUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "experienceUrl": {
+        "describe1": "联通告警经验库",
+        "direct": "http://10.180.40.207:19090/znjk/canary/experienceUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "maintainTeamUrl": {
+        "describe1": "联通-班组管理，打包发布时需修改",
+        "direct": "http://10.180.40.207:19090/znjk/canary/groupUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "preProcessingManagementUrl": {
+        "describe1": "预处理任务、预处理查询接口，打包发布时需修改",
+        "direct": "http://10.10.1.150:20001",
+        "discover": "",
+        "mode": "direct"
+    },
+    "uploadProducitonUrl": {
+        "describe1": "上传素材中心接口生产环境",
+        "direct": "http://10.180.40.207:19090/znjk/canary/uploadProducitonUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "ruleUrl": {
+        "describe1": "关联规则相关服务地址",
+        "direct": "http://10.180.40.207:19090/znjk/canary/ruleUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "default": {
+        "describe1": "告警查询sqlm ，打包发布时需修改",
+        "describe2": "sqlm 服务地址，打包发布时需修改",
+        "direct": "http://192.168.1.117:9527/sqlm/v2.0",
+        "discover": "",
+        "mode": "direct",
+        "dbNames": {
+            "NMOSDB": "nmosdb_mysql",
+            "NRMDB": "nrmdb_mysql",
+            "NPMDB": "npmdb_mysql"
+        },
+        "dbType": "mysql"
+    },
+    "viewItemUrl": {
+        "describe1": "告警右键视图服务地址",
+        "direct": "/viewItemUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "viewItemExportUrl": {
+        "dircibe1": "视图服务导出接口",
+        "direct": "/viewItemExportUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "alarmSoundUrl": {
+        "describe1": "发声服务地址--联通目前没用",
+        "direct": "http://10.12.1.107:7788",
+        "discover": "",
+        "mode": "direct"
+    },
+    "maintenanceDownLoadUrl": {
+        "describe1": "联通值班表文件下载服务",
+        "direct": "http://10.180.40.207:19090/znjk/canary/maintenanceDownLoadUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "unicom": {
+        "describe1": "告警查询sqlm ，打包发布时需修改",
+        "describe2": "sqlm 服务地址，打包发布时需修改",
+        "direct": "http://10.180.40.207:19090/znjk/canary/sqlm/v2.0",
+        "discover": "",
+        "mode": "direct",
+        "describe-dbNames": "sqlM连接串信息，打包发布时需要修改",
+        "dbNames": {
+            "NMOSDBMY": "nmosdb_mysql"
+        },
+        "dbType-describe": "mysql要配置dbType=mysql,否则请置空！",
+        "dbType": "mysql"
+    },
+    "monitorUrl": {
+        "describe1": "联通交接班服务",
+        "direct": "http://10.180.40.207:19090/znjk/canary/monitorUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "groupUrl": {
+        "describe1": "班组设置管理",
+        "direct": "http://10.180.40.207:19090/znjk/canary/groupUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "chatUrl": {
+        "describe1": "群聊接口地址",
+        "direct": "http://10.180.40.207:19090/znjk/canary/chatOps/chatUrl/chatOps",
+        "direct1": "http://10.180.40.207:19090/znjk/canary/chatOps/chatUrl",
+        "discover": "",
+        "mode": "direct"
+    },
+    "gatewayUrl": {
+        "describe1": "网关服务",
+        "direct": "http://10.180.40.207:19090/znjk/canary/gateWay",
+        "discover": "",
+        "mode": "direct"
+    },
+    "bocoServiceDiscovery": {
+        "describe1": "离职人员",
+        "direct": "http://10.180.40.207:19090/znjk/canary/serviceDiscovery/boco-security-server",
+        "discover": "",
+        "mode": "direct"
+    },
+    "iceUrl": {
+        "directSvcId": {
+            "describe1": "流水窗ICE，svc的ID",
+            "direct": "Alarm/View",
+            "discover": "",
+            "mode": "direct"
+        },
+        "directSvcAutoId": {
+            "describe1": "自动派单仿真验证",
+            "direct": "AutoDispatchAlarm/View",
+            "discover": "",
+            "mode": "direct"
+        },
+        "directServiceUrl": {
+            "describe1": "流水窗ICE服务地址",
+            "direct": "172.24.123.244:19011",
+            "discover": "",
+            "mode": "direct"
+        },
+        "icegridSvcId": {
+            "describe1": "ICE-Grid，svc的ID",
+            "direct": "IceGridServer/Locator",
+            "discover": "",
+            "mode": "direct"
+        },
+        "isUseIceGrid": {
+            "describe1": "是否启用ICE-Grid",
+            "direct": false,
+            "discover": "",
+            "mode": "direct"
+        },
+        "icegridUrl": {
+            "describe1": "ICE-Grid服务地址",
+            "direct": "10.10.2.22:4501",
+            "discover": "",
+            "mode": "direct"
+        },
+        "icegridBackupUrl": {
+            "describe1": "ICE-Grid备用地址",
+            "direct": "10.10.2.23:4501",
+            "discover": "",
+            "mode": "direct"
+        },
+        "refreshInterval": {
+            "describe1": "流水窗刷新间隔(ms)",
+            "direct": 1000,
+            "discover": "",
+            "mode": "direct"
+        }
+    },
+    "openServiceUrl": {
+        "describe1": "服务管理接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.open.service",
+        "mode": "discover"
+    },
+    "dispatchDetailsNoticeUrl": {
+        "describe1": "调度详情通知接口地址",
+        "direct": "",
+        "discover": "utin-fault-notice",
+        "mode": "discover"
+    },
+    "failureSheetUrl": {
+        "describe1": "工单查询接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.worksheet.server",
+        "mode": "discover"
+    },
+    "failureSheetExportUrl": {
+        "describe1": "工单查询 导出接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.worksheet.server",
+        "mode": "discover"
+    },
+    "monitor": {
+        "describe1": "告警中断监测",
+        "direct": "",
+        "discover": "cloud.alarm.monitor.server",
+        "mode": "discover"
+    },
+    "noticeUrl": {
+        "describe1": "联通告警通知",
+        "direct": "",
+        "discover": "cloud-alarm-interface",
+        "mode": "discover"
+    },
+    "alarmModelUrl": {
+        "describe1": "模型定义接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "indexUrl": {
+        "describe1": "统计指标",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "filterUrl": {
+        "describe1": "",
+        "direct": "http://10.180.40.207:19090/znjk/canary/filterUrl",
+        "discover": "cloud.alarm.model.define",
+        "mode": "direct"
+    },
+    "monitorSetUrl": {
+        "describe1": "告警设置接口地址",
+        "direct": "monitorSetUrl",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "netWorkManage": {
+        "describe1": "网元组管理",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "singleContentUrl": {
+        "describe1": "派单内容接口",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "interruptalarmUrl": {
+        "describe1": "联通版本过滤器查询-目前告警查询页面在用",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "ruleBaseUrl": {
+        "describe1": "规则库地址",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "alarmFilterUrl": {
+        "describe1": "",
+        "direct": "",
+        "discover": "cloud.alarm.model.define",
+        "mode": "discover"
+    },
+    "ruleSimulationUrl": {
+        "describe1": "模型定义接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.dispatch.simulation",
+        "mode": "discover"
+    },
+    "supplementUrl": {
+        "describe1": "告警补派管理接口地址",
+        "direct": "",
+        "discover": "cloud-alarm-supplement-dispatch",
+        "mode": "discover"
+    },
+    "cacheUrl": {
+        "describe1": "工作台缓存",
+        "direct": "",
+        "discover": "cloud.alarm.model.cache",
+        "mode": "discover"
+    },
+    "overViewUrl": {
+        "describe1": "监控大厅接口地址",
+        "direct": "",
+        "discover": "cloud.alarm.mteam.monitor",
+        "mode": "discover"
+    },
+    "alarmMonitorUrl": {
+        "describe1": "",
+        "direct": "",
+        "discover": "cloud.alarm.mteam.monitor",
+        "mode": "discover"
+    },
+    "reinsuranceRecordUrl": {
+        "describe1": "重保记录",
+        "direct": "",
+        "discover": "cloud-duty-manager-unicom",
+        "mode": "discover"
+    },
+    "dutyManagerUrl": {
+        "describe1": "工作台班组列表",
+        "direct": "",
+        "discover": "cloud-duty-manager-unicom",
+        "mode": "discover"
+    },
+    "groupAlarmUrl": {
+        "describe1": "联通值班长",
+        "direct": "",
+        "discover": "cloud.alarm.userdefined.query",
+        "mode": "discover"
+    },
+    "exportUrl": {
+        "describe1": "导出模板下载url",
+        "direct": "",
+        "discover": "cloud.alarm.userdefined.query",
+        "mode": "discover"
+    },
+    "alarmLongUrl": {
+        "describe1": "超长告警查询服务",
+        "direct": "",
+        "discover": "cloud.alarm.userdefined.query",
+        "mode": "discover"
+    },
+    "filter": {
+        "describe1": "老版过滤器服务地址",
+        "describe2": "统计范围接口地址",
+        "describe3": "告警查询res接口 ，打包发布时需修改",
+        "direct": "http://10.180.40.207:19090/znjk/canary/filter",
+        "discover": "cloud.alarm.userdefined.query",
+        "mode": "direct"
+    },
+    "baiduPathConfig": {
+        "styleUrl": "http://10.180.40.207:19090/znjk/canary/oss-client/baidu-map/wireless-screen-web.json",
+        "minZoom": 5,
+        "maxZoom": 15,
+        "zoom": 5,
+        "regionZoom": [
+            {
+                "name": "北京",
+                "id": 110000,
+                "zoom": 9.3,
+                "offsetX": 0,
+                "offsetY": 0.6
+            },
+            {
+                "name": "天津",
+                "id": 120000,
+                "zoom": 9.3,
+                "offsetX": 0,
+                "offsetY": 0.5
+            },
+            {
+                "name": "河北",
+                "id": 130000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "山西",
+                "id": 140000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 1.1
+            },
+            {
+                "name": "内蒙古",
+                "id": 150000,
+                "zoom": 6.3,
+                "offsetX": 0,
+                "offsetY": 8
+            },
+            {
+                "name": "辽宁",
+                "id": 210000,
+                "zoom": 7.7,
+                "offsetX": 0.5,
+                "offsetY": 0.5
+            },
+            {
+                "name": "吉林",
+                "id": 220000,
+                "zoom": 7.5,
+                "offsetX": 1.5,
+                "offsetY": 0.5
+            },
+            {
+                "name": "黑龙江",
+                "id": 230000,
+                "zoom": 6.3,
+                "offsetX": 0,
+                "offsetY": 4.8
+            },
+            {
+                "name": "上海",
+                "id": 310000,
+                "zoom": 10,
+                "offsetX": 0,
+                "offsetY": 0.3
+            },
+            {
+                "name": "江苏",
+                "id": 320000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "浙江",
+                "id": 330000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 0
+            },
+            {
+                "name": "安徽",
+                "id": 340000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "福建",
+                "id": 350000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "江西",
+                "id": 360000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": -0.5
+            },
+            {
+                "name": "山东",
+                "id": 370000,
+                "zoom": 8,
+                "offsetX": 2.7,
+                "offsetY": 0.4
+            },
+            {
+                "name": "河南",
+                "id": 410000,
+                "zoom": 8.1,
+                "offsetX": 0,
+                "offsetY": 0
+            },
+            {
+                "name": "湖北",
+                "id": 420000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "湖南",
+                "id": 430000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 0.5
+            },
+            {
+                "name": "广东",
+                "id": 440000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "广西",
+                "id": 450000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "海南",
+                "id": 460000,
+                "zoom": 9,
+                "offsetX": 0,
+                "offsetY": -0.4
+            },
+            {
+                "name": "重庆",
+                "id": 500000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1.5
+            },
+            {
+                "name": "四川",
+                "id": 510000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 1.3
+            },
+            {
+                "name": "贵州",
+                "id": 520000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "云南",
+                "id": 530000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 1.5
+            },
+            {
+                "name": "西藏",
+                "id": 540000,
+                "zoom": 6.7,
+                "offsetX": 0,
+                "offsetY": 3.8
+            },
+            {
+                "name": "陕西",
+                "id": 610000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 2.8
+            },
+            {
+                "name": "甘肃",
+                "id": 620000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 3.5
+            },
+            {
+                "name": "青海",
+                "id": 630000,
+                "zoom": 7,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "宁夏",
+                "id": 640000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": -0.3
+            },
+            {
+                "name": "新疆",
+                "id": 650000,
+                "zoom": 6,
+                "offsetX": 1,
+                "offsetY": 1.73
+            },
+            {
+                "name": "台湾",
+                "id": 710000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "香港",
+                "id": 810000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            },
+            {
+                "name": "澳门",
+                "id": 820000,
+                "zoom": 8,
+                "offsetX": 0,
+                "offsetY": 1
+            }
+        ],
+        "center": [108.948024, 43.263161],
+        "heatmap": {
+            "min": 0,
+            "max": "40"
+        },
+        "enableHeatmapProfessionalCode": {
+            "desc": "启动热力图的专业code，数组为空表示禁用热力图",
+            "list": [56, 44, 11]
+        }
+    },
+    "needPollUser": ["10076"],
+    "productionOperationAuth": [],
+    "specialDutyGroupMap": {
+        "generalDutyGroupId": "-1410998355"
+    },
+    "productionOperationScreenUrl": {
+        "describe1": "生产运营大屏地址",
+        "direct": "",
+        "discover": "production-operation-screen-service",
+        "mode": "discover"
+    },
+    "fault": {
+        "describe1": "网络故障集中存档",
+        "direct": "",
+        "discover": "cloud-alarm-fault-report",
+        "mode": "discover"
+    },
+    "wirelessUrl": {
+        "describe1": "",
+        "direct": "",
+        "discover": "wireless-screen-service/wireless",
+        "mode": "discover"
+    },
+    "jumpznjkssoNoVal": {
+        "url": "http://10.245.0.121:11088/iPortal/ggcspz/login/znjksso?toPage=BigEvent_Active&active=true",
+        "description": "骨干网工作台跳转地址"
+    },
+    "faultSchedulingAgentUrl": "http://10.245.0.121:15412/oss-fault-scheduling-agent/",
+    "faultAgent": {
+        "describe1": "智能体接口请求",
+        "direct": "http://10.245.0.121:19011/ai-agent",
+        "discover": "",
+        "mode": "direct"
+    },
+    "grayManage": {
+        "radioOptions": [
+            {
+                "label": "生产",
+                "value": 0,
+                "text": "http://10.245.0.121:9011/unicom/home-unicom"
+            },
+            {
+                "label": "大区",
+                "value": 1,
+                "text": "http://10.245.0.121:49011/unicom/home-unicom"
+            },
+            {
+                "label": "呼和灾备",
+                "value": 2,
+                "text": "http://10.180.40.207:9011/unicom/home-unicom?appKey=NewPortal&globalUniqueID=${globalUniqueID}"
+            }
+        ]
+    }
+}

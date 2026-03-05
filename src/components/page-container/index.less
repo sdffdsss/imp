@@ -1,0 +1,116 @@
+@import '~antd/es/style/themes/default.less';
+
+@layout-page-container: ~'@{ant-prefix}-page-container';
+@layout-page-container-divider: ~'@{ant-prefix}-divider';
+@layout-grid-content-prefix-cls: ~'@{ant-prefix}-grid-content';
+// .@{layout-page-container}-children-content {
+//     margin: 24px 24px 0;
+//     height: 100%;
+// }
+
+.@{layout-page-container} {
+    height: 100%;
+    &-wrap {
+        background-color: @component-background;
+        .@{ant-prefix}-tabs-nav {
+            margin: 0;
+        }
+    }
+    &-ghost {
+        .@{layout-page-container}-wrap {
+            background-color: transparent;
+        }
+    }
+    &-show-header-divider {
+        .@{layout-grid-content-prefix-cls} {
+            height: calc(100% - 89px);
+        }
+    }
+    &-show-header {
+        .@{layout-grid-content-prefix-cls} {
+            height: calc(100% - 72px);
+        }
+    }
+}
+
+.@{layout-page-container}-main {
+    .@{layout-page-container}-detail {
+        display: flex;
+    }
+
+    .@{layout-page-container}-row {
+        display: flex;
+        width: 100%;
+    }
+
+    .@{layout-page-container}-title-content {
+        margin-bottom: 16px;
+    }
+
+    .@{layout-page-container}-title,
+    .@{layout-page-container}-content {
+        flex: auto;
+    }
+
+    .@{layout-page-container}-extraContent,
+    .@{layout-page-container}-main {
+        flex: 0 1 auto;
+    }
+
+    .@{layout-page-container}-main {
+        width: 100%;
+    }
+
+    .@{layout-page-container}-title {
+        margin-bottom: 16px;
+    }
+
+    .@{layout-page-container}-logo {
+        margin-bottom: 16px;
+    }
+
+    .@{layout-page-container}-extraContent {
+        min-width: 242px;
+        margin-left: 88px;
+        text-align: right;
+    }
+}
+
+@media screen and (max-width: @screen-xl) {
+    .@{layout-page-container}-main {
+        .@{layout-page-container}-extraContent {
+            margin-left: 44px;
+        }
+    }
+}
+
+@media screen and (max-width: @screen-lg) {
+    .@{layout-page-container}-main {
+        .@{layout-page-container}-extraContent {
+            margin-left: 20px;
+        }
+    }
+}
+
+@media screen and (max-width: @screen-md) {
+    .@{layout-page-container}-main {
+        .@{layout-page-container}-row {
+            display: block;
+        }
+
+        .@{layout-page-container}-action,
+        .@{layout-page-container}-extraContent {
+            margin-left: 0;
+            text-align: left;
+        }
+    }
+}
+
+@media screen and (max-width: @screen-sm) {
+    .@{layout-page-container}-detail {
+        display: block;
+    }
+    .@{layout-page-container}-extraContent {
+        margin-left: 0;
+    }
+}

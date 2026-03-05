@@ -1,0 +1,181 @@
+.view-component-home-page {
+    position: relative;
+    width: 100%;
+    height: 260px;
+    border-radius: 6px;
+    &.tools {
+        height: 190px;
+    }
+    &.change-shifts {
+        .oss-ui-card-body {
+            padding: 0 10px;
+        }
+    }
+
+    &.monitor-todo {
+        .oss-ui-card-body {
+            padding: 0;
+        }
+    }
+    &.monitor-center {
+        .oss-ui-card-body {
+            padding: 0 12px 12px;
+        }
+    }
+    .card-extra {
+        .oss-ui-card-extra {
+            z-index: 22 !important;
+        }
+    }
+    .view-component-home-page-alarm-window {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 170px;
+        height: 170px;
+        margin: 0 auto;
+        // background-image: url('./alarm-count.png');
+        // background-repeat: no-repeat;
+        // background-size: 100% 100%;
+    }
+    .view-component-home-card {
+        color: #424242;
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .view-componet-action-button {
+        color: #cecccc;
+        font-size: 12px;
+    }
+    .oss-ui-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .oss-ui-card-body {
+        // display: flex;
+        flex: 1;
+        // flex-direction: column;
+        overflow: hidden;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+    .oss-ui-card-head {
+        position: relative;
+        padding: 0 12px 0 26px;
+        border-bottom: 0;
+    }
+    .oss-ui-card-extra {
+        z-index: 20;
+    }
+    &-tabs {
+        display: flex;
+        flex: 1;
+        // height: 100%;
+        // .oss-ui-progress-text {
+        //     height: 100%;
+        // }
+        padding-top: 5px;
+        .tabs-list-field-qf {
+            padding: 2px 3px;
+            color: #fff;
+            background: red;
+            border-radius: 5px;
+        }
+        &-alarm {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 36%;
+        }
+        &-progress {
+            width: 120px;
+            margin: 0 10px;
+            margin-right: 30px;
+            .oss-ui-progress {
+                width: 100%;
+                text-align: center;
+            }
+            // &-content {
+            //     display: flex;
+            //     flex-direction: column;
+            //     justify-content: space-evenly;
+            //     height: 100%;
+            // }
+            &-field {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 10px;
+                &-text {
+                    text-align: center;
+                }
+                .alarm-view {
+                    display: flex;
+                    align-items: center;
+                    .alrm-window-field {
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        &-list {
+            flex: 1;
+            .alrm-window-field-no {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .change-shifts-page-continer {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                .change-shifts-page-word {
+                    font-weight: 400;
+                    font-size: 2vh;
+                    font-style: normal;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .drop-down-setting {
+        .tools-config-button {
+            color: #ccc;
+            border: none;
+        }
+        .tools-dropdown {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            width: 150px;
+            height: 252px;
+            padding: 5px;
+            overflow: hidden;
+            background: @component-background;
+            box-shadow: 2px 2px 2px 2px #ccc;
+            transition: 0.3s;
+            .tools-dropdown-select {
+                flex: 1;
+                overflow-y: auto;
+                text-align: left;
+            }
+            .tools-dropdown-footer {
+                padding-top: 10px;
+                text-align: center;
+            }
+        }
+        .hidden {
+            height: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+    }
+}

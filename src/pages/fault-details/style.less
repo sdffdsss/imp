@@ -1,0 +1,162 @@
+.fault-details-page {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    padding: calc(1vh - 2px);
+    overflow-y: hidden;
+    .modal-mask-view {
+        position: absolute;
+        z-index: 10;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+    &-drawer {
+        position: fixed;
+        bottom: 0;
+        z-index: 999;
+        width: 100%;
+    }
+    &-info {
+        position: absolute;
+        z-index: 11;
+        display: flex;
+        flex-direction: column;
+        width: 23%;
+        // height: 100%;
+        margin-right: 1vh;
+        &-sheet {
+            width: 100%;
+            height: 40%;
+            min-height: 40%;
+            margin-top: 1vh;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+            transition: All 0.2s ease-in-out;
+        }
+        // &-sheet:hover {
+        //     position: relative;
+        //     top: 4vh;
+        //     left: 4vh;
+        //     z-index: 999;
+        //     border: 2px solid #3385ff;
+        //     -webkit-transform: scale(1.2, 1.2);
+        //     -moz-transform: scale(1.2, 1.2);
+        //     -o-transform: scale(1.2, 1.2);
+        //     -ms-transform: scale(1.2, 1.2);
+        //     transform: scale(1.2, 1.3);
+        // }
+        &-progress {
+            flex: 1;
+            width: 100%;
+            height: 0;
+            margin-top: 1vh;
+            border-radius: 5px;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+            transition: All 0.4s ease-in-out;
+            .progress-line-page {
+                border-radius: 5px;
+            }
+        }
+        &-progress:hover {
+            position: relative;
+            bottom: 8vh;
+            left: 4vh;
+            z-index: 9999;
+            border: 2px solid #3385ff;
+            border-radius: 10px;
+            -webkit-transform: scale(1.2, 1.3);
+            -moz-transform: scale(1.2, 1.3);
+            -o-transform: scale(1.2, 1.3);
+            -ms-transform: scale(1.2, 1.3);
+            transform: scale(1.2, 1.3);
+            .progress-line-page {
+                border-radius: 10px;
+            }
+        }
+    }
+    .full-map {
+        // position: absolute;
+        width: 100%;
+        height: 100%;
+        .fault-details-page-content-time {
+            right: 23.5%;
+        }
+    }
+    &-content {
+        position: relative;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+
+        &-time {
+            position: absolute;
+            top: 2vh;
+            right: 31%;
+            z-index: 10;
+            // display: flex;
+            // width: 100%;
+            // height: 50px;
+            // min-height: 50px;
+            // margin-top: 1vh;
+            .control-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80px;
+                height: 32px;
+                background-color: #fff;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+        }
+        &-map {
+            flex: 1;
+            width: 100%;
+        }
+    }
+    &-msg {
+        position: absolute;
+        right: 1vh;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        width: 23%;
+        height: 96%;
+        &-chat {
+            display: flex;
+            width: 100%;
+            height: 60px;
+            min-height: 60px;
+            margin-top: 1vh;
+            -webkit-transition: All 0.4s ease-in-out;
+            -moz-transition: All 0.4s ease-in-out;
+            -o-transition: All 0.4s ease-in-out;
+            transition: All 0.4s ease-in-out;
+        }
+        &-chat:hover {
+            position: relative;
+            right: 4.5vh;
+            z-index: 9999;
+            -webkit-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            -ms-transform: scale(1.2);
+            transform: scale(1.2);
+            .oss-imp-alart-common-bg {
+                border: 2px solid #3385ff;
+            }
+        }
+        &-notice {
+            flex: 1;
+            width: 100%;
+            height: 0;
+            margin-top: 1vh;
+        }
+    }
+}

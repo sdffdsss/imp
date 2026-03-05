@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--**一**报表标题-->
+  <!--title：此报表的名称-->
+  <!--IsAutoLoad：是否自动加载sql进行查询-->
+  <ReportTitle title="R_LOSS告警长时间告警未恢复统计" IsAutoLoad="false"/>
+  
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--informix的查询示例sql-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_RLoss_ByPage">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tpa_rloss_overlong_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+    tpa_rloss_overlong_detail.region_name g2,
+    tpa_rloss_overlong_detail.vendor_name g3,
+    tia_alarm_dict1.txt g4,
+    tpa_rloss_overlong_detail.eqp_label g5,
+    tia_alarm_dict2.txt g6,
+    tpa_rloss_overlong_detail.ne_label g7,
+    tpa_rloss_overlong_detail.alarm_title_text g8,
+    tpa_rloss_overlong_detail.org_severity          g9,
+    to_char(tpa_rloss_overlong_detail.event_time,'yyyy-mm-dd hh24:mi:ss') g10,
+    to_char(tpa_rloss_overlong_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss') g11
+  from tpa_rloss_overlong_detail tpa_rloss_overlong_detail 
+  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+  on tpa_rloss_overlong_detail.eqp_object_class =  tia_alarm_dict1.id
+  left join  (select id,txt from tia_alarm_dict where type =9)     tia_alarm_dict2
+  on tpa_rloss_overlong_detail.object_class =  tia_alarm_dict2.id
+  where tpa_rloss_overlong_detail.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tpa_rloss_overlong_detail.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+   and tpa_rloss_overlong_detail.region_id in (#areaID#)
+
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </sql>
+  
+  <!--Oracled的查询示例sql-->
+  <!--<sql>
+  select  * from
+  (select  a.*,rowNum m_rowNum  from
+  (
+  select
+  tfm_alarmlog_disp.first_result vircolumn_00,
+  tfp_filter_info.filter_name vircolumn_01,
+  tia_alg_statcode.state_name vircolumn_02,
+  tfm_alarmlog_disp.alarm_err_cnt vircolumn_03
+  from  tfm_alarmlog_disp,
+  tia_alg_statcode,
+  tfp_filter_info
+  where  tfm_alarmlog_disp.first_result &gt;=to_date(#Time1#,'yyyy-MM-dd HH24:mi:ss')
+  and tfm_alarmlog_disp.first_result &lt;=to_date(#Time2#,'yyyy-MM-dd HH24:mi:ss')
+  and tfm_alarmlog_disp.sum_level=#sum_level#
+  and tfm_alarmlog_disp.alarm_err_code=tia_alg_statcode.state_code(+)
+  and tfm_alarmlog_disp.filter_id=tfp_filter_info.filter_id(+)
+  )a
+  )
+  Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </sql>-->
+
+  <!--**三**汇总sql-->
+  
+  <!--informix的汇总示例sql-->
+  <countsql sqlId = "Select_AlmRpt_RLoss_Count">
+    select count(*)
+    from (select to_char(tpa_rloss_overlong_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+    tpa_rloss_overlong_detail.region_name g2,
+    tpa_rloss_overlong_detail.vendor_name g3,
+    tia_alarm_dict1.txt g4,
+    tpa_rloss_overlong_detail.eqp_label g5,
+    tia_alarm_dict2.txt g6,
+    tpa_rloss_overlong_detail.ne_label g7,
+    tpa_rloss_overlong_detail.alarm_title_text g8,
+    tpa_rloss_overlong_detail.org_severity          g9,
+    to_char(tpa_rloss_overlong_detail.event_time,'yyyy-mm-dd hh24:mi:ss') g10,
+    to_char(tpa_rloss_overlong_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss') g11
+  from tpa_rloss_overlong_detail tpa_rloss_overlong_detail 
+  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+  on tpa_rloss_overlong_detail.eqp_object_class =  tia_alarm_dict1.id
+  left join  (select id,txt from tia_alarm_dict where type =9)     tia_alarm_dict2
+  on tpa_rloss_overlong_detail.object_class =  tia_alarm_dict2.id
+  where tpa_rloss_overlong_detail.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tpa_rloss_overlong_detail.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+   and tpa_rloss_overlong_detail.region_id in (#areaID#)
+   )
+  </countsql>
+
+  <!--Oracled的汇总示例sql-->
+ <!-- <countsql>
+    select count(*)
+    from
+    (
+    select
+    tfm_alarmlog_disp.first_result vircolumn_00,
+    tfp_filter_info.filter_name vircolumn_01,
+    tia_alg_statcode.state_name vircolumn_02,
+    tfm_alarmlog_disp.alarm_err_cnt vircolumn_03
+    from  tfm_alarmlog_disp,
+    tia_alg_statcode,
+    tfp_filter_info
+    where  tfm_alarmlog_disp.first_result &gt;=to_date(#Time1#,'yyyy-MM-dd HH24:mi:ss')
+    and tfm_alarmlog_disp.first_result &lt;=to_date(#Time2#,'yyyy-MM-dd HH24:mi:ss')
+    and tfm_alarmlog_disp.sum_level=#sum_level#
+    and tfm_alarmlog_disp.alarm_err_code=tia_alg_statcode.state_code(+)
+    and tfm_alarmlog_disp.filter_id=tfp_filter_info.filter_id(+)
+    )
+  </countsql>-->
+  
+  <!--**四**查询条件-->
+  <!--Name：控件说明-->
+  <!--Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同-->
+  <!--DbName: 如果是通过数据源赋值的,此属性填写数据库实例名称-->
+  <!--ControlType： 标准控件名称 （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+  <!--BindType：绑定类型 （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+  <!--DefaultValue： 控件的默认值，目前时间控件提供：当月（当前时间所在月第一天）；当周（当前时间所在周第一天）；当日（当前时间所在天）；上月（当前时间所在月的上月第一天）-->
+  
+  <!--例子 Start-->
+  <Conditions>
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="昨日,当日">
+    </Condition>
+    <Condition Name="站段" Flag="areaID" BindType="sql" ControlType="MutiDropDown" DbName="nrmdb"
+          sqlId = "Select_AlmRpt_RLoss_CondAreaID" >
+      select distinct region_name as text, region_id as value from region_city_local
+    </Condition>
+  </Conditions>
+  <!--例子 End-->
+  
+  
+  <!--**五**显示列-->
+  <!--FieldName  ：与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序(可以不写)，true进行排序）-->
+  <!--IsHasDetail：是否此列可以弹出详情（false不弹出详情(可以不写)，true弹出详情）-->
+  <!--DetailWhereCondition: 设置点击此列的条件,其中条件字段名对应FieldName,在详情的sql中以{0} 为取代此条件-->
+
+  <!--例子 Start-->
+  <Columns> 
+    <ColumnItem FieldName="g1" DisplayName="时间" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="g2" DisplayName="站段" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g3" DisplayName="设备厂家" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g4" DisplayName="设备类型" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g5" DisplayName="设备名称" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g6" DisplayName="告警对象类型" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g7" DisplayName="告警对象名称" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g8" DisplayName="告警标题" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g9" DisplayName="网管告警级别" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g10" DisplayName="告警发生时间" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g11" DisplayName="告警清除时间" IsSort="false"></ColumnItem>
+  </Columns>
+  <!--例子 End-->
+
+    
+</root>

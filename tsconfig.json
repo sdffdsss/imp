@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "outDir": "build/dist",
+        "module": "esnext",
+        "target": "esnext",
+        "lib": ["esnext", "dom", "DOM.Iterable"],
+        "sourceMap": true,
+        "baseUrl": ".",
+        "jsx": "react",
+        "allowSyntheticDefaultImports": true,
+        "moduleResolution": "node",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": false,
+        "allowJs": false,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "experimentalDecorators": true,
+        "strict": false,
+        "noImplicitAny": false,
+        "declaration": true,
+        "paths": {
+            "@Src/*": ["./src/*"],
+            "@Pages/*": ["./src/pages/*"],
+            "@Utils/*": ["./src/utils/*"],
+            "@Configs/*": ["./src/configs/*"],
+            "@Components/*": ["./src/components/*"],
+            "@Common/*": ["./src/common/*"]
+        }
+    },
+    "exclude": ["node_modules", "build", "dist", "scripts", "webpack", "jest"]
+}

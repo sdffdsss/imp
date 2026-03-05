@@ -1,0 +1,110 @@
+.columns-sort-drag-new {
+    width: 600px;
+    height: 400px;
+    border: 1px solid @border-color-split;
+    padding: 10px;
+    background-color: @component-background;
+    .drag-columns-one {
+        background: @table-row-bg-even;
+        color: @text-color;
+        border-bottom: 1px solid @border-color-split;
+    }
+    .drag-columns-two {
+        background: @table-row-bg-odd;
+        color: @text-color;
+        border-bottom: 1px solid @border-color-split;
+    }
+    .columns-sort-drag-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .columns-sort-drag-direction {
+        display: inline-flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .columns-sort-drag-content-left {
+        width: calc(50% - 20px);
+        height: 100%;
+    }
+    .columns-sort-drag-content-right {
+        width: calc(50% - 20px);
+        height: 100%;
+    }
+    .columns-sort-drag-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .pagingtions-field {
+        padding-top: 5px;
+        text-align: right;
+    }
+    .columns-sort-drag-search-title {
+        font-weight: bold;
+        margin-right: 8px;
+        line-height: 32px;
+    }
+    .columns-sort-drag-list-new {
+        padding: 8px;
+        border: 1px solid @border-color-split;
+        height: calc(100% - 42px);
+        margin-top: 10px;
+        overflow: hidden;
+
+        .columns-sort-drag-list-new-page {
+            width: 100%;
+            height: calc(100% - 25px);
+            overflow-x: auto;
+        }
+        .columns-sort-drag-header {
+            box-sizing: border-box;
+            white-space: nowrap;
+            width: max-content;
+        }
+        .columns-sort-drag-header-num {
+            width: 50px;
+            padding: 5px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .columns-sort-drag-header-num-empty {
+            width: 30px;
+            padding: 5px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .columns-sort-drag-header-field {
+            display: inline-block;
+        }
+        .columns-sort-drag-header-field-info {
+            width: 80px;
+            padding: 5px;
+            display: inline-block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            vertical-align: middle;
+        }
+        .columns-sort-drag-list-new-content {
+            height: calc(100% - 32px);
+            overflow-y: auto;
+            width: max-content;
+            min-width: 100%;
+        }
+
+        .columns-sort-drag-header-color {
+            background-color: @table-header-bg;
+            color: @text-color;
+        }
+    }
+}
+
+.columns-sort-drag-spin {
+    height: 100%;
+    > :last-child {
+        height: 100%;
+    }
+}

@@ -1,0 +1,131 @@
+@import '~antd/es/style/themes/default.less';
+.maintenance-mode-wrapper {
+    &-table {
+        .oss-ui-card {
+            cursor: pointer;
+        }
+    }
+
+    .oss-web-common-virtual-table-page {
+        height: calc(100% - 48px) !important;
+    }
+    .oss-ui-radio-group {
+        float: left;
+        margin-left: 60px;
+        text-align: left;
+    }
+    .right-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 450px;
+        button {
+            margin-left: 10px;
+        }
+        .oss-ui-tooltip {
+            max-width: 320px;
+        }
+    }
+    .baoji {
+        right: 40px;
+    }
+    .sender-content {
+        position: absolute;
+        top: 0;
+        right: 0;
+        display: flex;
+        button {
+            margin-left: 10px;
+        }
+    }
+    .oss-ui-form-item-control-input-content {
+        text-align: left;
+    }
+    .oss-ui-space oss-ui-space-horizontal oss-ui-space-align-center {
+        // &:nth-child(3){
+        //   position: absolute;
+        // }
+    }
+    .left-container {
+        margin-left: 10px;
+        .title {
+            position: absolute;
+            left: 10px;
+        }
+        .oss-ui-radio-button-wrapper {
+            border: none;
+            &:not(:first-child):before {
+                width: 0;
+            }
+        }
+        .oss-ui-radio-button-wrapper {
+            border-radius: 20px;
+        }
+        .oss-ui-radio-button-wrapper:last-child {
+            border-radius: 20px;
+        }
+        .oss-ui-radio-button-wrapper:first-child {
+            border-radius: 20px;
+        }
+    }
+    .oss-ui-row {
+        justify-content: space-between;
+        .oss-ui-col-9:nth-child(1) {
+            display: block !important;
+            flex: 0 0 30% !important;
+        }
+        .oss-ui-col-9:nth-child(2) {
+            display: block !important;
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+            margin-left: 0;
+            padding-left: 20px;
+        }
+        .oss-ui-col-8:nth-child(1) {
+            display: block !important;
+            flex: 0 0 25% !important;
+            max-width: 25% !important;
+        }
+        .oss-ui-col-8:nth-child(2) {
+            display: block !important;
+            flex: 0 0 25% !important;
+            max-width: 25% !important;
+        }
+        .oss-ui-col-8:nth-child(3) {
+            display: block !important;
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+    }
+    .oss-ui-form-item {
+        margin: 0px;
+    }
+    .oss-ui-pro-table-search {
+        padding: 10px;
+        padding-bottom: 2px;
+    }
+    .oss-ui-col-4 {
+        padding: 0px !important;
+    }
+    .oss-ui-pro-table-list-toolbar-right {
+        position: absolute;
+        top: -35px;
+        right: 20px;
+    }
+
+    .maintenance-hint {
+        padding: 0 10px 10px 10px;
+        color: @error-color;
+        background-color: @component-background;
+    }
+}
+.mainper-tab-ellipsis {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    span {
+        display: block;
+        width: 100%;
+    }
+}

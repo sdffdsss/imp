@@ -1,0 +1,283 @@
+{
+    "statusConfig": [
+        {
+            "displayName": "确认状态",
+            "fieldName": "ack_flag",
+            "databaseName": "ack_flag",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "0", "name": "未确认", "image": "ack_flag_0" },
+                { "id": "1", "name": "手工确认", "image": "ack_flag_1" },
+                { "id": "2", "name": "自动确认", "image": "ack_flag_2" }
+            ]
+        },
+        {
+            "displayName": "告警清除状态",
+            "fieldName": "active_status",
+            "databaseName": "active_status",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "未清除", "image": "active_status_1" },
+                { "id": "2", "name": "超时清除", "image": "active_status_2" },
+                { "id": "0", "name": "已清除", "image": "active_status_0" },
+                { "id": "3", "name": "手工清除", "image": "active_status_3" },
+                { "id": "4", "name": "同步清除", "image": "active_status_4" },
+                { "id": "5", "name": "规则清除", "image": "active_status_5" }
+            ]
+        },
+        {
+            "displayName": "设备工程细分状态",
+            "fieldName": "alarm_resource_status",
+            "databaseName": "alarm_resource_status",
+            "orientation": "1",
+            "AlarmStatus": [
+                { "id": "0", "name": "未确认", "image": "alarm_resource_status_0" },
+                { "id": "1", "name": "现网有业务承载", "image": "alarm_resource_status_1" },
+                { "id": "2", "name": "退网", "image": "alarm_resource_status_2" },
+                { "id": "3", "name": "工程", "image": "alarm_resource_status_3" },
+                { "id": "4", "name": "虚拟", "image": "alarm_resource_status_4" },
+                { "id": "5", "name": "现网无业务承载", "image": "alarm_resource_status_5" },
+                { "id": "1000", "name": "规划状态", "image": "alarm_resource_status_1000" },
+                { "id": "1100", "name": "未知状态", "image": "alarm_resource_status_1100" },
+                { "id": "1200", "name": "工程实施状态", "image": "alarm_resource_status_1200" },
+                { "id": "1300", "name": "现网状态", "image": "alarm_resource_status_1300" },
+                { "id": "1310", "name": "现网已交维状态", "image": "alarm_resource_status_1310" },
+                { "id": "1320", "name": "现网未交维状态", "image": "alarm_resource_status_1320" },
+                { "id": "1400", "name": "现网容灾备份状态", "image": "alarm_resource_status_1400" },
+                { "id": "1410", "name": "现网容灾备份交维状态", "image": "alarm_resource_status_1410" },
+                { "id": "1420", "name": "现网容灾备份未交维状态", "image": "alarm_resource_status_1420" },
+                { "id": "1500", "name": "现网工程状态", "image": "alarm_resource_status_1500" },
+                { "id": "1600", "name": "退网待删除状态", "image": "alarm_resource_status_1600" },
+                { "id": "1700", "name": "退网状态", "image": "alarm_resource_status_1700" },
+                { "id": "9900", "name": "工程遗留状态", "image": "alarm_resource_status_9900" }
+            ]
+        },
+        {
+            "displayName": "派单状态",
+            "fieldName": "send_status",
+            "databaseName": "sheet_send_status",
+            "orientation": "1",
+            "AlarmStatus": [
+                { "id": "0", "name": "未派单", "image": "send_status_0" },
+                { "id": "1", "name": "等待派单", "image": "send_status_1" },
+                { "id": "2", "name": "人工中止派单", "image": "send_status_2" },
+                { "id": "3", "name": "系统抑制派单", "image": "send_status_3" },
+                { "id": "4", "name": "派单失败", "image": "send_status_4" },
+                { "id": "5", "name": "自动派单成功", "image": "send_status_5" },
+                { "id": "6", "name": "手工派单成功", "image": "send_status_6" },
+                { "id": "7", "name": "补派工单成功", "image": "send_status_7" },
+                { "id": "8", "name": "清除派单失败", "image": "send_status_8" },
+                { "id": "9", "name": "清除派单成功", "image": "send_status_9" },
+                { "id": "10", "name": "追单派单成功", "image": "send_status_10" },
+                { "id": "11", "name": "打包派单成功", "image": "send_status_11" },
+                { "id": "12", "name": "判重追单成功", "image": "send_status_12" },
+                { "id": "13", "name": "手工追单成功", "image": "send_status_13" },
+                { "id": "14", "name": "判重追单失败", "image": "send_status_14" },
+                { "id": "15", "name": "手工追单失败", "image": "send_status_15" },
+                { "id": "16", "name": "关联追单成功", "image": "send_status_16" },
+                { "id": "17", "name": "关联追单失败", "image": "send_status_17" },
+                { "id": "401", "name": "漏派单", "image": "send_status_401" }
+            ]
+        },
+        {
+            "displayName": "高铁/督办单类型",
+            "fieldName": "subway_supervisor_type",
+            "databaseName": "subway_supervisor_type",
+            "orientation": "1",
+            "AlarmStatus": [
+                { "id": "1", "name": "高铁单", "image": "is_subway_0", "fieldName": "is_subway", "value": "1" },
+                { "id": "0", "name": "督办单", "image": "sheet_status_7", "fieldName": "is_supv", "value": "1" }
+            ]
+        },
+
+        {
+            "displayName": "预处理状态",
+            "fieldName": "preprocess_flag",
+            "databaseName": "preprocess_flag",
+            "orientation": "1",
+            "AlarmStatus": [
+                { "id": "0", "name": "预处理状态未知", "image": "preprocess_flag_0" },
+                { "id": "1", "name": "等待预处理", "image": "preprocess_flag_1" },
+                { "id": "2", "name": "预处理执行中", "image": "preprocess_flag_2" },
+                { "id": "3", "name": "自动预处理成功", "image": "preprocess_flag_3" },
+                { "id": "4", "name": "预处理执行失败", "image": "preprocess_flag_4" },
+                { "id": "5", "name": "手工抑制预处理", "image": "preprocess_flag_5" },
+                { "id": "6", "name": "自动抑制预处理", "image": "preprocess_flag_6" },
+                { "id": "7", "name": "手工预处理成功", "image": "preprocess_flag_7" },
+                { "id": "8", "name": "等待预处理中终止", "image": "preprocess_flag_8" },
+                { "id": "9", "name": "预处理过程中终止", "image": "preprocess_flag_9" },
+                { "id": "10", "name": "预处理校验失败", "image": "preprocess_flag_10" },
+                { "id": "11", "name": "预处理逻辑失败", "image": "preprocess_flag_11" }
+            ]
+        },
+        {
+            "displayName": "工单状态",
+            "fieldName": "sheet_status",
+            "databaseName": "sheet_status",
+            "orientation": "1",
+            "AlarmStatus": [
+                { "id": "0", "name": "无工单", "image": "sheet_status_0" },
+                { "id": "1", "name": "草稿", "image": "sheet_status_1" },
+                { "id": "2", "name": "待受理", "image": "sheet_status_2" },
+                { "id": "3", "name": "处理中", "image": "sheet_status_3" },
+                { "id": "4", "name": "处理完成", "image": "sheet_status_4" },
+                { "id": "5", "name": "已归档", "image": "sheet_status_5" },
+                { "id": "6", "name": "作废", "image": "sheet_status_6" },
+                { "id": "7", "name": "待审批", "image": "sheet_status_7" },
+                { "id": "8", "name": "处理超时", "image": "sheet_status_8" },
+                { "id": "9", "name": "待确认", "image": "sheet_status_9" },
+                { "id": "10", "name": "已销单", "image": "sheet_status_10" },
+                { "id": "31", "name": "T1处理中", "image": "sheet_status_31" },
+                { "id": "32", "name": "T2处理中", "image": "sheet_status_32" },
+                { "id": "33", "name": "T3处理中", "image": "sheet_status_33" }
+            ]
+        },
+        {
+            "displayName": "标准化状态",
+            "fieldName": "standard_flag",
+            "databaseName": "standard_flag",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "未标准化", "image": "standard_flag_1" },
+                { "id": "2", "name": "标准化成功", "image": "standard_flag_2" },
+                { "id": "3", "name": "未匹配 ", "image": "standard_flag_3" }
+            ]
+        },
+        {
+            "displayName": "是否上报集团",
+            "fieldName": "send_jt_flag",
+            "databaseName": "send_jt_flag",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "上报集团", "image": "send_jt_flag_1" },
+                { "id": "0", "name": "不上报集团 ", "image": "send_jt_flag_0" }
+            ]
+        },
+        {
+            "displayName": "异常状态",
+            "fieldName": "alarm_abnormal_type",
+            "databaseName": "alarm_abnormal_type",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "0", "name": "非异常", "image": "alarm_abnormal_type_0" },
+                { "id": "10", "name": "告警处理延时", "image": "alarm_abnormal_type_10" },
+                { "id": "20", "name": "字典值转换错误", "image": "alarm_abnormal_type_20" },
+                { "id": "30", "name": "非关键字段解析错误", "image": "alarm_abnormal_type_30" },
+                { "id": "40", "name": "通过数据库转换错误", "image": "alarm_abnormal_type_40" },
+                { "id": "50", "name": "资源不匹配", "image": "alarm_abnormal_type_50" },
+                { "id": "70", "name": "关键字段解析错误", "image": "alarm_abnormal_type_70" },
+                { "id": "90", "name": "告警格式无法识别", "image": "alarm_abnormal_type_90" }
+            ]
+        },
+        {
+            "displayName": "备注标记",
+            "fieldName": "remark_exist",
+            "databaseName": "remark_exist",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "0", "name": "无备注", "image": "remark_exist_0" },
+                { "id": "1", "name": "有备注", "image": "remark_exist_1" }
+            ]
+        },
+        {
+            "displayName": "人工智能外呼",
+            "fieldName": "ivr_status",
+            "databaseName": "ivr_status",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "外呼等待延时中 ", "image": "ivr_status_1" },
+                { "id": "2", "name": "外呼手工抑制", "image": "ivr_status_2" },
+                { "id": "3", "name": "外呼系统抑制", "image": "ivr_status_3" },
+                { "id": "4", "name": "外呼派单失败", "image": "ivr_status_4" },
+                { "id": "5", "name": "外呼自动派单成功", "image": "ivr_status_5" },
+                { "id": "6", "name": "外呼手工派单成功", "image": "ivr_status_6" },
+                { "id": "8", "name": "自动外呼返回成功", "image": "ivr_status_8" },
+                { "id": "9", "name": "自动外呼返回失败", "image": "ivr_status_9" },
+                { "id": "10", "name": "自动外呼返回查询不到维护人员", "image": "ivr_status_10" },
+                { "id": "11", "name": "手动外呼返回成功", "image": "ivr_status_11" },
+                { "id": "12", "name": "手动外呼返回失败", "image": "ivr_status_12" },
+                { "id": "13", "name": "手动外呼返回查询不到维护人员", "image": "ivr_status_13" }
+            ]
+        },
+        {
+            "displayName": "告警督办",
+            "fieldName": "oversee_status",
+            "databaseName": "oversee_status",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "告警督办成功", "image": "oversee_status_1" },
+                { "id": "0", "name": "告警督办失败 ", "image": "oversee_status_0" }
+            ]
+        },
+        {
+            "displayName": "设备工程状态",
+            "fieldName": "remote_resource_status",
+            "databaseName": "remote_resource_status",
+            "orientation": "0",
+            "AlarmStatus": [{ "id": "1500", "name": "对端工程状态", "image": "remote_resource_status_1500" }]
+        },
+        {
+            "displayName": "告警已读状态",
+            "fieldName": "alarm_read",
+            "databaseName": "alarm_read",
+            "orientation": "0",
+            "AlarmStatus": [{ "id": "1", "name": "已读", "image": "alarm_read_1" }]
+        },
+        {
+            "displayName": "告警对象工程细分状态",
+            "fieldName": "alarm_ne_status",
+            "databaseName": "alarm_ne_status",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "0", "name": "未知", "image": "alarm_resource_status_0" },
+                { "id": "1", "name": "正常", "image": "alarm_resource_status_0" },
+                { "id": "3", "name": "本端网络变更", "image": "alarm_ne_status_0" },
+                { "id": "4", "name": "本端例行工作", "image": "alarm_ne_status_0" },
+                { "id": "5", "name": "本端软件装载", "image": "alarm_ne_status_0" },
+                { "id": "6", "name": "对端未知", "image": "alarm_resource_status_0" },
+                { "id": "7", "name": "对端容灾", "image": "alarm_resource_status_0" },
+                { "id": "8", "name": "本端故障处理", "image": "alarm_resource_status_0" },
+                { "id": "9", "name": "本端数据删除", "image": "alarm_ne_status_0" },
+                { "id": "10", "name": "本端实操演练", "image": "alarm_ne_status_0" },
+                { "id": "12", "name": "本端机房业务操作工程", "image": "alarm_ne_status_2" },
+                { "id": "13", "name": "本端机房例行巡检工程", "image": "alarm_ne_status_2" },
+                { "id": "14", "name": "本端机房简单出入", "image": "alarm_ne_status_2" },
+                { "id": "15", "name": "对端退网", "image": "alarm_resource_status_0" },
+                { "id": "16", "name": "对端退网待删除", "image": "alarm_resource_status_0" },
+                { "id": "17", "name": "对端工程阶段", "image": "alarm_ne_status_0" },
+                { "id": "18", "name": "对端无业务", "image": "alarm_ne_status_0" },
+                { "id": "25", "name": "工程", "image": "alarm_resource_status_0" },
+                { "id": "26", "name": "维护", "image": "alarm_ne_status_0" },
+                { "id": "27", "name": "对端网络变更", "image": "alarm_ne_status_0" },
+                { "id": "28", "name": "对端例行工作", "image": "alarm_ne_status_0" },
+                { "id": "29", "name": "对端软件装载", "image": "alarm_ne_status_0" },
+                { "id": "30", "name": "对端故障处理", "image": "alarm_resource_status_0" },
+                { "id": "31", "name": "对端数据删除", "image": "alarm_ne_status_0" },
+                { "id": "32", "name": "对端实操演练", "image": "alarm_ne_status_0" },
+                { "id": "33", "name": "对端机房业务操作工程", "image": "alarm_ne_status_2" },
+                { "id": "34", "name": "工程遗留", "image": "alarm_resource_status_0" },
+                { "id": "36", "name": "对端机房例行巡检工程", "image": "alarm_ne_status_2" },
+                { "id": "37", "name": "对端机房简单出入", "image": "alarm_ne_status_2" },
+                { "id": "38", "name": "本端应急", "image": "alarm_ne_status_1" },
+                { "id": "39", "name": "对端应急", "image": "alarm_ne_status_1" },
+                { "id": "40", "name": "对端规划", "image": "alarm_resource_status_0" },
+                { "id": "41", "name": "对端设计", "image": "alarm_resource_status_0" },
+                { "id": "42", "name": "对端工程在建", "image": "alarm_resource_status_0" },
+                { "id": "43", "name": "对端初验通过", "image": "alarm_resource_status_0" },
+                { "id": "44", "name": "对端停用", "image": "alarm_resource_status_0" },
+                { "id": "45", "name": "OMC重启", "image": "alarm_ne_status_0" }
+            ]
+        },
+        {
+            "displayName": "工程状态",
+            "fieldName": "proj_status",
+            "databaseName": "proj_status",
+            "orientation": "0",
+            "AlarmStatus": [
+                { "id": "1", "name": "标工", "image": "proj_status_1" },
+                { "id": "2", "name": "工程应急", "image": "proj_status_2" },
+                { "id": "3", "name": "现场施工", "image": "proj_status_3" }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+    "code": "200",
+    "message": "操作成功",
+    "status": null,
+    "data": null,
+    "enableMock": false,
+    "dataObject": {
+        "msg": "ok",
+        "result": [
+            { "latitude": "32.149585", "longitude": "119.002284" },
+            { "latitude": "32.149585", "longitude": "119.002284" }
+        ],
+        "total": 0,
+        "status": 0
+    },
+    "total": null,
+    "linkId": "report1683337811988"
+}

@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+
+   <!--    告警报表sql开始        -->
+
+   <!-- 资源覆盖率核查报表 -->
+	 
+   <select id="Select_AlmRpt_CompressionRatio_Unicom_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	select count(*) num
+	from(
+SELECT m1.VALUE AS province,
+tia2.txt AS professional,
+DATE_FORMAT(t1.check_time, '%Y-%m-%d') AS date_time,
+t1.alarm_total AS alarm_total,
+CONCAT(t1.region_id_rate,'%') AS region_id_rate,
+CONCAT(t1.city_id_rate,'%') AS city_id_rate,
+CONCAT(t1.vendor_id_rate,'%') AS vendor_id_rate,
+CONCAT(t1.active_status_rate,'%') AS active_status_rate,
+CONCAT(t1.alarm_resource_status_rate,'%') AS alarm_resource_status_rate,
+CONCAT(t1.sheet_send_status_rate,'%') AS sheet_send_status_rate,
+CONCAT(t1.sheet_status_rate,'%') AS sheet_status_rate,
+CONCAT(t1.org_severity_rate,'%') AS org_severity_rate,
+CONCAT(t1.standard_flag_rate,'%') AS standard_flag_rate,
+CONCAT(t1.ack_flag_rate,'%') AS ack_flag_rate,
+CONCAT(t1.object_class_rate,'%') AS object_class_rate,
+CONCAT(t1.eqp_object_class_rate,'%') AS eqp_object_class_rate,
+CONCAT(t1.event_time_rate,'%') AS event_time_rate,
+CONCAT(t1.cancel_time_rate,'%') AS cancel_time_rate,
+CONCAT(t1.omc_alarm_id_rate,'%') AS omc_alarm_id_rate,
+CONCAT(t1.alarm_title_text_rate,'%') AS alarm_title_text_rate,
+CONCAT(t1.vendor_severity_rate,'%') AS vendor_severity_rate,
+CONCAT(t1.vendor_type_rate,'%') AS vendor_type_rate,
+CONCAT(t1.probable_cause_txt_rate,'%') AS probable_cause_txt_rate,
+CONCAT(t1.probable_cause_rate,'%') AS probable_cause_rate,
+CONCAT(t1.ne_label_rate,'%') AS ne_label_rate,
+CONCAT(t1.eqp_label_rate,'%') AS eqp_label_rate,
+CONCAT(t1.special_field0_rate,'%') AS special_field0_rate,
+CONCAT(t1.special_field1_rate,'%') AS special_field1_rate,
+CONCAT(t1.china_tower_site_no_rate,'%') AS china_tower_site_no_rate,
+CONCAT(t1.proj_name_rate,'%') AS proj_name_rate,
+CONCAT(t1.proj_oa_file_id_rate,'%') AS proj_oa_file_id_rate,
+CONCAT(t1.sheet_no_rate,'%') AS sheet_no_rate,
+CONCAT(t1.sheet_send_person_rate,'%') AS sheet_send_person_rate,
+CONCAT(t1.standard_alarm_name_rate,'%') AS standard_alarm_name_rate,
+CONCAT(t1.standard_alarm_id_rate,'%') AS standard_alarm_id_rate,
+CONCAT(t1.effect_ne_rate,'%') AS effect_ne_rate,
+CONCAT(t1.effect_service_rate,'%') AS effect_service_rate,
+CONCAT(t1.ems_id_rate,'%') AS ems_id_rate,
+CONCAT(t1.ack_time_rate,'%') AS ack_time_rate,
+CONCAT(t1.ack_user_rate,'%') AS ack_user_rate,
+CONCAT(t1.admin_grid_id_rate,'%') AS admin_grid_id_rate,
+CONCAT(t1.alarm_abnormal_type_rate,'%') AS alarm_abnormal_type_rate,
+CONCAT(t1.alarm_act_count_rate,'%') AS alarm_act_count_rate,
+CONCAT(t1.alarm_check_rate,'%') AS alarm_check_rate,
+CONCAT(t1.alarm_content_rate,'%') AS alarm_content_rate,
+CONCAT(t1.alarm_eqp_status_rate,'%') AS alarm_eqp_status_rate,
+CONCAT(t1.Alarm_Explanation_addition_rate,'%') AS Alarm_Explanation_addition_rate,
+CONCAT(t1.ALARM_EXPLANATION_rate,'%') AS ALARM_EXPLANATION_rate,
+CONCAT(t1.alarm_important_level_rate,'%') AS alarm_important_level_rate,
+CONCAT(t1.alarm_ne_status_rate,'%') AS alarm_ne_status_rate,
+CONCAT(t1.alarm_origin_rate,'%') AS alarm_origin_rate,
+CONCAT(t1.alarm_reason_rate,'%') AS alarm_reason_rate,
+CONCAT(t1.alarm_source_rate,'%') AS alarm_source_rate,
+CONCAT(t1.alarm_title_rate,'%') AS alarm_title_rate,
+CONCAT(t1.alarm_unit_rate,'%') AS alarm_unit_rate,
+CONCAT(t1.alarm_value_rate,'%') AS alarm_value_rate,
+CONCAT(t1.alert_status_rate,'%') AS alert_status_rate,
+CONCAT(t1.attachment_rate,'%') AS attachment_rate,
+CONCAT(t1.board_type_rate,'%') AS board_type_rate,
+CONCAT(t1.business_layer_rate,'%') AS business_layer_rate,
+CONCAT(t1.business_region_ids_rate,'%') AS business_region_ids_rate,
+CONCAT(t1.business_regions_rate,'%') AS business_regions_rate,
+CONCAT(t1.business_system_rate,'%') AS business_system_rate,
+CONCAT(t1.cancel_user_rate,'%') AS cancel_user_rate,
+CONCAT(t1.channel_num_rate,'%') AS channel_num_rate,
+CONCAT(t1.channel_type_rate,'%') AS channel_type_rate,
+CONCAT(t1.circuit_fault_location_rate,'%') AS circuit_fault_location_rate,
+CONCAT(t1.circuit_id_rate,'%') AS circuit_id_rate,
+CONCAT(t1.circuit_no_rate,'%') AS circuit_no_rate,
+CONCAT(t1.corr_str_rate,'%') AS corr_str_rate,
+CONCAT(t1.correlate_alarm_flag_rate,'%') AS correlate_alarm_flag_rate,
+CONCAT(t1.dal_action_rate,'%') AS dal_action_rate,
+CONCAT(t1.department_process_flag_rate,'%') AS department_process_flag_rate,
+CONCAT(t1.eqp_alias_rate,'%') AS eqp_alias_rate,
+CONCAT(t1.eqp_idn_rate,'%') AS eqp_idn_rate,
+CONCAT(t1.eqp_int_id_rate,'%') AS eqp_int_id_rate,
+CONCAT(t1.eqp_object_class_text_rate,'%') AS eqp_object_class_text_rate,
+CONCAT(t1.eqp_version_rate,'%') AS eqp_version_rate,
+CONCAT(t1.event_cat_rate,'%') AS event_cat_rate,
+CONCAT(t1.event_id_rate,'%') AS event_id_rate,
+CONCAT(t1.extra_id1_rate,'%') AS extra_id1_rate,
+CONCAT(t1.extra_id2_rate,'%') AS extra_id2_rate,
+CONCAT(t1.extra_id3_rate,'%') AS extra_id3_rate,
+CONCAT(t1.extra_string1_rate,'%') AS extra_string1_rate,
+CONCAT(t1.extra_string2_rate,'%') AS extra_string2_rate,
+CONCAT(t1.extra_string3_rate,'%') AS extra_string3_rate,
+CONCAT(t1.fail_reason_rate,'%') AS fail_reason_rate,
+CONCAT(t1.gcss_client_grade_mgt_rate,'%') AS gcss_client_grade_mgt_rate,
+CONCAT(t1.gcss_client_grade_rate,'%') AS gcss_client_grade_rate,
+CONCAT(t1.gcss_client_level_rate,'%') AS gcss_client_level_rate,
+CONCAT(t1.gcss_client_name_rate,'%') AS gcss_client_name_rate,
+CONCAT(t1.gcss_client_num_rate,'%') AS gcss_client_num_rate,
+CONCAT(t1.gcss_client_rate,'%') AS gcss_client_rate,
+CONCAT(t1.gcss_service_level_rate,'%') AS gcss_service_level_rate,
+CONCAT(t1.gcss_service_num_rate,'%') AS gcss_service_num_rate,
+CONCAT(t1.gcss_service_rate,'%') AS gcss_service_rate,
+CONCAT(t1.gcss_service_type_rate,'%') AS gcss_service_type_rate,
+CONCAT(t1.grid_name_rate,'%') AS grid_name_rate,
+CONCAT(t1.group_id_rate,'%') AS group_id_rate,
+CONCAT(t1.group_severity_rate,'%') AS group_severity_rate,
+CONCAT(t1.idn_rate,'%') AS idn_rate,
+CONCAT(t1.int_id_rate,'%') AS int_id_rate,
+CONCAT(t1.interrupt_circuit_state_rate,'%') AS interrupt_circuit_state_rate,
+CONCAT(t1.is_send_soundbrand_rate,'%') AS is_send_soundbrand_rate,
+CONCAT(t1.last_event_time_rate,'%') AS last_event_time_rate,
+CONCAT(t1.layer_rate_rate,'%') AS layer_rate_rate,
+CONCAT(t1.link_office_rate,'%') AS link_office_rate,
+CONCAT(t1.locate_info_rate,'%') AS locate_info_rate,
+CONCAT(t1.locate_name_rate,'%') AS locate_name_rate,
+CONCAT(t1.logic_alarm_type_rate,'%') AS logic_alarm_type_rate,
+CONCAT(t1.logic_sub_alarm_type_rate,'%') AS logic_sub_alarm_type_rate,
+CONCAT(t1.machine_room_info_rate,'%') AS machine_room_info_rate,
+CONCAT(t1.maintain_group_rate,'%') AS maintain_group_rate,
+CONCAT(t1.ne_admin_status_rate,'%') AS ne_admin_status_rate,
+CONCAT(t1.ne_alias_rate,'%') AS ne_alias_rate,
+CONCAT(t1.ne_ip_rate,'%') AS ne_ip_rate,
+CONCAT(t1.ne_location_rate,'%') AS ne_location_rate,
+CONCAT(t1.ne_model_rate,'%') AS ne_model_rate,
+CONCAT(t1.ne_status_rate,'%') AS ne_status_rate,
+CONCAT(t1.ne_sub_type_rate,'%') AS ne_sub_type_rate,
+CONCAT(t1.network_type_rate,'%') AS network_type_rate,
+CONCAT(t1.network_type_top_rate,'%') AS network_type_top_rate,
+CONCAT(t1.nms_alarm_id_rate,'%') AS nms_alarm_id_rate,
+CONCAT(t1.nms_name_rate,'%') AS nms_name_rate,
+CONCAT(t1.object_class_text_rate,'%') AS object_class_text_rate,
+CONCAT(t1.object_level_rate,'%') AS object_level_rate,
+CONCAT(t1.omc_id_rate,'%') AS omc_id_rate,
+CONCAT(t1.org_type_rate,'%') AS org_type_rate,
+CONCAT(t1.Parent_Int_Id_rate,'%') AS Parent_Int_Id_rate,
+CONCAT(t1.Parent_Object_Class_rate,'%') AS Parent_Object_Class_rate,
+CONCAT(t1.port_num_rate,'%') AS port_num_rate,
+CONCAT(t1.preprocess_flag_rate,'%') AS preprocess_flag_rate,
+CONCAT(t1.province_process_flag_rate,'%') AS province_process_flag_rate,
+CONCAT(t1.redefine_severity_rate,'%') AS redefine_severity_rate,
+CONCAT(t1.redefine_type_rate,'%') AS redefine_type_rate,
+CONCAT(t1.region_name_rate,'%') AS region_name_rate,
+CONCAT(t1.region_severity_rate,'%') AS region_severity_rate,
+CONCAT(t1.related_tkgp_rate,'%') AS related_tkgp_rate,
+CONCAT(t1.remark_exist_rate,'%') AS remark_exist_rate,
+CONCAT(t1.remote_eqp_alias_rate,'%') AS remote_eqp_alias_rate,
+CONCAT(t1.remote_eqp_city_rate,'%') AS remote_eqp_city_rate,
+CONCAT(t1.remote_eqp_label_rate,'%') AS remote_eqp_label_rate,
+CONCAT(t1.remote_eqp_level_rate,'%') AS remote_eqp_level_rate,
+CONCAT(t1.remote_eqp_region_rate,'%') AS remote_eqp_region_rate,
+CONCAT(t1.remote_int_id_rate,'%') AS remote_int_id_rate,
+CONCAT(t1.remote_object_class_rate,'%') AS remote_object_class_rate,
+CONCAT(t1.remote_proj_sub_status_rate,'%') AS remote_proj_sub_status_rate,
+CONCAT(t1.remote_resource_status_rate,'%') AS remote_resource_status_rate,
+CONCAT(t1.resource_status_rate,'%') AS resource_status_rate,
+CONCAT(t1.rlocate_ne_int_id_rate,'%') AS rlocate_ne_int_id_rate,
+CONCAT(t1.rlocate_ne_name_rate,'%') AS rlocate_ne_name_rate,
+CONCAT(t1.rlocate_ne_type_rate,'%') AS rlocate_ne_type_rate,
+CONCAT(t1.send_jt_flag_rate,'%') AS send_jt_flag_rate,
+CONCAT(t1.severity_keycode_rate,'%') AS severity_keycode_rate,
+CONCAT(t1.signal_rate_rate,'%') AS signal_rate_rate,
+CONCAT(t1.site_no_rate,'%') AS site_no_rate,
+CONCAT(t1.site_property_unit_rate,'%') AS site_property_unit_rate,
+CONCAT(t1.site_type_rate,'%') AS site_type_rate,
+CONCAT(t1.special_field10_rate,'%') AS special_field10_rate,
+CONCAT(t1.special_field11_rate,'%') AS special_field11_rate,
+CONCAT(t1.special_field12_rate,'%') AS special_field12_rate,
+CONCAT(t1.special_field13_rate,'%') AS special_field13_rate,
+CONCAT(t1.special_field14_rate,'%') AS special_field14_rate,
+CONCAT(t1.special_field15_rate,'%') AS special_field15_rate,
+CONCAT(t1.special_field16_rate,'%') AS special_field16_rate,
+CONCAT(t1.special_field17_rate,'%') AS special_field17_rate,
+CONCAT(t1.special_field18_rate,'%') AS special_field18_rate,
+CONCAT(t1.special_field19_rate,'%') AS special_field19_rate,
+CONCAT(t1.special_field2_rate,'%') AS special_field2_rate,
+CONCAT(t1.special_field20_rate,'%') AS special_field20_rate,
+CONCAT(t1.special_field21_rate,'%') AS special_field21_rate,
+CONCAT(t1.special_field22_rate,'%') AS special_field22_rate,
+CONCAT(t1.special_field23_rate,'%') AS special_field23_rate,
+CONCAT(t1.special_field24_rate,'%') AS special_field24_rate,
+CONCAT(t1.special_field25_rate,'%') AS special_field25_rate,
+CONCAT(t1.special_field26_rate,'%') AS special_field26_rate,
+CONCAT(t1.special_field27_rate,'%') AS special_field27_rate,
+CONCAT(t1.special_field28_rate,'%') AS special_field28_rate,
+CONCAT(t1.special_field29_rate,'%') AS special_field29_rate,
+CONCAT(t1.special_field3_rate,'%') AS special_field3_rate,
+CONCAT(t1.special_field30_rate,'%') AS special_field30_rate,
+CONCAT(t1.special_field31_rate,'%') AS special_field31_rate,
+CONCAT(t1.special_field4_rate,'%') AS special_field4_rate,
+CONCAT(t1.special_field5_rate,'%') AS special_field5_rate,
+CONCAT(t1.special_field6_rate,'%') AS special_field6_rate,
+CONCAT(t1.special_field7_rate,'%') AS special_field7_rate,
+CONCAT(t1.special_field8_rate,'%') AS special_field8_rate,
+CONCAT(t1.special_field9_rate,'%') AS special_field9_rate,
+CONCAT(t1.stp_cat_rate,'%') AS stp_cat_rate,
+CONCAT(t1.sub_alarm_type_rate,'%') AS sub_alarm_type_rate,
+CONCAT(t1.sys_vendor_id_rate,'%') AS sys_vendor_id_rate,
+CONCAT(t1.time_stamp_c_rate,'%') AS time_stamp_c_rate,
+CONCAT(t1.time_stamp_rate,'%') AS time_stamp_rate,
+CONCAT(t1.tmsc_cat_rate,'%') AS tmsc_cat_rate,
+CONCAT(t1.type_keycode_rate,'%') AS type_keycode_rate,
+CONCAT(t1.vendor_name_rate,'%') AS vendor_name_rate
+FROM fmdb.tsm_check_alarm_complete t1,nmosdb.alarm_dict_mapper m1,nmosdb.tia_alarm_dict tia2
+WHERE m1.dict_name = 'province_id' 
+AND (m1.identifier in (${province}) or '-1' in (${province})) 
+AND t1.province_id = m1.identifier 
+AND (tia2.id = ${profession} or '-1' = ${profession})
+AND tia2.TYPE = 1001
+AND tia2.id = t1.professional_type 
+AND (DATE(t1.check_time) BETWEEN LEFT('${time1}',10) AND LEFT('${time2}',10))
+ORDER BY province ASC,professional ASC,DATE(t1.check_time) ASC
+	) a
+   </select>
+
+   <!-- 资源覆盖率核查报表  分页 -->
+  <select id="Select_AlmRpt_CompressionRatio_Unicom_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+	select * from
+	  (	SELECT m1.VALUE AS province_name,
+tia2.txt AS professional,
+DATE_FORMAT(t1.check_time, '%Y-%m-%d') AS date_time,
+t1.alarm_total AS alarm_total,
+CONCAT(t1.region_id_rate,'%') AS region_id_rate,
+CONCAT(t1.city_id_rate,'%') AS city_id_rate,
+CONCAT(t1.vendor_id_rate,'%') AS vendor_id_rate,
+CONCAT(t1.active_status_rate,'%') AS active_status_rate,
+CONCAT(t1.alarm_resource_status_rate,'%') AS alarm_resource_status_rate,
+CONCAT(t1.sheet_send_status_rate,'%') AS sheet_send_status_rate,
+CONCAT(t1.sheet_status_rate,'%') AS sheet_status_rate,
+CONCAT(t1.org_severity_rate,'%') AS org_severity_rate,
+CONCAT(t1.standard_flag_rate,'%') AS standard_flag_rate,
+CONCAT(t1.ack_flag_rate,'%') AS ack_flag_rate,
+CONCAT(t1.object_class_rate,'%') AS object_class_rate,
+CONCAT(t1.eqp_object_class_rate,'%') AS eqp_object_class_rate,
+CONCAT(t1.event_time_rate,'%') AS event_time_rate,
+CONCAT(t1.cancel_time_rate,'%') AS cancel_time_rate,
+CONCAT(t1.omc_alarm_id_rate,'%') AS omc_alarm_id_rate,
+CONCAT(t1.alarm_title_text_rate,'%') AS alarm_title_text_rate,
+CONCAT(t1.vendor_severity_rate,'%') AS vendor_severity_rate,
+CONCAT(t1.vendor_type_rate,'%') AS vendor_type_rate,
+CONCAT(t1.probable_cause_txt_rate,'%') AS probable_cause_txt_rate,
+CONCAT(t1.probable_cause_rate,'%') AS probable_cause_rate,
+CONCAT(t1.ne_label_rate,'%') AS ne_label_rate,
+CONCAT(t1.eqp_label_rate,'%') AS eqp_label_rate,
+CONCAT(t1.special_field0_rate,'%') AS special_field0_rate,
+CONCAT(t1.special_field1_rate,'%') AS special_field1_rate,
+CONCAT(t1.china_tower_site_no_rate,'%') AS china_tower_site_no_rate,
+CONCAT(t1.proj_name_rate,'%') AS proj_name_rate,
+CONCAT(t1.proj_oa_file_id_rate,'%') AS proj_oa_file_id_rate,
+CONCAT(t1.sheet_no_rate,'%') AS sheet_no_rate,
+CONCAT(t1.sheet_send_person_rate,'%') AS sheet_send_person_rate,
+CONCAT(t1.standard_alarm_name_rate,'%') AS standard_alarm_name_rate,
+CONCAT(t1.standard_alarm_id_rate,'%') AS standard_alarm_id_rate,
+CONCAT(t1.effect_ne_rate,'%') AS effect_ne_rate,
+CONCAT(t1.effect_service_rate,'%') AS effect_service_rate,
+CONCAT(t1.ems_id_rate,'%') AS ems_id_rate,
+CONCAT(t1.ack_time_rate,'%') AS ack_time_rate,
+CONCAT(t1.ack_user_rate,'%') AS ack_user_rate,
+CONCAT(t1.admin_grid_id_rate,'%') AS admin_grid_id_rate,
+CONCAT(t1.alarm_abnormal_type_rate,'%') AS alarm_abnormal_type_rate,
+CONCAT(t1.alarm_act_count_rate,'%') AS alarm_act_count_rate,
+CONCAT(t1.alarm_check_rate,'%') AS alarm_check_rate,
+CONCAT(t1.alarm_content_rate,'%') AS alarm_content_rate,
+CONCAT(t1.alarm_eqp_status_rate,'%') AS alarm_eqp_status_rate,
+CONCAT(t1.Alarm_Explanation_addition_rate,'%') AS Alarm_Explanation_addition_rate,
+CONCAT(t1.ALARM_EXPLANATION_rate,'%') AS ALARM_EXPLANATION_rate,
+CONCAT(t1.alarm_important_level_rate,'%') AS alarm_important_level_rate,
+CONCAT(t1.alarm_ne_status_rate,'%') AS alarm_ne_status_rate,
+CONCAT(t1.alarm_origin_rate,'%') AS alarm_origin_rate,
+CONCAT(t1.alarm_reason_rate,'%') AS alarm_reason_rate,
+CONCAT(t1.alarm_source_rate,'%') AS alarm_source_rate,
+CONCAT(t1.alarm_title_rate,'%') AS alarm_title_rate,
+CONCAT(t1.alarm_unit_rate,'%') AS alarm_unit_rate,
+CONCAT(t1.alarm_value_rate,'%') AS alarm_value_rate,
+CONCAT(t1.alert_status_rate,'%') AS alert_status_rate,
+CONCAT(t1.attachment_rate,'%') AS attachment_rate,
+CONCAT(t1.board_type_rate,'%') AS board_type_rate,
+CONCAT(t1.business_layer_rate,'%') AS business_layer_rate,
+CONCAT(t1.business_region_ids_rate,'%') AS business_region_ids_rate,
+CONCAT(t1.business_regions_rate,'%') AS business_regions_rate,
+CONCAT(t1.business_system_rate,'%') AS business_system_rate,
+CONCAT(t1.cancel_user_rate,'%') AS cancel_user_rate,
+CONCAT(t1.channel_num_rate,'%') AS channel_num_rate,
+CONCAT(t1.channel_type_rate,'%') AS channel_type_rate,
+CONCAT(t1.circuit_fault_location_rate,'%') AS circuit_fault_location_rate,
+CONCAT(t1.circuit_id_rate,'%') AS circuit_id_rate,
+CONCAT(t1.circuit_no_rate,'%') AS circuit_no_rate,
+CONCAT(t1.corr_str_rate,'%') AS corr_str_rate,
+CONCAT(t1.correlate_alarm_flag_rate,'%') AS correlate_alarm_flag_rate,
+CONCAT(t1.dal_action_rate,'%') AS dal_action_rate,
+CONCAT(t1.department_process_flag_rate,'%') AS department_process_flag_rate,
+CONCAT(t1.eqp_alias_rate,'%') AS eqp_alias_rate,
+CONCAT(t1.eqp_idn_rate,'%') AS eqp_idn_rate,
+CONCAT(t1.eqp_int_id_rate,'%') AS eqp_int_id_rate,
+CONCAT(t1.eqp_object_class_text_rate,'%') AS eqp_object_class_text_rate,
+CONCAT(t1.eqp_version_rate,'%') AS eqp_version_rate,
+CONCAT(t1.event_cat_rate,'%') AS event_cat_rate,
+CONCAT(t1.event_id_rate,'%') AS event_id_rate,
+CONCAT(t1.extra_id1_rate,'%') AS extra_id1_rate,
+CONCAT(t1.extra_id2_rate,'%') AS extra_id2_rate,
+CONCAT(t1.extra_id3_rate,'%') AS extra_id3_rate,
+CONCAT(t1.extra_string1_rate,'%') AS extra_string1_rate,
+CONCAT(t1.extra_string2_rate,'%') AS extra_string2_rate,
+CONCAT(t1.extra_string3_rate,'%') AS extra_string3_rate,
+CONCAT(t1.fail_reason_rate,'%') AS fail_reason_rate,
+CONCAT(t1.gcss_client_grade_mgt_rate,'%') AS gcss_client_grade_mgt_rate,
+CONCAT(t1.gcss_client_grade_rate,'%') AS gcss_client_grade_rate,
+CONCAT(t1.gcss_client_level_rate,'%') AS gcss_client_level_rate,
+CONCAT(t1.gcss_client_name_rate,'%') AS gcss_client_name_rate,
+CONCAT(t1.gcss_client_num_rate,'%') AS gcss_client_num_rate,
+CONCAT(t1.gcss_client_rate,'%') AS gcss_client_rate,
+CONCAT(t1.gcss_service_level_rate,'%') AS gcss_service_level_rate,
+CONCAT(t1.gcss_service_num_rate,'%') AS gcss_service_num_rate,
+CONCAT(t1.gcss_service_rate,'%') AS gcss_service_rate,
+CONCAT(t1.gcss_service_type_rate,'%') AS gcss_service_type_rate,
+CONCAT(t1.grid_name_rate,'%') AS grid_name_rate,
+CONCAT(t1.group_id_rate,'%') AS group_id_rate,
+CONCAT(t1.group_severity_rate,'%') AS group_severity_rate,
+CONCAT(t1.idn_rate,'%') AS idn_rate,
+CONCAT(t1.int_id_rate,'%') AS int_id_rate,
+CONCAT(t1.interrupt_circuit_state_rate,'%') AS interrupt_circuit_state_rate,
+CONCAT(t1.is_send_soundbrand_rate,'%') AS is_send_soundbrand_rate,
+CONCAT(t1.last_event_time_rate,'%') AS last_event_time_rate,
+CONCAT(t1.layer_rate_rate,'%') AS layer_rate_rate,
+CONCAT(t1.link_office_rate,'%') AS link_office_rate,
+CONCAT(t1.locate_info_rate,'%') AS locate_info_rate,
+CONCAT(t1.locate_name_rate,'%') AS locate_name_rate,
+CONCAT(t1.logic_alarm_type_rate,'%') AS logic_alarm_type_rate,
+CONCAT(t1.logic_sub_alarm_type_rate,'%') AS logic_sub_alarm_type_rate,
+CONCAT(t1.machine_room_info_rate,'%') AS machine_room_info_rate,
+CONCAT(t1.maintain_group_rate,'%') AS maintain_group_rate,
+CONCAT(t1.ne_admin_status_rate,'%') AS ne_admin_status_rate,
+CONCAT(t1.ne_alias_rate,'%') AS ne_alias_rate,
+CONCAT(t1.ne_ip_rate,'%') AS ne_ip_rate,
+CONCAT(t1.ne_location_rate,'%') AS ne_location_rate,
+CONCAT(t1.ne_model_rate,'%') AS ne_model_rate,
+CONCAT(t1.ne_status_rate,'%') AS ne_status_rate,
+CONCAT(t1.ne_sub_type_rate,'%') AS ne_sub_type_rate,
+CONCAT(t1.network_type_rate,'%') AS network_type_rate,
+CONCAT(t1.network_type_top_rate,'%') AS network_type_top_rate,
+CONCAT(t1.nms_alarm_id_rate,'%') AS nms_alarm_id_rate,
+CONCAT(t1.nms_name_rate,'%') AS nms_name_rate,
+CONCAT(t1.object_class_text_rate,'%') AS object_class_text_rate,
+CONCAT(t1.object_level_rate,'%') AS object_level_rate,
+CONCAT(t1.omc_id_rate,'%') AS omc_id_rate,
+CONCAT(t1.org_type_rate,'%') AS org_type_rate,
+CONCAT(t1.Parent_Int_Id_rate,'%') AS Parent_Int_Id_rate,
+CONCAT(t1.Parent_Object_Class_rate,'%') AS Parent_Object_Class_rate,
+CONCAT(t1.port_num_rate,'%') AS port_num_rate,
+CONCAT(t1.preprocess_flag_rate,'%') AS preprocess_flag_rate,
+CONCAT(t1.province_process_flag_rate,'%') AS province_process_flag_rate,
+CONCAT(t1.redefine_severity_rate,'%') AS redefine_severity_rate,
+CONCAT(t1.redefine_type_rate,'%') AS redefine_type_rate,
+CONCAT(t1.region_name_rate,'%') AS region_name_rate,
+CONCAT(t1.region_severity_rate,'%') AS region_severity_rate,
+CONCAT(t1.related_tkgp_rate,'%') AS related_tkgp_rate,
+CONCAT(t1.remark_exist_rate,'%') AS remark_exist_rate,
+CONCAT(t1.remote_eqp_alias_rate,'%') AS remote_eqp_alias_rate,
+CONCAT(t1.remote_eqp_city_rate,'%') AS remote_eqp_city_rate,
+CONCAT(t1.remote_eqp_label_rate,'%') AS remote_eqp_label_rate,
+CONCAT(t1.remote_eqp_level_rate,'%') AS remote_eqp_level_rate,
+CONCAT(t1.remote_eqp_region_rate,'%') AS remote_eqp_region_rate,
+CONCAT(t1.remote_int_id_rate,'%') AS remote_int_id_rate,
+CONCAT(t1.remote_object_class_rate,'%') AS remote_object_class_rate,
+CONCAT(t1.remote_proj_sub_status_rate,'%') AS remote_proj_sub_status_rate,
+CONCAT(t1.remote_resource_status_rate,'%') AS remote_resource_status_rate,
+CONCAT(t1.resource_status_rate,'%') AS resource_status_rate,
+CONCAT(t1.rlocate_ne_int_id_rate,'%') AS rlocate_ne_int_id_rate,
+CONCAT(t1.rlocate_ne_name_rate,'%') AS rlocate_ne_name_rate,
+CONCAT(t1.rlocate_ne_type_rate,'%') AS rlocate_ne_type_rate,
+CONCAT(t1.send_jt_flag_rate,'%') AS send_jt_flag_rate,
+CONCAT(t1.severity_keycode_rate,'%') AS severity_keycode_rate,
+CONCAT(t1.signal_rate_rate,'%') AS signal_rate_rate,
+CONCAT(t1.site_no_rate,'%') AS site_no_rate,
+CONCAT(t1.site_property_unit_rate,'%') AS site_property_unit_rate,
+CONCAT(t1.site_type_rate,'%') AS site_type_rate,
+CONCAT(t1.special_field10_rate,'%') AS special_field10_rate,
+CONCAT(t1.special_field11_rate,'%') AS special_field11_rate,
+CONCAT(t1.special_field12_rate,'%') AS special_field12_rate,
+CONCAT(t1.special_field13_rate,'%') AS special_field13_rate,
+CONCAT(t1.special_field14_rate,'%') AS special_field14_rate,
+CONCAT(t1.special_field15_rate,'%') AS special_field15_rate,
+CONCAT(t1.special_field16_rate,'%') AS special_field16_rate,
+CONCAT(t1.special_field17_rate,'%') AS special_field17_rate,
+CONCAT(t1.special_field18_rate,'%') AS special_field18_rate,
+CONCAT(t1.special_field19_rate,'%') AS special_field19_rate,
+CONCAT(t1.special_field2_rate,'%') AS special_field2_rate,
+CONCAT(t1.special_field20_rate,'%') AS special_field20_rate,
+CONCAT(t1.special_field21_rate,'%') AS special_field21_rate,
+CONCAT(t1.special_field22_rate,'%') AS special_field22_rate,
+CONCAT(t1.special_field23_rate,'%') AS special_field23_rate,
+CONCAT(t1.special_field24_rate,'%') AS special_field24_rate,
+CONCAT(t1.special_field25_rate,'%') AS special_field25_rate,
+CONCAT(t1.special_field26_rate,'%') AS special_field26_rate,
+CONCAT(t1.special_field27_rate,'%') AS special_field27_rate,
+CONCAT(t1.special_field28_rate,'%') AS special_field28_rate,
+CONCAT(t1.special_field29_rate,'%') AS special_field29_rate,
+CONCAT(t1.special_field3_rate,'%') AS special_field3_rate,
+CONCAT(t1.special_field30_rate,'%') AS special_field30_rate,
+CONCAT(t1.special_field31_rate,'%') AS special_field31_rate,
+CONCAT(t1.special_field4_rate,'%') AS special_field4_rate,
+CONCAT(t1.special_field5_rate,'%') AS special_field5_rate,
+CONCAT(t1.special_field6_rate,'%') AS special_field6_rate,
+CONCAT(t1.special_field7_rate,'%') AS special_field7_rate,
+CONCAT(t1.special_field8_rate,'%') AS special_field8_rate,
+CONCAT(t1.special_field9_rate,'%') AS special_field9_rate,
+CONCAT(t1.stp_cat_rate,'%') AS stp_cat_rate,
+CONCAT(t1.sub_alarm_type_rate,'%') AS sub_alarm_type_rate,
+CONCAT(t1.sys_vendor_id_rate,'%') AS sys_vendor_id_rate,
+CONCAT(t1.time_stamp_c_rate,'%') AS time_stamp_c_rate,
+CONCAT(t1.time_stamp_rate,'%') AS time_stamp_rate,
+CONCAT(t1.tmsc_cat_rate,'%') AS tmsc_cat_rate,
+CONCAT(t1.type_keycode_rate,'%') AS type_keycode_rate,
+CONCAT(t1.vendor_name_rate,'%') AS vendor_name_rate
+FROM fmdb.tsm_check_alarm_complete t1,nmosdb.alarm_dict_mapper m1,nmosdb.tia_alarm_dict tia2
+WHERE m1.dict_name = 'province_id' 
+AND (m1.identifier in (${province}) or '-1' in (${province})) 
+AND t1.province_id = m1.identifier 
+AND (tia2.id = ${profession} or '-1' = ${profession})
+AND tia2.TYPE = 1001
+AND tia2.id = t1.professional_type 
+AND (DATE(t1.check_time) BETWEEN LEFT('${time1}',10) AND LEFT('${time2}',10))
+ORDER BY province_name ASC,professional ASC,DATE(t1.check_time) ASC) a
+	 limit ${BegeinIndex},${PageSize}	    
+   </select>
+
+   <select id="Select_AlmRpt_CompressionRatio_Unicom_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '月' as txt, 3 id
+		  from dual
+   </select>
+
+   <!--省份sql-->
+   <select id="Select_AlmRpt_CompressionRatio_Unicom_CondProvince"  parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT value as txt, identifier as id FROM nmosdb.alarm_dict_mapper WHERE dict_name = 'province_id' ORDER BY order_field ASC
+		<!-- select distinct province_id id,province_name txt from region_city order by province_name-->
+   </select>
+	<!--地市sql-->
+   <select id="Select_AlmRpt_CompressionRatio_Unicom_CondRegion"  parameterType="java.util.Map" resultType="java.util.Map">
+<!--select distinct region_id id,region_name txt from region_city
+where (province_id in (${province_id}) or '-1' in  (${province_id}))
+order by pcode asc -->
+     	SELECT m.id id,m.txt txt
+			FROM (SELECT DISTINCT region_id id,region_name txt,pcode pcode_2 FROM region_city WHERE (province_id IN (${province_id}) OR '-1' IN  (${province_id}))) m
+			ORDER BY m.pcode_2 ASC
+   </select>
+   <!--专业-->
+    <select id="Select_AlmRpt_CompressionRatio_Unicom_CondProfession"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select txt,id FROM tia_alarm_dict tia2 WHERE   tia2.TYPE = 1001 ORDER BY tia2.type_name_en ASC
+   	</select>
+   <!--字段
+   <select id="Select_AlmRpt_CompressionRatio_Unicom_CondProfiled"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select distinct ti1.field_desc as txt,ti1.type as id 
+		 from nrmdb.tia_alarm_paas_mapping ti1
+   </select>-->
+
+
+<!-- 故障派单表查询-->
+  <select id="Select_AlmRpt_HighRate_Unicom_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+  	select count(*) num
+	from(
+		SELECT DISTINCT c1.province_name AS province_name,m1.VALUE AS region_name,tia2.txt AS professional_name,
+												SUBSTRING_INDEX(s1.send_rule,'_',-1) AS rule,
+                        DATE_FORMAT(s1.forward_time, '%Y-%m-%d') AS date_time,
+                        COUNT(DISTINCT s1.fp0) AS alarm_total,COUNT(DISTINCT s1.sheet_no) AS sheet_total
+        FROM alarm_dict_mapper m1,tfa_alarmsheetinfo s1,tia_alarm_dict tia2,region_city c1
+        WHERE m1.dict_name = 'region_id' 
+				AND (m1.identifier in (${region}) or '-1' in (${region}))
+				AND s1.region_id = m1.identifier AND c1.region_id = s1.region_id
+                AND (tia2.id = ${profession} or '-1' = ${profession})
+				AND tia2.TYPE = 1001 
+				AND tia2.id = s1.professional_type 
+                AND s1.sheet_send_status IN (5,6,7,10,11,12)
+                AND (locate('${rules}', s1.send_rule) > 0 or '-1' =  '${rules}')
+                AND (DATE(s1.forward_time) BETWEEN LEFT('${time1}',10) AND LEFT('${time2}',10))
+				AND (c1.province_id in (${province}) or '-1' in (${province})) 
+        GROUP BY date_time,c1.province_name,m1.VALUE,tia2.txt,s1.send_rule
+        ORDER BY province_name ASC,region_name ASC,professional_name ASC,rule ASC,date_time ASC
+	) b
+   </select>
+
+   <!-- 故障派单表分页-->
+     <select id="Select_AlmRpt_HighRate_Unicom_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+	select * from
+	  (	SELECT DISTINCT c1.province_name AS province_name,m1.VALUE AS region_name,tia2.txt AS professional_name,
+	  										SUBSTRING_INDEX(s1.send_rule,'_',-1) AS rule,
+                        DATE_FORMAT(s1.forward_time, '%Y-%m-%d') AS date_time,
+                        COUNT(DISTINCT s1.fp0) AS alarm_total,COUNT(DISTINCT s1.sheet_no) AS sheet_total
+        FROM alarm_dict_mapper m1,tfa_alarmsheetinfo s1,tia_alarm_dict tia2,region_city c1
+        WHERE m1.dict_name = 'region_id' 
+				AND (m1.identifier in (${region}) or '-1' in (${region}))
+				AND s1.region_id = m1.identifier AND c1.region_id = s1.region_id
+                AND (tia2.id = ${profession} or '-1' = ${profession})
+				AND tia2.TYPE = 1001 
+				AND tia2.id = s1.professional_type 
+                AND s1.sheet_send_status IN (5,6,7,10,11,12)
+                AND (locate('${rules}', s1.send_rule) > 0 or '-1' =  '${rules}')
+                AND (DATE(s1.forward_time) BETWEEN LEFT('${time1}',10) AND LEFT('${time2}',10))
+				AND (c1.province_id in (${province}) or '-1' in (${province}))
+        GROUP BY date_time,c1.province_name,m1.VALUE,tia2.txt,s1.send_rule
+        ORDER BY province_name ASC,region_name ASC,professional_name ASC,rule ASC,date_time ASC) a
+	 limit ${BegeinIndex},${PageSize}
+
+   </select>
+
+  <select id="Select_AlmRpt_HighRate_Unicom_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+ 		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id
+		  from dual
+   </select>
+  <select id="Select_AlmRpt_HighRate_Unicom_CondOmcid"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct nms_name as txt,omc_id as id
+		from tfa_alarm_cpm_hq_sum
+   </select>
+  <select id="Select_AlmRpt_HighRate_Unicom_CondEqpType"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '虚拟机' as txt, 508 as id
+		  from dual
+		union all
+		select '宿主机' as txt, 1521 as id
+		  from dual
+		union all
+		select '物理机' as txt, 502 as id
+		  from dual
+		union all
+		select '交换机' as txt, 905 as id
+		  from dual
+		union all
+		select '防火墙' as txt, 901 as id
+		  from dual
+		union all
+		select '虚拟存储' as txt, 1514 as id
+		  from dual
+		union all
+		select '应用' as txt, 506 as id
+		  from dual
+		union all
+		select '服务' as txt, 1520 as id from dual
+   </select>
+   <select id="Select_AlmRpt_HighRate_Unicom_DetailCount"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num
+				from
+				(
+					select
+					   tfa_alarm_cpm_hq_detail.first_result a_cloumn_00,
+					   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+					   meta_objects.ZH_NAME  a_cloumn_02,
+					   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+					   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+					   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+					   tfa_alarm_cpm_hq_detail.event_time a_cloumn_06,
+					   tfa_alarm_cpm_hq_detail.cancel_time   a_cloumn_07
+				  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+				 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				 ${DetailWhereCondition}
+				)
+   </select>
+   <select id="Select_AlmRpt_HighRate_Unicom_DetailByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+			(select  a.*,rowNum m_rowNum  from
+			(select
+			   to_char(tfa_alarm_cpm_hq_detail.first_result , 'yyyy-mm-dd hh24:mi:ss') a_cloumn_00,
+			   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+			   meta_objects.ZH_NAME  a_cloumn_02,
+			   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+			   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+			   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+			   to_char(tfa_alarm_cpm_hq_detail.event_time,'yyyy-mm-dd hh24:mi:ss') a_cloumn_06,
+			   to_char(tfa_alarm_cpm_hq_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   a_cloumn_07
+		  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+		 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				${DetailWhereCondition}
+			)a
+			)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+   <!--    告警报表sql结束    
+	<insert id="insertProduct" parameterType="java.util.Map" >
+         insert into test (name) values (#{name})
+    </insert>
+
+   <update id="updateProduct" parameterType="java.util.Map">
+		update test set name = (#{name})
+	</update>
+
+	<delete id="deleteProduct" parameterType="java.util.Map">
+		delete from test where name = (#{name})
+	</delete>
+    -->
+</mapper>

@@ -1,0 +1,106 @@
+import request from '@Common/api';
+// 查询
+export const getTemporaryRoute = (data) => {
+    return request(`networkFault/faultUnite`, {
+        type: 'get',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        data,
+    });
+};
+
+// 导出
+export const exportTemporaryRoute = (params) => {
+    return request(`networkFault/exportUnite`, {
+        type: 'get',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        responseType: 'blob',
+        data: params,
+    });
+};
+
+// 新增
+export const addTemporaryRoute = (data) => {
+    return request(`networkFault/addUnite`, {
+        type: 'post',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        data,
+    });
+};
+// 编辑
+export const editTemporaryRoute = (data) => {
+    return request(`networkFault/updateUnite`, {
+        type: 'post',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        data,
+    });
+};
+// 删除
+export const deleteTemporaryRoute = (data) => {
+    return request(`networkFault/delFault?id=${data.id}&deletedBy=${data.deletedBy}`, {
+        type: 'delete',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+    });
+};
+//获取省份信息
+export const getProvinceList = (data) => {
+    return request('group/findProvinces', {
+        type: 'post',
+        baseUrlType: 'groupUrl',
+        showErrorMessage: '获取省份数据失败',
+        showSuccessMessage: false,
+        data,
+    });
+};
+
+//获取枚举值
+export const getSelectList = (params) => {
+    return request(`networkFault/dict`, {
+        type: 'get',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        data: params,
+    });
+};
+
+// 上传文件信息
+export const addFileFunc = (data) => {
+    return request(`networkFault/addFile`, {
+        type: 'post',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        data,
+    });
+};
+
+// 删除文件信息
+export const deleteFileFunc = (fileId) => {
+    return request(`networkFault/delFile?fileId=${fileId}`, {
+        type: 'delete',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+    });
+};
+
+//下载文件
+export const downLoadFileFunc = (fileId) => {
+    return request(`networkFault/downFile?fileId=${fileId}`, {
+        type: 'get',
+        baseUrlType: 'dutyManagerUrl',
+        showErrorMessage: false,
+        showSuccessMessage: false,
+        responseType: 'blob',
+    });
+};

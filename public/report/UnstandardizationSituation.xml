@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--**一**报表标题-->
+  <!--title：此报表的名称-->
+  <!--IsAutoLoad：是否自动加载sql进行查询-->
+  <ReportTitle title="标准化有效性分析" IsAutoLoad="false"/>
+  
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--informix的查询示例sql-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_UnstandSituation_ByPage">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_nostandard_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+    tfa_alarm_nostandard_detail.eqp_object_class eqp_object_class,
+    tfa_alarm_nostandard_detail.prj_flag prj_flag,
+    tfa_alarm_nostandard_detail.board_type board_type,
+    tfa_alarm_nostandard_detail.layer_rate layer_rate,
+    tfa_alarm_nostandard_detail.network_type network_type,
+       tia_alarm_dict3.txt              g2,
+       tfa_alarm_nostandard_detail.vendor_name          g3,
+       tia_alarm_dict1.txt                               g4,
+       tfa_alarm_nostandard_detail.alarm_title          g5,
+       tfa_alarm_nostandard_detail.unstandard_alarm_num g6,
+       tfa_alarm_nostandard_detail.probable_cause       g7,
+       tfa_alarm_standard_dic.txt           g8,
+       tia_alarm_dict2.txt                              g9
+  from tfa_alarm_nostandard_detail tfa_alarm_nostandard_detail 
+  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+  on tfa_alarm_nostandard_detail.eqp_object_class =  tia_alarm_dict1.id
+  left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict2
+  on tfa_alarm_nostandard_detail.board_type =  tia_alarm_dict2.id
+  left join  (select id,txt from tia_alarm_dict where type = 110701)   tfa_alarm_standard_dic
+  on tfa_alarm_nostandard_detail.layer_rate =  tfa_alarm_standard_dic.id
+  left join  (select id,txt from tia_alarm_dict where type = 1037)     tia_alarm_dict3
+  on tfa_alarm_nostandard_detail.network_type =  tia_alarm_dict3.id
+  where tfa_alarm_nostandard_detail.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_nostandard_detail.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+   and prj_flag in (#prj_flag#)
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </sql>
+  
+  <!--Oracled的查询示例sql-->
+  <!--<sql>
+  select  * from
+  (select  a.*,rowNum m_rowNum  from
+  (
+  select
+  tfm_alarmlog_disp.first_result vircolumn_00,
+  tfp_filter_info.filter_name vircolumn_01,
+  tia_alg_statcode.state_name vircolumn_02,
+  tfm_alarmlog_disp.alarm_err_cnt vircolumn_03
+  from  tfm_alarmlog_disp,
+  tia_alg_statcode,
+  tfp_filter_info
+  where  tfm_alarmlog_disp.first_result &gt;=to_date(#Time1#,'yyyy-MM-dd HH24:mi:ss')
+  and tfm_alarmlog_disp.first_result &lt;=to_date(#Time2#,'yyyy-MM-dd HH24:mi:ss')
+  and tfm_alarmlog_disp.sum_level=#sum_level#
+  and tfm_alarmlog_disp.alarm_err_code=tia_alg_statcode.state_code(+)
+  and tfm_alarmlog_disp.filter_id=tfp_filter_info.filter_id(+)
+  )a
+  )
+  Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </sql>-->
+
+  <!--**三**汇总sql-->
+  
+  <!--informix的汇总示例sql-->
+  <countsql sqlId = "Select_AlmRpt_UnstandSituation_Count">
+    select count(*)
+    from (
+  select to_char(tfa_alarm_nostandard_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+    tfa_alarm_nostandard_detail.eqp_object_class eqp_object_class,
+    tfa_alarm_nostandard_detail.prj_flag prj_flag,
+    tfa_alarm_nostandard_detail.board_type board_type,
+    tfa_alarm_nostandard_detail.layer_rate layer_rate,
+    tfa_alarm_nostandard_detail.network_type network_type,
+       tia_alarm_dict3.txt              g2,
+       tfa_alarm_nostandard_detail.vendor_name          g3,
+       tia_alarm_dict1.txt                              g4,
+       tfa_alarm_nostandard_detail.alarm_title          g5,
+       tfa_alarm_nostandard_detail.unstandard_alarm_num g6,
+       tfa_alarm_nostandard_detail.probable_cause       g7,
+       tfa_alarm_standard_dic.txt           g8,
+       tia_alarm_dict2.txt                              g9
+  from tfa_alarm_nostandard_detail tfa_alarm_nostandard_detail 
+  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+  on tfa_alarm_nostandard_detail.eqp_object_class =  tia_alarm_dict1.id
+  left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict2
+  on tfa_alarm_nostandard_detail.board_type =  tia_alarm_dict2.id
+  left join  (select id,txt from tia_alarm_dict where type = 110701)   tfa_alarm_standard_dic
+  on tfa_alarm_nostandard_detail.layer_rate =  tfa_alarm_standard_dic.id
+  left join  (select id,txt from tia_alarm_dict where type = 1037)     tia_alarm_dict3
+  on tfa_alarm_nostandard_detail.network_type =  tia_alarm_dict3.id
+  where tfa_alarm_nostandard_detail.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_nostandard_detail.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+   and prj_flag in (#prj_flag#)
+   )
+  </countsql>
+
+  <!--Oracled的汇总示例sql-->
+  <!--**四**查询条件-->
+  <!--Name：控件说明-->
+  <!--Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同-->
+  <!--DbName: 如果是通过数据源赋值的,此属性填写数据库实例名称-->
+  <!--ControlType： 标准控件名称 （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+  <!--BindType：绑定类型 （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+  <!--DefaultValue： 控件的默认值，目前时间控件提供：当月（当前时间所在月第一天）；当周（当前时间所在周第一天）；当日（当前时间所在天）；上月（当前时间所在月的上月第一天）-->
+  
+  <!--例子 Start-->
+  <Conditions>
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="当月,当日">
+    </Condition>
+    <Condition Name="时间粒度" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True" DefaultValue="1"
+              sqlId = "Select_AlmRpt_UnstandSituation_CondSumLevel">
+      日,1
+    </Condition> 
+    <Condition Name="工程状态" Flag="prj_flag" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+              sqlId = "Select_AlmRpt_UnstandSituation_CondPrjFlag">
+      select '工程' as text,0 as value from dual union select '非工程' as text,1 as value from dual 
+    </Condition>
+  </Conditions>
+  <!--例子 End-->
+  
+  
+  <!--**五**显示列-->
+  <!--FieldName  ：与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序(可以不写)，true进行排序）-->
+  <!--IsHasDetail：是否此列可以弹出详情（false不弹出详情(可以不写)，true弹出详情）-->
+  <!--DetailWhereCondition: 设置点击此列的条件,其中条件字段名对应FieldName,在详情的sql中以{0} 为取代此条件-->
+
+  <!--例子 Start-->
+  <Columns> 
+    <ColumnItem FieldName="g1" DisplayName="时间" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="g2" DisplayName="专业" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g3" DisplayName="设备厂家" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g4" DisplayName="设备类型" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g5" DisplayName="告警标题" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g6" DisplayName="未标准化告警量" IsSort="true"  IsHasDetail="true" DetailWhereCondition=" and 1=1"></ColumnItem>    
+    <ColumnItem FieldName="g7" DisplayName="厂家告警号" IsSort="false"></ColumnItem>  
+    <ColumnItem FieldName="g8" DisplayName="标准化层速率" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g9" DisplayName="设备单板" IsSort="false"></ColumnItem>
+  </Columns>
+  <!--例子 End-->
+
+  <!--****************查询详情所用sql（如果不需要查看详情，可以忽略）*******************-->
+
+  <!--**六**查询详情示例sql-->
+  <!--DetailDbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--oracle的查询示例sql-->
+  
+
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+  
+  <!--多级表头例子
+  detailSqlId = "Select_AlmRpt_UnstandSituation_DetailByPage"
+  -->
+ <detailSql DetailDbName="nmosdb">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select  
+tfa_alarm_nostandard_detail2.fp0 w1,
+tia_alarm_dict1.txt w2,
+tia_alarm_dict2.txt  w3,
+tfa_alarm_nostandard_detail2.eqp_label  w4,
+tia_alarm_dict3.txt  w5,
+tfa_alarm_nostandard_detail2.ne_label   w6,
+tfa_alarm_nostandard_detail2.alarm_title_text   w7,
+tfa_alarm_nostandard_detail2.probable_cause   w8,
+tfa_alarm_nostandard_detail2.org_severity   w9,
+tfa_alarm_nostandard_detail2.alarm_resource_status   w10,
+tia_alarm_dict5.txt   w11,
+tfa_alarm_nostandard_detail2.province_name   w12,
+tfa_alarm_nostandard_detail2.region_name   w13,
+tfa_alarm_nostandard_detail2.city_name   w14,
+tfa_alarm_nostandard_detail2.standard_alarm_id   w15,
+to_char(tfa_alarm_nostandard_detail2.event_time,'yyyy-mm-dd hh24:mi:ss')   w16,
+to_char(tfa_alarm_nostandard_detail2.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w17,
+tfa_alarm_nostandard_detail2.vendor_name   w18,
+tia_alarm_dict4.txt   w19
+from 
+tfa_alarm_nostandard_detail2 tfa_alarm_nostandard_detail2
+left join 
+(select id,txt from tia_alarm_dict where type =1037) tia_alarm_dict1
+on tfa_alarm_nostandard_detail2.network_type = tia_alarm_dict1.id
+left join 
+(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict2
+on tfa_alarm_nostandard_detail2.eqp_object_class = tia_alarm_dict2.id
+left join 
+(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict3
+on tfa_alarm_nostandard_detail2.object_class = tia_alarm_dict3.id
+left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict4
+  on tfa_alarm_nostandard_detail2.board_type =  tia_alarm_dict2.id
+left join  (select id,txt from tia_alarm_dict where type = 110701)   tia_alarm_dict5
+  on tfa_alarm_nostandard_detail2.layer_rate =  tia_alarm_dict5.id
+where 
+ tfa_alarm_nostandard_detail2.event_time &gt;= to_date('@g1@','yyyy-mm-dd hh24:mi:ss')
+and tfa_alarm_nostandard_detail2.event_time &lt;to_date('@g1@','yyyy-mm-dd hh24:mi:ss') +1
+and tfa_alarm_nostandard_detail2.alarm_title_text = '@g5@'
+and tfa_alarm_nostandard_detail2.eqp_object_class = @eqp_object_class@
+and tfa_alarm_nostandard_detail2.network_type = @network_type@
+and tfa_alarm_nostandard_detail2.vendor_name = '@g3@'
+and tfa_alarm_nostandard_detail2.probable_cause = '@g7@' 
+and tfa_alarm_nostandard_detail2.layer_rate = @layer_rate@ 
+and tfa_alarm_nostandard_detail2.board_type = @board_type@ 
+and tfa_alarm_nostandard_detail2.alarm_resource_status = @prj_flag@ 
+  {0}
+    )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </detailSql>
+
+
+  <!--**七**详情汇总sql-->
+
+  <!--oracle的汇总示例sql
+  detailCountSql = "Select_AlmRpt_UnstandSituation_DetailCount"-->
+  <detailCountSql>
+    select count(*)
+    from
+    (select  
+tfa_alarm_nostandard_detail2.fp0 w1,
+tia_alarm_dict1.txt w2,
+tia_alarm_dict2.txt  w3,
+tfa_alarm_nostandard_detail2.eqp_label  w4,
+tia_alarm_dict3.txt  w5,
+tfa_alarm_nostandard_detail2.ne_label   w6,
+tfa_alarm_nostandard_detail2.alarm_title_text   w7,
+tfa_alarm_nostandard_detail2.probable_cause   w8,
+tfa_alarm_nostandard_detail2.org_severity   w9,
+tfa_alarm_nostandard_detail2.alarm_resource_status   w10,
+tia_alarm_dict5.txt   w11,
+tfa_alarm_nostandard_detail2.province_name   w12,
+tfa_alarm_nostandard_detail2.region_name   w13,
+tfa_alarm_nostandard_detail2.city_name   w14,
+tfa_alarm_nostandard_detail2.standard_alarm_id   w15,
+to_char(tfa_alarm_nostandard_detail2.event_time,'yyyy-mm-dd hh24:mi:ss')   w16,
+to_char(tfa_alarm_nostandard_detail2.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w17,
+tfa_alarm_nostandard_detail2.vendor_name   w18,
+tia_alarm_dict4.txt   w19
+from 
+tfa_alarm_nostandard_detail2 tfa_alarm_nostandard_detail2
+left join 
+(select id,txt from tia_alarm_dict where type =1037) tia_alarm_dict1
+on tfa_alarm_nostandard_detail2.network_type = tia_alarm_dict1.id
+left join 
+(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict2
+on tfa_alarm_nostandard_detail2.eqp_object_class = tia_alarm_dict2.id
+left join 
+(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict3
+on tfa_alarm_nostandard_detail2.object_class = tia_alarm_dict3.id
+left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict4
+  on tfa_alarm_nostandard_detail2.board_type =  tia_alarm_dict4.id
+left join  (select id,txt from tia_alarm_dict where type = 110701)   tia_alarm_dict5
+  on tfa_alarm_nostandard_detail2.layer_rate =  tia_alarm_dict5.id
+where 
+ tfa_alarm_nostandard_detail2.event_time &gt;= to_date('@g1@','yyyy-mm-dd hh24:mi:ss')
+and tfa_alarm_nostandard_detail2.event_time &lt;to_date('@g1@','yyyy-mm-dd hh24:mi:ss') +1
+and tfa_alarm_nostandard_detail2.alarm_title_text = '@g5@'
+and tfa_alarm_nostandard_detail2.eqp_object_class = @eqp_object_class@
+and tfa_alarm_nostandard_detail2.network_type = @network_type@
+and tfa_alarm_nostandard_detail2.vendor_name = '@g3@'
+and tfa_alarm_nostandard_detail2.probable_cause = '@g7@' 
+and tfa_alarm_nostandard_detail2.layer_rate = @layer_rate@ 
+and tfa_alarm_nostandard_detail2.board_type = @board_type@ 
+and tfa_alarm_nostandard_detail2.alarm_resource_status = @prj_flag@   
+   {0}
+    )
+  </detailCountSql>
+
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+  
+  <!--多级表头例子-->
+  <DetailColumns>
+    <DetailColumnItem FieldName="w1" DisplayName="告警指纹FP0" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w2" DisplayName="专业" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w18" DisplayName="厂家名称" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w3" DisplayName="设备类型" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w4" DisplayName="设备名称" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w5" DisplayName="网元类型" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w6" DisplayName="网元名称" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w7" DisplayName="告警标题" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w8" DisplayName="业务级别" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w9" DisplayName="告警等级" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w10" DisplayName="工程状态" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w11" DisplayName="告警指纹FP0" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w12" DisplayName="省份" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w13" DisplayName="地市" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w14" DisplayName="区县" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w15" DisplayName="网管告警ID" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w16" DisplayName="告警开始时间" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w17" DisplayName="告警清除时间" IsSort="true"></DetailColumnItem>
+  </DetailColumns>
+    
+</root>

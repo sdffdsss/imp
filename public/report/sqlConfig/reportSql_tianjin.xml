@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+  
+  <select id="Select_ProNetIDCExDetails_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '时' as txt, 4 id 
+		  from dual
+		  union all
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+
+   <select id="Select_ProNetIDCExDetails_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num
+				from
+				(
+				 select 
+					org_time as w1,
+					link_name as w2,
+					link_speed as w3",
+					in_avg_speed as w4,
+					in_max_speed as w5,
+					in_avg_ratio as w6,
+					in_max_ratio as w7,
+					out_avg_speed as w8,
+					out_max_speed as w9,
+					out_avg_ratio as w10,
+					out_max_ratio as w11
+				from
+					iptaw_perf_link
+				where
+					   1=1
+					and org_time &gt; to_date(#{time1},'yyyy-mm-dd hh24:mi:ss') 
+					and org_time &lt; to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')   
+					and link_name='空港物流IDC'
+					and sum_level= #{sum_level} 
+					and port_flag= 3 
+				order by org_time
+				)
+   </select>
+   <select id="Select_ProNetIDCExDetails_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+			(select  a.*,rowNum m_rowNum  from
+				( 
+					select 
+						org_time as w1,
+						link_name as w2,
+						link_speed as w3",
+						in_avg_speed as w4,
+						in_max_speed as w5,
+						in_avg_ratio as w6,
+						in_max_ratio as w7,
+						out_avg_speed as w8,
+						out_max_speed as w9,
+						out_avg_ratio as w10,
+						out_max_ratio as w11
+					from
+						iptaw_perf_link
+					where
+						1=1
+						and org_time &gt; to_date(#{time1},'yyyy-mm-dd hh24:mi:ss') 
+						and org_time &lt; to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')   
+						and link_name='空港物流IDC'
+						and sum_level= #{sum_level} 
+						and port_flag= 3 
+					order by org_time
+				) a
+			)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+	
+</mapper>

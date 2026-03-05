@@ -1,0 +1,26 @@
+.alarm-window-log-expression {
+  min-width: 500px;
+  max-height: 68vh;
+  overflow: auto;
+}
+.alarm-window-log-expression .alarm-window-log-expression-toolbar {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 14px;
+  padding-right: 40px;
+}
+.alarm-window-log-expression .info-color {
+  color: #008fbf;
+}
+.alarm-window-log-expression .trace-color {
+  color: #888888;
+}
+.alarm-window-log-expression .warning-color {
+  color: #ff9d00;
+}
+.alarm-window-log-expression .debug-color {
+  color: #84009e;
+}
+.alarm-window-log-expression .error-color {
+  color: #b00000;
+}

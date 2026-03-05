@@ -1,0 +1,50 @@
+.international-resource-monitor-wrapper {
+    // width: 100%;
+    display: flex;
+    height: calc(100% - 27px);
+    margin: 0px 12px 15px 15px;
+
+    .cable-fault-description-wrapper {
+        max-width: calc(100% - 210px);
+        // padding: 18px 0 0 16px;
+        // width: 41%;
+        overflow: hidden;
+        background-color: @component-background;
+        border-radius: 8px;
+        transition: all 0.3s;
+    }
+
+    .cable-fault-description-wrapper-none {
+        margin: 0;
+        // padding: 0;
+        overflow: auto;
+        > div {
+            min-width: 500px;
+        }
+    }
+
+    .cable-fault-description-wrapper-drag {
+        transition: none;
+    }
+
+    .cable-segmentation-line {
+        width: 12px;
+        cursor: col-resize;
+        transition: all 0.5s;
+    }
+
+    .cable-alarms-wrapper {
+        // width: calc(59% - 12px);
+        flex: 1;
+        padding: 19px 23px 17px;
+        overflow: auto; //新增
+        background-color: @component-background;
+        border-radius: 8px;
+    }
+    .oss-ui-timeline-item-tail {
+        height: 100%;
+    }
+    .oss-ui-timeline-item-head-custom {
+        padding: 0 1px;
+    }
+}

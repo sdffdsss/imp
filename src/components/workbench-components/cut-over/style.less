@@ -1,0 +1,84 @@
+.cut-over-continer {
+    width: 100%;
+    height: 100%;
+
+    // .title {
+    //     width: 100%;
+    //     height: 40px;
+    //     font-weight: 650;
+    //     font-size: 16px;
+    //     font-style: normal;
+    //     line-height: 40px;
+    //     .title-jump {
+    //         float: right;
+    //         margin-right: 10px;
+    //         color: @disabled-color;
+    //         cursor: pointer;
+    //     }
+    // }
+    .demo {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .demo-left {
+            display: flex;
+            flex-direction: column;
+
+            width: 50%;
+            height: 100%;
+            .left-chart {
+                width: 100%;
+                height: 55%;
+                text-align: center;
+                .oss-ui-progress-inner {
+                    width: 50% !important;
+                    height: 90% !important;
+                }
+            }
+            .left-title {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                //height: 30%;
+                .button-name {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                    width: 33%;
+                    height: 40px;
+                    .name {
+                        font-size: 1.4vh;
+                    }
+                    .num {
+                        margin-left: 10px;
+                        font-weight: 800;
+                        font-size: 2vh;
+                    }
+                }
+            }
+        }
+        .demo-right {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            height: 100%;
+
+            .right-title {
+                width: 100%;
+                height: 10%;
+                font-weight: 500;
+                font-size: 1.4vh;
+                text-align: center;
+            }
+            .right-table {
+                width: 100%;
+                height: 90%;
+            }
+        }
+    }
+}

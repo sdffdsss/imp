@@ -1,0 +1,46 @@
+@import '~oss-ui/es/style/themes/default.less';
+.alarm-search-new {
+    .addMenu {
+        .oss-ui-menu-title-content {
+            display: flex;
+            justify-content: center;
+        }
+    }
+    .oss-ui-menu.oss-ui-menu-sub.oss-ui-menu-inline {
+        max-height: calc(100vh - 320px);
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .oss-ui-layout-sider-trigger {
+        background-color: @component-background;
+        border-top: 1px solid @item-hover-bg;
+    }
+    .oss-ui-layout-sider-trigger:hover {
+        background-color: @item-hover-bg;
+    }
+    .anticon.anticon-left {
+        color: @black;
+    }
+    .anticon.anticon-right {
+        color: @black;
+    }
+    .alarm-search-window .search-alarm-window-container {
+        margin-bottom: 0px !important;
+    }
+    .toolBarButton {
+        margin-top: 14px;
+        .oss-ui-select-single:not(.oss-ui-select-customize-input) .oss-ui-select-selector {
+            height: 23px;
+        }
+        .oss-ui-select-single .oss-ui-select-selector .oss-ui-select-selection-item,
+        .oss-ui-select-single .oss-ui-select-selector .oss-ui-select-selection-placeholder {
+            line-height: 22px;
+        }
+    }
+    .oss-ui-layout-sider {
+        background-color: @body-background;
+    }
+    .oss-ui-layout-content {
+        margin-left: 10px !important;
+    }
+}

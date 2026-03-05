@@ -1,0 +1,51 @@
+.sending-sms-form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 10px;
+
+    .send-sms-top-row {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .sms-input-message-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+}
+
+.send-sms-right-part {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    .send-sms-table {
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .sms-message-group {
+        height: 100%;
+        .oss-ui-tabs {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            &-content-holder {
+                flex: 1;
+                overflow: hidden;
+            }
+
+            &-content,
+            &-tabpane {
+                height: 100%;
+            }
+
+            &-tabpane {
+                overflow: hidden;
+            }
+        }
+    }
+}

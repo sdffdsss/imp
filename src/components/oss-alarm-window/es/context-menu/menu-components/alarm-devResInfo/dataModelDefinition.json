@@ -1,0 +1,42 @@
+{
+  "dataModelDefinition": {
+    "name": "alarm-resInfo",
+    "title": "告警流水右键-资源详情",
+    "icon": "",
+    "author": "郝营营",
+    "description": "资源详情",
+    "header": {
+      "dimensions": [],
+      "indicators": [
+        {
+          "dataType": "String",
+          "fieldLabel": "属性中文名称",
+          "fieldName": "objectLabel",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "属性英文名",
+          "fieldName": "objectLabelEn",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "属性值",
+          "fieldName": "objectVal",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        }
+      ]
+    },
+    "rowConfig": {
+      "dimensionCount": "unknown",
+      "isUseDimensionParams": true
+    }
+  }
+}

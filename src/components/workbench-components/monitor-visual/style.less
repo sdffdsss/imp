@@ -1,0 +1,370 @@
+.workbench-monitor-visual {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+.monitor-visual-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    // width: calc(100% + 24px);
+    height: 100%;
+    // margin-left: -12px;
+    overflow: hidden;
+    .oss-ui-tabs > .oss-ui-tabs-nav,
+    .oss-ui-tabs > div > .oss-ui-tabs-nav {
+        background-color: #fff !important;
+    }
+    .change-shifts-page-continer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        .change-shifts-page-word {
+            font-weight: 400;
+            font-size: 16px;
+            font-style: normal;
+            text-align: center;
+        }
+    }
+    &-header {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 17px;
+        padding-top: 3vh;
+        font-size: 1vw;
+        &-title {
+            padding-left: 1vh;
+            font-weight: 500;
+            font-size: 16px;
+            font-family: 'PingFangSC-Regular, PingFang SC';
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            vertical-align: top;
+        }
+        &-more {
+            padding-left: 1vh;
+            font-weight: 400;
+            font-size: 12px;
+            font-family: 'PingFangSC-Regular, PingFang SC';
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: right;
+            vertical-align: top;
+        }
+    }
+    &-change-btn {
+        position: absolute;
+        top: 6px;
+        left: -7px;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 31px;
+        color: rgba(121, 121, 121, 0.3);
+        font-weight: 500;
+        font-size: 20px;
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0px 6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(270deg);
+        cursor: pointer;
+
+        &.show {
+            left: 185px;
+            transform: rotate(90deg);
+        }
+    }
+    &-tabs {
+        position: absolute;
+        left: -192px;
+        z-index: 5;
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        width: 192px;
+        height: 100%;
+        overflow-y: auto;
+        background-color: #ffffff;
+        border-right: 1px solid #f2f2f2;
+        &.show {
+            left: 0px;
+            background-color: #fff;
+        }
+
+        .oss-ui-tabs-tab {
+            height: 14px;
+            margin: 8px 0 !important;
+            padding: 0px 16px !important;
+            font-size: 14px;
+        }
+    }
+    &-content {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+        height: 100%;
+        background-color: transparent;
+        .oss-ui-spin-nested-loading {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            .oss-ui-spin-container {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                .oss-ui-tabs {
+                    width: 100%;
+                    .oss-ui-tabs-nav-wrap {
+                        justify-content: center;
+                        height: 100%;
+                        .oss-ui-tabs-nav-list {
+                            flex: 0;
+                            width: 26px;
+                            height: 280px;
+                            margin-left: 30px;
+                            border: 1px solid #ccc;
+                            border-radius: 16px;
+                            .oss-ui-tabs-tab {
+                                height: 100px;
+                                padding: 0px;
+                                letter-spacing: 0px;
+                                &.oss-ui-tabs-tab-active {
+                                    .oss-ui-tabs-tab-btn {
+                                        z-index: 999;
+                                        display: flex;
+                                        align-items: center;
+                                        width: 100%;
+                                        height: 100%;
+                                        padding: 5px;
+                                        color: #fff;
+                                        white-space: pre-wrap;
+                                        background-color: #3377ff;
+                                        border-radius: 24px;
+                                    }
+                                }
+                                .oss-ui-tabs-tab-btn {
+                                    z-index: 10;
+                                    display: flex;
+                                    align-items: center;
+                                    width: 100%;
+                                    height: 100%;
+                                    padding: 5px;
+                                    color: #000;
+                                    white-space: pre-wrap;
+                                    border-radius: 24px;
+                                }
+                            }
+                            .oss-ui-tabs-ink-bar {
+                                display: none;
+                            }
+                        }
+                    }
+                    .oss-ui-tabs-content-holder {
+                        display: flex;
+                        flex: 1;
+                        align-items: flex-start;
+                        width: 100%;
+                        .oss-ui-tabs-content {
+                            display: flex;
+                            align-items: flex-start;
+                            width: 100%;
+                            height: 100%;
+                            .oss-ui-tabs-tabpane {
+                                display: flex;
+                                align-items: flex-start;
+                                width: 100%;
+                                height: 100%;
+                                .monitor-visual-page-chart {
+                                    display: flex;
+                                    flex-direction: row;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 100%;
+                                    height: 100%;
+                                    .view-component-home-page-alarm-window {
+                                        width: 120px;
+                                        height: 100%;
+                                        &-img {
+                                        }
+                                        &-label {
+                                            margin-top: 16px;
+                                            margin-bottom: 16px;
+                                            color: #8e9297;
+                                            font-weight: normal;
+                                            font-size: 16px;
+                                            font-family: 'PingFangSC-Regular';
+                                            text-align: center;
+                                        }
+                                        &-total {
+                                            font-weight: bold;
+                                            font-size: 32px;
+                                            text-align: center;
+                                        }
+                                    }
+                                    .pie-txt {
+                                        display: flex;
+                                        flex: 1;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        width: 100%;
+                                        height: 100%;
+                                        overflow-y: auto;
+                                        .txt {
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: flex-start;
+                                            width: 100%;
+                                            height: 70px;
+                                            margin-bottom: 10px;
+                                            padding: 20px;
+                                            background: #f3f7ff;
+                                            border-radius: 10px;
+                                            &-img {
+                                                height: 18px;
+                                            }
+                                            &-title {
+                                                display: -webkit-box;
+                                                flex: 1;
+                                                margin: 0 16px 0 16px;
+                                                overflow: hidden;
+                                                font-size: 20px;
+                                                text-overflow: ellipsis;
+                                                -webkit-line-clamp: 1;
+                                                -webkit-box-orient: vertical;
+                                            }
+                                            &-value {
+                                                color: #3377ff;
+                                                font-weight: bold;
+                                                font-size: 20px;
+                                                font-family: 'Roboto-Bold';
+                                                text-align: right;
+                                            }
+                                        }
+                                    }
+                                }
+                                @media screen and (max-width: 1440px) {
+                                    .monitor-visual-page-chart {
+                                        flex-direction: column;
+                                        .view-component-home-page-alarm-window {
+                                            flex-direction: row;
+                                            width: 100%;
+                                            height: auto;
+                                            .view-component-home-page-alarm-window-img {
+                                                margin-right: 10px;
+                                            }
+                                            .oss-ui-image {
+                                                width: 33px !important;
+                                                height: 31px !important;
+                                                img {
+                                                    height: 31px !important;
+                                                }
+                                            }
+                                            .view-component-home-page-alarm-window-total {
+                                                width: calc(100% - 240px);
+                                            }
+                                        }
+                                        .pie-txt {
+                                            .txt {
+                                                height: 60px;
+                                            }
+                                        }
+                                    }
+                                }
+                                .monitor-visual-page-chart-bar {
+                                    display: flex;
+                                    flex-direction: column;
+                                    align-items: center;
+                                    justify-content: center;
+                                    width: 100%;
+                                    height: 100%;
+                                    .bar {
+                                        display: flex;
+                                        flex: 1;
+                                        width: 100%;
+                                    }
+                                    .select {
+                                        display: inline;
+                                        display: flex;
+                                        width: 100%;
+                                        height: 60px;
+                                        .select-all {
+                                            display: flex;
+                                            align-items: center;
+                                            justify-content: space-around;
+                                            width: 213px;
+                                            background: #eff2f5;
+                                            border-radius: 10px;
+                                            cursor: pointer;
+
+                                            &-title {
+                                                color: #8e9297;
+                                                font-weight: normal;
+                                                font-size: 16px;
+                                                font-family: 'PingFangSC-Regular';
+                                                text-align: center;
+                                            }
+                                            &-value {
+                                                font-weight: bold;
+                                                font-size: 24px;
+                                                text-align: center;
+                                            }
+                                        }
+                                        .select-1 {
+                                            text-align: center;
+                                            cursor: pointer;
+                                            p {
+                                                margin: 0px;
+                                            }
+                                            &-value {
+                                                font-weight: bold;
+                                                font-size: 20px;
+                                                text-align: center;
+                                            }
+                                            &-label {
+                                                color: #8e9297;
+                                                font-weight: normal;
+                                                font-family: 'PingFangSC-Regular';
+                                                text-align: center;
+                                            }
+                                            &.active {
+                                                .select-1-value {
+                                                    color: #3377ff;
+                                                }
+                                            }
+                                        }
+                                        @media screen and (max-width: 1440px) {
+                                            .select-all {
+                                                flex-direction: column;
+                                                width: 100px;
+                                                margin: 0px 20px;
+                                                padding: 10px 0;
+                                            }
+                                            .select-1 {
+                                                width: 50%;
+                                            }
+                                        }
+                                    }
+                                    @media screen and (max-width: 1440px) {
+                                        .select {
+                                            height: 120px;
+                                        }
+                                        .bar {
+                                            height: calc(100% - 120px);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

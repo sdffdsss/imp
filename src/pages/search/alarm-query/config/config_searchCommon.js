@@ -1,0 +1,487 @@
+const commonField = new Map([
+    // 固定列 hideInSearch: true ，其他皆是hideInTable: true(代码里统一添加该属性)
+    // {
+    //     dataIndex: 'fp0',
+    //     key: 'fp0',
+    //     title: '唯一标识',
+    //     valueType: 71, //rec_id
+    //     hideInSearch: true,
+    //     width: 200,
+    // },
+    // {
+    //     dataIndex: 'columnTemplates',
+    //     title: '选择模板',
+    //     valueType: 'enumeration',
+    //     // fieldSql: 'alarmSearch_selectColumnTemplates',
+    // },
+    [
+        'event_time',
+        {
+            key: 'event_time',
+            dataIndex: 'event_time',
+            title: '告警发生时间',
+            valueType: 'dateTimeRange',
+            defaultValue: {
+                value: ['yesterday', 'today'],
+            },
+            colSize: 1,
+        },
+    ],
+    [
+        'active_status',
+        {
+            key: 'active_status',
+            dataIndex: 'active_status',
+            title: '告警状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple', // 可选，默认null，field select是否为多选模式
+            fieldSql: 'alarmSearch_selectAlarmState',
+            type: 68,
+        },
+    ],
+    [
+        'province_region_city',
+        {
+            key: 'province_region_city',
+            dataIndex: 'province_region_city',
+            title: '省市区',
+            valueType: 'cascader',
+            fieldProps: { multiple: true },
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectProvinceRegionCity',
+        },
+    ],
+    [
+        'network_type_top',
+        {
+            key: 'network_type_top',
+            dataIndex: 'network_type_top',
+            title: '一级专业',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            // hideInTable: true,
+            fieldSql: 'alarmSearch_selectNetworkTypeTop',
+        },
+    ],
+    [
+        'network_type',
+        {
+            key: 'network_type',
+            dataIndex: 'network_type',
+            title: '二级专业',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectNetworkType',
+        },
+    ],
+    // {
+    //     key: 'professional_type',
+    //     dataIndex: 'professional_type',
+    //     title: '专业',
+    //     valueType: 'enumeration',
+    //     fieldMode: 'multiple',
+    //     fieldSql: 'alarmSearch_selectProfessionalType',
+    // },
+    [
+        'vendor_id',
+        {
+            key: 'vendor_id',
+            dataIndex: 'vendor_id',
+            title: '厂家',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            // fieldSearch: true,
+            fieldSql: 'alarmSearch_selectVendorId',
+            type: 4,
+        },
+    ],
+    [
+        'eqp_object_class',
+        {
+            key: 'eqp_object_class',
+            dataIndex: 'eqp_object_class',
+            title: '设备类型',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectEqpObjectClass',
+            type: 9,
+        },
+    ],
+    // {
+    //     key: 'int_id',
+    //     dataIndex: 'int_id',
+    //     title: '网元ID',
+    //     valueType: 'text',
+    //     operatorKeys: ['eq', 'like'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'eq',
+    //     },
+    // },
+    // {
+    //     key: 'group_id',
+    //     // dataIndex: 'circuit_group_id',
+    //     dataIndex: 'group_id',
+    //     title: '电路名称',
+    //     valueType: 'enumeration',
+    //     fieldMode: 'multiple',
+    //     fieldSql: 'alarmSearch_selectCircuitGroupId',
+    // },
+    [
+        'eqp_label',
+        {
+            key: 'eqp_label',
+            dataIndex: 'eqp_label',
+            title: '网元名称',
+            valueType: 'text',
+            operatorKeys: ['eq', 'like'],
+            showOperator: true,
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'object_class',
+        {
+            key: 'object_class',
+            dataIndex: 'object_class',
+            title: '告警对象类型',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectObjectClass',
+            type: 18,
+        },
+    ],
+    [
+        'ne_label',
+        {
+            key: 'ne_label',
+            dataIndex: 'ne_label',
+            title: '告警对象名称',
+            valueType: 'text',
+            operatorKeys: ['eq', 'like'],
+            showOperator: true,
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'extra_id3',
+        {
+            key: 'extra_id3',
+            dataIndex: 'extra_id3',
+            title: '告警业务子类',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            // fieldSql: 'alarmSearch_selectOrgSeverity',
+            dictName: 'extra_id3',
+            // fieldEnum: [
+            //     { key: 1, value: '一级告警' },
+            //     { key: 2, value: '二级告警' },
+            //     { key: 3, value: '三级告警' },
+            //     { key: 4, value: '四级告警' },
+            //     { key: 5, value: '正常' },
+            // ],
+            // defaultValue: {
+            //     value: [1, 2],
+            // },
+        },
+    ],
+    [
+        'org_severity',
+        {
+            key: 'org_severity',
+            dataIndex: 'org_severity',
+            title: '网管告警级别',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectOrgSeverity',
+            // fieldEnum: [
+            //     { key: 1, value: '一级告警' },
+            //     { key: 2, value: '二级告警' },
+            //     { key: 3, value: '三级告警' },
+            //     { key: 4, value: '四级告警' },
+            //     { key: 5, value: '正常' },
+            // ],
+            // defaultValue: {
+            //     value: [1, 2],
+            // },
+            type: 33,
+        },
+    ],
+    [
+        'alarm_title_text',
+        {
+            // dataIndex: 'alarm_title',
+            key: 'alarm_title_text',
+            dataIndex: 'alarm_title_text',
+            title: '告警标题',
+            valueType: 'text',
+            operatorKeys: ['eq', 'like'],
+            showOperator: true,
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'standard_alarm_id',
+        {
+            key: 'standard_alarm_id',
+            dataIndex: 'standard_alarm_id',
+            title: '网管告警ID',
+            valueType: 'text',
+            operatorKeys: ['eq', 'like'],
+            showOperator: true,
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'alarm_resource_status',
+        {
+            key: 'alarm_resource_status',
+            dataIndex: 'alarm_resource_status',
+            title: '工程状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectAlarmResourceStatus',
+            type: 14,
+        },
+    ],
+    // {
+    //     key: 'probable_cause',
+    //     dataIndex: 'probable_cause',
+    //     title: '厂家告警号',
+    //     valueType: 'text',
+    //     operatorKeys: ['eq', 'like'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'like',
+    //     },,
+    // },
+    // {
+    //     key: 'ems_id',
+    //     dataIndex: 'ems_id',
+    //     title: 'EMS名称',
+    //     valueType: 'text',
+    //     operatorKeys: ['eq', 'like'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'like',
+    //     },
+    // },
+    // {
+    //     key: 'alarm_source',
+    //     dataIndex: 'alarm_source',
+    //     title: '告警来源',
+    //     valueType: 'enumeration',
+    //     fieldMode: 'multiple',
+    //     fieldSql: 'alarmSearch_selectAlarmSource',
+    // },
+    // [
+    //     'alarm_origin',
+    //     {
+    //         key: 'alarm_origin',
+    //         dataIndex: 'alarm_origin',
+    //         title: '关联查询',
+    //         valueType: 'enumeration',
+    //         fieldSql: 'alarmSearch_selectAlarmOrigin',
+    //         defaultValue: {
+    //             value: '0',
+    //         },
+    //     },
+    // ],
+    // {
+    //     key: 'nms_name',
+    //     dataIndex: 'nms_name',
+    //     title: '专业网管名称',
+    //     valueType: 'text',
+    //     operatorKeys: ['eq', 'like'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'like',
+    //     },
+    // },
+    // {
+    //     key: 'preprocess_flag1',
+    //     dataIndex: 'preprocess_flag1',
+    //     title: '预处理状态',
+    //     valueType: 'enumeration',
+    //     fieldMode: 'multiple',
+    //     fieldSql: 'alarmSearch_selectPreprocessFlag1',
+    // },
+    // {
+    //     key: 'preprocess_flag2',
+    //     dataIndex: 'preprocess_flag2',
+    //     title: '预处理结果',
+    //     valueType: 'enumeration',
+    //     fieldSql: 'alarmSearch_selectPreprocessFlag2',
+    // },
+    // {
+    //     key: 'home_client_num',
+    //     dataIndex: 'home_client_num',
+    //     title: '家客用户数',
+    //     valueType: 'number',
+    //     operatorKeys: ['gt'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'gt',
+    //     },
+    // },
+    // {
+    //     key: 'effect_community_num',
+    //     dataIndex: 'effect_community_num',
+    //     title: '家客小区数',
+    //     valueType: 'number',
+    //     operatorKeys: ['gt'],
+    //     showOperator: true,
+    //     defaultValue: {
+    //         operator: 'gt',
+    //     },
+    // },
+    //= ==========原页面otherConditions 部分
+
+    [
+        'send_status',
+        {
+            key: 'send_status',
+            dataIndex: 'send_status',
+            title: '派单状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectSendStatus',
+            type: 52,
+        },
+    ],
+    [
+        'ack_flag',
+        {
+            key: 'ack_flag',
+            dataIndex: 'ack_flag',
+            title: '确认状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectAckFlag',
+            type: 64,
+        },
+    ],
+    [
+        'is_undistributed_send_status',
+        {
+            key: 'is_undistributed_send_status',
+            dataIndex: 'is_undistributed_send_status',
+            title: '是否派单告警',
+            valueType: 'enumeration',
+            // fieldSql: 'alarmSearch_selectIsUndistributedSendStatus',
+            fieldEnum: [
+                { key: -1, value: '是' },
+                { key: 0, value: '否' },
+            ],
+        },
+    ],
+    [
+        'sheet_status',
+        {
+            key: 'sheet_status',
+            dataIndex: 'sheet_status',
+            title: '工单状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectSheetStatus',
+            type: 55,
+        },
+    ],
+    [
+        'sheet_no',
+        {
+            key: 'sheet_no',
+            dataIndex: 'sheet_no',
+            title: '工单编号',
+            valueType: 'text',
+            showOperator: true,
+            operatorKeys: ['eq', 'like'],
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'gcss_client_name',
+        {
+            key: 'gcss_client_name',
+            dataIndex: 'gcss_client_name',
+            title: '客户名称',
+            valueType: 'text',
+            showOperator: true,
+            operatorKeys: ['eq', 'like'],
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'circuit_no',
+        {
+            key: 'circuit_no',
+            dataIndex: 'circuit_no',
+            title: '电路号',
+            valueType: 'text',
+            showOperator: true,
+            operatorKeys: ['eq', 'like'],
+            defaultValue: {
+                operator: 'like',
+            },
+        },
+    ],
+    [
+        'gcss_client_level',
+        {
+            key: 'gcss_client_level',
+            dataIndex: 'gcss_client_level',
+            title: '客户级别',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectGcssClientLevel',
+        },
+    ],
+    [
+        'gcss_service_level',
+        {
+            key: 'gcss_service_level',
+            dataIndex: 'gcss_service_level',
+            title: '集客业务级别',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectGcssServiceLevel',
+        },
+    ],
+    [
+        'interrupt_circuit_state',
+        {
+            key: 'interrupt_circuit_state',
+            dataIndex: 'interrupt_circuit_state',
+            title: '电路中断状态',
+            valueType: 'enumeration',
+            fieldMode: 'multiple',
+            fieldSql: 'alarmSearch_selectInterruptCircuitState',
+        },
+    ],
+    [
+        'alarm_abnormal_type',
+        {
+            key: 'alarm_abnormal_type',
+            dataIndex: 'alarm_abnormal_type',
+            title: '是否异常告警',
+            valueType: 'enumeration',
+            fieldEnum: [
+                { key: 0, value: '是' },
+                { key: 1, value: '否' },
+            ],
+        },
+    ],
+]);
+export default commonField;

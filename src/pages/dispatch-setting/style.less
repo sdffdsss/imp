@@ -1,0 +1,93 @@
+.dispatch-setting-page {
+    display: flex;
+    background-color: #fff;
+    .oss-ui-tabs {
+        width: 100%;
+        height: 100%;
+        .oss-ui-tabs-content-holder {
+            flex: 1;
+            .oss-ui-tabs-content {
+                height: 100%;
+            }
+        }
+    }
+    .automatic-dispatch-page {
+        .oss-ui-spin-nested-loading {
+            height: 100%;
+            .oss-ui-spin-container {
+                height: 100%;
+            }
+        }
+        .oss-ui-card-body {
+            padding-right: 0px;
+        }
+    }
+    &-left {
+        width: 300px;
+        padding: 4px 16px;
+        .title-head {
+            width: 100%;
+            height: 40px;
+            padding-left: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 40px;
+            background-color: #f1f1f1;
+            opacity: 0.85;
+        }
+        .tree-title {
+            padding: 4px;
+            padding-left: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            opacity: 0.85;
+        }
+        .tree-son-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 200px;
+            padding: 2px;
+        }
+        .oss-ui-tree-node-content-wrapper {
+            margin-top: -8px;
+            padding: 8px;
+        }
+    }
+    &-right {
+        flex: 1;
+        padding: 0 12px;
+        .volume-title {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .oss-ui-page-header-heading-left {
+            width: 100%;
+            .oss-ui-page-header-heading-title {
+                width: 100%;
+            }
+        }
+        .actions-btn {
+            position: relative;
+            // bottom: 500px;
+            margin-top: 20px;
+        }
+        .working-content {
+            display: flex;
+            width: 60px;
+            .working-item {
+                z-index: 9;
+                width: 40px;
+                color: red;
+            }
+        }
+    }
+}
+.dispatch-setting-modal-manual {
+    .oss-ui-modal {
+        width: 650px !important;
+    }
+}

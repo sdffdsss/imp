@@ -1,0 +1,75 @@
+.duty-title-calendar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1vh;
+}
+
+.management-work-record-continer {
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    .work-record-collapse {
+        // .oss-ui-timeline-label {
+        // overflow: hidden;
+        // }
+        .collapse-title {
+            display: flex;
+            align-items: center;
+            .collapse-title-block {
+                width: 4px;
+                height: 16px;
+                margin: 0 8px;
+                background-color: rgba(46, 160, 247, 1);
+                border-radius: 4px;
+            }
+        }
+        .work-record-panel {
+            border: 0px;
+            .oss-ui-collapse-content-box {
+                padding-top: 10px;
+            }
+            .panel-button {
+                color: rgba(46, 160, 247, 1);
+                border: 1px solid rgba(46, 160, 247, 1);
+                border-radius: 4px;
+            }
+            .oss-ui-collapse-content {
+                background-color: @component-background;
+            }
+            .change-shifts-page-continer {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 120px;
+                .change-shifts-page-word {
+                    color: #cccfd3;
+                    font-weight: 400;
+                    font-style: normal;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .upload-file-continer {
+        width: 100%;
+        height: 100%;
+        padding-bottom: 1%;
+        padding-left: 3%;
+    }
+}
+.work-record-button {
+    margin: 2vh 0;
+    text-align: center;
+    .oss-ui-btn-primary {
+        padding: 0 40px;
+        font-size: 14px;
+        background: linear-gradient(116.462601300001deg, rgba(2, 0, 255, 1) 7%, rgba(0, 118, 255, 1) 97%);
+        border-radius: 37px;
+        box-shadow: 0px 1px 6px rgb(51 119 255 / 20%);
+    }
+}

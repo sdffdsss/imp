@@ -1,0 +1,219 @@
+.edit-content-page {
+    height: 100%;
+
+    .oss-ui-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100%;
+        padding: 2% 0 0;
+        background-color: #fff;
+
+        .oss-ui-layout-header,
+        .oss-ui-layout-content,
+        .oss-ui-layout-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background: #fff;
+        }
+
+        .oss-ui-layout-content {
+            overflow-y: auto;
+        }
+
+        .oss-ui-layout-footer {
+            background: #fff;
+        }
+    }
+
+    .oss-ui-steps-item {
+        .oss-ui-steps-item-tail {
+            text-align: center;
+        }
+
+        .oss-ui-steps-item-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            margin-bottom: 0;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .oss-ui-steps-item-content {
+            margin: 0;
+        }
+    }
+
+    .basic-card {
+        width: 66%;
+
+        margin-top: 2%;
+        padding: 2% 0;
+        overflow: auto;
+        .oss-ui-form-item {
+            margin-bottom: 25px;
+        }
+
+        .oss-ui-form-item-with-help {
+            margin-bottom: 10px;
+        }
+    }
+
+    .conditions-card {
+        position: relative;
+        width: 66%;
+        margin: 20px 0 30px;
+
+        .oss-ui-card-body {
+            padding: 20px 0 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+        }
+    }
+
+    .strategy-card {
+        position: relative;
+        // display: flex;
+        width: 66%;
+        // min-height: 48%;
+
+        .oss-ui-card-body {
+            // display: flex;
+            // flex: 1;
+            // flex-direction: column;
+            padding: 20px 36px 12px 0;
+            // overflow: auto;
+
+            .oss-ui-tabs-top {
+                // flex: 1;
+                margin-left: 36px;
+            }
+        }
+
+        .oss-ui-tabs-top > .oss-ui-tabs-nav::before {
+            border: none;
+        }
+
+        .oss-ui-tabs-nav {
+            margin: 0 !important;
+        }
+
+        .oss-ui-tabs-nav-list {
+            .oss-ui-tabs-tab {
+                margin-right: 10px;
+                border-bottom-color: #fff;
+                border-radius: 8px;
+            }
+        }
+
+        .oss-ui-tabs-content-holder {
+            position: relative;
+            display: flex;
+
+            .oss-ui-tabs-content-top {
+                // flex: 1;
+
+                padding: 10px 40px 0 0;
+                // overflow: auto;
+                border: 1px solid #f0f0f0;
+                border-radius: 4px;
+
+                .recovert-notice {
+                    margin-bottom: 20px;
+                }
+
+                .instructions {
+                    padding: 0 0 10px 20px;
+                    color: red;
+                }
+            }
+        }
+
+        .fault-hour {
+            position: absolute;
+            top: 2px;
+            right: -40px;
+            width: 50;
+            font-size: 14px;
+        }
+
+        .checked-role {
+            margin: 2px 22px 2px 0;
+
+            .oss-ui-checkbox + span {
+                position: relative;
+                padding: 0 14px 0 4px;
+            }
+
+            .checked-tip {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 12px;
+                height: 12px;
+                color: #fff;
+                font-size: 12px;
+                line-height: 10px;
+                text-align: center;
+                background: #009dd9;
+                border: 1px solid #fff;
+                border-radius: 50%;
+                box-shadow: 1px 1px 2px 1px #b1b1b1;
+
+                > span {
+                    display: block;
+                    height: 100%;
+                    transform: scale(0.6);
+                }
+            }
+        }
+    }
+
+    .common-title {
+        position: absolute;
+        top: -10px;
+        left: 0;
+        width: 80px;
+        height: 25px;
+        color: rgb(0, 255, 255);
+        line-height: 25px;
+        text-align: center;
+        background: rgb(77, 136, 194);
+
+        &-box {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border: 5px solid transparent;
+            border-top: 5px solid #fff;
+            border-right: 5px solid #fff;
+        }
+    }
+
+    .fault-recovery-card {
+        width: 66%;
+        height: 64%;
+        margin-top: 3%;
+        padding: 1% 0;
+
+        &-radio {
+            display: flex;
+            flex-direction: column;
+            .oss-ui-radio-wrapper {
+                height: 30px;
+                line-height: 30px;
+            }
+        }
+    }
+}

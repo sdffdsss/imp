@@ -1,0 +1,30 @@
+.cancel-report {
+    overflow: hidden;
+    .div-2-textarea-white {
+        width: 100%;
+        min-height: 128px;
+        padding: 3px 7px;
+        transition: all 0.3s ease;
+        &:empty::before {
+            content: attr(placeholder);
+        }
+    }
+    .div-2-textarea {
+        width: 100%;
+        min-height: 128px;
+        padding: 3px 7px;
+        color: #fff;
+        background: #1b3c69;
+        border: 1px solid rgba(34, 128, 219, 0.7);
+        transition: all 0.3s ease;
+        &:empty::before {
+            color: #ccc;
+            content: attr(placeholder);
+        }
+    }
+    .div-2-textarea-wireless {
+        color: #000;
+        background: #fff;
+        border: 1px solid #ccc;
+    }
+}

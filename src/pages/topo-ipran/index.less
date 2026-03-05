@@ -1,0 +1,144 @@
+.topo-monitor-content {
+    display: flex;
+    height: 100%;
+    .topo-monitor-left {
+        height: 100%;
+        width: 260px;
+        display: flex;
+        flex-direction: column;
+        // margin: 12px 10px;
+        background: @component-background;
+        .search-line {
+            padding: 10px;
+        }
+        .filter-tree-list {
+            padding: 0 10px;
+            flex: 1;
+            overflow-y: auto;
+        }
+    }
+    .topo-monitor-right {
+        flex: 1;
+        height: 100%;
+        display: flex;
+        position: relative;
+        padding-left: 10px;
+        overflow: hidden;
+        .alarm-monitoring-tree-container {
+            width: 300px;
+            height: 100%;
+            // background: @component-background;
+            margin-right: 10px;
+            padding: 6px;
+        }
+
+        .alarm-monitoring-topo-container {
+            flex: 1;
+            position: relative;
+            // background: @component-background;
+            .example{
+                text-align: center;
+                line-height: 100vh;
+            }
+            .topo-monitor-right-title{
+                position: absolute;
+                padding: 6px;
+                z-index: 1;
+                font-size: 14px;
+                font-weight:bold;
+                left: 12px;
+                .site-tree-search-value{
+                    color: #000000 !important;
+                }
+            }
+
+            .alarm-monitoring-topo-toolbar-container {
+                position: absolute;
+                background-color: #7b8088;
+                padding: 6px;
+                z-index: 1;
+                top: 12px;
+                right: 12px;
+            }
+
+            .alarm-monitoring-topo-back-button{
+                position: absolute;
+                left: 70px;
+                top: 8px;
+                z-index: 1;
+            }
+
+            .alarm-monitoring-topo-search-container {
+                position: absolute;
+                z-index: 1;
+                top: 36px;
+                left: 12px;
+            }
+
+            .alarm-monitoring-topo-overview-container {
+                position: absolute;
+                bottom: 12px;
+                right: 12px;
+                z-index: 1;
+            }
+
+            .alarm-monitoring-topo-alarm-container {
+                position: absolute;
+                top: 60px;
+                left: 12px;
+                z-index: 1;
+            }
+        }
+    }
+}
+
+th.oss-ui-descriptions-item-label {
+    width: 120px;
+}
+
+.site-tree-search-value {
+    color: #f50;
+}
+
+
+.topo-monitor-alarm{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .failure-sheet-top-container{
+        // flex: 1;
+        height: calc(100% - 135px);
+    }
+    .failure-sheet-bottom-container{
+        position: absolute;
+        bottom: 0px;
+        width: 100%;
+        flex: 0 0 auto;
+        overflow: auto;
+        z-index: 100;
+        .@{ant-prefix}-grid-content{
+            overflow: auto;
+        }
+        .failure-sheet-bottom-container-close{
+            position: absolute;
+            top: 9px;
+            left: 9px;
+            cursor: pointer;
+        }
+        .oss-ui-table-body{
+            height: 150px !important;
+            max-height:150px !important;
+        }
+    }
+}
+
+.contextMenu {
+    z-index: 100;
+}
+
+.alarm-window .alarm-window-operation-bar-right{
+    max-width: 50% !important;
+    min-width: 52px;
+    overflow: hidden;
+}

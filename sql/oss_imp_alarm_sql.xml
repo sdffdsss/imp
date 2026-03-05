@@ -1,0 +1,2836 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+    <!--nmosdb 根据当前用户，得到的拥有查看/编辑权限过滤器的用户编号集合-->
+    <select id="SelectIrregularShareFilterUserIdList" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select distinct b.user_id
+        from tai_userinfo b,tai_userinfo c,tfp_filter_info d
+        where c.user_id=#{user_id} and to_number(c.user_level) <= 9 and b.user_id=d.owner_id
+        union all
+        select distinct b.user_id
+        from tai_userinfo b,tai_userinfo c,tfp_filter_info d
+        where c.user_id=#{user_id} and b.user_id=d.owner_id and to_number(c.user_level) >=10 and to_number(b.user_level)<=to_number(c.user_level)
+        and b.region_id in
+        (select region_id from tai_userinfo where user_id=#{user_id}
+        union all
+        select distinct region_id from region_city_local where province_id=c.region_id
+        union all
+        select distinct city_id from region_city_local where province_id=c.region_id
+        union all
+        select distinct city_id from region_city_local where region_id=c.region_id)
+        ]]>
+    </select>
+    <!--nmosdb 根据当前用户，得到的拥有查看权限规则的用户编号集合-->
+    <select id="SelectIrregularShareRuleSeeUserIdList" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select distinct b.user_id
+        from tai_userinfo b,tai_userinfo c,tfp_filter_info d
+        where c.user_id=#{user_id} and to_number(c.user_level) <= 9 and b.user_id=d.owner_id
+        union all
+        select distinct b.user_id
+        from tai_userinfo b,tai_userinfo c,tfp_filter_info d
+        where c.user_id=#{user_id} and to_number(c.user_level) >=10 and to_number(b.user_level)>=10 and b.user_id=d.owner_id
+        and b.region_id in
+        (select region_id from tai_userinfo where user_id=#{user_id}
+        union all
+        select distinct province_id from region_city_local where  province_id in
+        (select distinct province_id from region_city_local where (c.user_level=10 and province_id =c.region_id) or (c.user_level=11 and region_id =c.region_id) or (c.user_level=12 and city_id =c.region_id))
+        union all
+        select distinct region_id from region_city_local where province_id in
+        (select distinct province_id from region_city_local where (c.user_level=10 and province_id =c.region_id) or (c.user_level=11 and region_id =c.region_id) or (c.user_level=12 and city_id =c.region_id))
+        union all
+        select distinct city_id from region_city_local where  province_id in
+        (select distinct province_id from region_city_local where (c.user_level=10 and province_id =c.region_id) or (c.user_level=11 and region_id =c.region_id) or (c.user_level=12 and city_id =c.region_id))
+        )
+        ]]>
+    </select>
+    <!--nmosdb 根据当前用户，得到的拥有编辑权限规则的用户编号集合-->
+    <select id="SelectIrregularShareRuleUserIdList" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select distinct b.user_id from tai_userinfo b,tai_userinfo c,tfp_filter_info d
+        where to_number(b.user_level)=to_number(c.user_level) and c.region_id=b.region_id and b.user_id=d.owner_id and c.user_id=#{user_id}
+        ]]>
+    </select>
+    <!--==============start 获取容量和预装 start============================-->
+    <select id="SelectAlarmCapacityAndPrevision" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select option_key,option_value from taw_option_info where option_key='${AlarmCount}' or option_key='${AlarmPreload}' or option_key='${AlarmAutoLock}' or option_key='${AlarmAutoLockTime}'
+        ]]>
+    </select>
+    <!--==============end 获取容量和预装 end=============================-->
+    <!--==============start 插入容量和预装 start=============================-->
+    <insert id="InsertAlarmCapacityAndPrevision" parameterType="java.util.Map">
+        <![CDATA[
+        insert into taw_option_info (option_key,option_value) values ('${optionKey}','${optionValue}')
+        ]]>
+    </insert>
+    <!--==============end 插入容量和预装 end=============================-->
+    <!--==============start 删除容量和预装 start=============================-->
+    <delete id="DeleteAlarmCapacityAndPrevision" parameterType="java.util.Map">
+        <![CDATA[
+        delete from taw_option_info where option_key='${AlarmCount}' or option_key='${AlarmPreload}' or option_key='${AlarmAutoLock}' or option_key='${AlarmAutoLockTime}'
+        ]]>
+    </delete>
+    <!--==============end 删除容量和预装 end=============================-->
+    <!-- 获取告警值班中的已有视图 start -->
+    <select id="SelectAlarmOndutyExitViews" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select c.columns_value, t.status_value,u.zh_name,u.user_name,m.* from tfp_monitorviewinfo m , tfp_status_template t ,tfp_column_template c,nrmdb.tau_user u
+        where  m.status_disp_templet = t.template_id and m.col_disp_templet = c.template_id and m.window_owner=u.user_id   and m.window_owner=#{user_id} and
+        m.if_used=1 and m.window_type = 0
+        ]]>
+    </select>
+    <!-- 获取告警值班中的已有视图 end -->
+
+    <!-- 获取告警列模板列表 start -->
+    <select id="SelectAlarmColumnTemplates" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select t.template_id,t.template_name,t.description,t.owner_id,u.user_name,DATE_FORMAT(t.create_time, '%Y-%m-%d %T') as create_time,t.columns_value
+        from tfp_column_template t,nrmdb.tau_user u
+        where u.user_id=t.owner_id]]>
+    </select>
+    <!-- 获取告警列模板列表 end -->
+
+    <!-- 获取告警列模板列表 start -->
+    <select id="SelectAlarmColumnTemplatesById" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select t.template_id,t.template_name,t.description,t.owner_id,u.user_name,t.create_time,t.columns_value
+        from tfp_column_template t,nrmdb.tau_user u
+        where u.user_id=t.owner_id and template_id=#{id}
+        ]]>
+    </select>
+    <!-- 获取告警列模板列表 end -->
+
+    <!-- 删除告警列模板列表 start -->
+    <delete id="DeleteAlarmColumnTemplates" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfp_column_template where template_id=#{template_id}
+        ]]>
+    </delete>
+    <!-- 删除告警列模板列表 end -->
+
+    <!-- 插入告警列模板列 start -->
+    <insert id="InsertAlarmColumnTemplates" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_column_template (template_id,template_name,description,owner_id,create_time,columns_value,modify_time)
+        values (#{template_id},#{template_name},#{description},#{owner_id},STR_TO_DATE(#{create_time},'%Y-%m-%d %T'),#{columns_value},
+        STR_TO_DATE(#{modify_time},'%Y-%m-%d %T'))
+        ]]>
+    </insert>
+    <!-- 插入告警列模板列 end -->
+
+    <!-- 更新告警列模板列 start -->
+    <update id="UpdateAlarmColumnTemplates" parameterType="java.util.Map">
+        <![CDATA[
+        update tfp_column_template
+        set template_name=#{template_name},
+        description=#{description},
+        columns_value=#{columns_value},
+        modify_time=STR_TO_DATE(#{modify_time},'%Y-%m-%d %T')
+        where template_id=#{template_id}
+        ]]>
+    </update>
+    <!-- 更新告警列模板列 end -->
+
+    <!-- 获取所有告警列定义信息 start -->
+    <select id="SelectAllTfmAlarmColInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select col_name_zh,msg_field from tfm_alarm_col_info where msg_field is not null
+        ]]>
+    </select>
+    <!-- 获取所有告警列定义信息 end -->
+
+    <!-- 获取告警查询列模板 start -->
+    <select id="SelectTawOptionInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select option_key,option_value from taw_option_info where option_key='${option_key}'
+        ]]>
+    </select>
+    <!-- 获取告警查询列模板 end -->
+
+    <!-- 删除告警查询列模板 start -->
+    <delete id="DeleteSearchAlarmColumnTemplates" parameterType="java.util.Map">
+        <![CDATA[
+        delete from taw_option_info where option_key='${option_key}'
+        ]]>
+    </delete>
+    <!-- 删除告警查询列模板 end -->
+
+    <!-- 插入告警查询列模板 start -->
+    <insert id="InsertSearchAlarmColumnTemplates" parameterType="java.util.Map">
+        <![CDATA[
+        insert into taw_option_info (option_key,option_value) values ('${option_key}','${option_value}')
+        ]]>
+    </insert>
+    <!-- 插入告警查询列模板 end -->
+
+    <!-- 获取告警标志状态模板 start -->
+    <select id="SelectStatusIconTemplate" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t.template_id,t.template_name,t.description,t.owner_id,u.user_name,DATE_FORMAT(t.create_time, '%Y-%m-%d %T') create_time,t.status_value
+        from Tfp_Status_Template t,nrmdb.tau_user u
+        where u.user_id=t.owner_id
+        ]]>
+    </select>
+    <!-- 获取告警标志状态模板 end -->
+
+    <!-- 按id获取告警标志状态 start -->
+    <select id="GetStatusIconById" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select t.template_id,t.template_name,t.description,t.owner_id,u.user_name,t.create_time,t.status_value
+        from Tfp_Status_Template t,nrmdb.tau_user u
+        where u.user_id=t.owner_id and template_id=#{id}
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取所有告警标志状态 start -->
+    <select id="SelectStatusIcon" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select col_name_zh,msg_field from tfm_alarm_status_info t where msg_field is not null
+        ]]>
+    </select>
+    <!-- 获取所有告警标志状态 end -->
+
+    <!-- 插入告警标志状态模板 start -->
+    <insert id="InsertStatusIconTemplate" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_status_template (template_id,template_name,Tfp_Status_Template.description,owner_id,create_time,status_value,Modify_Time)
+        values (#{template_id},#{template_name},#{description},#{owner_id},STR_TO_DATE(#{create_time},'%Y-%m-%d %T'),#{status_value},STR_TO_DATE(#{Modify_Time},'%Y-%m-%d %T'))
+        ]]>
+    </insert>
+    <!-- 插入告警标志状态模板 end -->
+
+    <!-- 更新告警标志状态模板 start -->
+    <update id="UpdateStatusIconTemplate" parameterType="java.util.Map">
+        <![CDATA[
+        update tfp_status_template
+        set template_name=#{template_name},Tfp_Status_Template.description=#{description},status_value=#{status_value},modify_time=STR_TO_DATE(#{modify_time},'%Y-%m-%d %T')
+        where template_id=#{template_id}
+        ]]>
+    </update>
+    <!-- 更新告警标志状态模板 end -->
+
+    <!-- 删除告警标志状态模板 start -->
+    <delete id="DeleteStatusIconTemplate" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfp_status_template where template_id=#{template_id}
+        ]]>
+    </delete>
+    <!-- 删除告警标志状态模板 end -->
+
+    <!-- 获取告警正文 start -->
+    <select id="SelectAlarmText" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select alarm_text0 || alarm_text1 || alarm_text2 || alarm_text3 || alarm_text4 || alarm_text5 || alarm_text6 || alarm_text7 || alarm_text8 || alarm_text9 || alarm_text10 || alarm_text11 || alarm_text12 || alarm_text13 || alarm_text14 || alarm_text15 alarm_text from tfa_alarm_act where fp0=${fp0} and fp1=${fp1} and fp2=${fp2} and fp3=${fp3} and event_time=STR_TO_DATE('${event_time}','%Y-%m-%d %T') union all select alarm_text0 || alarm_text1 || alarm_text2 || alarm_text3 || alarm_text4 || alarm_text5 || alarm_text6 || alarm_text7 || alarm_text8 || alarm_text9 || alarm_text10 || alarm_text11 || alarm_text12 || alarm_text13 || alarm_text14 || alarm_text15  alarm_text  from  tfa_alarm_clr where fp0=${fp0} and fp1=${fp1} and fp2=${fp2} and fp3=${fp3} and event_time=STR_TO_DATE('${event_time}','%Y-%m-%d %T')
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取所有告警标志状态 start -->
+    <select id="SelectSheetSendRule" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select  sheet_send_rule from tfa_alarm_sla where fp0=${fp0} and fp1=${fp1} and fp2=${fp2} and fp3=${fp3}
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取设备厂家 start -->
+    <select id="SelectDeviceCompanys" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type,zh_name,vendor_text from vendor_name order by vendor_text
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取专业  start -->
+    <select id="SelectMajor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1001 and id not in (0)
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取一级专业  start -->
+    <select id="SelectFirstMajor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1317 and valid=1 and id not in (0)
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 获取设备类型  start -->
+    <select id="SelectDeviceTypes" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type =9 and valid = 1 and txt not in ('A++客户','A+客户','A客户','B客户','C客户','me','AAA') order by txt
+        ]]>
+    </select>
+    <!-- end -->
+
+       <!-- 删除告警经验库1 start -->
+    <delete id="DeleteAlarmExperienceLibrary1" parameterType="java.util.Map">
+        <![CDATA[
+			delete from tfp_adv_key_code where item_id=${item_id}
+        ]]>
+    </delete>
+	<!-- 删除告警经验库2 start -->
+    <delete id="DeleteAlarmExperienceLibrary2" parameterType="map">
+        <![CDATA[
+			delete from tfp_advice_item where item_id=${item_id}
+        ]]>
+    </delete>
+    <!-- 删除告警经验库2 end -->
+    <delete id="DeleteAlarmExperienceLibrary3" parameterType="java.util.Map">
+        <![CDATA[
+			delete from tfp_adv_matchcond where field_name in ('title_text','object_class','professional_type') and display_name='deleted'and vendor_id='${0}'
+        ]]>
+    </delete>
+    <!-- 通过vendor id获取condition_id start -->
+    <select id="SelectConditionIdByVendor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select field_name, condition_id
+        from tfp_adv_matchcond
+        where field_name in ('title_text', 'object_class', 'professional_type')
+        and vendor_id = ${vendorId}
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 插入告警经验库1 start -->
+    <insert id="InsertAlarmExperienceLibrary1" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_advice_item (item_id,vendor_id,user_id,description,flow_img) values ('${item_Id}','${vendor_Id}','${user_Id}','${description}','${flow_img}')
+        ]]>
+    </insert>
+    <!-- 插入告警经验库1 end -->
+
+    <!-- 插入告警经验库2 start -->
+    <insert id="InsertAlarmExperienceLibrary2" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_adv_matchcond (field_name,vendor_id,display_name) values('${field_name}',${vendor_id},'${display_name}')
+        ]]>
+    </insert>
+    <!-- 插入告警经验库2 end -->
+
+    <!-- 插入告警经验库3 start -->
+    <insert id="InsertAlarmExperienceLibrary3" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_adv_key_code (item_id,condition_id,value) values(${item_id},${condition_id},'${value}')
+        ]]>
+    </insert>
+    <!-- 插入告警经验库3 end -->
+
+    <!-- 初始化告警经验库1 start -->
+    <insert id="InsertInitExperience1" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_adv_matchcond(field_name,display_name,vendor_id) select field_name,'DELETE' as display_name, vendor_id from (select 'title_text' as field_name,vendor_name.type as vendor_id from vendor_name minus select field_name,vendor_id from tfp_adv_matchcond)
+        ]]>
+    </insert>
+    <!-- 初始化告警经验库1 end -->
+
+    <!-- 初始化告警经验库2 start -->
+    <insert id="InsertInitExperience2" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_adv_matchcond(field_name,display_name,vendor_id) select field_name,'DELETE' as display_name, vendor_id from (select 'object_class' as field_name,vendor_name.type as vendor_id from vendor_name minus select field_name,vendor_id from tfp_adv_matchcond)
+        ]]>
+    </insert>
+    <!-- 初始化告警经验库2 end -->
+
+    <!-- 初始化告警经验库3 start -->
+    <insert id="InsertInitExperience3" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_adv_matchcond(field_name,display_name,vendor_id) select field_name,'DELETE' as display_name, vendor_id from (select 'professional_type' as field_name,vendor_name.type as vendor_id from  vendor_name minus select field_name,vendor_id from tfp_adv_matchcond)
+        ]]>
+    </insert>
+    <!-- 初始化告警经验库3 end -->
+
+    <!-- 获取经验库数量 start -->
+    <select id="SelectExperienceLibraryCount" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select count(*) num
+        from (select *
+        from (select d1.value       title_text,
+        d2.value       object_class,
+        d3.value       professional_type,
+        e1.description,
+        e1.flow_img,
+        e1.item_id,
+        e1.vendor_id   vendor_id
+        from tfp_adv_key_code  d1,
+        tfp_adv_key_code  d2,
+        tfp_adv_key_code  d3,
+        tfp_adv_matchcond f1,
+        tfp_adv_matchcond f2,
+        tfp_adv_matchcond f3,
+        tfp_advice_item   e1
+        where d1.condition_id = f1.condition_id
+        and d2.condition_id = f2.condition_id
+        and d3.condition_id = f3.condition_id
+        and f1.field_name = 'title_text'
+        and f2.field_name = 'object_class'
+        and f3.field_name = 'professional_type'
+        and d1.item_id = d2.item_id
+        and d1.item_id = d3.item_id
+        and d1.item_id = e1.item_id
+        ]]>
+        <if test="vendorId != null">
+            <![CDATA[
+            and e1.vendor_id= ${vendorId}
+            ]]>
+        </if>
+        <if test="objectClass != null">
+            <![CDATA[
+            and d2.value='${objectClass}'
+            ]]>
+        </if>
+        <if test="professionalType != null">
+            <![CDATA[
+            and d3.value='${professionalType}'
+            ]]>
+        </if>
+        <if test="titleText != null">
+            <![CDATA[
+            and lower(d1.value) like '%${titleText}%'
+            ]]>
+        </if>
+        <if test="null == null">
+            <![CDATA[
+            ) t
+            left join tia_alarm_dict tia1
+            on t.object_class = to_char(tia1.id)
+            and tia1.type = 9
+            left join tia_alarm_dict tia2
+            on t.professional_type = to_char(tia2.id)
+            and tia2.type = 1001
+            left join nrmdb.vendor_name tia3
+            on t.vendor_id = tia3.type)
+            ]]>
+        </if>
+    </select>
+    <!-- end -->
+
+    <!-- 获取经验库 start -->
+    <select id="SelectExperienceLibrary" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+         select t.item_id,
+        t.title_text,
+         DBMS_LOB.substr(t.description, 6000, 1) as DESCRIPTION,
+        tia3.zh_name        vendor,
+        tia2.txt            professional,
+        tia1.txt            objectclass,
+        t.vendor_id,
+        t.professional_type,
+        t.object_class,
+        t.flow_img          flow_img,
+        t.flow_img          flow_img_link
+        from (select row_number() over(order by e1.item_id desc) arownum,
+        d1.value title_text,
+        d2.value object_class,
+        d3.value professional_type,
+        e1.description ,
+        e1.flow_img,
+        e1.item_id,
+        e1.vendor_id vendor_id
+        from tfp_adv_key_code  d1,
+        tfp_adv_key_code  d2,
+        tfp_adv_key_code  d3,
+        tfp_adv_matchcond f1,
+        tfp_adv_matchcond f2,
+        tfp_adv_matchcond f3,
+        tfp_advice_item   e1
+        where d1.condition_id = f1.condition_id
+        and d2.condition_id = f2.condition_id
+        and d3.condition_id = f3.condition_id
+        and f1.field_name = 'title_text'
+        and f2.field_name = 'object_class'
+        and f3.field_name = 'professional_type'
+        and d1.item_id = d2.item_id
+        and d1.item_id = d3.item_id
+        and d1.item_id = e1.item_id) t
+            left join tia_alarm_dict tia1
+            on t.object_class = to_char(tia1.id)
+            and tia1.type = 9
+            left join tia_alarm_dict tia2
+            on t.professional_type = to_char(tia2.id)
+            and tia2.type = 1001
+            left join vendor_name tia3
+            on t.vendor_id = tia3.type
+        ]]>
+    </select>
+    <!-- end -->
+ <!-- 获取经验库 start -->
+    <select id="SelectFilterExperienceLibrary" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+         select t.item_id,
+        t.title_text,
+         DBMS_LOB.substr(t.description, 6000, 1) as DESCRIPTION,
+        tia3.zh_name        vendor,
+        tia2.txt            professional,
+        tia1.txt            objectclass,
+        t.vendor_id,
+        t.professional_type,
+        t.object_class,
+        t.flow_img          flow_img,
+        t.flow_img          flow_img_link
+        from (select row_number() over(order by e1.item_id desc) arownum,
+        d1.value title_text,
+        d2.value object_class,
+        d3.value professional_type,
+        e1.description ,
+        e1.flow_img,
+        e1.item_id,
+        e1.vendor_id vendor_id
+        from tfp_adv_key_code  d1,
+        tfp_adv_key_code  d2,
+        tfp_adv_key_code  d3,
+        tfp_adv_matchcond f1,
+        tfp_adv_matchcond f2,
+        tfp_adv_matchcond f3,
+        tfp_advice_item   e1
+        where d1.condition_id = f1.condition_id
+        and d2.condition_id = f2.condition_id
+        and d3.condition_id = f3.condition_id
+        and f1.field_name = 'title_text'
+        and f2.field_name = 'object_class'
+        and f3.field_name = 'professional_type'
+        and d1.item_id = d2.item_id
+        and d1.item_id = d3.item_id
+        and d1.item_id = e1.item_id
+			  ]]>
+			<if test="vendorId != null">
+            <![CDATA[
+            and e1.vendor_id= ${vendorId}
+            ]]>
+        </if>
+        <if test="objectClass != null">
+            <![CDATA[
+            and d2.value='${objectClass}'
+            ]]>
+        </if>
+        <if test="professionalType != null">
+            <![CDATA[
+            and d3.value='${professionalType}'
+            ]]>
+        </if>
+        <if test="titleText != null">
+            <![CDATA[
+            and lower(d1.value) like '%${titleText}%'
+            ]]>
+        </if>
+		<if test="startRowNum != null">
+            <![CDATA[
+            ) t
+            left join tia_alarm_dict tia1
+            on t.object_class = to_char(tia1.id)
+            and tia1.type = 9
+            left join tia_alarm_dict tia2
+            on t.professional_type = to_char(tia2.id)
+            and tia2.type = 1001
+            left join vendor_name tia3
+            on t.vendor_id = tia3.type
+            ]]>
+        </if>
+    </select>
+    <!-- end -->
+    <!-- 获取经验库单条数据 依据为设备id，专业id，设备对象类型id，告警经验标题 start -->
+    <select id="SelectExperienceLibraryByCondition" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select *
+        from (select t.item_id,
+        t.professional_type,
+        t.title_text,
+        t.description,
+        tia3.zh_name        vendor,
+        tia2.txt            professional,
+        tia1.txt            objectclass,
+        t.vendor_id,
+        t.object_class,
+        t.flow_img          flow_img,
+        t.flow_img          flow_img_link
+        from (select row_number() over(order by e1.item_id desc) arownum,
+        d1.value title_text,
+        d2.value object_class,
+        d3.value professional_type,
+        e1.description,
+        e1.flow_img,
+        e1.item_id,
+        e1.vendor_id vendor_id
+        from tfp_adv_key_code  d1,
+        tfp_adv_key_code  d2,
+        tfp_adv_key_code  d3,
+        tfp_adv_matchcond f1,
+        tfp_adv_matchcond f2,
+        tfp_adv_matchcond f3,
+        tfp_advice_item   e1
+        where d1.condition_id = f1.condition_id
+        and d2.condition_id = f2.condition_id
+        and d3.condition_id = f3.condition_id
+        and f1.field_name = 'title_text'
+        and f2.field_name = 'object_class'
+        and f3.field_name = 'professional_type'
+        and d1.item_id = d2.item_id
+        and d1.item_id = d3.item_id
+        and d1.item_id = e1.item_id) t
+        left join tia_alarm_dict tia1
+        on t.object_class = to_char(tia1.id)
+        and tia1.type = 9
+        left join tia_alarm_dict tia2
+        on t.professional_type = to_char(tia2.id)
+        and tia2.type = 1001
+        left join vendor_name tia3
+        on t.vendor_id = tia3.type)
+        where object_class = '${objectClass}'
+        and vendor_id =  '${vendorId}'
+        and title_text =  '${titleText}'
+        and professional_type =  '${professionalType}'
+        ]]>
+    </select>
+    <!-- end -->
+
+    <!-- 修改经验库1 -->
+    <update id="UpdateExperienceLibrary1" parameterType="java.util.Map">
+        <![CDATA[
+        update tfp_advice_item set description='${description}',flow_img='${flow_img}' where item_id =${item_id}
+        ]]>
+    </update>
+    <!-- 修改经验库end -->
+
+    <!-- 修改经验库2 -->
+    <update id="UpdateExperienceLibrary2" parameterType="java.util.Map">
+        <![CDATA[
+        update tfp_adv_key_code set value='${value}' where item_id=${item_id} and condition_id='${condition_id}'
+        ]]>
+    </update>
+    <!-- 修改经验库end -->
+
+    <!-- 获取监控视图列表 start -->
+    <select id="SelectMonitorViews" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select m.window_id,
+			   m.window_name,
+			   m.window_type,
+			   m.window_owner,
+			   u.user_name,
+			   DATE_FORMAT(m.create_time, '%Y-%m-%d %T') create_time,
+			   m.window_attribute,
+			   m.if_used,
+			   m.childwindow_show,
+			   m.col_disp_templet,
+			   m.status_disp_templet,
+			   m.filter_id_list,
+			   m.note,
+			   DATE_FORMAT(m.latest_time, '%Y-%m-%d %T') latest_time,
+			   c.columns_value,
+			   s.status_value
+		  from tfp_monitorviewinfo m,
+			   nrmdb.tau_user        u,
+			   tfp_status_template s,
+			   tfp_column_template c
+		 where u.user_id = m.window_owner
+		   and m.status_disp_templet = s.template_id
+		   and m.col_disp_templet = c.template_id
+		   and m.window_type in (0, 1)
+		   and m.if_used in (0, 1)
+		   and m.window_attribute in (0, 1)
+        ]]>
+    </select>
+    <select id="SelectMonitorViewsById" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select m.window_id,
+        m.window_name,
+        m.window_type,
+        m.window_owner,
+        u.user_name,
+        m.create_time,
+        m.window_attribute,
+        m.if_used,
+        m.childwindow_show,
+        m.col_disp_templet,
+        m.status_disp_templet,
+        m.filter_id_list,
+        m.note,
+        m.latest_time,
+        c.columns_value,
+        s.status_value
+        from tfp_monitorviewinfo m,
+        nrmdb.tau_user        u,
+        tfp_status_template s,
+        tfp_column_template c
+        where u.user_id = m.window_owner and
+        m.status_disp_templet = s.template_id
+        and m.col_disp_templet = c.template_id
+        ]]>
+        <if test="condition != null">${condition}</if>
+    </select>
+    <select id="SelectOndutyMonitorViewsByUserid" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select asd.window_id,
+                asd.window_name,
+                asd.window_type,
+                asd.window_owner,
+                asd.user_name,
+                asd.create_time,
+                asd.window_attribute,
+                asd.if_used,
+                asd.window_bar_type,
+                asd.ack_flag,
+                asd.col_disp_templet,
+                asd.status_disp_templet,
+                asd.note,
+                asd.latest_time,
+                asd.columns_value,
+                asd.status_value,
+                asd.filter_id_list,
+                group_concat(asd.filter_name) as filter_name_list
+            from (select m.window_id,
+                        m.window_name,
+                        m.window_type,
+                        m.window_owner,
+                        u.user_name,
+                        DATE_FORMAT(m.create_time, '%Y-%m-%d %T') create_time,
+                        m.window_attribute,
+                        m.if_used,
+                        m.window_bar_type,
+                        m.ack_flag,
+                        m.col_disp_templet,
+                        m.status_disp_templet,
+                        m.filter_id_list,
+                        f.filter_name,
+                        m.note,
+                        DATE_FORMAT(m.latest_time, '%Y-%m-%d %T') latest_time,
+                        c.columns_value,
+                        s.status_value
+                    from tfp_monitorviewinfo m,
+                        nrmdb.tau_user      u,
+                        tfp_status_template s,
+                        tfp_column_template c,
+                        alarm_rule_define   f
+                    where u.user_id = m.window_owner          
+                    and m.status_disp_templet = s.template_id
+                    and instr(m.filter_id_list, f.filter_id) > 0
+                    and m.col_disp_templet = c.template_id
+                    and m.window_type in (0)
+                    and m.if_used in (1)
+                    and m.window_attribute in (0, 1)
+                    and m.window_owner = '${userId}'    
+                ) asd
+
+            group by asd.window_id,
+                    asd.window_name,
+                    asd.window_type,
+                    asd.window_owner,
+                    asd.user_name,
+                    asd.create_time,
+                    asd.window_attribute,
+                    asd.if_used,
+                    asd.window_bar_type,
+                    asd.ack_flag,
+                    asd.col_disp_templet,
+                    asd.status_disp_templet,
+                    asd.note,
+                    asd.latest_time,
+                    asd.columns_value,
+                    asd.status_value,
+                    asd.filter_id_list
+        ]]>
+
+    </select>
+    <select id="SelectCustomMonitorViewsByUserid" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+           SELECT
+                m.window_id,
+                m.window_name,
+                m.window_type,
+                m.window_owner,
+                u.user_name,
+                DATE_FORMAT(m.create_time, '%Y-%m-%d %T') create_time,
+                m.window_attribute,
+                m.if_used,
+                m.childwindow_show,
+                m.col_disp_templet,
+                m.status_disp_templet,
+                m.filter_id_list,
+                m.note,
+                DATE_FORMAT(m.latest_time, '%Y-%m-%d %T')    latest_time,
+                group_concat(f.filter_id)                 AS filter_id_list,
+                group_concat(f.filter_name)               AS filter_name_list,
+                c.columns_value,
+                s.status_value
+            FROM
+                tfp_monitorviewinfo m,
+                nrmdb.tau_user u,
+                tfp_status_template s,
+                tfp_column_template c,
+                alarm_rule_define f
+            WHERE
+                u.user_id = m.window_owner
+            AND m.status_disp_templet = s.template_id
+            AND m.col_disp_templet = c.template_id
+            AND instr(m.filter_id_list, f.filter_id) > 0
+            AND ((
+                        m.window_type IN (1)
+                    AND m.if_used IN (1)
+                    AND m.window_attribute IN (0,
+                                            1)
+                    AND m.window_owner ='${userId}')
+                OR  (
+                        m.if_used IN (1)
+                    AND m.window_attribute IN (1)
+                    AND m.window_owner !='${userId}'))
+            GROUP BY
+                m.window_id,
+                m.window_name,
+                m.window_type,
+                m.window_owner,
+                u.user_name,
+                m.create_time,
+                m.window_attribute,
+                m.if_used,
+                m.childwindow_show,
+                m.col_disp_templet,
+                m.status_disp_templet,
+                m.note,
+                m.latest_time,
+                c.columns_value,
+                s.status_value
+        ]]>
+
+    </select>
+    <!--获取监控视图列表 end -->
+
+    <!-- 删除监控视图 start -->
+    <delete id="DeleteMonitorView" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfp_monitorviewinfo where window_id in (${windowIds})
+        ]]>
+    </delete>
+    <!-- 删除监控视图 end -->
+
+    <!-- 插入监控视图列表 start -->
+    <insert id="InsertMonitorView" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_monitorviewinfo
+		  (window_id,
+		   window_name,
+		   window_type,
+		   window_owner,
+		   create_time,
+		   window_attribute,
+		   if_used,
+		   childwindow_show,
+		   col_disp_templet,
+		   status_disp_templet,
+		   filter_id_list,
+		   note)
+		values
+		  (${windowId},
+		   '${windowName}',
+		   '${windowType}',
+		   '${userName}',
+		   sysdate(),
+		   '${windowAttribute}',
+		   '${ifUsed}',
+		   '${childwindowShow}',
+		   ${col_disp_templet},
+		   ${status_disp_templet},
+		   '${filter_id_list}',
+		   '${note}')
+
+        ]]>
+    </insert>
+    <!-- 插入监控视图列表 end -->
+
+    <!-- 获取tia_alarm_dict-网元类型type=9 start -->
+    <select id="SelectTiaAlarmDictByType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select ID ,txt from tia_alarm_dict where type=${type} and valid=${valid} order by txt
+        ]]>
+    </select>
+    <!--获取tia_alarm_dict-网元类型type=9  end -->
+
+    <!--查询规则延时时间 start -->
+    <select id="SelectFilterDelayseconds" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select filter_id id,attribute_value value from tfp_ex_ticketfwd where attribute_name='${name}'
+        ]]>
+    </select>
+    <!-- 查询规则延时时间 end -->
+
+    <!--插入规则延时时间 start -->
+    <insert id="InsertFilterDelayseconds" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfp_ex_ticketfwd (filter_id,attribute_value,attribute_name) values (${filter_id},'${value}','${name}')
+        ]]>
+    </insert>
+    <!--插入规则延时时间 start -->
+
+    <!--修改规则延时时间 start -->
+    <update id="UpdateFilterDelayseconds" parameterType="java.util.Map">
+        <![CDATA[
+        update tfp_ex_ticketfwd set attribute_value='${value}' where attribute_name='${name}' and filter_id =${filter_id}
+        ]]>
+    </update>
+    <!-- 修改规则延时时间 end -->
+
+    <!--删除规则延时时间 start -->
+    <delete id="DeleteFilterDelayseconds" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfp_ex_ticketfwd where attribute_name='${name}' and filter_id = ${filter_id}
+        ]]>
+    </delete>
+    <!-- 删除规则延时时间 end -->
+    <!-- 右键备注信息 -->
+    <select id="SelectMemoInfos" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select remark_id,fp0,fp1,fp2,fp3,int_id,object_class,user_id,remark_time,remark_txt from tfa_remark where fp0=#{fp0} and  fp1=#{fp1} and  fp2=#{fp2} and  fp3=#{fp3}
+        ]]>
+    </select>
+    <insert id="InsertMemoInfo" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_remark (remark_id,fp0,fp1,fp2,fp3,int_id,object_class,user_id,remark_time,remark_txt,manual_class_id) values ('${remark_id}','${fp0}','${fp1}','${fp2}','${fp3}','${int_id}','${object_class}','${user_id}',STR_TO_DATE('${remark_time}','%Y-%m-%d %T'),'${remark_txt}',-1)
+        ]]>
+    </insert>
+    <update id="UpdateMemoInfo" parameterType="java.util.Map">
+        <![CDATA[
+        update tfa_remark set remark_time=STR_TO_DATE('${remark_time}','%Y-%m-%d %T'),user_id='${user_id}',remark_txt='${remark_txt}' where remark_id =${remark_id}
+        ]]>
+    </update>
+    <!-- 右键备注信息 -->
+
+    <!--花名册管理 Start-->
+    <!--集团/省内梳理表查询-->
+    <select id="SelectCardingType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.*,t2.operator_user_name as submitreview_user,t2.operator_time as submitreview_time,t3.operator_status
+        from standard_roster_record t1 left join (select a.roster_int_id, a.operator_user_name, max(a.operator_time) as operator_time,
+        a.operator_status from standard_roster_status a where a.operator_status = 2 group by a.roster_int_id, a.operator_user_name,
+        a.operator_status) t2 on t1.roster_int_id = t2.roster_int_id left join (select a.* from standard_roster_status a,
+        (select roster_int_id, max(operator_time) as operator_time from standard_roster_status group by roster_int_id) c where a.roster_int_id = c.roster_int_id
+        and a.operator_time = c.operator_time) t3 on t1.roster_int_id = t3.roster_int_id where
+        t1.file_type = ${file_type}             order by t1.import_time desc
+        ]]>
+    </select>
+    <!--集团/省内梳理表删除1-->
+    <delete id="DeleteCardingType1" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_content where roster_int_id=${roster_int_id}
+        ]]>
+    </delete>
+    <!--集团/省内梳理表删除1-->
+    <delete id="DeleteCardingType2" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_status where roster_int_id=${roster_int_id}
+        ]]>
+    </delete>
+    <!--集团/省内梳理表删除1-->
+    <delete id="DeleteCardingType3" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_record where roster_int_id=${roster_int_id}
+        ]]>
+    </delete>
+    <!--专业-->
+    <select id="SelectProfessional" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1001 AND valid=1
+        ]]>
+    </select>
+    <!--网元设备类型-->
+    <select id="SelectObjectClass" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt FROM tia_alarm_dict WHERE type = 9 AND valid = 1 and txt not in ('A++客户','A+客户','A客户','B客户','C客户','me','AAA') order by txt
+        ]]>
+    </select>
+    <!--厂商-->
+    <select id="SelectVendor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type id,zh_name txt from vendor_name where type > 0 and use_type = 0 order by zh_name
+        ]]>
+    </select>
+    <!--专业，设备表类型-->
+    <select id="SelectOrgTypeRoster" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=7 AND valid=1 and id in (1,100)
+        ]]>
+    </select>
+    <!--一次获取专业、厂家、网元类型、网络类别、梳理表类型-->
+    <select id="SelectRosterImportTypeDic" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from (select type id,zh_name txt,'厂家' as type_name,99999 as type from vendor_name where type >= 0 and type in (0,1,4,7,8,9,11,12,50,51,52,201,202,203,953,710) order by zh_name)
+        union  all
+        select id,txt,'专业' as type_name,type from tia_alarm_dict where type=1001 and valid=1
+        union  all
+        select * from (
+        select id,upper(txt),type_name,type from tia_alarm_dict where type=9 and valid=1 and id in (100,101,102,105,108,110,111,112,121,122,124,130,131,161,200,201,301,400,900,1001,1002,2001,2010,30011,30013,30214,6000,6010,6100,6101,6102,6103,6109,6111,6112,6114,6116,6118,8101,8102,8103,8104,8105,8106,8107,9200,9201,9300,10003,14010,14301,14302,14129,14130,14131,14134,14303,14304,14305,14306,140002,140003,20150,20151) order by txt)
+        union  all
+        select id,txt,'网络类型' as type_name,type from tia_alarm_dict where type=1037 and valid=1
+        union all
+        select id,txt,'梳理表类型' as type_name,type from tia_alarm_dict where type=7 and valid=1 and id in (1,100)
+        ]]>
+    </select>
+    <!--花名册文件相关信息-->
+    <select id="SelectRosterFilesInfor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.*,
+        t2.operator_user_name as submitreview_user,
+        t2.operator_time as submitreview_time,
+        t3.operator_status
+        from standard_roster_record t1
+        left join
+        (select a.roster_int_id,a.operator_user_name,max(a.operator_time) as operator_time,a.operator_status from standard_roster_status a where
+        a.operator_status = 2 group by a.roster_int_id,a.operator_user_name,a.operator_status
+        )t2 on t1.roster_int_id=t2.roster_int_id
+        left join
+        (select a.* from standard_roster_status a ,(select roster_int_id,max(operator_time) as operator_time
+        from standard_roster_status
+        group by roster_int_id
+        ) c
+        where a.roster_int_id=c.roster_int_id and a.operator_time=c.operator_time
+        )t3 on t1.roster_int_id=t3.roster_int_id ${v0}  order by t1.import_time desc
+        ]]>
+    </select>
+    <!--根据专业、厂家、网元类型获取配置列-->
+    <select id="SelectRosterGetColumn" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t.* from standard_roster_column t
+        where professional_type=${profType} and ne_type=${neType} and vendor_id=${vendType}
+        order by col_index
+        ]]>
+    </select>
+    <!--花名册通用批量插入SQL-->
+    <insert id="InsertRosterCommonBatch" parameterType="java.util.Map">
+        <![CDATA[
+        insert into ${table} (${setColumns}) values (${setValues})
+        ]]>
+    </insert>
+    <!--花名册文件插入SQL-->
+    <insert id="InsertRosterFile" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_record (roster_int_id,professional_type,professional_name,vendor_id,vendor_name,ne_type,ne_type_name,sun_network_type,version,import_time,import_user,import_user_name,file_type,file_name,org_type,org_type_name)
+        values(${v0},${v1},'${v2}',${v3},'${v4}',${v5},'${v6}','${v7}','${v8}',sysdate(),${v9},'${v10}',${v11},'${v12}',${v13},'${v14}')
+        ]]>
+    </insert>
+    <!--花名册文件流程表插入SQL-->
+    <insert id="InsertRosterFileStatus" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_status
+        (roster_int_id, operator_status, operator_user,operator_user_name, operator_time, operator_note)
+        values
+        (${roster_int_id}, ${operator_status}, ${operator_user},'${operator_user_name}',sysdate(), '${operator_note}')
+        ]]>
+    </insert>
+    <!--花名册文件流程表插入-->
+    <insert id="InsertRosterFileStatus2" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_status
+        (roster_int_id, operator_status, operator_user,operator_user_name, operator_time, operator_note)
+        values
+        (${v0},${v1},${v2},'${v3}',sysdate(),'${v4}')
+        ]]>
+    </insert>
+    <!--花名册文件流程表插入-->
+    <insert id="InsertRosterFileStatus3" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_status
+        (roster_int_id, operator_status, operator_user,operator_user_name, operator_time, operator_note)
+        values
+        (${v0},${v1},${v2},'${v3}',sysdate()+1/24/60/60,'${v4}')
+        ]]>
+    </insert>
+    <!--更新所有花名册的启用状态-->
+    <update id="UpdateAllRosterFileEnabledStatus" parameterType="java.util.Map">
+        <![CDATA[
+        update standard_roster_record set enabled_status=2 where professional_type='${v0}' and vendor_id='${v1}' and ne_type='${v2}' and file_type='${v3}' and enabled_status=1
+        ]]>
+    </update>
+    <!--更新花名册启用状态-->
+    <update id="UpdateRosterEnabledStatus" parameterType="java.util.Map">
+        <![CDATA[
+        update standard_roster_record set enabled_status=1 where roster_int_id=${v0}
+        ]]>
+    </update>
+    <!--花名册最新文件读取SQL-->
+    <select id="SelectRosterLatestFile" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from
+        (select * from standard_roster_record
+        where professional_type = ${professional_type}
+        and vendor_id = ${vendor_id}
+        and ne_type = ${ne_type}
+        and org_type = ${org_type}
+        order by import_time desc)
+        where rownum < 2
+        ]]>
+    </select>
+    <!--花名册网管告警ID-->
+    <select id="SelectStandardAlarmId" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_id from standard_roster_content where roster_int_id = ${roster_int_id}
+        ]]>
+    </select>
+    <!--花名册受影响过滤器信息-->
+    <select id="SelectInfluencedFilterInfo" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select
+          f.filter_id,
+          f.filter_name,
+          f.module_id,
+          f.owner_id,
+          u.user_name,
+          f.create_time,
+          f.latest_time,
+          f.filter_memo,
+          f.module_id,
+          f.share_regions,
+          f.share_users,
+          f.is_valid,
+          f.is_private,
+          c1.def_id c1_def_id,
+          c1.value c1_value,
+          c2.def_id c2_def_id,
+          c2.value c2_value
+          from tai_userinfo u, tfp_filter_info f,tfp_filter_define f1,tai_condition c
+          left join (select c11.condition_id, c11.def_id,d1.def_name,d1.zh_name,c11.value,c11.reverse from tia_condition_def d1, tai_condition1 c11 where d1.def_id=c11.def_id)c1 on c.condition_id=c1.condition_id
+          left join (select c22.condition_id, c22.def_id,d1.def_name,d1.zh_name,c22.value,c22.reverse from tia_condition_def d1, tai_condition2 c22 where d1.def_id=c22.def_id)c2 on c.condition_id=c2.condition_id
+          where f.owner_id = u.user_id
+          and u.deleted = 0 and f.module_id> 0 and f.filter_id=f1.filter_id and f1.condition_id = c.condition_id and (c1.def_id = 65 or c2.def_id = 65)
+          order by f.module_id
+        ]]>
+    </select>
+    <!--花名册受影响过滤器信息-->
+    <select id="SelectInfluencedRelationRule" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.*,
+        pro.txt                      professional_type_name,
+        b.derive_clr_rule,
+        b.alarm_text,
+        b.derive_title_text,
+        b.derive_org_severity,
+        b.derive_standard_alarm_id,
+        b.derive_standard_alarm_name,
+        b.professional_type          derive_professional_type,
+        b.vendor_id                  derive_vendor_id,
+        b.eqp_object_class           derive_eqp_object_class,
+        b.object_class               derive_object_class,
+        b.active_timeout             derive_active_timeout,
+        c.filter_condition,
+        c.is_main_alarm
+        from tfa_gaia_rule_file a
+        left join tfa_gaia_rule_derive b
+        on a.ser_file_id = b.ser_file_id
+        left join tfa_gaia_rule_sub_alarm c
+        on c.ser_file_id = a.ser_file_id
+        left join (select * from tia_alarm_dict where type = 1001 and valid = 1) pro
+        on pro.id = a.professional_type
+        where a.in_use in (0, 1)
+        order by change_time desc, c.is_main_alarm desc
+        ]]>
+    </select>
+    <!--花名册最新文件读取SQL-->
+    <select id="SelectRosterLatestFileForDongHuan" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from
+        (select * from standard_roster_record
+        where professional_type = ${professional_type}
+        and vendor_id = ${vendor_id}
+        and org_type = ${org_type}
+        order by import_time desc)
+        where rownum < 2
+        ]]>
+    </select>
+    <!--根据导入文件ID获取配置列-->
+    <select id="SelectRosterGetColumnByFile" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.* from standard_roster_column a
+        join standard_roster_record b
+        on a.professional_type = b.professional_type
+        and a.vendor_id = b.vendor_id
+        and a.ne_type = b.ne_type
+        where b.roster_int_id=${roster_int_id} order by a.col_index
+        ]]>
+    </select>
+
+    <!--根据导入文件ID获取花名册内容总记录数-->
+    <select id="SelectRosterGetContentCountByFile" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select count(*) as count from  standard_roster_content
+        where roster_int_id=${roster_int_id}
+        ]]>
+    </select>
+    <!--删除花名册单条记录-->
+    <delete id="DeleteRosterDeleteContent" parameterType="java.util.Map">
+        <![CDATA[
+        delete from  standard_roster_content where INFO_ID=${INFO_ID}
+        ]]>
+    </delete>
+    <!--删除花名册文件所有内容-->
+    <delete id="DeleteRosterAllContent" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_content where roster_int_id=${0}
+        ]]>
+    </delete>
+    <!--花名册通用更新SQL-->
+    <update id="UpdateRosterCommon" parameterType="java.util.Map">
+        <![CDATA[
+        update ${table} set ${setvaule} where ${setwhere}
+        ]]>
+    </update>
+    <!--删除花名册文件-->
+    <delete id="DeleteRosterRecord" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_record where roster_int_id=${v0}
+        ]]>
+    </delete>
+    <!--删除花名册文件流程-->
+    <delete id="DeleteRosterStatus" parameterType="java.util.Map">
+        <![CDATA[
+        delete standard_roster_status where roster_int_id=${v0}
+        ]]>
+    </delete>
+    <!--获取上一个版本花名册的ID-->
+    <select id="SelectPreVersionID" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from (
+        select 'PreID' as type, roster_int_id
+        from standard_roster_record
+        where import_time < STR_TO_DATE('${v0}','%Y-%m-%d %T') and professional_type='${v1}' and vendor_id='${v2}' and ne_type='${v3}' and org_type='${v4}'  and file_type='${v5}'
+        order by import_time desc ) where rownum <2
+        union all
+        select * from (
+        select 'EnableID' as type, roster_int_id
+        from standard_roster_record
+        where enabled_status=1 and  file_type=2  and professional_type='${v1}' and vendor_id='${v2}' and ne_type='${v3}' and org_type='${v4}') where rownum <2
+        ]]>
+    </select>
+    <!--查询指定的两个花名册的内容-->
+    <select id="SelectRosterContent" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select 'Current' as temporaryfiletype,${v0} as temporarymatch,${v1} from standard_roster_content
+        where roster_int_id=${v2}
+        union all
+        select 'Pre' as  temporaryfiletype,${v0} as temporarymatch,${v1} from standard_roster_content
+        where roster_int_id=${v3}
+        union all
+        select 'Enable' as  temporaryfiletype,${v0} as temporarymatch,${v1} from standard_roster_content
+        where roster_int_id=${v4}
+        union all
+        select 'Update' as temporaryfiletype, t.* from
+        (select ${v0} as temporaryKey,${v1} from standard_roster_content
+        where roster_int_id=${v2}) t,
+        (select ${v0} as temporaryKey,${v1} from standard_roster_content
+        where roster_int_id=${v3}) t1
+        where t.temporarykey=t1.temporarykey and ${v5}
+        ]]>
+    </select>
+    <!--查询指定的两个花名册的内容,优化版本-->
+    <select id="SelectRosterContentAlter1" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select rownum,t.* from(
+        select 'Current' as temporaryfiletype,${v0} from standard_roster_content
+        where roster_int_id=${v1}
+        union all
+        select 'Pre' as  temporaryfiletype,${v0} from standard_roster_content
+        where roster_int_id=${v2}
+        union all
+        select 'Enable' as  temporaryfiletype,${v0} from standard_roster_content
+        where roster_int_id=${v3}
+        order by ${v0}) t
+        ]]>
+    </select>
+    <!--插入花名册与字典表的映射关系-->
+    <insert id="InsertRosterDictMapping" parameterType="java.util.Map">
+        <![CDATA[
+        insert into roster_dict_mapping(roster_txt,dict_id,dict_txt) values ('${v0}',${v1},'${v2}')
+        ]]>
+    </insert>
+    <!--删除tfm_alarm_stand_info表数据-->
+    <delete id="DeleteStandInfo" parameterType="java.util.Map">
+        <![CDATA[
+        delete tfm_alarm_stand_info where  professional_type =${v0} and vendor_id =${v1} and Eqp_Object_Class = ${v2} and file_type=${v3}
+        ]]>
+    </delete>
+    <!--同步到tfm_alarm_stand_info表-->
+    <insert id="InsertRosterStandInfo" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfm_alarm_stand_info (info_id,mapping_type, alarm_title_text, professional_type, vendor_id, vendor_severity, vendor_version, alarm_explanation, effect_ne, effect_service, eqp_object_class, file_name, logic_type, logic_sub_type, object_class, redefine_severity,org_severity,org_type, redefine_type, related_flag, standard_alarm_id, standard_alarm_name, send_jt_flag, object_class_text, eqp_object_class_text, probable_cause, probable_cause_oid, layer_rate, layer_rate_text, alarm_check, Rule_Seq,alarm_explanation_addition,locate_name,time_stamp,file_type)
+        select  a.info_id,a.mapping_type, a.alarm_title_text, a.professional_type, a.vendor_id, a.vendor_severity, a.vendor_version, a.alarm_explanation, a.effect_ne, a.effect_service, a.eqp_object_class, a.file_name, a.logic_alarm_type, a.logic_sub_alarm_type, a.object_class, a.org_severity,a.org_severity,a.org_type, a.org_type, a.related_flag, a.standard_alarm_id, a.standard_alarm_name, a.send_jt_flag, a.object_class_text, a.eqp_object_class_text, a.probable_cause, a.probable_cause_oid, a.layer_rate, a.layer_rate_text, a.alarm_check, a.Rule_Seq,a.alarm_explanation_addition,a.alarm_explanation_addition,sysdate(),b.file_type
+        from standard_roster_content a left join standard_roster_record b on a.roster_int_id=b.roster_int_id
+        where a.roster_int_id=${v0} and b.file_type=${v1}
+        ]]>
+    </insert>
+    <!--单条更新同步到tfm_alarm_stand_info表-->
+    <update id="UpdateRosterStandInfo" parameterType="java.util.Map">
+        <![CDATA[
+        update tfm_alarm_stand_info a
+        set (mapping_type, alarm_title_text, professional_type, vendor_id, vendor_severity, vendor_version, alarm_explanation, effect_ne, effect_service, eqp_object_class, file_name, logic_type, logic_sub_type, object_class, redefine_severity,org_severity,org_type,redefine_type, related_flag, standard_alarm_id, standard_alarm_name, send_jt_flag, object_class_text, eqp_object_class_text, probable_cause, probable_cause_oid, layer_rate, layer_rate_text, alarm_check, Rule_Seq,alarm_explanation_addition,locate_name,time_stamp)
+        = (select mapping_type, alarm_title_text, professional_type, vendor_id, vendor_severity, vendor_version, alarm_explanation, effect_ne, effect_service, eqp_object_class, file_name, logic_alarm_type, logic_sub_alarm_type, object_class, org_severity, org_severity,org_type,org_type, related_flag, standard_alarm_id, standard_alarm_name, send_jt_flag, object_class_text, eqp_object_class_text, probable_cause, probable_cause_oid, layer_rate, layer_rate_text, alarm_check, Rule_Seq,alarm_explanation_addition,alarm_explanation_addition,sysdate()
+        from standard_roster_content b
+        where a.info_id =b.info_id)
+        where a.info_id = ${info_id}
+        ]]>
+    </update>
+    <!--在线花名册 Start -->
+    <!--在线花名册文件相关信息-->
+    <select id="SelectOnlineRosterFilesInfor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.*,
+        t2.operator_user_name as review_user,
+        t2.operator_time as review_time,
+        t3.operator_user_name as release_user,
+        t3.operator_time as release_time,
+        t4.operator_user_name as submitreview_user,
+        t4.operator_time as submitreview_time
+        from standard_roster_record t1
+        left join
+        (select a.roster_int_id,a.operator_user_name,max(a.operator_time) as operator_time from standard_roster_status a where
+        a.operator_status = 5 group by a.roster_int_id,a.operator_user_name
+        )t2 on t1.roster_int_id=t2.roster_int_id
+        left join
+        (select  b.roster_int_id,b.operator_user_name,max(b.operator_time) as operator_time  from standard_roster_status b where
+        b.operator_status = 7 group by b.roster_int_id,b.operator_user_name
+        )t3  on t1.roster_int_id=t3.roster_int_id
+        left join
+        (select  b.roster_int_id,b.operator_user_name,max(b.operator_time) as operator_time  from standard_roster_status b where
+        b.operator_status = 2 group by b.roster_int_id,b.operator_user_name
+        )t4  on t1.roster_int_id=t4.roster_int_id where t1.enabled_status=1 ${v0}  order by t1.import_time desc
+        ]]>
+    </select>
+    <!--在线花名册待审核-->
+    <select id="SelectOnlineRosterStayReviewManage" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.*,b.mobilephone
+        from (
+        select t1.*,
+        t2.operator_user as userid,
+        t2.operator_user_name as submitreview_user,
+        t2.operator_time as submitreview_time,
+        nvl(t2.operator_status,0) as operator_status
+        from standard_roster_record t1,standard_roster_status t2,
+        (select roster_int_id,
+        max(operator_time) as operator_time
+        from standard_roster_status
+        group by roster_int_id) t3
+        where t1.roster_int_id = t2.roster_int_id
+        and t2.roster_int_id = t3.roster_int_id
+        and t2.operator_time = t3.operator_time
+        and (t2.operator_status = ${v1}) ${v0}
+        )a left join  tai_userinfo b on a.userid=b.user_id
+        order by  a.submitreview_time desc
+        ]]>
+    </select>
+    <!--在线花名册已审核-->
+    <select id="SelectOnlineRosterReviewManage" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.*,
+        t2.operator_user_name as submitreview_user,
+        t2.operator_time as submitreview_time,
+        t3.operator_user_name as review_user,
+        t3.operator_time as review_time,
+        nvl(t3.operator_status,0) as operator_status
+        from standard_roster_record t1
+        left join
+        (select a.roster_int_id,a.operator_user_name,a.operator_status,max(a.operator_time) as operator_time from standard_roster_status a where
+        a.operator_status = 2 group by a.roster_int_id,a.operator_user_name,a.operator_status
+        )t2 on t1.roster_int_id=t2.roster_int_id
+        left join
+        (select a.* from standard_roster_status a ,(select roster_int_id,max(operator_time) as operator_time
+        from standard_roster_status
+        group by roster_int_id
+        ) c
+        where a.roster_int_id=c.roster_int_id and a.operator_time=c.operator_time
+        )t3 on t1.roster_int_id=t3.roster_int_id
+        where t2.operator_status=${v1} and nvl(t3.operator_status,0) in (5,7) ${v0} order by t3.operator_time desc
+        ]]>
+    </select>
+    <!--在线花名册待发布-->
+    <select id="SelectOnlineRosterStayReleaseManage" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.*,b.mobilephone from (
+        select t1.*,
+        t2.operator_user as userid,
+        t2.operator_user_name as  review_user,
+        t2.operator_time as review_time,
+        t4.operator_user_name as submitreview_user,
+        t4.operator_time as submitreview_time,
+        nvl(t2.operator_status,0) as operator_status
+        from standard_roster_record t1,standard_roster_status t2,
+        (select roster_int_id,
+        max(operator_time) as operator_time
+        from standard_roster_status
+        group by roster_int_id) t3,(select roster_int_id,operator_user_name,operator_status,max(operator_time) as operator_time
+        from standard_roster_status group by roster_int_id, operator_user_name,operator_status) t4
+        where t1.roster_int_id = t2.roster_int_id
+        and t1.roster_int_id=t4.roster_int_id
+        and t4.operator_status=2
+        and t2.roster_int_id = t3.roster_int_id
+        and t2.operator_time = t3.operator_time
+        and t2.operator_status = ${v1} ${v0} ) a left join  tai_userinfo b on a.userid=b.user_id
+        order by  a.review_time desc
+        ]]>
+    </select>
+    <!--在线花名册已发布-->
+    <select id="SelectOnlineRosterReleaseManage" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.*,
+        t2.operator_user_name as review_user,
+        t2.operator_time as review_time,
+        t3.operator_user_name as release_user,
+        t3.operator_time as release_time,
+        nvl(t3.operator_status,0) as operator_status,
+        t4.operator_user_name as submitreview_user,
+        t4.operator_time as submitreview_time
+        from standard_roster_record t1
+        left join
+        (select a.roster_int_id,a.operator_user_name,a.operator_status,max(a.operator_time) as operator_time from standard_roster_status a where
+        a.operator_status = 5 group by a.roster_int_id,a.operator_user_name,a.operator_status
+        )t2 on t1.roster_int_id=t2.roster_int_id
+        left join
+        (select  b.roster_int_id,b.operator_user_name,b.operator_status,max(b.operator_time) as operator_time  from standard_roster_status b where
+        b.operator_status = 7 group by b.roster_int_id,b.operator_user_name,b.operator_status
+        )t3  on t1.roster_int_id=t3.roster_int_id
+        left join
+        (select  c.roster_int_id,c.operator_user_name,max(c.operator_time) as operator_time  from standard_roster_status c where
+        c.operator_status = 2 group by c.roster_int_id,c.operator_user_name
+        )t4  on t1.roster_int_id=t4.roster_int_id
+        where t2.operator_status=${v1} and  nvl(t3.operator_status,0)=${v2} ${v0} order by  t3.operator_time desc
+        ]]>
+    </select>
+    <!--在线花名册 End -->
+
+    <!--未标准化花名册 Start -->
+    <!--查询未标准化花名册信息-->
+    <select id="SelectNotStandardRoster" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.*,b.user_name as First_Confirm_UserName,c.txt as Professional_Name
+        from tpa_alarm_unstandard_sum  a
+        left join tai_userinfo b on a.first_confirm_userid=b.user_id
+        left join (select id,txt from tia_alarm_dict where type=1001 AND valid=1 ) c on a.professional_type=c.id
+        ]]>
+    </select>
+    <!--带条件查询未标准化花名册信息-->
+    <select id="SelectNotStandardRosterByCondition" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.*,b.user_name as First_Confirm_UserName,c.txt as Professional_Name
+        from tpa_alarm_unstandard_sum  a
+        left join tai_userinfo b on a.first_confirm_userid=b.user_id
+        left join (select id,txt from tia_alarm_dict where type=1001 AND valid=1 ) c on a.professional_type=c.id
+        where  sum_level=${v0} and first_result >=STR_TO_DATE('${v1}','%Y-%m-%d %T') and first_result <=STR_TO_DATE('${v2}','%Y-%m-%d %T')
+        ]]>
+    </select>
+    <!--查询未标准化详细信息(下载专用)-->
+    <select id="SelectNotStanRosterDetail" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.txt as professional_name,t.vendor_name,t.ne_type_name,t4.txt as object_class_name,t2.txt as eqp_object_class_name,t.eqp_label,t.ne_label,
+        t.vendor_severity as vendor_severity_name,t.vendor_type  as  vendor_type_name,t3.txt as standard_flag_name,t.alarm_title_text,t.event_time,t5.txt org_type_name,           t.alarm_text0||t.alarm_text1||t.alarm_text2||t.alarm_text3||t.alarm_text4||t.alarm_text5||t.alarm_text6||t.alarm_text7||t.alarm_text8 as alarm_text
+        from tfa_alarm_unstandard  t
+        left join (select id,txt from tia_alarm_dict where type=1001 AND valid=1 ) t1
+        on t.professional_type=t1.id
+        left join (select id,txt from tia_alarm_dict where type = 9 and valid = 1) t2
+        on t.eqp_object_class=t2.id
+        left join (select id,txt from tia_alarm_dict where type = 1031 and valid = 1) t3
+        on t.standard_flag=t3.id
+        left join (select id,txt from tia_alarm_dict where type = 9 and valid = 1) t4
+        on t.object_class=t4.id
+        left join (select id,txt from tia_alarm_dict where type = 7 and valid = 1 and id in (1,100)) t5
+        on t.org_type=t5.id
+        where t.event_time >=STR_TO_DATE(${startevent_time},'%Y-%m-%d %T') and t.event_time <=STR_TO_DATE(${endevent_time},'%Y-%m-%d %T') and t.professional_type=${professional_type} and t.vendor_id=${vendor_id} and t.org_type=${org_type} and t.alarm_title_text=${alarm_title_text}
+        ]]>
+    </select>
+    <!--查询未标准化详细信息-->
+    <select id="SelectNotStanRosterDetail2" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.txt as professional_name,t.vendor_name,t.ne_type_name,t4.txt as object_class_name,t2.txt as eqp_object_class_name,t.eqp_label,t.ne_label,
+        t.vendor_severity as vendor_severity_name,t.vendor_type as  vendor_type_name,t3.txt as standard_flag_name,t.alarm_title_text,t.event_time,t5.txt org_type_name,                    t.alarm_text0||t.alarm_text1||t.alarm_text2||t.alarm_text3||t.alarm_text4||t.alarm_text5||t.alarm_text6||t.alarm_text7||t.alarm_text8 as alarm_text
+        from tfa_alarm_unstandard  t
+        left join (select id,txt from tia_alarm_dict where type=1001 AND valid=1 ) t1
+        on t.professional_type=t1.id
+        left join (select id,txt from tia_alarm_dict where type = 9 and valid = 1) t2
+        on t.eqp_object_class=t2.id
+        left join (select id,txt from tia_alarm_dict where type = 1031 and valid = 1) t3
+        on t.standard_flag=t3.id
+        left join (select id,txt from tia_alarm_dict where type = 9 and valid = 1) t4
+        on t.object_class=t4.id
+        left join (select id,txt from tia_alarm_dict where type = 7 and valid = 1 and id in (1,100)) t5
+        on t.org_type=t5.id
+        where t.event_time >=STR_TO_DATE('${v0}','%Y-%m-%d %T') and t.event_time <=STR_TO_DATE('${v1}','%Y-%m-%d %T') and t.professional_type = ${v2} and t.vendor_id = ${v3} and  t.alarm_title_text = '${v4}' and t.object_class = ${v5} and t.org_type = ${v6}
+        ]]>
+    </select>
+    <!--查询下载未标准化详情所需要的信息-->
+    <select id="SelectDownLoadNotStanRoster" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t1.txt as professional_name,t.vendor_name,t2.txt as eqp_object_class_name,t.eqp_label,
+        t.event_time,t.alarm_title_text, t.vendor_severity as vendor_severity_name,t5.txt org_type_name,           t.alarm_text0||t.alarm_text1||t.alarm_text2||t.alarm_text3||t.alarm_text4||t.alarm_text5||t.alarm_text6||t.alarm_text7||t.alarm_text8 as alarm_text
+        from tfa_alarm_unstandard  t
+        left join (select id,txt from tia_alarm_dict where type=1001 AND valid=1 ) t1
+        on t.professional_type=t1.id
+        left join (select id,txt from tia_alarm_dict where type = 9 and valid = 1) t2
+        on t.eqp_object_class=t2.id
+        left join (select id,txt from tia_alarm_dict where type = 7 and valid = 1 and id in (1,100)) t5
+        on t.org_type=t5.id
+        where t.event_time >=STR_TO_DATE('${startevent_time}','%Y-%m-%d %T') and t.event_time <=STR_TO_DATE('${endevent_time}','%Y-%m-%d %T') and t.professional_type=${professional_type} and t.vendor_id=${vendor_id} and t.alarm_title_text=${alarm_title_text} and t.org_type=${org_type}
+        ]]>
+    </select>
+    <!--插入确认人和确认时间-->
+    <update id="UpdateConfirmUser" parameterType="java.util.Map">
+        <![CDATA[
+        update  tpa_alarm_unstandard_sum set first_confirm_userid=${first_confirm_userid},first_confirm_time=sysdate()
+        where first_result=${first_result} and ne_type=${ne_type} and sum_level=${sum_level} and professional_type=${professional_type} and vendor_id=${vendor_id} and t.org_type=${org_type} and alarm_title_text=${alarm_title_text}
+        ]]>
+    </update>
+    <!--未标准化花名册 End -->
+
+    <!-- 在线梳理表详情 Start-->
+    <!--专业-->
+    <select id="SelectDetailProfessionalType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1001 AND valid=1
+        ]]>
+    </select>
+    <!--网元类型-->
+    <select id="SelectDetailEqpObjectClass" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,upper(txt) txt from tia_alarm_dict where type =9 and id >10 and valid =1 order by txt
+        ]]>
+    </select>
+    <!--厂商-->
+    <select id="SelectDetailVendorId" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type id,upper(zh_name) txt from vendor_name where type > 0 order by zh_name
+        ]]>
+    </select>
+    <!--告警对象类型-->
+    <select id="SelectDetailObjectClass" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select  id,upper(txt) txt from tia_alarm_dict where type =9 and id >10 and valid =1 order by txt
+        ]]>
+    </select>
+    <!--网管告警级别-->
+    <select id="SelectDetailOrgSeverity" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 6 and valid = 1
+        ]]>
+    </select>
+    <!--告警类别-->
+    <select id="SelectDetailOrgType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 7 and valid = 1
+        ]]>
+    </select>
+    <!--告警逻辑分类-->
+    <select id="SelectDetailLogicAlarmType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 1006 and valid = 1
+        ]]>
+    </select>
+    <!--告警逻辑子类-->
+    <select id="SelectDetailLogicSubAlarmType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 1007 and valid = 1
+        ]]>
+    </select>
+    <!--该事件对设备的影响-->
+    <select id="SelectDetailEffectNe" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 1008 and valid = 1
+        ]]>
+    </select>
+    <!--该事件对业务的影响-->
+    <select id="SelectDetailEffectService" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type = 1009 and valid = 1
+        ]]>
+    </select>
+    <!--花名册详情查询-->
+    <select id="SelectRosterDetailQuery" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select *
+        from (select A1.*, rownum RN
+        from (select
+        a.professional_name professional_type,
+        a.vendor_name vendor_id,
+        a.ne_type_name eqp_object_class,
+        a.version,
+        b.mapping_type,
+        b.alarm_title_text,
+        b.probable_cause,
+        b.vendor_severity,
+        b.vendor_version,
+        b.alarm_explanation_addition,
+        b.standard_alarm_id,
+        b.info_id,
+        b.roster_int_id,
+        c.txt object_class,
+        d.txt org_severity,
+        e.txt org_type,
+        f.txt logic_alarm_type,
+        g.txt logic_sub_alarm_type,
+        h.txt effect_ne,
+        i.txt effect_service
+        from standard_roster_record a inner join standard_roster_content b
+        on a.roster_int_id = b.roster_int_id left join (select  id, txt from tia_alarm_dict where type=9 and valid=1) c on b.object_class=c.id
+        left join (select id,txt from tia_alarm_dict where type = 6 and valid = 1 ) d on b.org_severity=d.id
+        left join (select id,txt from tia_alarm_dict where type = 7 and valid = 1 ) e on b.org_type=e.id
+        left join (select id,txt from tia_alarm_dict where type = 1006 and valid = 1 ) f on b.logic_alarm_type=f.id
+        left join (select id,txt from tia_alarm_dict where type = 1007 and valid = 1 ) g on b.logic_sub_alarm_type=g.id
+        left join (select id,txt from tia_alarm_dict where type = 1008 and valid = 1 ) h on b.effect_ne=h.id
+        left join (select id,txt from tia_alarm_dict where type = 1009 and valid = 1 ) i on b.effect_service=i.id
+        where a.enabled_status = 1  ${v0}) A1
+        where rownum <= ${v2})
+        where RN >${v1}
+        ]]>
+    </select>
+    <!--花名册数量查询-->
+    <select id="SelectRosterDetailQueryCount" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select count(*) totalcount
+        from standard_roster_record a, standard_roster_content b
+        where a.roster_int_id = b.roster_int_id
+        and a.enabled_status = 1 ${v0}
+        ]]>
+    </select>
+    <!--花名册数量查询-->
+    <select id="SelectRosterGetOneContent" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from standard_roster_content where info_id=${0}
+        ]]>
+    </select>
+    <!--新增梳理表-->
+    <insert id="insertCardingTable" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_content (info_id,roster_int_id,rule_seq,mapping_type,professional_type,vendor_id,eqp_object_class,
+        object_class,alarm_title_text,probable_cause,alarm_explanation_addition,vendor_severity,vendor_version,org_severity,
+        standard_alarm_id,alarm_explanation,org_type,logic_alarm_type,logic_sub_alarm_type,effect_ne,effect_service,standard_alarm_name,
+        send_jt_flag) values (${info_id}, ${roster_int_id}, ${rule_seq}, ${mapping_type}, ${professional_type}, ${vendor_id}, ${eqp_object_class}, ${object_class},
+        ${alarm_title_text}, ${probable_cause}, ${alarm_explanation_addition}, ${vendor_severity}, ${vendor_version},${org_severity}, ${standard_alarm_id},
+        ${alarm_explanation}, ${org_type}, ${logic_alarm_type}, ${logic_sub_alarm_type}, ${effect_ne}, ${effect_service}, ${standard_alarm_name}, ${send_jt_flag})
+        ]]>
+    </insert>
+    <!--梳理表编辑-->
+    <update id="updateCardingTable" parameterType="java.util.Map">
+        <![CDATA[
+        update  standard_roster_content set logic_sub_alarm_type=${logic_sub_alarm_type},effect_ne=${effect_ne},
+        effect_service=${effect_service},standard_alarm_name=${standard_alarm_name},send_jt_flag=${send_jt_flag}
+        where info_id=${info_id} and roster_int_id=${roster_int_id}
+        ]]>
+    </update>
+    <!-- 梳理表字典数据管理-->
+    <select id="selectColumnDictionData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select professional_name,professional_type,vendor_id,vendor_name,ne_type,ne_type_name,col_name_zn,col_name_en,key_col from standard_roster_column where 1=1
+        ]]>
+    </select>
+    <!--梳理表字典数据管理数据查看-->
+    <select id="SelectColumnDiction" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from standard_roster_column where 1=1  and vendor_id =${vendor_id} and ne_type =${ne_type}
+        ]]>
+    </select>
+    <!--梳理表厂商-->
+    <select id="SelectRosterVender" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type id,zh_name txt from vendor_name where type >= 0 order by zh_name
+        ]]>
+    </select>
+    <!--梳理表字典数据管理添加-->
+    <insert id="InsertColumnDictionData" parameterType="java.util.Map">
+        <![CDATA[
+        insert into standard_roster_column(professional_type,professional_name,vendor_id,
+        vendor_name,ne_type,ne_type_name,col_name_en,col_name_zn,col_index,key_col,dict_sql)
+        values(${professional_type},'${professional_name}',${vendor_id},'${vendor_name}',${ne_type},
+        '${ne_type_name}','${col_name_en}','${col_name_zn}',${col_index},${key_col},'${dict_sql}')
+        ]]>
+    </insert>
+    <!--梳理表字典数据管理删除-->
+    <delete id="DeleteColumnDictionData" parameterType="java.util.Map">
+        <![CDATA[
+        delete from standard_roster_column where vendor_id =${vendor_id} and ne_type =${ne_type}
+        ]]>
+    </delete>
+    <!-- 在线梳理表详情 End-->
+    <!--花名册管理 End-->
+    <!--节假日相关 Start-->
+    <select id="selectHolidays" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,the_year,holiday_name,to_char(holiday_start,'%Y-%m-%d %T') holiday_start,to_char(holiday_end,'%Y-%m-%d %T') holiday_end,enable from tfa_eoms_holiday
+        where enable=1
+        ]]>
+    </select>
+    <!--节假日相关 End-->
+    <!--网元组相关 Start-->
+    <select id="QueryObjectGroup" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.group_id id,a.group_name txt,a.memo,a.owner_id,b.user_name from tai_negrp_info a left join tai_userinfo b on a.owner_id=b.user_id
+        ]]>
+    </select>
+    <!--网元组相关 End-->
+    <!--过滤器和规则相关 Start-->
+    <select id="SelectTicketObjects" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.id,b.depname txt
+        from (select distinct yhs id from objects
+        union
+        select distinct maintain_group id from drop_alarm_maintain_group) a
+        left join eoms_sm_dep b on b.pid=a.id
+        order by b.depname,a.id
+        ]]>
+    </select>
+    <select id="SelectTicketT2Typ1Objects" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select sheet_t2_id id,sheet_t2_name txt from tfp_sheet_obj_t2 where is_valid=1 order by sheet_t2_name
+        ]]>
+    </select>
+    <select id="SelectTypeReDefineItems" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=12
+        ]]>
+    </select>
+    <select id="SelectSMSUserGroups" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t.group_id, t.group_name, t.memo, t.owner_id from tai_groupinfo t
+        ]]>
+    </select>
+    <select id="SelectSMSAllUsers" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t.user_id, t.user_name, t.mobilephone, t.email, u.group_id
+        from nrmdb.tau_user t
+        left join tai_usrgroup u on t.user_id = u.user_id
+        ]]>
+    </select>
+    <select id="SelectSMSTemplete" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select option_value from taw_option_info where trim(option_key) = '${user_name}.SMSTemplate'
+        ]]>
+    </select>
+    <delete id="DeleteSMSTemplete" parameterType="java.util.Map">
+        <![CDATA[
+        delete from taw_option_info where trim(option_key) = '${user_name}.SMSTemplate'
+        ]]>
+    </delete>
+    <insert id="InsertSMSTemplete" parameterType="java.util.Map">
+        <![CDATA[
+        insert into taw_option_info (option_key , option_value) values('${user_name}.SMSTemplate','${SMSTemplate}')
+        ]]>
+    </insert>
+
+	
+        <!-- 全量告警列字段 start -->
+    <select id="resourceCache_Select_tfm_alarm_col_info" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        SELECT
+                IFNULL(IFNULL(msg_field,db_field),msg_field) AS db_field,
+                col_name_zh,
+                db_col_type,
+                col_group,
+                map_content,
+                mem
+            FROM
+                tfm_alarm_col_info
+            WHERE
+                (
+                    msg_field IS NOT NULL
+                OR  db_field = 'rule_name')
+            AND col_disp_type = 1
+        ]]>
+    </select>
+    <!-- 全量告警列字段 end -->
+    <!-- 全量正文 start -->
+    <!--过滤器和规则相关 End-->
+    <!-- 根据用户id查询邮箱 start-->
+    <select id="SelectUserEmail" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select email from tai_userinfo where user_id = '${user_id}'
+        ]]>
+    </select>
+    <!-- 根据用户id查询邮箱 end-->
+
+    <!--关联规则管理sql start-->
+    <!--厂家-->
+    <select id="SelectRelevanceVendor" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type id,zh_name txt from vendor_name where type >= 0 order by zh_name
+        ]]>
+    </select>
+    <!--告警对象类型-->
+    <select id="SelectRelevanceType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt FROM tia_alarm_dict WHERE type = 9 AND valid = 1 and
+        txt not in ('A++客户','A+客户','A客户','B客户','C客户','me','AAA') order by txt
+        ]]>
+    </select>
+    <!--获取触发关联条件列表-->
+    <select id="SelectRelationCondition" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from tfa_gaia_relate_condition
+        ]]>
+    </select>
+    <!--告警子类型-->
+    <select id="SelectSubAlarmType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select ID id, txt from tia_alarm_dict where type = 30 and valid = 1
+        ]]>
+    </select>
+    <!--查找关联规则专业归属类型-->
+    <select id="SelectProfessionTypes" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1001 and valid=1
+        ]]>
+    </select>
+    <!--获取所有告警模板列表-->
+    <select id="SelectAllTemplateFields" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select col_name_zh,msg_field from tfm_alarm_col_info where msg_field is not null
+        ]]>
+    </select>
+    <!--查询告警关联规则  -->
+    <select id="SelectRelationAlarmNew" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select a.ser_file_id,a.directorys,a.file_name,a.opt_person,a.new_file,a.change_time,a.in_use,a.change_time_str,a.alarm_id_num,
+        a.rule_name,a.relation_type,a.professional_type,a.vendor_id,a.ruledesc,a.user_id,a.is_local_rule,a.relation_condition,a.relation_position_info,a.use_resources,a.pro_resconfig,
+        a.ext_resconfig,a.alarm_content,a.rule_def_user,a.rule_def_phone,a.eqp_object_class, a.topic_idlist,
+        a.filter_id, a.phone_num, a.fire_point, a.active_time_out, a.count_type, a.thresh_hold,
+        a.thresh_hold_refer_sql, a.change_status, a.project_surpress, a.create_time, a.dealed_process_alias,
+        a.relation_name, a.whilelist_province, a.blacklist_province, a.whitelist_province, a.reason_type,
+        b.derive_clr_rule, b.alarm_text, b.derive_title_text, b.derive_org_severity, b.derive_standard_alarm_id,
+        b.derive_standard_alarm_name, b.professional_type   derive_professional_type, b.vendor_id    derive_vendor_id,
+        b.eqp_object_class derive_eqp_object_class, b.object_class derive_object_class,
+        b.active_timeout derive_active_timeout, c.filter_condition, c.is_main_alarm
+        from tfa_gaia_rule_file a left join tfa_gaia_rule_derive b on a.ser_file_id = b.ser_file_id left join tfa_gaia_rule_sub_alarm c
+        on c.ser_file_id = a.ser_file_id where a.rule_name like lower('%${keyword}%') and a.in_use in (${inUse}) and a.professional_type in
+        (${professionalType}) order by change_time ${sort}, c.is_main_alarm desc
+        ]]>
+    </select>
+    <!--根据规则ID查找频次子告警信息-->
+    <select id="SelectFrequencySubAlarm" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select ser_file_id,filter_name, sub_alarm_name,relation,clear_alarm_join,Filter_condition,Is_Main_Alarm from
+        tfa_gaia_rule_sub_alarm where ser_file_id in (${v0})
+        ]]>
+    </select>
+
+    <!--查找告警类型-->
+    <select id="SelectAlarmType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from tfa_gaia_rule_filter_condition where 1=1  order by Change_time desc 
+        ]]>
+    </select>
+    <!--查找根据告警类型名称查找告警类型(检查名称是否重复)-->
+    <select id="SelectAlarmTypeByName" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select * from tfa_gaia_rule_filter_condition where filter_name ='${v0}'
+        ]]>
+    </select>
+
+    <!--删除告警类型-->
+    <delete id="DeleteAlarmType" parameterType="java.util.Map">
+        <![CDATA[
+        delete  from tfa_gaia_rule_filter_condition where filter_name='${v0}'
+        ]]>
+    </delete>
+
+    <!--专业-->
+    <select id="SelectRelevanceProfession" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt from tia_alarm_dict where type=1001 AND valid=1 and id <=5
+        ]]>
+    </select>
+
+
+    <!--设备类型-->
+    <select id="SelectDeviceType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id,txt FROM tia_alarm_dict 
+        WHERE type = 9 AND valid = 1 and txt not in ('A++客户','A+客户','A客户','B客户','C客户','me','AAA') 
+        order by txt
+        ]]>
+    </select>
+
+
+    <!--告警标题-->
+    <select id="SelectAlarmTitle" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct alarm_title_text txt FROM tfm_alarm_stand_info where 1=1 ${v0}
+        ]]>
+    </select>
+
+    <!--根据设备类型查询告警标题-->
+    <select id="SelectAlarmTitleByDeviceType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct alarm_title_text txt,info_id id from tfm_alarm_stand_info 
+        where vendor_id=${v0} and eqp_object_class=${v1}  and lower(alarm_title_text) like lower('%${v2}%')
+        ]]>
+    </select>
+
+    <!--根据对象类型查询告警标题-->
+    <select id="SelectAlarmTitleByObjectType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct alarm_title_text txt,info_id id from tfm_alarm_stand_info 
+        where vendor_id=${v0} and object_class=${v1}  and lower(alarm_title_text) like lower('%${v2}%')"
+        ]]>
+    </select>
+
+    <!--网管告警ID-->
+    <select id="SelectStandardAlarmID" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_id txt,info_id id FROM tfm_alarm_stand_info 
+        where standard_alarm_id is not null and 1=1 ${v0}
+        ]]>
+    </select>
+
+    <!--根据设备类型查找网管告警ID-->
+    <select id="SelectStandardAlarmIDByDeviceType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_id txt,info_id id FROM tfm_alarm_stand_info  
+        where standard_alarm_id is not null and vendor_id=${v0} and eqp_object_class=${v1} 
+        and standard_alarm_id like lower('%${v2}%')
+        ]]>
+    </select>
+
+
+    <!--根据设备类型查找网管告警ID-->
+    <select id="SelectStandardAlarmIDByObjectType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_id txt,info_id id FROM tfm_alarm_stand_info  
+        where standard_alarm_id is not null and vendor_id=${v0} and object_class=${v1} 
+        and standard_alarm_id like lower('%${v2}%')
+        ]]>
+    </select>
+
+
+    <!--新增告警类型-->
+    <insert id="InsertAlarmType" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_gaia_rule_filter_condition (filter_name,class_desc,filter_condition,change_time,def_user) 
+        values ('${v0}','${v1}','${v2}','${v3}','${v4}') 
+        ]]>
+    </insert>
+
+
+    <!--查找关联告警-->
+    <select id="SelectRelationAlarm" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select ser_file_id id,Relation_type,rule_name,file_name,new_file,opt_person,change_time,in_use,ruledesc,professional_type,RULE_DEF_USER 
+        from tfa_gaia_rule_file where lower(rule_name) like lower('%${v0}%') and in_use in (${v1}) and professional_type in (${v2}) 
+        order by change_time ${v3}
+        ]]>
+    </select>
+
+    <!--查找关联告警-->
+    <select id="SelectRelationAlarmBaseInfoById" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select rule_name,opt_person,new_file,create_time,change_time,in_use,ruledesc,professional_type,rule_def_user
+        ,rule_def_phone,active_time_out,thresh_hold,directorys,file_name,project_surpress,relation_name
+        ,whitelist_province,blacklist_province 
+        from tfa_gaia_rule_file where ser_file_id =${v0}
+        ]]>
+    </select>
+
+    <!--查找关联告警-->
+    <delete id="DeleteRelationAlarmBaseInfoById" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfa_gaia_rule_file where ser_file_id =${v0}
+        ]]>
+    </delete>
+
+    <!--根据关联规则名称查找关联告警-->
+    <select id="SelectRelationAlarmByRuleName" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select RULE_NAME  from TFA_GAIA_RULE_FILE where Rule_NAME ='${v0}'
+        ]]>
+    </select>
+
+
+    <!--新增关联告警-->
+    <insert id="InsertRelationRule" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_gaia_rule_file (ser_file_id, rule_name,change_time,ruledesc,directorys,file_name,opt_person
+        ,new_file,in_use,change_time_str,alarm_id_num,RULE_DEF_USER,RULE_DEF_PHONE,RELATION_TYPE,professional_type
+        ,active_time_out,thresh_hold,project_surpress,change_status,create_time,relation_name,whitelist_province,blacklist_province) 
+          values(${v0},'${v1}',STR_TO_DATE('${v2}','%Y-%m-%d %T'),'${v3}','','${v1}.xml','${v5}','new',${v6},' ',0,'${v7}'
+          ,'${v8}',${v9},${v10},'${v11}m',${v12},${v13},1,STR_TO_DATE('${v14}','%Y-%m-%d %T'),'${v15}','${v16}','${v17}')
+          ]]>
+    </insert>
+
+    <!--更改规则状态-->
+    <update id="UpdateRelationRuleStatus" parameterType="java.util.Map">
+        <![CDATA[
+        update  TFA_GAIA_RULE_FILE set in_use =${v1},change_time=STR_TO_DATE('${v2}','%Y-%m-%d %T'),opt_person='${v3}' 
+        where ser_file_id =${v0}
+        ]]>
+    </update>
+
+    <!--更新关联告警-->
+    <update id="UpdateRelationRule" parameterType="java.util.Map">
+        <![CDATA[
+        update tfa_gaia_rule_file set  rule_name='${v1}', change_time=STR_TO_DATE('${v2}','%Y-%m-%d %T'), ruledesc='${v3}'
+        , directorys='' ,file_name='${v1}.xml',opt_person='${v5}',new_file='new',in_use=${v6},alarm_id_num=0,RULE_DEF_USER='${v7}'
+        ,RULE_DEF_PHONE='${v8}',RELATION_TYPE=${v9}, professional_type=${v10},active_time_out='${v11}m',thresh_hold=${v12}
+        ,project_surpress=${v13},relation_name='${v14}',change_status=1,whitelist_province='${v15}',blacklist_province='${v16}'  
+        where ser_file_id=${v0}
+        ]]>
+    </update>
+
+
+    <!--更改规则状态-->
+    <update id="UpdateRelationRuleStatus1" parameterType="java.util.Map">
+        <![CDATA[
+        update  TFA_GAIA_RULE_FILE set in_use =${v1},change_time=STR_TO_DATE('${v2}','%Y-%m-%d %T'),opt_person='${v3}'
+        ,change_status=1 where ser_file_id =${v0}
+        ]]>
+    </update>
+
+    <!--插入衍生告警信息-->
+    <insert id="InsertDeriveInfo" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_gaia_rule_derive (ser_file_id,derive_title_text,alarm_text,derive_clr_rule,derive_standard_alarm_id
+        ,derive_org_severity,derive_standard_alarm_name) values(${v0},'${v1}','${v2}',${v3},'${v4}',${v5},'${v6}')
+        ]]>
+    </insert>
+
+
+    <!--插入衍生告警信息-->
+    <delete id="DeleteDeriveInfo" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfa_gaia_rule_derive where ser_file_id =${v0}
+        ]]>
+    </delete>
+
+    <!--根据规则ID查找衍生告警信息-->
+    <select id="SelectDeriveInfo" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select derive_title_text,alarm_text,derive_standard_alarm_name,derive_clr_rule,derive_standard_alarm_id
+        ,derive_org_severity  from tfa_gaia_rule_derive where ser_file_id=${v0}
+        ]]>
+    </select>
+
+    <!--添加频次关联子告警-->
+    <insert id="InsertFrequencySubAlarm" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_gaia_rule_sub_alarm(ser_file_id,filter_name,relation,clear_alarm_join,Filter_condition
+        ,Is_Main_Alarm,extend_key,sub_alarm_name) values(${v0},'${v1}','${v2}',${v3},'${v4}',${v5},'${v6}','${v7}')
+        ]]>
+    </insert>
+
+    <!--删除频次关联子告警-->
+    <delete id="DeleteFrequencySubAlarm" parameterType="java.util.Map">
+        <![CDATA[
+        delete from tfa_gaia_rule_sub_alarm where ser_file_id = ${v0}
+        ]]>
+    </delete>
+
+    <!--获取触发关联条件列表-->
+    <select id="SelectRelationRuleXml" parameterType="java.util.Map">
+        <![CDATA[
+        select new_file,directorys,file_name from tfa_gaia_rule_file where  ser_file_id=${v0}
+        ]]>
+    </select>
+
+    <!--更新阈值关联阈值-->
+    <update id="UpdateThreshold" parameterType="java.util.Map">
+        <![CDATA[
+        update tfa_gaia_rule_file set count_type=${v1},thresh_hold=${v2},fire_point=${v3},THRESH_HOLD_REFER_SQL='${v4}' 
+        where  ser_file_id=${v0}
+        ]]>
+    </update>
+
+    <!--查询阈值关联阈值-->
+    <select id="SelectThreshold" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select count_type,thresh_hold,fire_point from tfa_gaia_rule_file where  ser_file_id=${v0}
+        ]]>
+    </select>
+
+    <!--添加告警关联规则的日志-->
+    <insert id="InsertRelationRuleLog" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tai_ologrec(olog_type,olog_id,olog_class,user_id,rec_dtime,memo) 
+        values (1,${v0},1,${v1},STR_TO_DATE('${v2}','%Y-%m-%d %T'),'${v3}')
+        ]]>
+    </insert>
+
+    <!--查找告警标准名-->
+
+    <select id="SelectStandardAlarmName" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_name txt,info_id id FROM tfm_alarm_stand_info 
+        where standard_alarm_name is not null and 1=1 ${v0}
+        ]]>
+    </select>
+
+    <!--根据设备类型查询告警标准名-->
+    <select id="SelectAlarmNameByDeviceType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_name txt from tfm_alarm_stand_info 
+        where vendor_id=${v0} and eqp_object_class=${v1}  and standard_alarm_name like lower('%${v2}%')
+        ]]>
+    </select>
+
+    <!--根据对象类型查询告警标准名-->
+    <select id="SelectAlarmNameByObjectType" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct standard_alarm_name txt from tfm_alarm_stand_info 
+        where vendor_id=${v0} and object_class=${v1}  and standard_alarm_name like lower('%${v2}%')
+        ]]>
+    </select>
+
+
+    <!--关联规则管理sql end-->
+    <!--告警确认信息sql start-->
+    <insert id="InsertConfirmContent" parameterType="java.util.Map">
+        <![CDATA[
+        insert into tfa_alarm_conreason
+        (fp0, fp1, fp2, fp3, user_id, time_stamp, confirm_reason, reason_type)
+        values
+        ('${fp0}', '${fp1}', '${fp2}', '${fp3}', '${user_id}', STR_TO_DATE('${time_stamp}','%Y-%m-%d %T'), '${textContent}', '${reason_type}')
+        ]]>
+    </insert>
+    <select id="SelectConfirmContent" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select user_id, time_stamp, confirm_reason, reason_type
+        from tfa_alarm_conreason
+        where fp0 = '${fp0}'
+        and fp1 = '${fp1}'
+        and fp2 = '${fp2}'
+        and fp3 = '${fp3}'
+        ]]>
+    </select>
+    <!--告警确认信息sql end-->
+
+    <!--过滤器组管理 begin-->
+
+    <select id="SelectFilterGroupType" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+       select t.group_type_id, t.group_type_name from tai_group_type t
+        ]]>
+    </select>
+    <select id="SelectFilterGroups" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select *
+          from (select t1.group_id,
+                       t1.group_name,
+                       t2.group_type_name,
+                       t2.group_type_id,
+                       row_number() over(order by t1.group_type_id) rownumber
+                  from tai_group_info t1, tai_group_type t2
+                 where t1.group_type_id = t2.group_type_id
+                   and t1.group_type_id = #{groupTypeId})
+         where rownumber > #{start}
+           and rownumber <= #{end}
+        ]]>
+    </select>
+    <select id="SelectFilterGroupsCount" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select count(*) total
+          from (select t1.group_id,
+                       t1.group_name,
+                       t2.group_type_name,
+                       t2.group_type_id,
+                       row_number() over(order by t1.group_type_id) rownumber
+                  from tai_group_info t1, tai_group_type t2
+                 where t1.group_type_id = t2.group_type_id
+                   and t1.group_type_id = #{groupTypeId}
+                   )
+        ]]>
+    </select>
+    <select id="SelectFilterGroupDetail" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select *
+          from (select t1.circuit_id,
+                       t2.circuittype,
+                       t2.transcircuitno,
+                       t2.userlabel,
+                       row_number() over(order by group_id) rownumber
+                  from tai_circuitgroup t1
+                  left join nrmdb.circuit t2
+                    on t1.circuit_id = t2.int_id
+                 where t1.group_id = #{groupId})
+         where rownumber > #{start}
+           and rownumber <= #{end}
+        ]]>
+    </select>
+    <select id="SelectFilterGroupDetailCount" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select count(*) total
+          from (select t1.circuit_id,
+                       t2.circuittype,
+                       t2.transcircuitno,
+                       t2.userlabel,
+                       row_number() over(order by group_id) rownumber
+                  from tai_circuitgroup t1
+                  left join nrmdb.circuit t2
+                    on t1.circuit_id = t2.int_id
+                 where t1.group_id = #{groupId}
+                 )
+        ]]>
+    </select>
+    <!--过滤器组管理 end-->
+    <!--查看支撑VNF的虚机实时性能指标sql start-->
+    <select id="SelectVNFRealtimePerform" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select int_id, userlabel from objects where object_class=508 and related_ne1= ${int_id}
+        ]]>
+    </select>
+    <!--查看支撑VNF的虚机实时性能指标sql end-->
+    <!--当班窗口布局保存 start-->
+    <select id="SelectOndutyStyleOption" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select option_value from taw_option_info where trim(option_key)='${option_key}'
+        ]]>
+    </select>
+    <update id="UpdateOndutyStyleOption" parameterType="java.util.Map">
+        <![CDATA[
+        update taw_option_info set option_value='${option_value}' where option_key='${option_key}'
+        ]]>
+    </update>
+    <insert id="InsertOndutyStyleOption" parameterType="java.util.Map">
+        <![CDATA[
+        insert into taw_option_info(option_key,option_value) values ('${option_key}','${option_value}')
+        ]]>
+    </insert>
+    <!--当班窗口布局保存 end-->
+    <!-- 经验库查询sql start-->
+    <select id="SelectVendorName" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select type,zh_name from vendor_name
+        ]]>
+    </select>
+    <select id="SelectConditionID" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select field_name,condition_id from tfp_adv_matchcond where field_name in ('title_text','object_class','professional_type') and vendor_id=${vendorId}
+        ]]>
+    </select>
+    <select id="SelectCondition2ID" parameterType="java.util.Map" resultType="java.util.Map">
+        <![CDATA[
+        select condition_id,field_name,vendor_id from tfp_adv_matchcond where field_name='title_text' or field_name='object_class' or field_name='professional_type' order by vendor_id
+        ]]>
+    </select>
+    <!-- 获取经验库 start -->
+    <select id="SelectAllExperienceLibrary" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select t.item_id,
+        t.title_text,
+        t.description,
+        tia3.zh_name        vendor,
+        tia2.txt            professional,
+        tia1.txt            objectclass,
+        t.vendor_id,
+        t.professional_type,
+        t.object_class,
+        t.flow_img          flow_img,
+        t.flow_img          flow_img_link
+        from (select row_number() over(order by e1.item_id desc) arownum,
+        d1.value title_text,
+        d2.value object_class,
+        d3.value professional_type,
+        e1.description,
+        e1.flow_img,
+        e1.item_id,
+        e1.vendor_id vendor_id
+        from tfp_adv_key_code  d1,
+        tfp_adv_key_code  d2,
+        tfp_adv_key_code  d3,
+        tfp_adv_matchcond f1,
+        tfp_adv_matchcond f2,
+        tfp_adv_matchcond f3,
+        tfp_advice_item   e1
+        where d1.condition_id = f1.condition_id
+        and d2.condition_id = f2.condition_id
+        and d3.condition_id = f3.condition_id
+        and f1.field_name = 'title_text'
+        and f2.field_name = 'object_class'
+        and f3.field_name = 'professional_type'
+        and d1.item_id = d2.item_id
+        and d1.item_id = d3.item_id
+        and d1.item_id = e1.item_id
+        ]]>
+        <if test="vendorId != null">
+            <![CDATA[
+            and e1.vendor_id= ${vendorId}
+            ]]>
+        </if>
+        <if test="objectClass != null">
+            <![CDATA[
+            and d2.value='${objectClass}'
+            ]]>
+        </if>
+        <if test="professionalType != null">
+            <![CDATA[
+            and d3.value='${professionalType}'
+            ]]>
+        </if>
+        <if test="titleText != null">
+            <![CDATA[
+            and lower(d1.value) like '%${titleText}%'
+            ]]>
+        </if>
+        <![CDATA[
+        ) t
+        left join tia_alarm_dict tia1
+        on t.object_class = to_char(tia1.id)
+        and tia1.type = 9
+        left join tia_alarm_dict tia2
+        on t.professional_type = to_char(tia2.id)
+        and tia2.type = 1001
+        left join vendor_name tia3
+        on t.vendor_id = tia3.type
+        ]]>
+    </select>
+    <!-- end -->
+    <!-- 经验库查询sql end-->
+    <!--==============start 厂家设备维度监控 获取厂家 start============================-->
+    <select id="SelectZhName" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select type id,zh_name txt from vendor_name where type >= 0 order by zh_name
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 获取厂家 end=============================-->
+
+    <!--==============start 厂家设备维度监控 获取地市 start============================-->
+    <select id="SelectReginName" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select distinct region_id id,region_name txt from region_city_local order by region_name
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 获取地市 end=============================-->
+
+    <!--==============start 厂家设备维度监控 获取设备类型 start============================-->
+    <select id="SelectTypeName" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        select id, txt from tia_alarm_dict where type = 9 and valid = 1
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 获取设备类型 end=============================-->
+
+    <!--==============start 厂家设备维度监控 显示数据列表 start============================-->
+    <select id="SelectManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select '-' as regin_name,
+        '-' as zh_name ,
+        '-' as type ,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        Group by a.province_id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 厂家、地市、设备类型都选择显示数据列表 start============================-->
+    <select id="SelectAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select  a.region_name ,
+        c.txt as zh_name ,
+        c.id,
+        b.txt as type,
+        b.id,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select id,txt from tia_alarm_dict where type=9) b
+        on a.eqp_object_class=b.id
+        left join (select type id,zh_name txt from vendor_name where type >= 0 ) c
+        on a.vendor_id=c.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.Eqp_object_class in (${type})
+        And a.vendor_id in (${zhName})
+        and a.region_id in (${city})
+        Group by a.region_id,a.region_name,b.txt,b.id,c.txt,c.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 厂家、地市、设备类型都选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 厂家、地市选择显示数据列表 start============================-->
+    <select id="SelectVendorRegionAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select  a.region_name ,
+        b.txt as zh_name,
+	'-'as type,
+        b.id,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select type id,zh_name txt from vendor_name where type >= 0 ) b
+        on a.vendor_id=b.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.vendor_id in (${zhName})
+        And a.region_id in (${city})
+        Group by a.region_name,b.txt,b.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 厂家、地市选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 厂家、设备类型选择显示数据列表 start============================-->
+    <select id="SelectVendorTypeAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select  '-' as regin_name ,
+        c.txt as zh_name ,
+        c.id,
+        b.txt as type ,
+        b.id,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select id,txt from tia_alarm_dict where type=9) b
+        on a.eqp_object_class=b.id
+        left join (select type id,zh_name txt from vendor_name where type >= 0 ) c
+        on a.vendor_id=c.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.Eqp_object_class in (${type})
+        And a.vendor_id in (${zhName})
+        Group by c.txt,c.id,b.txt,b.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 厂家、设备类型选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 地市、设备类型选择显示数据列表 start============================-->
+    <select id="SelectRegionTypeAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select  a.region_name  ,
+        '-' as zh_name,
+        b.txt  as type,
+        b.id,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select id,txt from tia_alarm_dict where type=9) b
+        on a.eqp_object_class=b.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.Eqp_object_class in (${type})
+        And a.region_id in (${city})
+        Group by a.region_name,b.txt,b.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 地市、设备类型选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 厂家选择显示数据列表 start============================-->
+    <select id="SelectVendorAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select '-' as region_id,
+        b.txt as zh_name ,
+        b.id,
+        '-' as type  ,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select type id,zh_name txt from vendor_name where type >= 0 ) b
+        on a.vendor_id=b.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.vendor_id in (${zhName})
+        Group by a.vendor_id,b.txt，b.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 厂家选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 设备类型选择显示数据列表 start============================-->
+    <select id="SelectTypeAllManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select '-' as region_name  ,
+        '-' as zh_name  ,
+        b.txt as type  ,
+        b.id,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        left join (select id,txt from tia_alarm_dict where type=9) b
+        on a.eqp_object_class=b.id
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.Eqp_object_class in (${type})
+        Group by a.Eqp_object_class,b.txt,b.id
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 设备类型选择显示数据列表 end=============================-->
+
+    <!--==============start 厂家设备维度监控 地市选择显示数据列表 start============================-->
+    <select id="SelectRegionManufacturerDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+        Select  case when a.region_name ='99999' then '其它' else a.region_name end  as region_name,
+        '-' as zh_name ,
+        '-' as type ,
+        Sum(a.act_alarm_num) as act_alarm_num  ,
+        concat(round(Sum(a.standard_alarm_num) /Sum(a.total_alarm_num),4)*100,'%') as standard_alarm_pct ,
+        Max(a.last_event_time) as last_event_time ,
+        Max(a.last_time_stamp) as last_time_stamp ,
+        Avg(A.avg_detect_duration) as avg_detect_duration,
+        concat(round(Sum(A.detect_intime_num)/sum(a.total_alarm_num2),4)*100,'%') as detect_intime_pct ,
+        Sum(A.normal_alarm_num) as normal_alarm_num ,
+        concat(round(Sum(A.normal_alarm_num)/Sum(a.total_alarm_num2),4)*100,'%') as normal_alarm_pct
+        From
+        tfa_alarmview_yn_sum a
+        where a.first_result = (select max(first_result) from tfa_alarmview_yn_sum)
+        And a.sum_level=-2
+        And a.region_id in (${city})
+        Group by a.region_name
+        ]]>
+    </select>
+    <!--==============end 厂家设备维度监控 地市选择显示数据列表 end=============================-->
+
+    <!--==============start 网管维度监控 数据列表 start============================-->
+    <select id="SelectDimensionDataList" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            Select b.ems_id ,
+            b.ems_name ,
+            b.vendor_name ,
+            b.cover_area ,
+            b.cover_device_range,
+            b.id_address ,
+            nvl(a.act_alarm_num,0) act_alarm_num ,
+            nvl(round(a.standard_alarm_num/a.total_alarm_num,4)*100,0) as tandard_alarm_pct,
+            a.last_event_time,
+            a.last_time_stamp,
+            nvl(round(A.avg_detect_duration,2),0) as avg_detect_duration ,
+            nvl(round(A.detect_intime_num/a.total_alarm_num2,4)*100,0) as detect_intime_pct,
+            nvl(A.normal_alarm_num,0) normal_alarm_num,
+            nvl(round(A.normal_alarm_num/a.total_alarm_num2,4)*100,0) as normal_alarm_pct
+            From
+            tfa_alarmview_ynems_sum a
+            Left join tfa_alarmview_ems_resource b
+            On a.ems_id=b.ems_id
+            where a.first_result = (select max(first_result) from tfa_alarmview_ynems_sum)
+            And a.sum_level=-2
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 数据列表 end=============================-->
+
+    <!--==============start 网管维度监控 网管名称 start============================-->
+    <select id="SelectEmsData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            Select ems_id,ems_name from tfa_alarmview_ems_resource
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 网管名称 end=============================-->
+
+    <!--==============start 网管维度监控 告警数图表取值 start============================-->
+    <select id="SelectTotalAlarmNumData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select sum(total_alarm_num) as total_alarm_num
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 告警数图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 规范告警数图表取值 start============================-->
+    <select id="SelectNormalAlarmNumBarData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select sum(normal_alarm_num) as normal_alarm_num
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 规范告警数图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 规范告警率图表取值 start============================-->
+    <select id="SelectNormalAlarmPctData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select sum(normal_alarm_num)/sum(total_alarm_num2) as normal_alarm_pct
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 规范告警率图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 标准化匹配成功率图表取值 start============================-->
+    <select id="SelectStandardAlarmNumData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select round(sum(standard_alarm_num)/sum(total_alarm_num ),2)*100 as standard_alarm_pct
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 标准化匹配成功率图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 标准化匹配成功数图表取值 start============================-->
+    <select id="SelectAvgDetectDurationData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select round(avg(avg_detect_duration),2) as avg_detect_duration
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 标准化匹配成功数图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 告警呈现及时率图表取值 start============================-->
+    <select id="SelectDetectIntimePctData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            select round(sum (detect_intime_num)/sum(total_alarm_num2 ),2)*100 as detect_intime_pct
+            From tfa_alarmview_ynems_sum
+            Where first_result > STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            And first_result<= STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and sum_level=-1
+            and ${param}
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 标准化匹配成功数图表取值 end=============================-->
+
+    <!--==============start 网管维度监控 导出数据 start============================-->
+    <select id="SelectExportData" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            Select A.first_result,---时间
+            b.ems_id ,-- 网管id
+            b.ems_name ,--网管名称
+            b.vendor_name ,--网管厂家
+            b.cover_area , --网管覆盖范围
+            b.cover_device_range, --网管覆盖设备类型
+            b.id_address ,--网管IP地址
+            a.act_alarm_num ,--活动告警量
+            a.standard_alarm_num/a.total_alarm_num ,--标准化匹配成功率
+            a.last_event_time,--最后告警发生时间
+            a.last_time_stamp,-- 最后告警发现时间
+            A.avg_detect_duration ,--平均故障发现用时(分钟)
+            A.detect_intime_num/a.total_alarm_num2,-- 告警呈现及时率
+            A.normal_alarm_num ,--规范告警数
+            A.normal_alarm_num/a.total_alarm_num2 --规范告警率
+            From
+            tfa_alarmview_ynems_15_sum a
+            Left join tfa_alarmview_ems_resource b
+            On a.ems_id=b.ems_id
+            where a.first_result >=STR_TO_DATE('${startTime}','%Y-%m-%d %T')
+            and a.first_result < STR_TO_DATE('${endTime}','%Y-%m-%d %T')
+            and  a.sum_level=-1
+            and ${param}
+            order by a.ems_id,a.first_result
+        ]]>
+    </select>
+    <!--==============end 网管维度监控 导出数据 end=============================-->
+	 <!--==============start 列模板管理  活动告警列 start============================-->
+    <select id="SelectAlarmColumnDict" parameterType="java.util.Map"
+            resultType="java.util.Map">
+        <![CDATA[
+            SELECT
+                IFNULL(IFNULL(msg_field,db_field),msg_field) AS db_field,
+                col_name_zh,
+                db_col_type,
+                col_group,
+                map_content,
+                mem
+            FROM
+                tfm_alarm_col_info
+            WHERE
+                (
+                    msg_field IS NOT NULL
+                OR  db_field = 'rule_name')
+            AND col_disp_type = 1
+
+        ]]>
+    </select>
+    <!--==============end 列模板管理  活动告警列 end=============================-->
+	
+		   <!--    过滤器条件        -->
+	   <!--    一级专业        -->
+	      <select id="selectNetworkTypeTop"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select id,txt from tia_alarm_dict where type=1317 and valid=1
+   </select>
+    <!--   网元告警级别        -->
+	   <select id="selectOrgSeverity"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select id,txt from tia_alarm_dict where type=6 and valid=1
+   </select>
+       <!--   设备类型        -->
+   <select id="selectEqpObjectClass"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select id,txt from tia_alarm_dict where type=9 and valid=1
+   </select>
+   <!--   设备厂家        -->
+   <select id="selectTiaAlarmDict"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select type id,zh_name txt from vendor_name where type >= 0 order by zh_name
+   </select>
+     
+	   <!--   大区        -->
+      <select id="selectDistrictId"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select distinct district_id,district_name from region_city
+   </select>
+      <!--   省份        -->
+      <select id="selectProvinceId"  parameterType="java.util.Map" resultType="java.util.Map">
+select distinct province_id,province_name from region_city
+   </select> 
+	      <!--   过滤器条件        -->
+
+</mapper>

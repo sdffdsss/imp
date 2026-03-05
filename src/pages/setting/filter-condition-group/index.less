@@ -1,0 +1,43 @@
+@import '~oss-ui/es/style/themes/default.less';
+
+.filter-condition-tree-mode-wrapper {
+    height: 100%;
+    .tree-mode-content-wrapper {
+        display: flex;
+        padding-top: 10px;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        .filter-tree-list {
+            width: 20%;
+            padding: 30px 10px 10px;
+            overflow-y: scroll;
+        }
+        .tree-node-render {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .oss-ui-tree-treenode {
+            width: 100%;
+            .oss-ui-tree-node-content-wrapper {
+                width: 100%;
+            }
+        }
+
+        .table-info-wrapper {
+            max-width: 80%;
+            flex: 1;
+        }
+    }
+    .btn-text-container {
+        display: inline-block;
+        width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: @link-color;
+        cursor: pointer;
+    }
+}

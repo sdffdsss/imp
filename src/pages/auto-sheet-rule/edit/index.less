@@ -1,0 +1,70 @@
+.rightContent_edit {
+    height: 100%;
+    padding: 16px;
+    overflow: auto;
+    // border: @table-border;
+    border: 1px solid @border-color-split;
+    .oss-ui-form-item {
+        margin-bottom: 5px !important;
+    }
+}
+
+.auto-sheet-card {
+    .oss-ui-card-body {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        overflow-y: auto;
+    }
+
+    .oss-ui-transfer {
+        flex: 1;
+    }
+}
+
+.auto-sheet-condition-card {
+    .auto-sheet-condition-row {
+        height: 100%;
+
+        > .oss-ui-col {
+            height: 100%;
+
+            .oss-ui-form {
+                display: flex;
+                flex-direction: column;
+
+                .flex-row {
+                    flex: 1;
+
+                    .condition-form-item {
+                        height: 100%;
+
+                        .oss-ui-col,
+                        .oss-ui-form-item-control-input,
+                        .oss-ui-form-item-control-input-content {
+                            height: 100%;
+                        }
+
+                        .condition-vertical-space-wrapper {
+                            display: flex;
+                            flex-direction: column;
+                            height: 100%;
+
+                            > .oss-ui-space-item:last-child {
+                                flex: 1;
+
+                                > .oss-ui-card {
+                                    height: 100%;
+
+                                    > .oss-ui-card-body {
+                                        //height: 100% !important;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,67 @@
+@import '~oss-ui/es/style/themes/default.less';
+.datalistSearch {
+    max-height: 80px;
+    overflow: auto;
+}
+.accordion-container {
+    position: relative;
+    width: 100%;
+    .condition-list-title {
+        max-height: 150px;
+        overflow: auto;
+        margin-top: 8px;
+        position: absolute;
+        top: 20px;
+        left: 7.55vw;
+        z-index: 999;
+        width: 37.55vw;
+        background-color: @white;
+        border-left: 1px solid @border-color-base;
+        border-right: 1px solid @border-color-base;
+        border-bottom: 1px solid @border-color-base;
+        border-radius: 2px;
+        .condition-item {
+            .spanName {
+                width: 100%;
+                line-height: 30px;
+                display: inline-block;
+                padding-left: 8px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: @border-color-base;
+                }
+            }
+        }
+    }
+    .condition-list {
+        max-height: 150px;
+        overflow: auto;
+        margin-top: 8px;
+        position: absolute;
+        top: 20px;
+        left: 7.55vw;
+        z-index: 666;
+        width: 37.55vw;
+        background-color: @white;
+        border-left: 1px solid @border-color-base;
+        border-right: 1px solid @border-color-base;
+        border-radius: 2px;
+        .condition-item {
+            .spanName {
+                width: 100%;
+                line-height: 30px;
+                display: inline-block;
+                padding-left: 8px;
+                cursor: pointer;
+                &:hover {
+                    background-color: @border-color-base;
+                }
+            }
+        }
+    }
+}
+
+.message-model {
+    margin-top: 230px;
+}

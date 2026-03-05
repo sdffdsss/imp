@@ -1,0 +1,66 @@
+.alarm-window-page-container {
+    .alarm-window-grid-layout {
+        .react-grid-item {
+            .oss-ui-card {
+                height: 100%;
+                .oss-ui-card-head {
+                    // background: #095aa3;
+                    height: 30px;
+                    min-height: 30px;
+                    line-height: 30px;
+                    padding: 0 12px;
+
+                    .oss-ui-card-head-wrapper {
+                        .oss-ui-card-head-title {
+                            padding: 0;
+                            font-weight: 600;
+                        }
+                        .oss-ui-card-extra {
+                            padding: 0;
+                        }
+                    }
+                }
+
+                .oss-ui-card-body {
+                    height: calc(100% - 30px);
+                    overflow: auto;
+                    padding: 12px;
+
+                    .oss-ui-collapse {
+                        border: none;
+                        height: 100%;
+
+                        .oss-ui-collapse-item {
+                            // &.oss-ui-collapse-item-active {
+                            //     min-height: calc(100% - 2 * 38px);
+                            //     max-height: calc(100% - 2 * 38px);
+
+                            //     .oss-ui-collapse-content {
+                            //         min-height: calc(100% - 38px);
+                            //         max-height: calc(100% - 38px);
+                            //     }
+                            // }
+                            .oss-ui-collapse-header {
+                                padding: 8px 16px 8px 40px;
+                                // background-color: #08579f;
+                                // border-bottom: 2px solid #003062;
+                            }
+
+                            .oss-ui-collapse-content {
+                                border-top: none;
+                                .oss-ui-collapse-content-box {
+                                    // background-color: #133a70;
+                                    padding: 6px;
+                                }
+                            }
+
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

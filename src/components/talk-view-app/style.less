@@ -1,0 +1,178 @@
+.talk-view-app {
+    height: 100%;
+    .talk-view-placeholder {
+        padding-top: 30vh;
+        color: var(--adm-color-weak);
+        text-align: center;
+        &-loadingWrapper {
+            margin-bottom: 24px;
+            font-size: 24px;
+        }
+    }
+    .talk-view-app-page {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        .talk-view-content {
+            flex: 1;
+            padding: 5px 10px;
+            overflow-y: auto;
+            &-unread {
+                position: absolute;
+                right: 5px;
+                bottom: 40px;
+                padding: 2px 5px;
+                color: rgb(124, 187, 289);
+                font-size: 12px;
+                background-color: #fff;
+                border: 1px solid rgb(218, 218, 218);
+                border-radius: 3px;
+                :hover {
+                    background-color: rgb(250, 250, 250);
+                }
+            }
+            &-field {
+                display: flex;
+                // align-items: center;
+                padding: 5px 0;
+                &-name {
+                    width: 40px;
+                    height: 40px;
+                    color: #fff;
+                    line-height: 40px;
+                    text-align: center;
+                    background: rgb(5, 146, 208);
+                    border-radius: 3px;
+                }
+                &-area {
+                    display: inline-block;
+                    max-width: 50%;
+                    margin: 0 5px;
+                    &-content {
+                        padding: 10px;
+                        white-space: pre-line;
+                        background-color: rgb(227, 231, 235);
+                        border-radius: 3px;
+                    }
+                    &-count {
+                        color: rgb(73, 181, 240);
+                    }
+                }
+            }
+            .my-talk {
+                flex-direction: row-reverse;
+                width: 100%;
+                // justify-content: end;
+
+                .talk-view-content-field-area-content {
+                    background-color: rgb(145, 236, 131);
+                }
+            }
+        }
+
+        .talk-view-input {
+            width: 100%;
+            padding: 5px 10px;
+            background: rgb(247, 247, 247);
+            &-content {
+                display: flex;
+                align-items: center;
+            }
+            .talk-view-input-area {
+                flex: 1;
+                margin-right: 5px;
+                background: #fff;
+                border-radius: 3px;
+            }
+            &-select {
+                display: flex;
+                justify-content: space-between;
+                height: 200px;
+                padding-top: 10px;
+                overflow-y: auto;
+                &-option {
+                    width: 30%;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .talk-user-app-page {
+        &-list {
+            display: flex;
+            flex-wrap: wrap;
+            &-field {
+                width: 50px;
+                margin: 5px;
+                &-name {
+                    width: 100%;
+                    height: 50px;
+                    color: #fff;
+                    line-height: 50px;
+                    text-align: center;
+                    background: rgb(5, 146, 208);
+                    border-radius: 3px;
+                }
+                &-username {
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .talk-user-app-list-page {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        .talk-user-app-page-imageList {
+            flex: 1;
+            overflow-y: auto;
+            background: #000;
+            .talk-user-app-page-image {
+                position: relative;
+                &-check {
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                }
+            }
+        }
+        &-search {
+            display: flex;
+            padding: 5px 5px 5px 0;
+            background: #fff;
+            &-input {
+                flex: 1;
+                margin-right: 5px;
+            }
+        }
+        &-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        &-ok {
+            width: 100%;
+            padding: 5px 10px;
+            text-align: right;
+            background: #fff;
+        }
+    }
+}
+.my-component {
+    .bf-controlbar {
+        display: none;
+    }
+    .my-component-editor {
+        height: auto;
+        min-height: 24px;
+        max-height: 100px;
+        padding: 0;
+    }
+    .bf-container .public-DraftEditor-content {
+        padding: 0;
+    }
+    .bf-container .public-DraftEditor-content > div {
+        padding: 0;
+    }
+}

@@ -1,0 +1,70 @@
+.modal-content-title {
+    display: flex;
+    align-items: center;
+    width: 1000px;
+    height: 30px;
+    color: #4990e2;
+    font-size: 16px;
+    &::before {
+        width: 5px;
+        height: 20px;
+        margin-right: 10px;
+        background: #4990e2;
+        content: '';
+    }
+}
+.modal-content-part1 {
+    width: 1020px;
+    height: 500px;
+
+    overflow-y: auto;
+}
+.modal-content-part2 {
+    width: 1020px;
+    height: 200px;
+
+    overflow-y: auto;
+    .oss-ui-tooltip {
+        max-width: 450px;
+    }
+    .oss-ui-tooltip-arrow {
+        display: none;
+    }
+}
+.modal-content-line {
+    width: 1000px;
+    height: 1px;
+    margin: 5px 0;
+    background: #ccc;
+}
+.table-tooltipStatus {
+    position: relative;
+    background-color: #fff;
+}
+.table-tooltipText {
+    position: relative;
+    width: 440px;
+    padding: 0;
+    font-size: 12px;
+    text-align: center;
+    .oss-ui-table {
+        margin: 0 !important;
+    }
+}
+.table-8line {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 8;
+}
+
+.table-tooltipStatus:hover .tooltipText {
+    visibility: visible;
+}
+.modal-content-as {
+    .oss-ui-modal-body {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+}

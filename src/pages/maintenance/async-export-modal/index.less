@@ -1,0 +1,47 @@
+.async-export-box {
+    width: 100%;
+
+    .async-export-item {
+        width: 100%;
+        height: 170px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        .export-form-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            justify-items: end;
+            width: 100%;
+            height: 100%;
+        }
+        .async-export-tip {
+            padding: 10px 10px 10px 30px;
+            color: red;
+        }
+    }
+    .async-list-title {
+        padding-left: 12px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .async-export-button-box {
+        display: flex;
+        gap: 100px;
+        justify-content: center;
+        width: 100%;
+        padding: 20px;
+    }
+    .async-export-down-button {
+        color: #488fe1;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+        &:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+}

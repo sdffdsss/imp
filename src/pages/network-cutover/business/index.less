@@ -1,0 +1,23 @@
+.network-cutover-business-table-row {
+    background-color: rgba(230, 53, 53, 0.16) !important ;
+    .oss-ui-table-cell-fix-left,
+    .oss-ui-table-cell-fix-left-last,
+    .oss-ui-table-cell-fix-right {
+        background-color: #fbdfdf !important;
+        &.action-columns {
+            background-color: #fff !important;
+        }
+        &.oss-ui-table-cell-row-hover {
+            background-color: #fafafa !important;
+        }
+    }
+}
+.text-ellipsis {
+    display: -webkit-box; // 将对象作为弹性伸缩盒子模型显示。
+    width: 100%;
+    overflow: hidden; // 超出的文本隐藏
+    text-overflow: ellipsis; // 溢出用省略号显示
+    -webkit-line-clamp: 3;
+    line-clamp: 3; // 这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。 // 这个属性不是css的规范属性，需要组合上面两个属性，表示显示的行数。
+    -webkit-box-orient: vertical; // 从上到下垂直排列子元素（设置伸缩盒子的子元素排列方式）
+}

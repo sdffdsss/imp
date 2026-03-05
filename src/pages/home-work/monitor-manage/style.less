@@ -1,0 +1,323 @@
+@import '~antd/es/style/themes/default.less';
+.monitor-manage {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    .table-ellipsis {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .alarm-window {
+        .alarm-window-operation-bar {
+            margin: 0;
+            border: none;
+        }
+
+        .alarm-window-operation-bar-right {
+            max-width: none;
+        }
+
+        .oss-ui-table-body {
+            height: 120px !important
+        }
+    }
+    .monitor-manage-select {
+        height: 40px;
+        margin-bottom: 10px;
+    }
+    .monitor-manage-page {
+        width: 100%;
+        height: 100%;
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        .monitor-manage-page-field {
+            width: 32%;
+            height: 32%;
+            border: 1px solid #016ee0;
+            border-radius: 2px;
+            .monitor-manage-page-field-title {
+                margin-top: 3vh;
+                margin-left: 10%;
+                font-size: 0.6vw;
+            }
+            .monitor-manage-page-field-content {
+                padding: 3% 4% 3% 10%;
+                height: calc(100% - 3vh - 0.6vw - 3%);
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                .monitor-manage-page-field-content-context {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+        }
+    }
+    .monitor-manage-time-color {
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        background: @component-background;
+        .monitor-manage-time-color-icon {
+            padding: 2px 3px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    }
+    .oss-ui-table.oss-ui-table-small {
+        font-size: 0.6vw;
+    } 
+    .monitor-manage-table {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        justify-content: space-between;
+        .failure-sheet-top-container{
+            // flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            width: 100%;
+            height: calc(100% - 25px);
+        }
+        .failure-sheet-bottom-container{
+            position: absolute;
+            bottom: 0px;
+            width: calc(100% - 20px);
+            height: 215px;
+            overflow: auto;
+            z-index: 1;
+            .@{ant-prefix}-grid-content{
+                overflow: auto;
+                .oss-imp-alarm-protable-search{
+                    width: 100%!important;
+                }
+            }
+            .failure-sheet-bottom-container-close{
+                position: absolute;
+                z-index: 1;
+                top: 1px;
+                left: 9px;
+                cursor: pointer;
+            }
+        }
+        .monitor-manage-table-field-left {
+            width: 100%;
+            display: flex;
+            .monitor-manage-table-field-left-title {
+                width: 4%;
+                padding: 0 1%;
+                height: 30px;
+                background: rgb(35, 111, 171);
+                display: flex;
+                font-size: 0.9vw;
+                justify-content: center;
+                align-items: center;
+                span {
+                    text-align: center;
+                    display: inline-block;
+                }
+            }
+           
+            
+        }
+        .monitor-manage-table-field-right {
+            height: 100%;
+        }
+        .monitor-manage-table-field-tabs {
+            width: 100%;
+            height: 100%;
+            padding: 0 10px 10px 10px;
+
+            .monitor-manage-table-field-tabs-table {
+                height: 100%;
+            }
+        }
+        .oss-ui-tabs {
+            height: 100%;
+            .oss-ui-tabs-content-holder {
+                height: calc(100% - 0.6vw - 10px);
+                .oss-ui-tabs-content {
+                    height: 100%;
+                }
+            }
+            .oss-ui-table-wrapper {
+                padding: 0;
+            }
+        }
+        .oss-ui-tabs-tab {
+            font-size: 0.6vw;
+        }
+        .oss-ui-tabs-tab + .oss-ui-tabs-tab {
+            margin: 0 0px 0 32px;
+        }
+        .monitor-manage-table-right-tabs {
+            width: 100%;
+            padding: 10px;
+            height: 100%;
+            .monitor-manage-table-right-tabs-timeline {
+                width: 100%;
+                height: 100%;
+                border: 1px solid #016ee0;
+                padding: 30px 10px;
+                overflow-y: auto;
+                .oss-ui-timeline-item {
+                    font-size: 0.6vw;
+                }
+                .oss-ui-timeline-item {
+                    padding-bottom: 30px;
+                }
+                .oss-ui-timeline.oss-ui-timeline-label .oss-ui-timeline-item-label {
+                    width: 6vw;
+                    text-align: center;
+                    display: inline-block;
+                    justify-content: center;
+                }
+                .oss-ui-timeline.oss-ui-timeline-label .oss-ui-timeline-item-head {
+                    left: calc(6vw + 10px);
+                }
+                .oss-ui-timeline.oss-ui-timeline-label .oss-ui-timeline-item-left .oss-ui-timeline-item-content {
+                    left: calc(6vw + 10px);
+                    width: calc(100% - 14px - 6vw - 20px);
+                }
+                .oss-ui-timeline.oss-ui-timeline-label .oss-ui-timeline-item-tail {
+                    left: calc(6vw + 10px);
+                }
+                .monitor-manage-table-right-tabs-timeline-info {
+                    width: 100%;
+                    display: flex;
+                    .monitor-manage-table-right-tabs-timeline-info-context {
+                        flex: 1;
+                    }
+                    .monitor-manage-table-right-tabs-timeline-info-icon {
+                        width: calc(0.6vw + 20px);
+                        text-align: right;
+                        cursor: pointer;
+                        font-size: 18px;
+                    }
+                }
+            }
+            .monitor-manage-table-right-tabs-header {
+                font-size: 0.6vw;
+                padding: 2px;
+                padding-bottom: 12px;
+                .monitor-manage-table-right-tabs-header-icon {
+                    display: inline-block;
+                    width: 0.14vw;
+                    height: 0.6vw;
+                    background: #01ffff;
+                    vertical-align: middle;
+                    margin-right: 10px;
+                }
+                .monitor-manage-table-right-tabs-header-title {
+                    vertical-align: middle;
+                }
+            }
+            .monitor-manage-table-right-tabs-content {
+                padding: 10px;
+                border: 1px solid #016ee0;
+                width: 100%;
+                background: #041f55;
+                height: calc(100% - 24px - 0.6vw);
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                .monitor-manage-table-right-tabs-content-field {
+                    width: 20%;
+                    height: 45%;
+                    // background: red;
+
+                    .monitor-manage-table-right-tabs-content-field-info {
+                        font-size: 0.6vw;
+                        margin-top: 10px;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+            
+    }
+}
+
+.handover-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .group-name {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        & > span {
+            margin-right: 5px;
+        }
+    }
+    .user-list {
+        margin: 10px 0 10px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        section {
+            height: 30px;
+            width: 45%;
+            background-color: rgba(28, 159, 239, 1);
+            border-radius: 3px;
+            text-align: center;
+            line-height: 30px;
+            color: #fff;
+        }
+    }
+    .info-list {
+        flex: 90%;
+        border: 1px solid @border-color-split;
+        overflow: scroll;
+        overflow-x: hidden;
+        &-button {
+            margin: 5px;
+        }
+        &-info {
+            &-item {
+                display: flex;
+                justify-content: space-around;
+                line-height: 30px;
+                border-bottom: 1px solid @border-color-base;
+                &:nth-of-type(odd) {
+                    background: @table-row-bg-even;
+                }
+                &:nth-of-type(enev) {
+                    background: @table-row-bg-odd;
+                }
+                & > section {
+                    &:nth-of-type(1) {
+                        // flex: 1;
+                        white-space: normal;
+                        word-break: break-all;
+                        width: 75%;
+                    }
+                    &:nth-of-type(2) {
+                        width: 30px;
+                    }
+                }
+            }
+        }
+    }
+    .handover-btn {
+        flex: 1;
+        margin-top: 10px;
+        text-align: center;
+    }
+    
+}
+
+.oss-ui-table-pagination.oss-ui-pagination {
+    margin: 0;
+}

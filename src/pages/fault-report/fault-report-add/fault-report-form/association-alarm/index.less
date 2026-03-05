@@ -1,0 +1,72 @@
+.association-ticket-modal-footer {
+    display: flex;
+    justify-content: center;
+}
+
+.association-alarm-modal-search {
+    margin-bottom: 8px;
+}
+
+.association-ticket-table-wrapper {
+    margin-bottom: 16px;
+    padding: 0;
+    .overview-monitor-alarm-table-cell-alarm {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        background: red;
+    }
+}
+.backShowTable {
+    .oss-ui-table-row-expand-icon {
+        display: none;
+    }
+}
+
+.default-association-ticket-modal {
+    .association-ticket-table-wrapper {
+        margin-bottom: 0;
+    }
+    .oss-ui-btn-primary {
+        text-shadow: 1px 3px 10px 0px rgba(7, 69, 189, 0.4);
+        background: #4990e2;
+        border: 1px solid #4990e2;
+    }
+    .oss-ui-btn-primary[disabled],
+    .oss-ui-btn-primary[disabled]:hover,
+    .oss-ui-btn-primary[disabled]:focus,
+    .oss-ui-btn-primary[disabled]:active,
+    .oss-ui-btn[disabled],
+    .oss-ui-btn[disabled]:hover,
+    .oss-ui-btn[disabled]:focus,
+    .oss-ui-btn[disabled]:active {
+        color: #fff;
+        background-color: #4990e2;
+        border-color: #4990e2;
+    }
+    .oss-ui-pro-table-alert {
+        display: none;
+    }
+    .overview-monitor-alarm-table-sub {
+        position: absolute;
+        // padding-left: 18px;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        margin-left: 15px;
+        // color: rgb(124, 188, 252);
+        color: #ccc;
+        // justify-content: center;
+        text-align: left;
+        // border-left: 1px solid rgb(124, 188, 252);
+        border-left: 1px solid #ccc;
+    }
+}

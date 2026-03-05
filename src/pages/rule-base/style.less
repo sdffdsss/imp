@@ -1,0 +1,132 @@
+.rule-base-wrapper {
+    height: 100%;
+    background: @component-background;
+    .rule-select-wrapper {
+        .oss-ui-radio-button-wrapper {
+            width: 70px;
+            color: #a0cdf2;
+            text-align: center;
+            border: 0px solid #a0cdf2;
+        }
+        .oss-ui-radio-button-wrapper-checked {
+            color: #ffff;
+        }
+        .oss-ui-radio-button-wrapper:nth-child(1) {
+            border-top: 1px solid #a0cdf2 !important;
+            border-bottom: 1px solid #a0cdf2 !important;
+            border-left: 1px solid #a0cdf2 !important;
+            border-radius: 15px 0 0 15px;
+        }
+        .oss-ui-radio-button-wrapper-checked:nth-child(1) {
+            border-radius: 15px 0 0 15px;
+        }
+        .oss-ui-radio-button-wrapper:nth-child(2) {
+            border-top: 1px solid #a0cdf2 !important;
+            border-bottom: 1px solid #a0cdf2 !important;
+        }
+        .oss-ui-radio-button-wrapper:nth-child(3) {
+            border-top: 1px solid #a0cdf2 !important;
+            border-right: 1px solid #a0cdf2 !important;
+            border-bottom: 1px solid #a0cdf2 !important;
+            border-radius: 0 15px 15px 0;
+        }
+        .oss-ui-radio-button-wrapper-checked:nth-child(3) {
+            border-radius: 0 15px 15px 0;
+        }
+        .oss-ui-radio-button-wrapper:not(:first-child)::before {
+            width: 0px !important;
+        }
+    }
+    .rule-card-wrapper {
+        padding: 0 20px;
+        background: @component-background;
+
+        .rule-card-type {
+            .oss-ui-col-4 {
+                display: block;
+                flex: 0 0 20%;
+                max-width: 20%;
+            }
+        }
+        @media screen and (max-width: 1439px) {
+            .rule-card-type {
+                .oss-ui-col-4 {
+                    display: block;
+                    flex: 0 0 25%;
+                    max-width: 25%;
+                }
+            }
+        }
+        .rule-card-wrapper-title {
+            padding-left: 10px;
+            font-weight: 650;
+            font-size: 18px;
+            font-style: normal;
+            line-height: 36px;
+        }
+        .oss-ui-card-cover {
+            height: 10%;
+        }
+        .oss-ui-card-body {
+            height: 90%;
+            .rule-card-wrappe-content {
+                display: -webkit-box;
+                height: 58%;
+                padding-top: 4%;
+                overflow: hidden; //超出的文本隐藏
+                color: #666666;
+                font-weight: 400;
+                font-size: 12px;
+                font-style: normal;
+                text-overflow: ellipsis; //溢出用省略号显示
+                -webkit-line-clamp: 3; // 超出多少行
+                -webkit-box-orient: vertical;
+            }
+            .rule-card-wrappe-foot {
+                height: 40%;
+                .rule-card-wrappe-num {
+                    position: absolute;
+                    top: 12px;
+                    color: #ffa861;
+                    font-weight: 400;
+                    font-size: 18px;
+                    font-style: normal;
+                }
+                .rule-card-wrappe-name {
+                    color: #999999;
+                    font-size: 11px;
+                }
+            }
+        }
+        .rule-card-provinces {
+            @media screen and (max-width: 1439px) {
+                .oss-ui-col-4 {
+                    display: block;
+                    flex: 0 0 20%;
+                    max-width: 20%;
+                }
+            }
+            .rule-card-provinces-name {
+                height: 50%;
+                padding-top: 4%;
+                font-weight: 650;
+                font-size: 18px;
+                font-style: normal;
+                text-align: center;
+            }
+            .rule-card-provinces-foot {
+                height: 50%;
+                .rule-card-wrappe-num {
+                    color: #ffa861;
+                    font-weight: 400;
+                    font-size: 18px;
+                    font-style: normal;
+                }
+                .rule-card-wrappe-name {
+                    color: #999999;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+}

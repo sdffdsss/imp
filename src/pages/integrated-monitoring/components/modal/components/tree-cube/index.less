@@ -1,0 +1,44 @@
+.tree-cube {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 105px;
+    height: 70px;
+    margin: 0 5px 6px 5px;
+    cursor: pointer;
+    &-name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 40px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        text-align: center;
+    }
+
+    &-num {
+        color: rgb(24, 144, 255);
+        font-weight: 700;
+        font-size: 16px;
+    }
+    &-font {
+        font-size: 14px;
+    }
+
+    &:hover {
+        background: rgb(227, 236, 255);
+        .tree-cube-name {
+            color: rgb(0, 102, 196);
+        }
+
+        .tree-cube-num {
+            color: rgb(0, 102, 196);
+        }
+        .tree-cube-font {
+            color: rgb(0, 102, 196);
+        }
+    }
+}

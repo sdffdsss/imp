@@ -1,0 +1,11 @@
+﻿{
+    "menuItem": [
+        {
+            "fileName": "告警报表-示例",
+            "menuItem": [
+                { "fileName": "资源覆盖率核查报表", "textName": "unicom_resource_rate_check" },
+                { "fileName": "故障派单核查报表", "textName": "unicom_fault_sheet_check", "active": true }
+            ]
+        }
+    ]
+}

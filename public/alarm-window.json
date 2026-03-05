@@ -1,0 +1,773 @@
+{
+    "needFp": false,
+    "clickLock": false,
+    "autoUnLock": true,
+    "unLockTime": 60,
+    "alarmTitlelist": {
+        "active": "未清除未确认",
+        "confirm": "未清除已确认",
+        "clear": "已清除未确认",
+        "cleardAck": "已清除已确认"
+    },
+    "batchSize": 50,
+    "defaultSize": "small",
+    "doubleClickType": 1,
+    "exportHtmlType": true,
+    "contextAndToolbar": {
+        "alarmContextMenu": {
+            "active": [
+                {
+                    "name": "告警详情",
+                    "key": "NewAlarmDetails"
+                },
+                {
+                    "name": "拓扑查看",
+                    "key": "topologyView"
+                },
+                {
+                    "name": "告警查询",
+                    "key": "AlarmSearch"
+                },
+                {
+                    "name": "告警确认",
+                    "key": "AlarmAcknowledgement",
+                    "subMenus": [
+                        {
+                            "name": "独立确认",
+                            "key": "AlarmSingleAcknowledgement"
+                        },
+                        {
+                            "name": "告警关联确认",
+                            "key": "AlarmRelatedAcknowledgement"
+                        },
+                        {
+                            "name": "查看确认",
+                            "key": "AlarmAcknowledgementCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警清除",
+                    "key": "AlarmManualClearing",
+                    "subMenus": [
+                        {
+                            "name": "独立清除",
+                            "key": "AlarmManualSingleClearing"
+                        },
+                        {
+                            "name": "关联清除",
+                            "key": "AlarmRelatedManualClearing"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警备注",
+                    "key": "WarningRemarks",
+                    "subMenus": [
+                        {
+                            "name": "独立备注",
+                            "key": "WarningSingleRemarks"
+                        },
+                        {
+                            "name": "关联备注",
+                            "key": "WarningRelatedRemarks"
+                        },
+                        {
+                            "name": "查看备注",
+                            "key": "WarningRemarksCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "工单操作",
+                    "key": "SheetOperation",
+                    "subMenus": [
+                        {
+                            "name": "手工派单-故障单",
+                            "key": "ManualDispatchUnicom"
+                        },
+                        {
+                            "name": "手工派单-督办单",
+                            "key": "Supervise"
+                        },
+                        {
+                            "name": "追加告警到工单",
+                            "key": "AddToSheet"
+                        },
+                        {
+                            "name": "手工派单测试",
+                            "key": "EomsTestDispatch"
+                        },
+                        {
+                            "name": "抑制派单",
+                            "key": "SuppressionOfOrders"
+                        },
+                        {
+                            "name": "EOMS手工派单",
+                            "key": "EomsManualDispatch"
+                        },
+                        {
+                            "name": "查看工单详情",
+                            "key": "EomsSheetCheckUnicom"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警短信派发",
+                    "key": "AlarmSMSDistribution"
+                },
+                {
+                    "name": "IVR呼叫",
+                    "key": "AlarmCall",
+                    "subMenus": [
+                        {
+                            "name": "手工呼叫",
+                            "key": "AlarmManualCall"
+                        },
+                        {
+                            "name": "抑制呼叫",
+                            "key": "AlarmCallUnSend"
+                        },
+                        {
+                            "name": "查看呼叫详情",
+                            "key": "AlarmCallCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警预处理",
+                    "key": "AlarmPretreatment",
+                    "subMenus": [
+                        {
+                            "name": "手工预处理",
+                            "key": "AlarmManualPretreatment"
+                        },
+                        {
+                            "name": "查看预处理详情",
+                            "key": "AlarmPretreatmentCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警导出",
+                    "key": "AlarmExport"
+                },
+                {
+                    "name": "告警经验管理",
+                    "key": "AlarmExperience",
+                    "subMenus": [
+                        {
+                            "name": "告警经验查询",
+                            "key": "AlarmExperienceCheck"
+                        },
+                        {
+                            "name": "告警经验库管理",
+                            "key": "AlarmExperienceManage"
+                        }
+                    ]
+                },
+                {
+                    "name": "资源属性",
+                    "key": "CompDevResAttr",
+                    "subMenus": [
+                        {
+                            "name": "资源信息",
+                            "key": "CompDevResUnicom"
+                        },
+                        {
+                            "name": "机房信息",
+                            "key": "CompMachineryRoom"
+                        },
+                        {
+                            "name": "影响用户",
+                            "key": "CompEffectedUser"
+                        },
+                        {
+                            "name": "影响小区",
+                            "key": "CompEffectedCell"
+                        },
+                        {
+                            "name": "工程信息",
+                            "key": "CompArPro"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警重要通知",
+                    "key": "alarmNotice"
+                },
+                {
+                    "name": "光功率查询",
+                    "key": "OpticalPowerSearch"
+                }
+            ],
+            "confirm": [
+                {
+                    "name": "告警详情",
+                    "key": "NewAlarmDetails"
+                },
+                {
+                    "name": "拓扑查看",
+                    "key": "topologyView"
+                },
+                {
+                    "name": "告警确认",
+                    "key": "AlarmAcknowledgement",
+                    "subMenus": [
+                        {
+                            "name": "独立确认",
+                            "key": "AlarmSingleAcknowledgement"
+                        },
+                        {
+                            "name": "告警关联确认",
+                            "key": "AlarmRelatedAcknowledgement"
+                        },
+                        {
+                            "name": "查看确认",
+                            "key": "AlarmAcknowledgementCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警清除",
+                    "key": "AlarmManualClearing",
+                    "subMenus": [
+                        {
+                            "name": "独立清除",
+                            "key": "AlarmManualSingleClearing"
+                        },
+                        {
+                            "name": "关联清除",
+                            "key": "AlarmRelatedManualClearing"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警备注",
+                    "key": "WarningRemarks",
+                    "subMenus": [
+                        {
+                            "name": "独立备注",
+                            "key": "WarningSingleRemarks"
+                        },
+                        {
+                            "name": "关联备注",
+                            "key": "WarningRelatedRemarks"
+                        },
+                        {
+                            "name": "查看备注",
+                            "key": "WarningRemarksCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "工单操作",
+                    "key": "SheetOperation",
+                    "subMenus": [
+                        {
+                            "name": "手工派单",
+                            "key": "ManualDispatch"
+                        },
+                        {
+                            "name": "故障工单派发",
+                            "key": "ManualDispatchUnicom"
+                        },
+                        {
+                            "name": "抑制派单",
+                            "key": "SuppressionOfOrders"
+                        },
+                        {
+                            "name": "EOMS手工派单",
+                            "key": "EomsManualDispatch"
+                        },
+                        {
+                            "name": "查看工单详情",
+                            "key": "EomsSheetCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警短信派发",
+                    "key": "AlarmSMSDistribution"
+                },
+                {
+                    "name": "IVR呼叫",
+                    "key": "AlarmCall",
+                    "subMenus": [
+                        {
+                            "name": "手工呼叫",
+                            "key": "AlarmManualCall"
+                        },
+                        {
+                            "name": "抑制呼叫",
+                            "key": "AlarmCallUnSend"
+                        },
+                        {
+                            "name": "查看呼叫详情",
+                            "key": "AlarmCallCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警预处理",
+                    "key": "AlarmPretreatment",
+                    "subMenus": [
+                        {
+                            "name": "手工预处理",
+                            "key": "AlarmManualPretreatment"
+                        },
+                        {
+                            "name": "查看预处理详情",
+                            "key": "AlarmPretreatmentCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警导出",
+                    "key": "AlarmExport"
+                },
+                {
+                    "name": "告警经验管理",
+                    "key": "AlarmExperience",
+                    "subMenus": [
+                        {
+                            "name": "告警经验查询",
+                            "key": "AlarmExperienceCheck"
+                        },
+                        {
+                            "name": "告警经验库管理",
+                            "key": "AlarmExperienceManage"
+                        }
+                    ]
+                },
+                {
+                    "name": "资源属性",
+                    "key": "CompDevResAttr",
+                    "subMenus": [
+                        {
+                            "name": "资源信息",
+                            "key": "CompDevResUnicom"
+                        },
+                        {
+                            "name": "机房信息",
+                            "key": "CompMachineryRoom"
+                        },
+                        {
+                            "name": "影响用户",
+                            "key": "CompEffectedUser"
+                        },
+                        {
+                            "name": "影响小区",
+                            "key": "CompEffectedCell"
+                        },
+                        {
+                            "name": "工程信息",
+                            "key": "CompArPro"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警重要通知",
+                    "key": "alarmNotice"
+                },
+                {
+                    "name": "光功率查询",
+                    "key": "OpticalPowerSearch"
+                }
+            ],
+            "clear": [
+                {
+                    "name": "告警详情",
+                    "key": "NewAlarmDetails"
+                },
+                {
+                    "name": "拓扑查看",
+                    "key": "topologyView"
+                },
+                {
+                    "name": "告警确认",
+                    "key": "AlarmAcknowledgement",
+                    "subMenus": [
+                        {
+                            "name": "独立确认",
+                            "key": "AlarmSingleAcknowledgement"
+                        },
+                        {
+                            "name": "告警关联确认",
+                            "key": "AlarmRelatedAcknowledgement"
+                        },
+                        {
+                            "name": "查看确认",
+                            "key": "AlarmAcknowledgementCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警备注",
+                    "key": "WarningRemarks",
+                    "subMenus": [
+                        {
+                            "name": "独立备注",
+                            "key": "WarningSingleRemarks"
+                        },
+                        {
+                            "name": "关联备注",
+                            "key": "WarningRelatedRemarks"
+                        },
+                        {
+                            "name": "查看备注",
+                            "key": "WarningRemarksCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "工单操作",
+                    "key": "SheetOperation",
+                    "subMenus": [
+                        {
+                            "name": "手工派单",
+                            "key": "ManualDispatch"
+                        },
+                        {
+                            "name": "故障工单派发",
+                            "key": "ManualDispatchUnicom"
+                        },
+                        {
+                            "name": "抑制派单",
+                            "key": "SuppressionOfOrders"
+                        },
+                        {
+                            "name": "EOMS手工派单",
+                            "key": "EomsManualDispatch"
+                        },
+                        {
+                            "name": "查看工单详情",
+                            "key": "EomsSheetCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警短信派发",
+                    "key": "AlarmSMSDistribution"
+                },
+                {
+                    "name": "IVR呼叫",
+                    "key": "AlarmCall",
+                    "subMenus": [
+                        {
+                            "name": "手工呼叫",
+                            "key": "AlarmManualCall"
+                        },
+                        {
+                            "name": "抑制呼叫",
+                            "key": "AlarmCallUnSend"
+                        },
+                        {
+                            "name": "查看呼叫详情",
+                            "key": "AlarmCallCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警预处理",
+                    "key": "AlarmPretreatment",
+                    "subMenus": [
+                        {
+                            "name": "手工预处理",
+                            "key": "AlarmManualPretreatment"
+                        },
+                        {
+                            "name": "查看预处理详情",
+                            "key": "AlarmPretreatmentCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警导出",
+                    "key": "AlarmExport"
+                },
+                {
+                    "name": "告警经验管理",
+                    "key": "AlarmExperience",
+                    "subMenus": [
+                        {
+                            "name": "告警经验查询",
+                            "key": "AlarmExperienceCheck"
+                        },
+                        {
+                            "name": "告警经验库管理",
+                            "key": "AlarmExperienceManage"
+                        }
+                    ]
+                },
+                {
+                    "name": "资源属性",
+                    "key": "CompDevResAttr",
+                    "subMenus": [
+                        {
+                            "name": "资源信息",
+                            "key": "CompDevResUnicom"
+                        },
+                        {
+                            "name": "机房信息",
+                            "key": "CompMachineryRoom"
+                        },
+                        {
+                            "name": "影响用户",
+                            "key": "CompEffectedUser"
+                        },
+                        {
+                            "name": "影响小区",
+                            "key": "CompEffectedCell"
+                        },
+                        {
+                            "name": "工程信息",
+                            "key": "CompArPro"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警重要通知",
+                    "key": "alarmNotice"
+                },
+                {
+                    "name": "光功率查询",
+                    "key": "OpticalPowerSearch"
+                }
+            ],
+            "cleardAck": [
+                {
+                    "name": "告警详情",
+                    "key": "NewAlarmDetails"
+                },
+                {
+                    "name": "拓扑查看",
+                    "key": "topologyView"
+                },
+                {
+                    "name": "告警确认",
+                    "key": "AlarmAcknowledgement",
+                    "subMenus": [
+                        {
+                            "name": "独立确认",
+                            "key": "AlarmSingleAcknowledgement"
+                        },
+                        {
+                            "name": "告警关联确认",
+                            "key": "AlarmRelatedAcknowledgement"
+                        },
+                        {
+                            "name": "查看确认",
+                            "key": "AlarmAcknowledgementCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警备注",
+                    "key": "WarningRemarks",
+                    "subMenus": [
+                        {
+                            "name": "独立备注",
+                            "key": "WarningSingleRemarks"
+                        },
+                        {
+                            "name": "关联备注",
+                            "key": "WarningRelatedRemarks"
+                        },
+                        {
+                            "name": "查看备注",
+                            "key": "WarningRemarksCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "工单操作",
+                    "key": "SheetOperation",
+                    "subMenus": [
+                        {
+                            "name": "手工派单",
+                            "key": "ManualDispatch"
+                        },
+                        {
+                            "name": "故障工单派发",
+                            "key": "ManualDispatchUnicom"
+                        },
+                        {
+                            "name": "抑制派单",
+                            "key": "SuppressionOfOrders"
+                        },
+                        {
+                            "name": "EOMS手工派单",
+                            "key": "EomsManualDispatch"
+                        },
+                        {
+                            "name": "查看工单详情",
+                            "key": "EomsSheetCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警短信派发",
+                    "key": "AlarmSMSDistribution"
+                },
+                {
+                    "name": "IVR呼叫",
+                    "key": "AlarmCall",
+                    "subMenus": [
+                        {
+                            "name": "手工呼叫",
+                            "key": "AlarmManualCall"
+                        },
+                        {
+                            "name": "抑制呼叫",
+                            "key": "AlarmCallUnSend"
+                        },
+                        {
+                            "name": "查看呼叫详情",
+                            "key": "AlarmCallCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警预处理",
+                    "key": "AlarmPretreatment",
+                    "subMenus": [
+                        {
+                            "name": "手工预处理",
+                            "key": "AlarmManualPretreatment"
+                        },
+                        {
+                            "name": "查看预处理详情",
+                            "key": "AlarmPretreatmentCheck"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警导出",
+                    "key": "AlarmExport"
+                },
+                {
+                    "name": "告警经验管理",
+                    "key": "AlarmExperience",
+                    "subMenus": [
+                        {
+                            "name": "告警经验查询",
+                            "key": "AlarmExperienceCheck"
+                        },
+                        {
+                            "name": "告警经验库管理",
+                            "key": "AlarmExperienceManage"
+                        }
+                    ]
+                },
+                {
+                    "name": "资源属性",
+                    "key": "CompDevResAttr",
+                    "subMenus": [
+                        {
+                            "name": "资源信息",
+                            "key": "CompDevResUnicom"
+                        },
+                        {
+                            "name": "机房信息",
+                            "key": "CompMachineryRoom"
+                        },
+                        {
+                            "name": "影响用户",
+                            "key": "CompEffectedUser"
+                        },
+                        {
+                            "name": "影响小区",
+                            "key": "CompEffectedCell"
+                        },
+                        {
+                            "name": "工程信息",
+                            "key": "CompArPro"
+                        }
+                    ]
+                },
+                {
+                    "name": "告警重要通知",
+                    "key": "alarmNotice"
+                },
+                {
+                    "name": "光功率查询",
+                    "key": "OpticalPowerSearch"
+                }
+            ]
+        },
+        "longAlarmContextMenu": {
+            "active": []
+        },
+        "alarmToolBar": {
+            "active": [
+                "AlarmSynchronization",
+                "ColumnSettings",
+                "AlarmExport",
+                "CustomFilter",
+                "ShowAll",
+                "AlarmLock",
+                "AlarmTop",
+                "AssociatedAlarmFiltering",
+                "FoldingState",
+                "CapacitySettings",
+                "tableSize",
+                "ViewCurrentFilter",
+                "AlarmSound"
+            ],
+            "confirm": [
+                "ColumnSettings",
+                "AlarmExport",
+                "CustomFilter",
+                "ShowAll",
+                "AlarmLock",
+                "AlarmTop",
+                "AssociatedAlarmFiltering",
+                "FoldingState",
+                "CapacitySettings",
+                "tableSize",
+                "AlarmSound"
+            ],
+            "clear": [
+                "ColumnSettings",
+                "AlarmExport",
+                "CustomFilter",
+                "ShowAll",
+                "AlarmLock",
+                "AlarmTop",
+                "AssociatedAlarmFiltering",
+                "FoldingState",
+                "CapacitySettings",
+                "tableSize",
+                "AlarmSound"
+            ],
+            "cleardAck": [
+                "ColumnSettings",
+                "AlarmExport",
+                "CustomFilter",
+                "ShowAll",
+                "AlarmLock",
+                "AlarmTop",
+                "AssociatedAlarmFiltering",
+                "FoldingState",
+                "CapacitySettings",
+                "tableSize",
+                "AlarmSound"
+            ]
+        }
+    },
+    "registerWindow": [
+        {
+            "winType": 1,
+            "winName": "active"
+        },
+        {
+            "winType": 2,
+            "winName": "confirm"
+        },
+        {
+            "winType": 0,
+            "winName": "clear"
+        }
+    ]
+}

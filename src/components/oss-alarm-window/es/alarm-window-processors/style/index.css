@@ -1,0 +1,147 @@
+.alarm-window-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+.alarm-window-container .alarm-window-item-show {
+  flex: 1;
+  transition: all 0.3s;
+}
+.alarm-window-container .alarm-window-item-hide {
+  min-height: 25px;
+  height: 25px;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.alarm-window-title {
+  cursor: pointer;
+  white-space: nowrap;
+  margin-right: 6px;
+}
+.alarm-window-title .alarm-window-title-icon {
+  margin-right: 4px;
+}
+.alarm-window-collapse .oss-ui-collapse-item {
+  display: flex;
+  flex-direction: column;
+}
+.alarm-window-collapse .oss-ui-collapse-item .oss-ui-collapse-content {
+  height: 100%;
+}
+.alarm-window-collapse .oss-ui-collapse-item .oss-ui-collapse-content .oss-ui-collapse-content-box {
+  height: 100%;
+}
+.alarm-window-collapse .oss-ui-collapse-item-active {
+  flex: 1;
+}
+.alarm-window-collapse .oss-ui-table-wrapper {
+  padding: 0;
+}
+.alarm-window-collapse-expandicon {
+  height: 100%;
+  vertical-align: middle;
+}
+.alarm-window-collapse-panel-header {
+  vertical-align: middle;
+}
+.show-dialog-btn {
+  margin: 0 4px;
+}
+.alarm-flow-window-card-header-fold-icon {
+  cursor: pointer;
+  margin-left: 16px;
+}
+.alarm-flow-window-card-extra-icon {
+  cursor: pointer;
+  margin-left: 16px;
+}
+.alarm-flow-window-card-extra-drag-icon {
+  cursor: move;
+  margin-left: 16px;
+}
+.oss-alarm-window-processors-container {
+  height: 100%;
+}
+.oss-alarm-window-processors-container .alarm-window-processors {
+  height: inherit;
+  width: 100%;
+  border: none;
+}
+.oss-alarm-window-processors-container .alarm-window-processors .oss-ui-card-head {
+  padding: 0px;
+  height: 25px;
+  min-height: 25px;
+  line-height: 25px;
+  font-weight: normal;
+  font-size: 14px;
+}
+.oss-alarm-window-processors-container .alarm-window-processors .oss-ui-card-head .oss-ui-card-head-title {
+  padding: 0;
+}
+.oss-alarm-window-processors-container .alarm-window-processors .oss-ui-card-head .oss-ui-card-extra {
+  padding: 0;
+}
+.alarm-window-processors.light .alarm-flow-window-card-header-fold-icon {
+  color: #252631;
+}
+.alarm-window-processors.light .alarm-flow-window-card-extra-icon {
+  color: #252631;
+}
+.alarm-window-processors.light .alarm-flow-window-card-extra-drag-icon {
+  color: #252631;
+}
+.alarm-window-processors.light .alarm-window-title-active {
+  color: #4a90e2;
+}
+.alarm-window-processors.light .alarm-window-title-active .alarm-window-title-icon {
+  color: #4a90e2;
+}
+.alarm-window-processors.light .alarm-window-title-hide {
+  color: #252631;
+}
+.alarm-window-processors.light .alarm-window-title-hide .alarm-window-title-icon {
+  color: #252631;
+}
+.alarm-window-processors.dark .alarm-flow-window-card-header-fold-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.dark .alarm-flow-window-card-extra-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.dark .alarm-flow-window-card-extra-drag-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.dark .alarm-window-title-active {
+  color: #9e9e9e;
+}
+.alarm-window-processors.dark .alarm-window-title-active .alarm-window-title-icon {
+  color: #9e9e9e;
+}
+.alarm-window-processors.dark .alarm-window-title-hide {
+  color: #ffffff;
+}
+.alarm-window-processors.dark .alarm-window-title-hide .alarm-window-title-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.darkblue .alarm-flow-window-card-header-fold-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.darkblue .alarm-flow-window-card-extra-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.darkblue .alarm-flow-window-card-extra-drag-icon {
+  color: #ffffff;
+}
+.alarm-window-processors.darkblue .alarm-window-title-active {
+  color: #4e9aef;
+}
+.alarm-window-processors.darkblue .alarm-window-title-active .alarm-window-title-icon {
+  color: #4e9aef;
+}
+.alarm-window-processors.darkblue .alarm-window-title-hide {
+  color: #ffffff;
+}
+.alarm-window-processors.darkblue .alarm-window-title-hide .alarm-window-title-icon {
+  color: #ffffff;
+}

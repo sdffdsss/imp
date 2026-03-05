@@ -1,0 +1,45 @@
+.phone-form-container {
+    // white-space: nowrap;
+    min-height: 30px;
+    max-height: 70px;
+    overflow: auto;
+    span {
+        margin: 5px 5px 5px 0;
+    }
+    .phone-form {
+        display: inline-block;
+        width: 130px;
+        margin-left: 5px;
+    }
+}
+
+.message-user-group-modal .oss-ui-modal-body {
+    height: calc(100vh - 214px);
+
+    .oss-ui-pro-table-alert {
+        display: none;
+    }
+
+    .oss-ui-tabs,
+    .oss-ui-tabs-content {
+        height: 100%;
+    }
+
+    .message-user-modal-right {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+
+        .tag-groups {
+            flex: 1;
+            margin: 0 10px;
+            padding: 10px;
+            overflow: auto;
+            border: 1px solid @border-color-base;
+
+            .oss-ui-tag {
+                margin-bottom: 10px;
+            }
+        }
+    }
+}

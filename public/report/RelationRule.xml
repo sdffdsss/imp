@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="告警关联有效性分析" />
+  
+  <!--查询sql-->
+  <!--例子Start-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_RelationRule_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (
+    select  to_char(first_result ,'yyyy-mm-dd hh24:mi:ss')   w1, 
+      to_char(first_result,'yyyy-mm-dd hh24:mi:ss') w2,   
+       ac_rule_name w3,
+       case when relation_type =4 then '衍生关联' when relation_type =1 then '主次关联' else '-' end  w4,
+       case when in_user_flag='1' then '是' else '否' end w5,
+       parent_alarm_num w6,
+       sub_alarm_num w7,
+       parent_alarm_num w8,
+       case when org_alarm_event_time is null then '-' else rtrim(to_char(org_alarm_event_time,'yyyy-mm-dd hh24:mi:ss')) end w9,
+       '正常' w10
+  from tpa_alarmrelation_jt_sum 
+where 
+tpa_alarmrelation_jt_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarmrelation_jt_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+and sum_level=#sum_level#
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+
+
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_RelationRule_Count">
+    select count(*)
+    from (
+     select  to_char(first_result ,'yyyy-mm-dd hh24:mi:ss')   w1, 
+      to_char(first_result,'yyyy-mm-dd hh24:mi:ss') w2,   
+       ac_rule_name w3,
+       case when relation_type =4 then '衍生关联' when relation_type =1 then '主次关联' else '-' end  w4,
+       case when in_user_flag='1' then '是' else '否' end w5,
+       parent_alarm_num w6,
+       sub_alarm_num w7,
+       parent_alarm_num w8,
+       case when org_alarm_event_time is null then '-' else rtrim(to_char(org_alarm_event_time,'yyyy-mm-dd hh24:mi:ss')) end w9,
+       '正常' w10
+  from tpa_alarmrelation_jt_sum 
+where 
+tpa_alarmrelation_jt_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarmrelation_jt_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+and sum_level=#sum_level#
+)
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="当日,当日">
+    </Condition>
+    <Condition Name="时间粒度" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True" DefaultValue="1"
+          sqlId = "Select_AlmRpt_RelationRule_CondSumLevel">
+      日,1|周,2|月,3
+    </Condition> 
+
+    <!--例子 End-->
+
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+ 
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+    <ColumnItem FieldName="w1" DisplayName="统计开始时间" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="w2" DisplayName="统计结束时间" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w3" DisplayName="关联规则名称" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="w4" DisplayName="关联方式" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w5" DisplayName="是否开启" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w6" DisplayName="父告警数" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w7" DisplayName="子告警数" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w8" DisplayName="生效次数" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w9" DisplayName="最后生效时间" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="w10" DisplayName="是否可能异常" IsSort="false"></ColumnItem>
+  </Columns>
+</root>

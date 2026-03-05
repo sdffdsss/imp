@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--**一**报表标题-->
+  <!--title：此报表的名称-->
+  <!--IsAutoLoad：是否自动加载sql进行查询-->
+  <ReportTitle title="专业告警统计分析"/>
+  
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_NettypeAlm_ByPage">
+  </sql>
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_NettypeAlm_Count">
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <!--Name：控件说明-->
+  <!--Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同-->
+  <!--DbName: 如果是通过数据源赋值的,此属性填写数据库实例名称-->
+  <!--ControlType： 标准控件名称 （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+  <!--BindType：绑定类型 （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+  <!--DefaultValue： 控件的默认值，目前时间控件提供：当月（当前时间所在月第一天）；当周（当前时间所在周第一天）；当日（当前时间所在天）；上月（当前时间所在月的上月第一天）-->
+  
+  <!--例子 Start-->
+  <Conditions>
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange"  DefaultValue="当周,当日">
+    </Condition>
+    <Condition Name="时间粒度" Flag="sum_level" ControlType="ComboBox" TriggerEvent="True" DefaultValue="1"
+              sqlId = "Select_AlmRpt_NettypeAlm_CondSumLevel">
+      日,1|周,2|月,3
+    </Condition> 
+    <Condition Name="路局" Flag="areaID"  ControlType="MutiDropDown" DbName="nrmdb" 
+              sqlId = "Select_AlmRpt_NettypeAlm_CondAreaID">
+      select distinct province_name as text,province_id as value from region_city_local union all select distinct region_name as text, region_id as value from region_city_local
+    </Condition>
+    <Condition Name="专业" Flag="professional" ControlType="MutiDropDown" DbName="nmosdb" 
+              sqlId = "Select_AlmRpt_NettypeAlm_CondProfessional">
+      Select  ID value,txt text From TIA_ALARM_DICT where Type=1317 
+    </Condition>    
+  </Conditions>
+  <!--例子 End-->
+  
+  
+  <!--FieldName  ：与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序(可以不写)，true进行排序）-->
+  <!--IsHasDetail：是否此列可以弹出详情（false不弹出详情(可以不写)，true弹出详情）-->
+  <!--DetailWhereCondition: 设置点击此列的条件,其中条件字段名对应FieldName,在详情的sql中以{0} 为取代此条件-->
+
+  <!--例子 Start-->
+  <Columns>
+    <ColumnItem FieldName="g1" DisplayName="时间" IsSort="true"></ColumnItem>
+    <ColumnItem FieldName="g3" DisplayName="路局/站段" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g4" DisplayName="专业" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g5" DisplayName="告警量" IsSort="false"></ColumnItem>
+    <ColumnItem FieldName="g6" DisplayName="告警量日均" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g7" DisplayName="派单量" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g8" DisplayName="派单量日均" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g9" DisplayName="符合派单规则告警" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g10" DisplayName="符合派单规则告警日均" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g11" DisplayName="告警总量历时" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g12" DisplayName="告警总量日均历时" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g13" DisplayName="派单量总历时" IsSort="false"></ColumnItem>   
+    <ColumnItem FieldName="g14" DisplayName="派单量总历时日均" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g15" DisplayName="符合派单规则告警总量历时" IsSort="false"></ColumnItem>    
+    <ColumnItem FieldName="g16" DisplayName="符合派单规则告警总量日均" IsSort="false"></ColumnItem>    
+  </Columns>
+  <!--例子 End-->
+</root>

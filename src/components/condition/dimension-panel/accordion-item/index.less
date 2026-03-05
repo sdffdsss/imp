@@ -1,0 +1,31 @@
+@import '../../theme.less';
+.accordion-item {
+    line-height: 24px;
+    cursor: pointer;
+    height: 24px;
+    text-indent: 20px;
+    .anticon {
+        float: left;
+        margin: 9px 6px;
+        color: #597ef7;
+        font-size: 20px;
+    }
+    .type-name {
+        width: calc(100% - 40px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.accordion-item-light:nth-of-type(even) {
+    background: @condition-field-item-light-odd-bg;
+}
+
+.accordion-item-dark:nth-of-type(even) {
+    background: @condition-field-item-dark-odd-bg;
+}
+
+.accordion-item-darkblue:nth-of-type(even) {
+    background: @condition-field-item-darkblue-odd-bg;
+}

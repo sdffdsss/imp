@@ -1,0 +1,128 @@
+.info-back-continer {
+    width: 100%;
+    height: 100%;
+    .progress-line-page-header {
+        padding-top: 20px;
+        padding-left: 1vh;
+        position: relative;
+        height: 60px;
+        border-radius: 6px;
+        .refreshTime {
+            font-size: 14px;
+            color: #ccc;
+            position: absolute;
+            right: 12px;
+        }
+    }
+    .info-back-card-empty {
+        width: 100%;
+        height: 21%;
+        background-color: rgba(255, 255, 255, 0.9);
+        border-radius: 6px;
+        margin-top: 0.1vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        &-img {
+            width: 50%;
+            height: 70%;
+        }
+        &-message {
+            font-size: 16px;
+            font-weight: 900;
+        }
+    }
+    .info-back-card {
+        width: 100%;
+        height: 96%;
+
+        overflow-y: auto;
+        .info-back-first-radius {
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        .info-back-radius {
+            border-radius: 10px;
+        }
+        .info-back-module {
+            width: 100%;
+            margin-bottom: 3%;
+            padding: 10px 20px 10px 20px;
+
+            .info-back-attachment {
+                margin-bottom: 4%;
+                border-bottom: 2px dashed #eff7fd;
+                .attachment-name {
+                    padding: 2px 0;
+                    color: @disabled-color;
+                    font-size: 1.4vh;
+                }
+                .attachment-file {
+                    padding-bottom: 2px;
+                    font-size: 1.4vh;
+                }
+            }
+            .info-back-titel {
+                font-size: 1.8vh;
+            }
+        }
+
+        .card-border {
+            width: 100%;
+            height: 130px;
+            margin-bottom: 10px;
+            border-bottom: 2px dashed #eff7fd;
+            .card-continer {
+                display: flex;
+                width: 100%;
+                height: 120px;
+                padding: 0 5px;
+                .card-left {
+                    width: 120px;
+                    height: 100%;
+                }
+                .card-right {
+                    width: calc(100% - 120px);
+                    height: 100%;
+
+                    .card-title {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        height: 30%;
+
+                        .card-title-word {
+                            width: 75%;
+                            font-size: 1.4vh;
+                        }
+                        .card-title-name {
+                            color: rgba(51, 119, 255, 1);
+                        }
+                    }
+                    .card-content {
+                        display: -webkit-box;
+                        width: 100%;
+                        height: 50%;
+                        padding: 0px 10px;
+                        overflow: hidden;
+                        color: #837a85;
+                        text-indent: 14px;
+                        word-wrap: break-word;
+                        -webkit-box-orient: vertical;
+                        -webkit-line-clamp: 3;
+                    }
+                    .card-date {
+                        display: flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        width: 100%;
+                        height: 30%;
+                        padding-right: 13px;
+                        color: #adabb0;
+                    }
+                }
+            }
+        }
+    }
+}

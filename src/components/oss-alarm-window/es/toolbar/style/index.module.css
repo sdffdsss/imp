@@ -1,0 +1,24 @@
+:global(.oss-ui-tabs-dropdown-menu-item) {
+  min-width: unset;
+}
+.toolbar-icon {
+  font-size: 14px;
+}
+:global(.light) .toolbar-icon-active {
+  color: #4a90e2 !important;
+}
+:global(.light) .toolbar-icon-unactive {
+  color: #4c5969 !important;
+}
+:global(.dark) .toolbar-icon-active {
+  color: #4a90e2 !important;
+}
+:global(.dark) .toolbar-icon-unactive {
+  color: #00d0ff !important;
+}
+:global(.darkblue) .toolbar-icon-active {
+  color: #d8f6ff !important;
+}
+:global(.darkblue) .toolbar-icon-unactive {
+  color: #00c3ff !important;
+}

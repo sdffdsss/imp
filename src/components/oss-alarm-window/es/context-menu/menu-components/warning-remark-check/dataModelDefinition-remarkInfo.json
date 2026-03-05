@@ -1,0 +1,37 @@
+{
+  "dataModelDefinition": {
+    "name": "alarm-remarkInfo",
+    "title": "告警流水右键-查看备注结果",
+    "icon": "",
+    "author": "郝营营",
+    "description": "告警流水右键-查看备注结果",
+    "header": {
+      "dimensions": [],
+      "indicators": [
+        {
+          "dataType": "String",
+          "fieldLabel": "备注人",
+          "fieldName": "remarkUser",
+          "fieldUnit": "",
+          "list": "false"
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "时间",
+          "fieldName": "remarkTime",
+          "fieldUnit": "",
+          "list": "false"
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "正文",
+          "fieldName": "content",
+          "fieldUnit": "",
+          "list": "false"
+        }
+      ]
+    },
+    "page": true,
+    "rowConfig": { "dimensionCount": "unknown", "isUseDimensionParams": true }
+  }
+}

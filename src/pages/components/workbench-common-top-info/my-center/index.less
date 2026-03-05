@@ -1,0 +1,78 @@
+.workbench-top-my-center-wrapper {
+    display: flex;
+    // align-items: center;
+    height: 100%;
+    padding: 10px 0 10px 14px;
+    .header {
+        margin-top: 5px;
+    }
+    .bold {
+        font-weight: 700;
+        line-height: 22px;
+    }
+    .user-info {
+        display: flex;
+        flex: auto;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-left: 25px;
+        padding-top: 5px;
+        .user-name {
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 18px;
+        }
+        .on-duty {
+            display: flex;
+            align-items: center;
+            img {
+                margin-right: 5px;
+            }
+            &-content {
+                width: 140px;
+                overflow: hidden;
+                color: rgb(24, 144, 255);
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+        div {
+            font-size: 14px;
+            .time-render {
+                margin-top: 3px;
+                margin-left: 10px;
+                color: #3eaeff;
+                font-size: 20px;
+                font-family: 'timeFamily';
+            }
+        }
+        .user-depart {
+            margin-top: 9px;
+            color: rgb(24, 144, 255);
+            line-height: 20px;
+        }
+    }
+
+    .on-duty-des {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+        font-size: 14px;
+    }
+
+    .group-select {
+        width: 125px;
+
+        .oss-ui-select-selector {
+            border: 1px solid #1890ff;
+            border-radius: 4px;
+
+            .oss-ui-select-selection-item {
+                color: #1890ff;
+            }
+        }
+        .oss-ui-select-arrow {
+            color: #1890ff;
+        }
+    }
+}

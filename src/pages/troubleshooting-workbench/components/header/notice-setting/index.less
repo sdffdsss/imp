@@ -1,0 +1,696 @@
+.notice-setting-modal {
+    height: 636px;
+    .oss-ui-modal-content {
+        height: 100%;
+        border-radius: 8px;
+        .oss-ui-modal-body {
+            height: 100% !important;
+            max-height: 100% !important;
+            border-radius: 6px;
+        }
+    }
+    .oss-ui-modal-close-icon {
+        color: #fff;
+    }
+    .oss-ui-modal-footer {
+        background-color: rgb(12, 61, 110);
+
+        border-top: none;
+    }
+    .notice-setting-container {
+        .notice-setting-title {
+            height: 40px;
+            padding-left: 16px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 40px;
+            background: rgb(21, 87, 154);
+        }
+        .notice-setting-body {
+            display: flex;
+            width: 100%;
+            height: 572px;
+            padding: 16px;
+            background-color: rgb(12, 61, 110);
+            ::-webkit-scrollbar-thumb {
+                background-color: #105793;
+                border-radius: 1em;
+            }
+            ::-webkit-scrollbar-track {
+                background-color: #003d7a;
+                border-radius: 1em;
+            }
+            .notice-setting-left {
+                flex: 0 0 auto;
+                width: 360px;
+                color: #fff;
+                border-right: 1px dashed rgb(48, 119, 186);
+                .notice-setting-left-content {
+                    display: flex;
+                    height: 100%;
+                    margin-right: 16px;
+                    line-height: 36px;
+                    background-color: rgb(15, 78, 136);
+                    border-radius: 6px;
+                    .notice-setting-left-specialty {
+                        flex: 0 0 auto;
+                        width: 180px;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        border-right: 1px solid rgb(48, 119, 186);
+                        .notice-setting-left-list-item {
+                            padding-left: 16px;
+                            color: #fff;
+                            cursor: pointer;
+                            &:nth-of-type(1) {
+                                border-radius: 6px 0 0 0;
+                            }
+                            &:nth-last-of-type(1) {
+                                border-radius: 0 0 0 6px;
+                            }
+                            &.active {
+                                background-color: #4277b5;
+                            }
+                        }
+                    }
+                    .notice-setting-left-failure-class {
+                        flex: 1 1 auto;
+                        overflow-x: hidden;
+                        overflow-y: auto;
+                        .notice-setting-right-list-item {
+                            padding-left: 16px;
+                            color: #fff;
+                            cursor: pointer;
+                            &:nth-of-type(1) {
+                                border-radius: 0 6px 0 0;
+                            }
+                            // &:nth-last-of-type(1) {
+                            //     border-radius: 0 0 6px 0;
+                            // }
+                            &.active {
+                                background-color: #4277b5;
+                            }
+                        }
+                    }
+                }
+            }
+            .notice-setting-right {
+                position: relative;
+                flex: 1 1 auto;
+                height: 100%;
+                padding: 0 0 0 16px;
+                overflow: hidden;
+                #notice-setting-form {
+                    height: 100%;
+                }
+                .notice-setting-right-content {
+                    height: calc(100% - 38px);
+                    overflow: auto;
+                    .notice-setting-report-notice {
+                        // .report-notice-item {
+                        color: #fff;
+                        border: none;
+                        .oss-ui-checkbox-wrapper {
+                            color: #fff;
+                        }
+                        .oss-ui-checkbox-inner {
+                            background-color: #0c3d6e;
+                            border: 1px solid #2280db;
+                        }
+                        .oss-ui-checkbox-disabled .oss-ui-checkbox-inner {
+                            background-color: #2d557e !important;
+                            border-color: #3372bd !important;
+                        }
+                        &:nth-last-of-type(1) {
+                            margin: 0;
+                        }
+                        .fault-report-notice-content {
+                            flex-direction: column;
+                            .fault-report-notice-content-table {
+                                .oss-ui-table {
+                                    background: #1f4476;
+
+                                    .oss-ui-table-thead > tr > th {
+                                        color: #fff;
+                                        background: #15579a;
+                                        border: none;
+                                        box-shadow: none;
+                                    }
+                                    .oss-ui-table-tbody > tr,
+                                    .oss-ui-table-tbody > tr > td,
+                                    .oss-ui-table-tbody > tr.oss-ui-table-row:hover > td,
+                                    .oss-ui-table-tbody > tr > td.oss-ui-table-cell-row-hover {
+                                        color: #fff;
+                                        background: #1e4476;
+                                        border: none;
+                                    }
+                                }
+                            }
+                            .fault-report-notice-content-phone {
+                                // height: 106px !important;
+                                // margin-top: 8px;
+                                margin-left: 0;
+                                // overflow-y: auto;
+                                // background-color: #224b80;
+                                // border: 1px solid rgba(34, 128, 219, 0.7);
+                                .oss-ui-tag {
+                                    color: #fff;
+                                    background: #3875c3;
+                                    border-color: #3875c3;
+                                }
+                            }
+                        }
+                        .oss-ui-select {
+                            color: #fff;
+                        }
+                        .oss-ui-select:not(.oss-ui-select-customize-input) .oss-ui-select-selector {
+                            background-color: #224b80;
+                            border: 1px solid rgba(34, 128, 219, 0.7);
+                        }
+                        .oss-ui-select .oss-ui-select-arrow {
+                            color: rgb(88, 202, 255);
+                        }
+
+                        .oss-ui-select-dropdown {
+                            background-color: #0a3661;
+                            .oss-ui-select-item-option {
+                                color: #fff;
+                            }
+                            .oss-ui-select-item-option-selected:not(.oss-ui-select-item-option-disabled),
+                            .oss-ui-select-item-option-active:not(.oss-ui-select-item-option-disabled) {
+                                color: #fff;
+                                background-color: #11589e;
+                            }
+                        }
+                        .oss-ui-input-affix-wrapper {
+                            background-color: #224b80;
+                            border: 1px solid rgba(34, 128, 219, 0.7);
+                            textarea.oss-ui-input {
+                                min-height: 108px !important;
+                                color: #fff;
+                                background-color: #224b80;
+                                border: 1px solid rgba(34, 128, 219, 0.7);
+                            }
+                        }
+                        .oss-ui-input-affix-wrapper-textarea-with-clear-btn .oss-ui-input-clear-icon {
+                            color: #06223e;
+                        }
+                        // }
+                    }
+                    .report-notice-error-text {
+                        margin-left: 10px;
+                    }
+                }
+                .notice-setting-right-bottom {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 40px;
+                    padding: 5px 10px;
+                    text-align: right;
+                    .oss-ui-btn-ghost {
+                        color: #fff;
+                        border: 1px solid rgb(34, 128, 219);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.notice-setting-modal,
+.group-workbench-notice-setting-notice-template,
+.group-workbench-notice-setting-notice-template-add,
+.group-workbench-notice-setting-user-group-select {
+    ::-webkit-scrollbar-thumb {
+        background-color: #105793;
+        border-radius: 1em;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: #003d7a;
+        border-radius: 1em;
+    }
+    .oss-ui-modal-header {
+        background: #15579a;
+        border-bottom-color: #15579a;
+        .oss-ui-modal-title {
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+        }
+    }
+    .oss-ui-table-tbody > tr.oss-ui-table-row:hover > td {
+        background: #195585;
+    }
+    .oss-ui-table-tbody > tr > td {
+        border-bottom: 1px solid rgba(34, 128, 219, 0.7);
+    }
+    .oss-ui-table-tbody > tr:nth-child(even) {
+        color: #fff;
+        background-color: #002b51;
+    }
+    .oss-ui-table-tbody > tr:nth-child(odd) {
+        color: #fff;
+        background-color: #002647;
+    }
+    .clickRowStyls {
+        background-color: #195585 !important;
+    }
+    .oss-ui-modal-content {
+        background-color: #0c3d6e;
+        .oss-ui-form-item-label > label {
+            color: #fff;
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 24px;
+        }
+        .oss-ui-input {
+            color: #fff;
+            background: #224b80;
+            border: 1px solid rgba(34, 128, 219, 0.7);
+        }
+        .oss-ui-input-textarea-show-count::after {
+            color: #999;
+        }
+        .oss-ui-modal-close-icon {
+            color: #fff;
+        }
+        .left-list-container {
+            background-color: #0c3d6e;
+        }
+        .oss-ui-modal-header {
+            background: #15579a;
+        }
+        .oss-ui-typography {
+            color: #fff;
+        }
+        .left-list-container {
+            // background: #224b80;
+            border: 1px solid rgba(34, 128, 219, 0.7);
+            .oss-ui-input-affix-wrapper {
+                background: #224b80;
+                border: 1px solid rgba(34, 128, 219, 0.7);
+                .oss-ui-input {
+                    background: #224b80;
+                    border: rgba(34, 128, 219, 0.7);
+                }
+            }
+        }
+        .oss-ui-input[disabled] {
+            color: #fff;
+            background: #224b80;
+            border-color: rgba(34, 128, 219, 0.7);
+        }
+        .SearchOutlined {
+            color: #fff;
+        }
+        .oss-ui-input-status-error:not(.oss-ui-input-disabled):not(.oss-ui-input-borderless).oss-ui-input {
+            background: #224b80;
+        }
+        .oss-ui-pagination-item-active {
+            background-color: #2e659d;
+        }
+        .oss-ui-pagination.mini .oss-ui-pagination-prev .oss-ui-pagination-item-link,
+        .oss-ui-pagination.mini .oss-ui-pagination-next .oss-ui-pagination-item-link {
+            color: #fff;
+        }
+    }
+    .oss-ui-modal-footer {
+        border-top-color: #0c3d6e;
+        .oss-ui-btn {
+            color: #fff;
+            background: #1890ff;
+            border-color: #1890ff;
+        }
+    }
+    .oss-ui-card {
+        background-color: #0a3661;
+        .oss-ui-table {
+            background: #1f4476;
+
+            .oss-ui-table-thead > tr > th {
+                color: #fff;
+                background: #15579a;
+                border: none;
+                box-shadow: none;
+            }
+            .oss-ui-table-tbody > tr,
+            .oss-ui-table-tbody > tr > td,
+            .oss-ui-table-tbody > tr.oss-ui-table-row:hover > td,
+            .oss-ui-table-tbody > tr > td.oss-ui-table-cell-row-hover {
+                color: #fff;
+                background: #1e4476;
+                border-bottom: 1px solid rgba(34, 128, 219, 0.7);
+            }
+        }
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container {
+            border-left: 1px solid rgb(48, 119, 186);
+        }
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-content > table,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-header > table {
+            border-top: 1px solid rgb(48, 119, 186);
+        }
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-content > table > thead > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-header > table > thead > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-body > table > thead > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-summary > table > thead > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-content > table > tbody > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-header > table > tbody > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-body > table > tbody > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-summary > table > tbody > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-content > table > tfoot > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-header > table > tfoot > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-body > table > tfoot > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-summary > table > tfoot > tr > th,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-content > table > tfoot > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-header > table > tfoot > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-body > table > tfoot > tr > td,
+        .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-summary > table > tfoot > tr > td {
+            border-right: 1px solid rgb(48, 119, 186);
+        }
+    }
+    .oss-ui-modal-body .message-user-modal-right .tag-groups {
+        border: 1px solid rgb(48, 119, 186);
+        .oss-ui-tag {
+            color: #fff;
+            background: #3875c3;
+            border-color: #3875c3;
+        }
+    }
+    .oss-ui-select-disabled.oss-ui-select:not(.oss-ui-select-customize-input) .oss-ui-select-selector {
+        color: #fff;
+        background-color: #1a3c69;
+        border: 1px solid rgb(48, 119, 186);
+    }
+    .oss-ui-select-arrow {
+        color: #fff;
+    }
+    .oss-ui-select:not(.oss-ui-select-customize-input) .oss-ui-select-selector {
+        color: #fff;
+        background-color: #1a3c69;
+        border: 1px solid rgb(48, 119, 186);
+    }
+    .oss-ui-btn,
+    .oss-ui-btn:hover,
+    .oss-ui-btn:focus,
+    .oss-ui-btn:active {
+        color: #fff;
+        background: #0087f9;
+        border: 1px solid #0087f9;
+
+        &.oss-ui-btn-link {
+            color: #1890ff;
+            background: transparent;
+            border-color: transparent;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+    .oss-ui-checkbox-wrapper {
+        color: #fff;
+    }
+    .oss-ui-checkbox-inner {
+        background-color: #0c3d6e;
+        border: 1px solid #2280db;
+    }
+    .oss-ui-checkbox-disabled .oss-ui-checkbox-inner {
+        background-color: #2d557e !important;
+        border-color: #3372bd !important;
+    }
+    .oss-ui-pagination {
+        color: #fff;
+    }
+    .oss-ui-pagination-item a {
+        color: #fff;
+    }
+    .oss-ui-select-dropdown {
+        background-color: #0a3661;
+        .oss-ui-select-item-option {
+            color: #fff;
+        }
+        .oss-ui-select-item-option-selected:not(.oss-ui-select-item-option-disabled),
+        .oss-ui-select-item-option-active:not(.oss-ui-select-item-option-disabled) {
+            color: #fff;
+            background-color: #11589e;
+        }
+    }
+    .oss-ui-popover {
+        width: 160px;
+        .oss-ui-popover-content {
+            .oss-ui-popover-arrow {
+                .oss-ui-popover-arrow-content {
+                    background-color: #003062;
+                    &::before {
+                        background: linear-gradient(to left, #003062 50%, #003062 50%) no-repeat -5px -5px;
+                    }
+                }
+            }
+            .oss-ui-popover-inner {
+                color: #fff;
+                background-color: #003062;
+                .oss-ui-popover-inner-content {
+                    color: #fff;
+                    .oss-ui-popover-message {
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+    // .fault-report-detail-card {
+    // header {
+    //     color: #fff;
+    // }
+    .fault-report-detail-card-divider {
+        border-color: rgb(48, 119, 186);
+    }
+    // 按钮选择器
+    .adm-selector {
+        &.fault-report-form-selector {
+            --text-color: rgb(88, 202, 255);
+            --checked-text-color: rgb(255, 255, 255);
+            --border: 1px solid rgb(2, 112, 172);
+            --checked-border: 1px solid rgb(88, 202, 255);
+            .adm-selector-item .adm-selector-check-mark-wrapper {
+                border-top: 8px solid rgb(88, 202, 255);
+                border-right: 10px solid rgb(88, 202, 255);
+            }
+        }
+    }
+    // 日期选择
+    .oss-ui-picker-focused {
+        border-color: #5cd3ff;
+        border-right-width: 1px;
+        box-shadow: 0 0 0 2px rgba(52, 195, 255, 0.2);
+    }
+    .oss-ui-picker {
+        color: #fff;
+        background: #003062;
+        border: 1px solid #0070b6;
+        border-radius: 2px;
+        .oss-ui-picker-input {
+            > input {
+                color: #fff;
+                background: transparent;
+                background-color: #003062;
+                background-image: none;
+                border: 1px solid #0070b6;
+                border: 0;
+                border-radius: 2px;
+            }
+            > input[disabled] {
+                color: #ccc;
+            }
+            .oss-ui-picker-suffix {
+                color: #fff;
+            }
+        }
+        &.oss-ui-picker-disabled {
+            background: #003062;
+            border-color: #0070b6;
+        }
+    }
+    .oss-ui-picker-dropdown {
+        .oss-ui-picker-panel-container {
+            background: #073c70;
+            border-radius: 2px;
+            box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+            .oss-ui-picker-panel {
+                border: 1px solid #264f79;
+                .oss-ui-picker-datetime-panel {
+                    .oss-ui-picker-date-panel {
+                        .oss-ui-picker-header {
+                            color: #fff;
+                            border-bottom: 1px solid #264f79;
+                            button {
+                                color: #fff;
+                                background: transparent;
+                                border: 0;
+                            }
+                        }
+                        .oss-ui-picker-body {
+                            .oss-ui-picker-content {
+                                th {
+                                    color: #fff;
+                                }
+                                .oss-ui-picker-cell-in-view {
+                                    color: #fff;
+                                    &.oss-ui-picker-cell-selected .oss-ui-picker-cell-inner {
+                                        color: #fff;
+                                        background: #34c3ff;
+                                    }
+                                    &.oss-ui-picker-cell-today .oss-ui-picker-cell-inner::before {
+                                        border: 1px solid #34c3ff;
+                                        border-radius: 2px;
+                                    }
+                                }
+                                .oss-ui-picker-cell-disabled::before {
+                                    background: #2d557e;
+                                }
+                                .oss-ui-picker-cell-disabled {
+                                    color: #fff;
+                                }
+                                .oss-ui-picker-cell {
+                                    color: #fff;
+                                }
+                            }
+                        }
+                    }
+                    .oss-ui-picker-time-panel {
+                        border-left: 1px solid #264f79;
+                        .oss-ui-picker-header {
+                            color: #fff;
+                            border-bottom: 1px solid #264f79;
+                        }
+                        .oss-ui-picker-time-panel-column {
+                            > li.oss-ui-picker-time-panel-cell .oss-ui-picker-time-panel-cell-inner {
+                                color: #fff;
+                                border-radius: 0;
+                                &:hover {
+                                    background: #246faa;
+                                }
+                            }
+                            > li.oss-ui-picker-time-panel-cell-selected .oss-ui-picker-time-panel-cell-inner {
+                                background: #044083;
+                            }
+                            &:not(:first-child) {
+                                border-left: 1px solid #264f79;
+                            }
+                        }
+                    }
+                }
+                .oss-ui-picker-footer {
+                    border-top: 1px solid #264f79;
+                    a {
+                        color: #34c3ff;
+                    }
+                }
+                .oss-ui-picker-cell:hover:not(.oss-ui-picker-cell-in-view) .oss-ui-picker-cell-inner,
+                .oss-ui-picker-cell:hover:not(.oss-ui-picker-cell-selected):not(.oss-ui-picker-cell-range-start):not(
+                        .oss-ui-picker-cell-range-end
+                    ):not(.oss-ui-picker-cell-range-hover-start):not(.oss-ui-picker-cell-range-hover-end)
+                    .oss-ui-picker-cell-inner {
+                    background: #246faa;
+                }
+            }
+        }
+    }
+
+    .oss-ui-picker-time-panel-column {
+        > li.oss-ui-picker-time-panel-cell .oss-ui-picker-time-panel-cell-inner {
+            color: #fff;
+            border-radius: 0;
+            &:hover {
+                background: #246faa;
+            }
+        }
+        > li.oss-ui-picker-time-panel-cell-selected .oss-ui-picker-time-panel-cell-inner {
+            background: #044083;
+        }
+        &:not(:first-child) {
+            border-left: 1px solid #264f79;
+        }
+    }
+
+    .oss-ui-picker-separator {
+        color: #fff;
+    }
+    .oss-ui-picker-range-arrow {
+        background: linear-gradient(135deg, transparent 40%, #222869 40%);
+        &::before {
+            background: linear-gradient(to left, #222869 50%, #222869 50%) no-repeat -5px -5px;
+        }
+    }
+    input:-webkit-autofill {
+        color: #fff !important;
+        box-shadow: 0 0 0px 1000px #003062 inset !important;
+        -webkit-text-fill-color: #fff;
+    }
+    .oss-ui-input {
+        &.oss-ui-input-borderless,
+        &.oss-ui-input-borderless:hover,
+        &.oss-ui-input-borderless:focus,
+        &.oss-ui-input-borderless-focused,
+        &.oss-ui-input-borderless-disabled,
+        &.oss-ui-input-borderless[disabled] {
+            background-color: transparent;
+            border: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+    .fault-report-detail-layout-item {
+        color: #fff;
+        div {
+            color: #fff;
+        }
+        .fault-info-item-context-box-name,
+        .fault-info-item-context-box-time {
+            color: rgb(88, 202, 255);
+        }
+    }
+    .fault-report-notice-content {
+        flex-direction: column;
+        .fault-report-notice-content-table {
+            .oss-ui-table {
+                background: #1f4476;
+
+                .oss-ui-table-thead > tr > th {
+                    color: #fff;
+                    background: #15579a;
+                    border: none;
+                    box-shadow: none;
+                }
+                .oss-ui-table-tbody > tr,
+                .oss-ui-table-tbody > tr > td,
+                .oss-ui-table-tbody > tr.oss-ui-table-row:hover > td,
+                .oss-ui-table-tbody > tr > td.oss-ui-table-cell-row-hover {
+                    color: #fff;
+                    background: #1e4476;
+                    border: none;
+                }
+            }
+        }
+        .fault-report-notice-content-phone {
+            // height: 106px !important;
+            // margin-top: 8px;
+            margin-left: 0;
+            // overflow-y: auto;
+            // background-color: #224b80;
+            // border: 1px solid rgba(34, 128, 219, 0.7);
+            .oss-ui-tag {
+                color: #fff;
+                background: #3875c3;
+                border-color: #3875c3;
+            }
+        }
+    }
+    .fault-report-form-upload p {
+        color: #c6c4c4;
+    }
+    .oss-ui-checkbox-group {
+        color: #fff;
+    }
+}

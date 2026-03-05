@@ -1,0 +1,130 @@
+.simulation-detail {
+    height: 100%;
+    padding: 10px;
+    overflow: hidden;
+    background: @component-background;
+    .simulation-info {
+        margin-bottom: 10px;
+    }
+    .oss-ui-spin-nested-loading {
+        height: 100%;
+        .oss-ui-spin-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            .rule-alarm-window-wrapper {
+                flex: 1;
+            }
+        }
+    }
+
+    .simulation-title {
+        display: flex;
+        justify-content: space-between;
+        padding-left: 10px;
+        color: #4990e2;
+        line-height: 28px;
+        border-left: 5px solid #4990e2;
+    }
+
+    .oss-ui-table-wrapper {
+        padding: 0;
+    }
+
+    .content-col {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 10px;
+    }
+
+    .content-label {
+        width: 92px;
+        font-weight: bold;
+        text-align: right;
+        &:after {
+            margin-right: 10px;
+            content: ':';
+        }
+    }
+
+    .content-value {
+        // flex: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+
+    .nums-table {
+        .oss-ui-table-thead > tr > th,
+        .oss-ui-table-tbody > tr > td,
+        .oss-ui-table tfoot > tr > th,
+        .oss-ui-table tfoot > tr > td {
+            padding: 3px 8px !important;
+        }
+
+        td {
+            padding: 3px 8px !important;
+        }
+    }
+    .progress-content {
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-start;
+        width: 90%;
+        .step-item {
+            width: 30%;
+            .step-item-title-percent {
+                text-align: center;
+            }
+            .step-item-title {
+                text-align: center;
+            }
+            .oss-ui-progress-line {
+                width: 93%;
+            }
+            .step-content-2,
+            .step-content-3 {
+                position: relative;
+                top: 3px;
+                display: inline-block;
+                width: 25px;
+                height: 25px;
+                line-height: 25px;
+                text-align: center;
+                border: 2px solid #cccc;
+                border-radius: 50px;
+            }
+            .oss-ui-progress-status-success .oss-ui-progress-text {
+                margin-top: 5px;
+                margin-left: 0px;
+                .anticon svg {
+                    font-size: 24px;
+                }
+            }
+        }
+        .time-remaining {
+            position: relative;
+            top: -24px;
+            width: 10%;
+            color: #2089f6;
+            font-weight: bold;
+        }
+        .step-item:nth-child(2) {
+            .oss-ui-progress-status-success {
+                position: relative;
+                left: -8.4%;
+            }
+        }
+        .step-item:nth-child(3) {
+            .oss-ui-progress.oss-ui-progress-status-success {
+                position: relative;
+                left: -16.5%;
+            }
+        }
+    }
+}
+
+.xml-view-modal .oss-ui-modal-body {
+    white-space: pre-wrap;
+}

@@ -1,0 +1,35 @@
+.async-export-box {
+    width: 100%;
+
+    .async-export-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 50px;
+        padding: 0 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    .async-list-title {
+        padding-left: 12px;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    .async-export-button-box {
+        display: flex;
+        gap: 5px;
+    }
+    .async-export-down-button {
+        color: #488fe1;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        cursor: pointer;
+        &:disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+    }
+}

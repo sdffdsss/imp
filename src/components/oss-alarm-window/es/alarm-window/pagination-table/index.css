@@ -1,0 +1,21 @@
+.alarm-window-pagination-table {
+  padding: 0 !important;
+  border: none !important;
+}
+.alarm-window-pagination-table #refUpperPlaceholder > div {
+  position: relative;
+}
+.alarm-window-pagination-table #refUpperPlaceholder > div > div {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+.alarm-window-pagination-table #refLoadingPlaceholder {
+  margin: -20px 0 0 -40px;
+  pointer-events: none;
+  transform: translate(50%, 50%);
+}
+.alarm-window-pagination-table-pagination {
+  padding: 10px;
+  text-align: right;
+}

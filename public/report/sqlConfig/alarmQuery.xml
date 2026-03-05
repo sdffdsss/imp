@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+
+   <!--    告警查询sql开始        -->
+   <select id="alarmSearch_selectAlarmColInfo"  parameterType="java.util.Map" resultType="java.util.Map">
+			select decode(msg_field, null, db_field, msg_field) as db_field,
+				   col_name_zh , rec_id
+			  from tfm_alarm_col_info
+			 where (msg_field is not null or db_field = 'rule_name')
+			   and col_disp_type = 1
+   </select>
+
+	<select id="alarmSearch_selectAlarmColTemplatesById" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		select t.template_id,t.template_name,t.description,t.owner_id,u.user_name,t.create_time,t.columns_value
+		from tfp_column_template t,tai_userinfo u
+		where u.user_id=t.owner_id and template_id=0
+		]]>
+	</select>
+
+   <select id="alarmSearch_selectColumnTemplates"  parameterType="java.util.Map" resultType="java.util.Map">
+		select t.template_id as id , t.template_name as txt from tfp_column_template t
+   </select>
+
+   <select id="alarmSearch_selectProvinceRegionCity"  parameterType="java.util.Map" resultType="java.util.Map">
+		select level_0_value, level_0_label,level_1_value, level_1_label,level_2_value, level_2_label
+		  from (select distinct nvl(city_id, '0') as level_0_value,
+								nvl(city_name, '0') as level_0_label,
+								nvl(region_id, '0') as level_1_value,
+								nvl(region_name, '0') as level_1_label,
+								nvl(province_id, '0') as level_2_value,
+								nvl(province_name, '0') as level_2_label
+				  from region_city_local
+				 order by level_2_value, level_1_value, level_0_value) A
+   </select>
+   <select id="alarmSearch_selectAlarmState"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id, txt from tia_alarm_dict where type = 5 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='active_status' and valid = 1 order by IDENTIFIER 
+   </select>
+   
+   <select id="alarmSearch_selectNetworkTypeTop"  parameterType="java.util.Map" resultType="java.util.Map">
+		<!--select id, txt	from tia_alarm_dict where type = 1317 and valid = 1-->
+		select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='network_type_top' and valid = 1 order by value 
+   </select>
+   
+   <select id="alarmSearch_selectProfessionalType"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!-- select id,txt from tia_alarm_dict where  type=1001 and valid=1 -->
+			<!-- select id,txt from tia_alarm_dict where  type=1037  and valid=1 order by id -->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='professional_type' and valid = 1 order by value 
+   </select>
+   
+   <select id="alarmSearch_selectNetworkType"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1037 and valid = 1 order by txt-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='network_type' and valid = 1 order by value 
+   </select>
+   
+   <select id="alarmSearch_selectVendorId"  parameterType="java.util.Map" resultType="java.util.Map">
+					select ID, TXT
+		  from (select nvl(type, '0') as id, nvl(vendor_text, '0') as txt
+				  from vendor_name
+				 where type >=0
+				 order by vendor_text) A
+   </select>
+   
+   <select id="alarmSearch_selectEqpObjectClass"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 9 and valid = 1  and  id >=100 order by txt-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='object_class' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectCircuitGroupId"  parameterType="java.util.Map" resultType="java.util.Map">
+			select distinct t.group_id id, t.group_name txt
+			  from tai_group_info t
+			 where t.group_type_id = 1
+			 order by t.group_name
+   </select>
+   <select id="alarmSearch_selectObjectClass"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 9 and valid = 1  and  id >=100 order by txt-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='object_class' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectOrgSeverity"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 6 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='org_severity' and valid = 1 order by IDENTIFIER 
+   </select>
+   <select id="alarmSearch_selectAlarmResourceStatus"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 45 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='alarm_resource_status' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectAlarmSource"  parameterType="java.util.Map" resultType="java.util.Map">
+			select '省部接口上报' as id, '省部接口上报' as txt
+			  from tia_condition_def
+			union
+			select '集团直采话务' as id, '集团直采话务' as txt
+			  from tia_condition_def
+			union
+			select '集团直采数据' as id, '集团直采数据' as txt
+			  from tia_condition_def
+			union
+			select '集团直采传输' as id, '集团直采传输' as txt
+			  from tia_condition_def
+			union
+			select '集团直采国际局' as id, '集团直采国际局' as txt
+			  from tia_condition_def
+   </select>
+   <select id="alarmSearch_selectAlarmOrigin"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1318 and valid = 1 and id != 3-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='alarm_query_type' and valid = 1 order by IDENTIFIER 
+   </select>
+   <select id="alarmSearch_selectPreprocessFlag1"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1023 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='preprocess_flag' and valid = 1 order by IDENTIFIER 
+   </select>
+   
+   <select id="alarmSearch_selectPreprocessFlag2"  parameterType="java.util.Map" resultType="java.util.Map">
+		  select distinct a.id, a.txt
+		  from (
+				select '3,7' id, '成功' txt
+				  from dual
+				union all
+				select '4,10,11' id, '失败' txt from dual) a
+   </select>
+   <select id="alarmSearch_selectAckFlag"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 4 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='ack_flag' and valid = 1 order by IDENTIFIER 
+   </select>
+   <select id="alarmSearch_selectIsUndistributedSendStatus"  parameterType="java.util.Map" resultType="java.util.Map">
+		select id, txt
+		from (select distinct 0 id, '否' txt from dual
+        union        select distinct -1 id, '是' txt from dual) a
+   </select>
+   <select id="alarmSearch_selectSendStatus"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1028 and valid = 1 and id != 0-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='send_status' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectSheetStatus"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1029 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='sheet_status' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectGcssClientLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type=101102 and valid=1 order by id-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='gcss_client_level' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectGcssServiceLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type=101103 and valid=1 order by id-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='gcss_service_level' and valid = 1 order by value 
+   </select>
+   <select id="alarmSearch_selectInterruptCircuitState"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1323 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='interrupt_circuit_state' and valid = 1 order by value 
+   </select>
+
+   <select id="alarmSearch_selectSubAlarmType"  parameterType="java.util.Map" resultType="java.util.Map">
+			<!--select id,txt from tia_alarm_dict where type = 1323 and valid = 1-->
+			select IDENTIFIER id, value txt from alarm_dict_mapper where dict_name='sub_alarm_type' and valid = 1 order by value 
+   </select>
+
+   <select id="alarmSearch_selectFilterType"  parameterType="java.util.Map" resultType="java.util.Map">
+				select id, txt
+		from (select distinct 'allFilters' id, '全部过滤器' txt
+			  from dual
+			union
+			select distinct 'myFilters' id, '我的过滤器' txt
+			  from dual
+			union
+			select distinct 'ruleFitlers' id, '派单规则' txt from dual) a
+   </select>
+
+   <!--    告警查询sql结束        -->
+
+	<insert id="insertProduct" parameterType="java.util.Map" >
+         insert into test (name) values (#{name})
+    </insert>
+   
+   <update id="updateProduct" parameterType="java.util.Map">
+		update test set name = (#{name})
+	</update>
+	
+	<delete id="deleteProduct" parameterType="java.util.Map">
+		delete from test where name = (#{name})
+	</delete>
+	
+</mapper>

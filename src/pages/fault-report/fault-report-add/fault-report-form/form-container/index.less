@@ -1,0 +1,78 @@
+.adm-selector {
+    &.fault-report-form-selector {
+        --color: transparent;
+        --checked-color: transparent;
+        --text-color: rgb(153, 153, 153);
+        --checked-text-color: rgb(51, 51, 51);
+        --border: 1px solid rgb(209, 211, 216);
+        --checked-border: 1px solid rgb(26, 120, 246);
+        --border-radius: 4px;
+        --padding: 4px 16px;
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 1.4;
+        .adm-space {
+            --gap-vertical: 0;
+        }
+        .adm-selector-item .adm-selector-check-mark-wrapper {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 8px solid rgb(26, 120, 246);
+            border-right: 10px solid rgb(26, 120, 246);
+            border-bottom: 8px solid #1677ff00;
+            border-left: 10px solid transparent;
+            > svg {
+                top: -6px;
+            }
+        }
+    }
+}
+#fault-report-form-container {
+    height: 100%;
+    overflow-y: scroll;
+    .oss-ui-spin-nested-loading {
+        height: 100%;
+    }
+}
+.fault-confirm-modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    .confirm-info {
+        width: 100%;
+        height: 100px;
+        line-height: 100px;
+        text-align: center;
+    }
+    .confirm-footer {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 12px;
+    }
+}
+.fault-report-message-success {
+    .oss-ui-message-notice-content {
+        .oss-ui-message-custom-content {
+            position: relative;
+            display: flex;
+            .fault-report-modal-success {
+                width: 325px;
+                height: 28px;
+                text-align: left;
+                .fault-report-modal-success-link {
+                    position: absolute;
+                    right: 0;
+                    bottom: 0;
+                    color: #58afff;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}

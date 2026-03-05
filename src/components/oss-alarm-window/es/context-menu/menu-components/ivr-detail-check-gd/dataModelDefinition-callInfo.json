@@ -1,0 +1,58 @@
+{
+    "dataModelDefinition": {
+        "name": "alarm-callInfo",
+        "title": "告警流水右键-查看IVR呼叫详情",
+        "icon": "",
+        "author": "徐潞园",
+        "description": "告警流水右键-查看IVR呼叫详情",
+        "header": {
+            "dimensions": [],
+            "indicators": [
+                {
+                    "dataType": "String",
+                    "fieldLabel": "外呼规则",
+                    "fieldName": "sendRule",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "外呼状态",
+                    "fieldName": "IvrStatus",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "短信接收人",
+                    "fieldName": "smsSendPhone",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "短信内容",
+                    "fieldName": "smsContent",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "语音内容",
+                    "fieldName": "callContenta",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "第一呼叫人",
+                    "fieldName": "firstCalMan",
+                    "fieldUnit": "",
+                    "list": "false"
+                }
+            ]
+        },
+        "page": true,
+        "rowConfig": { "dimensionCount": "unknown", "isUseDimensionParams": true }
+    }
+}

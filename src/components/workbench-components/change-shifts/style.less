@@ -1,0 +1,278 @@
+.change-shifts-continer {
+    width: 100%;
+    height: 100%;
+    ::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 8px;
+        /*高宽分别对应横竖滚动条的尺寸*/
+        height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #ccc;
+        border-radius: 10px;
+    }
+    .change-shifts-page-continer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        .change-shifts-page-word {
+            font-weight: 400;
+            font-size: 16px;
+            font-style: normal;
+            text-align: center;
+        }
+    }
+
+    // .title {
+    //     width: 100%;
+    //     height: 40px;
+    //     font-weight: 650;
+    //     font-size: 16px;
+    //     font-style: normal;
+    //     line-height: 40px;
+    //     .title-jump {
+    //         float: right;
+    //         margin-right: 10px;
+    //         color: @disabled-color;
+    //         cursor: pointer;
+    //     }
+    // }
+    .demo {
+        display: flex;
+        width: 100%;
+        height: 100%;
+
+        .demo-left {
+            width: 36%;
+            height: 100%;
+            ::-webkit-scrollbar-thumb {
+                background-color: #fff !important;
+            }
+            ::-webkit-scrollbar-track {
+                background-color: #fff !important;
+            }
+            .record-content {
+                width: 130%;
+                height: 80%;
+                margin-left: -30%;
+                padding-top: 5%;
+                overflow-y: auto;
+
+                .oss-ui-timeline-item {
+                    min-height: 2vh;
+                    padding-bottom: 4%;
+                    .oss-ui-timeline-item-label {
+                        color: #8e9297;
+                        font-weight: 400;
+                        font-size: 14px;
+                        font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC', sans-serif;
+                        font-style: normal;
+                    }
+                    .oss-ui-timeline-item-tail {
+                        border-left: 2px solid @component-background;
+                    }
+                    .oss-ui-timeline-item-content {
+                        min-height: 26px;
+                        padding: 2px 10px;
+                        font-weight: 400;
+                        font-size: 14px;
+                        font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+                        font-style: normal;
+                        background-color: rgba(242, 242, 242, 1);
+                        border-radius: 4px;
+                    }
+                }
+                // .left-content {
+                //     .oss-ui-timeline-item-content {
+                //         height: 70px;
+                //         overflow-y: auto;
+                //     }
+                // }
+            }
+            .record-button {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 20%;
+                // .button-style {
+                //     display: flex;
+                //     align-items: center;
+                //     justify-content: center;
+                //     width: 50%;
+                //     height: 100%;
+                // }
+                // .button-time {
+                //     display: flex;
+                //     align-items: center;
+                //     width: 50%;
+                //     height: 100%;
+                //     font-size: 1.4vh;
+                //     .time-style {
+                //         margin-left: 10px;
+                //         color: #1890ff;
+                //     }
+                // }
+                .button-style {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 60%;
+                    min-width: 180px;
+                    height: 38px;
+                    color: #fff;
+                    background: linear-gradient(109.937991744206deg, rgba(2, 0, 255, 1) 10%, rgba(0, 118, 255, 1) 95%);
+                    border-radius: 37px;
+                    .button-style-word {
+                        font-weight: 650;
+                        font-size: 16px;
+                        font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC', sans-serif;
+                        font-style: normal;
+                        letter-spacing: 8px;
+                    }
+                    .button-style-time {
+                        margin: 0 6px 0 10px;
+                        font-size: 12px;
+                        font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+                        font-style: normal;
+                    }
+                }
+                @media screen and (min-width: 1200px) {
+                    .button-style {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 60%;
+                        height: 38px;
+                        color: #fff;
+                        background: linear-gradient(109.937991744206deg, rgba(2, 0, 255, 1) 10%, rgba(0, 118, 255, 1) 95%);
+                        border-radius: 37px;
+                        .button-style-word {
+                            font-weight: 650;
+                            font-size: 16px;
+                            font-family: 'PingFangSC-Semibold', 'PingFang SC Semibold', 'PingFang SC', sans-serif;
+                            font-style: normal;
+                            letter-spacing: 8px;
+                        }
+                        .button-style-time {
+                            margin: 0 6px 0 10px;
+                            font-size: 12px;
+                            font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+                            font-style: normal;
+                        }
+                        .button-style-count {
+                            font-weight: 650;
+                            font-size: 12px;
+                            font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+                            font-style: normal;
+                        }
+                    }
+                }
+            }
+        }
+        .demo-right {
+            width: 64%;
+            height: 100%;
+            overflow-y: auto;
+            .list-top {
+                width: 100%;
+                height: 90%;
+
+                .oss-ui-list-empty-text {
+                    margin-top: 20%;
+                }
+                .oss-ui-list-lg .oss-ui-list-item {
+                    padding: 12px 16px;
+                }
+                .oss-ui-list-item-meta-title {
+                    //font-size: 1.6vh;
+                    font-size: 14px;
+                }
+                .oss-ui-list-item-meta-description {
+                    //font-size: 1.2vh;
+                    font-size: 12px;
+                }
+                .oss-ui-list-item-meta {
+                    align-items: center;
+                    width: 80%;
+                }
+                .example {
+                    width: 100%;
+                    height: 100%;
+                    .oss-ui-spin-nested-loading {
+                        height: 100%;
+                    }
+                    .oss-ui-list-empty-text {
+                        line-height: 46vh;
+                    }
+                }
+                .avatar-div {
+                    margin-top: 100%;
+                }
+                .personnel-input {
+                    width: 90%;
+                }
+                .bottom-style {
+                    background-color: #3377ff;
+                    border-radius: 20px;
+                }
+                .table-description {
+                    display: flex;
+                    flex-direction: row;
+                    .table-description-content {
+                        padding-right: 20px;
+                    }
+                    .table-description-personnel {
+                        .personnel-card {
+                            margin-right: 10px;
+                            padding: 0px 14px;
+                            color: #00a8f1;
+                            font-size: 12px;
+                            background-color: #f2f7ff;
+                            border-radius: 6px;
+                        }
+
+                        .personnel-time {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+            .list-bottom {
+                position: absolute;
+                right: 29%;
+                bottom: 0;
+                height: 10%;
+                .bottom-style {
+                    background-color: #3377ff;
+                    border-radius: 20px;
+                }
+            }
+            .important-notice-nothing {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 90%;
+                .important-notice-img {
+                    width: 237px;
+                    height: 60%;
+                    background-image: url('../img/cuowu.png');
+                    background-repeat: no-repeat;
+                    background-size: 100% 100%;
+                }
+                .important-notice-word {
+                    margin-top: 2%;
+                    color: #cccfd3;
+                    font-weight: 400;
+                    font-size: 16px;
+                    font-style: normal;
+                }
+            }
+        }
+    }
+}

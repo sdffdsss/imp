@@ -1,0 +1,230 @@
+.duty-monitor-page {
+    display: flex;
+    min-width: 1024px;
+    height: 1240px;
+    margin-top: 12px;
+
+    .duty-view-title {
+        height: 60px;
+        padding: 0 20px;
+        color: rgba(0, 0, 0, 0.85);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 60px;
+    }
+    .oss-ui-table-cell {
+        position: relative;
+        .overview-monitor-alarm-table-cell-alarm {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: red;
+        }
+    }
+
+    &-left {
+        display: flex;
+        flex-direction: column;
+        width: 54%;
+        height: 100%;
+        margin-right: 10px;
+
+        &-top {
+            display: flex;
+            height: 9%;
+            margin-bottom: 10px;
+
+            &-item {
+                display: flex;
+                flex: 1;
+                margin-right: 8px;
+                background: #fff;
+                border-radius: 8px;
+
+                &:nth-last-of-type(1) {
+                    margin-right: 0;
+                }
+
+                .oss-ui-image {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-end;
+                    width: 48%;
+
+                    .oss-ui-image-img {
+                        width: 76%;
+                        margin-top: 10%;
+                    }
+                }
+
+                &-right {
+                    display: flex;
+                    flex: 1;
+                    flex-direction: column;
+                    align-items: center;
+                    color: rgba(0, 0, 0, 0.85);
+                    text-align: center;
+
+                    &-count {
+                        display: flex;
+                        flex: 2;
+                        align-items: flex-end;
+                        justify-content: center;
+                        font-weight: 400;
+                        font-size: 4vh;
+
+                        @media (max-width: 1920px) {
+                            flex: 2;
+                        }
+
+                        @media (max-width: 1366px) {
+                            flex: 3;
+                        }
+                    }
+
+                    &-title {
+                        flex: 1;
+                        width: 100%;
+                        font-size: 1.4vh;
+                        line-height: 1;
+
+                        @media (max-width: 1920px) {
+                            flex: 1;
+                        }
+
+                        @media (max-width: 1366px) {
+                            flex: 2;
+                        }
+                    }
+                }
+            }
+        }
+        &-center {
+            height: 32%;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        &-center2 {
+            height: 28%;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        &-bottom {
+            display: flex;
+            flex: 1;
+            border-radius: 8px;
+        }
+    }
+
+    &-right {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+
+        &-top {
+            height: 39%;
+            margin-bottom: 10px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        &-bottom {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            background: #fff;
+            border-radius: 8px;
+
+            &-list {
+                display: flex;
+                flex: 1;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                padding: 0 20px 30px;
+
+                &-item {
+                    display: flex;
+                    flex-direction: column;
+                    width: 32%;
+                    height: 31%;
+                    background: rgba(24, 144, 255, 0.05);
+                    border-radius: 8px;
+
+                    &-top {
+                        display: flex;
+                        height: 40px;
+                        padding-left: 20px;
+                        border-bottom: 1px solid rgba(24, 144, 255, 0.3);
+
+                        .oss-ui-image {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            margin-right: 8px;
+                        }
+
+                        &-title {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: rgb(51, 51, 51);
+                            font-size: 14px;
+                            font-family: Microsoft YaHei;
+                        }
+                    }
+
+                    &-bottom {
+                        display: flex;
+                        flex: 1;
+                        flex-direction: column;
+                        padding: 0 20px 10px;
+
+                        .item {
+                            display: flex;
+                            flex: 1;
+                            align-items: center;
+                            justify-content: space-between;
+
+                            .title {
+                                color: rgb(51, 51, 51);
+                                font-size: 14px;
+                                font-family: Microsoft YaHei;
+                            }
+
+                            .count {
+                                color: #1890ff;
+                                font-weight: 700;
+                                font-size: 14px;
+                                text-align: right;
+
+                                @media (max-width: 1920px) {
+                                    width: 80px;
+                                }
+
+                                @media (max-width: 1366px) {
+                                    width: 42px;
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.duty-monitor-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+}

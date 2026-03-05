@@ -1,0 +1,113 @@
+@import '~antd/es/style/themes/default.less';
+
+.alarm-window-continer-long {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    .alarm-window {
+        .alarm-window-operation-bar {
+            margin: 0;
+            border: none;
+        }
+
+        .alarm-window-operation-bar-right {
+            max-width: none;
+        }
+
+        // .oss-ui-table-body {
+        //     height: 500px !important;
+        // }
+    }
+    .alarm-window-long-wrapper {
+        flex: auto;
+        // .oss-ui-table-body {
+        //     max-height: 480px !important;
+        // }
+
+        .oss-ui-table-wrapper {
+            height: 100%;
+            .oss-ui-spin-nested-loading {
+                height: 100%;
+                .oss-ui-spin-container {
+                    height: 100%;
+                    // .oss-ui-table {
+                    //     height: 100%;
+                    // }
+                }
+            }
+        }
+    }
+}
+.failure-sheet-top-select {
+    margin: 10px 0px;
+    padding: 10px 10px 10px;
+    background-color: @component-background;
+    .oss-ui-form-item {
+        margin-bottom: 0px;
+    }
+    .oss-ui-radio-button-wrapper {
+        background: none;
+        border: none;
+        &:not(:first-child):before {
+            width: 0;
+        }
+    }
+    .oss-ui-radio-button-wrapper-checked {
+        background: #fff;
+    }
+    .oss-ui-radio-button-wrapper {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:last-child {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:first-child {
+        border-radius: 20px;
+    }
+}
+.failure-sheet-top-select {
+    .oss-ui-checkbox-wrapper + .oss-ui-checkbox-wrapper {
+        margin-left: 0px;
+    }
+}
+
+.oss-ui-table-pagination.oss-ui-pagination {
+    margin: 0;
+}
+
+.alarm-window-long-wrapper {
+    .alarm-window-operation-bar {
+        display: none !important;
+    }
+    // .oss-ui-table-body {
+    //     min-height: 58vh;
+    //     max-height: 73vh !important;
+    // }
+    .oss-ui-pagination {
+        // padding-bottom: 30px;
+        background-color: @component-background;
+    }
+}
+// .alarm-window-long-wrapper {
+//     height: calc(100% - 220px);
+//     .oss-ui-table-wrapper {
+//         height: 100%;
+//         .oss-ui-spin-nested-loading {
+//             height: 100%;
+//             .oss-ui-spin-container {
+//                 height: 100%;
+//                 .oss-ui-table {
+//                     height: calc(100% - 22px);
+//                     .oss-ui-table-container {
+//                         height: 100%;
+//                         //.oss-ui-table-body {
+//                         //height: calc(100% - 220px);
+//                         //max-height: calc(100% - 220px) !important;
+//                         //}
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }

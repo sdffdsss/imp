@@ -1,0 +1,56 @@
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 150px;
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 18px;
+    font-family: 微软雅黑;
+    line-height: 20px;
+    text-align: center;
+    background-color: #a7a9ab;
+    border-radius: 0 20px 20px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.select-button {
+    background-color: #3377fe;
+}
+
+:global {
+    .oss-ui-popover-placement-right {
+        left: 30px !important;
+    }
+    .oss-ui-popover-inner {
+        border-radius: 8px;
+    }
+    .oss-ui-popover-arrow {
+        display: none;
+    }
+    .oss-ui-popover-inner-content {
+        padding-top: 10px;
+        padding-right: 0;
+        padding-bottom: 10px;
+        padding-left: 0;
+    }
+
+    .nav-button-menu-box {
+        color: #000000 !important;
+        font-weight: 400;
+        font-size: 18px;
+        font-family: 思源黑体;
+        text-align: center;
+
+        .oss-ui-menu-item {
+            height: 34px;
+            line-height: 34px;
+        }
+        .oss-ui-menu-item-selected {
+            color: #ffffff !important;
+            background-color: #689bff !important;
+        }
+    }
+}

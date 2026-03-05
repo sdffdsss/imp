@@ -1,0 +1,15 @@
+﻿{
+    "menuItem": [
+        {
+            "fileName": "告警报表",
+            "menuItem": [
+                { "fileName": "告警压缩率", "textName": "CompressionRatio" },
+                { "fileName": "专业告警统计分析", "textName": "NetworktypeAlarm" },
+                { "fileName": "告警关联有效性分析", "textName": "RelationRule" },
+                { "fileName": "告警派单有效性分析", "textName": "SendRule" },
+                { "fileName": "标准化有效性分析", "textName": "UnstandardizationSituation" },
+                { "fileName": "云平台高频告警统计报表", "textName": "jxcloud_high_rate_alarm", "active": true }
+            ]
+        }
+    ]
+}

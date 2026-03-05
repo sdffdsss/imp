@@ -1,0 +1,76 @@
+{
+    "code": 200,
+    "message": "操作成功",
+    "enableMock": false,
+    "data": {
+        "faultSpecialtyCount": null,
+        "faultProvinceCount": [
+            { "code": "-662225376", "desc": "江苏省", "num": 21, "zoneLng": "118.767413", "zoneLat": "32.041544", "areaId": "320000", "new": false },
+            { "code": "-1308712042", "desc": "浙江省", "num": 1, "zoneLng": "120.153576", "zoneLat": "30.287459", "areaId": "330000", "new": false },
+            { "code": "72791720", "desc": "海南省", "num": 0, "zoneLng": "110.331190", "zoneLat": "20.031971", "areaId": "460000", "new": false },
+            { "code": "354339340", "desc": "上海市", "num": 0, "zoneLng": "121.472644", "zoneLat": "31.231706", "areaId": "310000", "new": false },
+            { "code": "1715320617", "desc": "重庆市", "num": 0, "zoneLng": "106.504962", "zoneLat": "29.533155", "areaId": "500000", "new": false },
+            { "code": "706006321", "desc": "安徽省", "num": 0, "zoneLng": "117.283042", "zoneLat": "31.861190", "areaId": "340000", "new": false },
+            { "code": "1059902420", "desc": "四川省", "num": 0, "zoneLng": "104.065735", "zoneLat": "30.659462", "areaId": "510000", "new": false },
+            { "code": "-1002839260", "desc": "福建省", "num": 0, "zoneLng": "119.306239", "zoneLat": "26.075302", "areaId": "350000", "new": false },
+            { "code": "185858522", "desc": "贵州省", "num": 0, "zoneLng": "106.713478", "zoneLat": "26.578343", "areaId": "520000", "new": false },
+            { "code": "-1139861561", "desc": "北京市", "num": 0, "zoneLng": "116.405285", "zoneLat": "39.904989", "areaId": "110000", "new": false },
+            { "code": "-294706381", "desc": "江西省", "num": 0, "zoneLng": "115.892151", "zoneLat": "28.676493", "areaId": "360000", "new": false },
+            { "code": "597617993", "desc": "云南省", "num": 0, "zoneLng": "102.712251", "zoneLat": "25.040609", "areaId": "530000", "new": false },
+            { "code": "1047933115", "desc": "天津市", "num": 0, "zoneLng": "117.190182", "zoneLat": "39.125596", "areaId": "120000", "new": false },
+            { "code": "1150126687", "desc": "山东省", "num": 0, "zoneLng": "117.000923", "zoneLat": "36.675807", "areaId": "370000", "new": false },
+            { "code": "509842836", "desc": "西藏自治区", "num": 0, "zoneLng": "91.132212", "zoneLat": "29.660361", "areaId": "540000", "new": false },
+            { "code": "-1128953347", "desc": "河北省", "num": 0, "zoneLng": "114.502461", "zoneLat": "38.045474", "areaId": "130000", "new": false },
+            { "code": "-640755821", "desc": "河南省", "num": 0, "zoneLng": "113.665412", "zoneLat": "34.757975", "areaId": "410000", "new": false },
+            { "code": "1161128211", "desc": "陕西省", "num": 0, "zoneLng": "108.948024", "zoneLat": "34.263161", "areaId": "610000", "new": false },
+            { "code": "1751711880", "desc": "山西省", "num": 0, "zoneLng": "112.549248", "zoneLat": "37.857014", "areaId": "140000", "new": false },
+            { "code": "58374238", "desc": "湖北省", "num": 0, "zoneLng": "114.298572", "zoneLat": "30.584355", "areaId": "420000", "new": false },
+            { "code": "1321688157", "desc": "甘肃省", "num": 0, "zoneLng": "103.823557", "zoneLat": "36.058039", "areaId": "620000", "new": false },
+            {
+                "code": "366691449",
+                "desc": "内蒙古自治区",
+                "num": 0,
+                "zoneLng": "111.670801",
+                "zoneLat": "40.818311",
+                "areaId": "150000",
+                "new": false
+            },
+            { "code": "1711400496", "desc": "湖南省", "num": 0, "zoneLng": "112.982279", "zoneLat": "28.194090", "areaId": "430000", "new": false },
+            { "code": "-1153529036", "desc": "青海省", "num": 0, "zoneLng": "96.202544", "zoneLat": "35.499761", "areaId": "630000", "new": false },
+            { "code": "-1947138647", "desc": "辽宁省", "num": 0, "zoneLng": "123.429096", "zoneLat": "41.796767", "areaId": "210000", "new": false },
+            { "code": "-1489894494", "desc": "广东省", "num": 0, "zoneLng": "113.280637", "zoneLat": "23.125178", "areaId": "440000", "new": false },
+            {
+                "code": "827961572",
+                "desc": "宁夏回族自治区",
+                "num": 0,
+                "zoneLng": "106.278179",
+                "zoneLat": "38.466370",
+                "areaId": "640000",
+                "new": false
+            },
+            { "code": "1821817893", "desc": "吉林省", "num": 0, "zoneLng": "125.324500", "zoneLat": "43.886841", "areaId": "220000", "new": false },
+            {
+                "code": "979979892",
+                "desc": "广西壮族自治区",
+                "num": 0,
+                "zoneLng": "108.320004",
+                "zoneLat": "22.824020",
+                "areaId": "450000",
+                "new": false
+            },
+            {
+                "code": "-988740465",
+                "desc": "新疆维吾尔自治区",
+                "num": 0,
+                "zoneLng": "85.614899",
+                "zoneLat": "42.127001",
+                "areaId": "650000",
+                "new": false
+            },
+            { "code": "153199949", "desc": "黑龙江省", "num": 0, "zoneLng": "126.642464", "zoneLat": "45.756967", "areaId": "230000", "new": false }
+        ],
+        "faultCityCount": null,
+        "faultFailureClassCount": null
+    },
+    "total": null
+}

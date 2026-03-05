@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="Alarm Standard Ratio Report" />
+  
+  <!--查询sql-->
+  <!--例子Start-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_StandardRatio_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (
+    select
+  to_char(tpa_alarm_unstandard_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+    case when #sum_level#=1 then to_char(tpa_alarm_unstandard_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when #sum_level#=3 then  to_char(add_months(tpa_alarm_unstandard_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when #sum_level#=2 then to_char(tpa_alarm_unstandard_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+  tpa_alarm_unstandard_tc_sum.ne_name w2,
+  tia_alarm_dict1.txt  w3,
+  vendor_name.zh_name  w4,
+  tia_alarm_dict2.txt w5,
+  tpa_alarm_unstandard_tc_sum.unstandard_alarm_num w6,
+  tpa_alarm_unstandard_tc_sum.ne_id ne_id,
+  tpa_alarm_unstandard_tc_sum.eqp_object_class eqp_object_class,
+  tpa_alarm_unstandard_tc_sum.network_type_top network_type_top,
+  tpa_alarm_unstandard_tc_sum.vendor_id  vendor_id
+from nmosdb.tpa_alarm_unstandard_tc_sum tpa_alarm_unstandard_tc_sum
+left join 
+    (select id,txt from nmosdb.tia_alarm_dict where type =1317) tia_alarm_dict1
+on tpa_alarm_unstandard_tc_sum.network_type_top=tia_alarm_dict1.id
+left join
+     (select id,txt from nmosdb.tia_alarm_dict where type =9) tia_alarm_dict2
+on tpa_alarm_unstandard_tc_sum.eqp_object_class=tia_alarm_dict2.id
+left join 
+     vendor_name vendor_name
+on tpa_alarm_unstandard_tc_sum.vendor_id=vendor_name.type
+where 
+tpa_alarm_unstandard_tc_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_sum.sum_level=#sum_level#
+and tpa_alarm_unstandard_tc_sum.vendor_id in (#vendor#)
+and tpa_alarm_unstandard_tc_sum.eqp_object_class in (#eqp_obj#)
+   and tpa_alarm_unstandard_tc_sum.ne_id in (#areaID#)
+   and tpa_alarm_unstandard_tc_sum.ne_type =10000
+   order by tpa_alarm_unstandard_tc_sum.first_result,tpa_alarm_unstandard_tc_sum.ne_name,vendor_name.zh_name,tia_alarm_dict2.txt,tpa_alarm_unstandard_tc_sum.unstandard_alarm_num desc
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+
+
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_StandardRatio_Count">
+    select count(*)
+    from (
+  select
+  to_char(tpa_alarm_unstandard_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+    case when #sum_level#=1 then to_char(tpa_alarm_unstandard_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when #sum_level#=3 then  to_char(add_months(tpa_alarm_unstandard_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when #sum_level#=2 then to_char(tpa_alarm_unstandard_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+  tpa_alarm_unstandard_tc_sum.ne_name w2,
+  tia_alarm_dict1.txt  w3,
+  vendor_name.zh_name  w4,
+  tia_alarm_dict2.txt w5,
+  tpa_alarm_unstandard_tc_sum.unstandard_alarm_num w6,
+  tpa_alarm_unstandard_tc_sum.ne_id ne_id,
+  tpa_alarm_unstandard_tc_sum.eqp_object_class eqp_object_class,
+  tpa_alarm_unstandard_tc_sum.network_type_top network_type_top,
+  tpa_alarm_unstandard_tc_sum.vendor_id  vendor_id
+from nmosdb.tpa_alarm_unstandard_tc_sum tpa_alarm_unstandard_tc_sum
+left join 
+    (select id,txt from nmosdb.tia_alarm_dict where type =1317) tia_alarm_dict1
+on tpa_alarm_unstandard_tc_sum.network_type_top=tia_alarm_dict1.id
+left join
+     (select id,txt from nmosdb.tia_alarm_dict where type =9) tia_alarm_dict2
+on tpa_alarm_unstandard_tc_sum.eqp_object_class=tia_alarm_dict2.id
+left join 
+     vendor_name vendor_name
+on tpa_alarm_unstandard_tc_sum.vendor_id=vendor_name.type
+where 
+tpa_alarm_unstandard_tc_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_sum.sum_level=#sum_level#
+and tpa_alarm_unstandard_tc_sum.vendor_id in (#vendor#)
+and tpa_alarm_unstandard_tc_sum.eqp_object_class in (#eqp_obj#)
+   and tpa_alarm_unstandard_tc_sum.ne_id in (#areaID#)
+   and tpa_alarm_unstandard_tc_sum.ne_type =10000
+   order by tpa_alarm_unstandard_tc_sum.first_result,tpa_alarm_unstandard_tc_sum.ne_name,vendor_name.zh_name,tia_alarm_dict2.txt,tpa_alarm_unstandard_tc_sum.unstandard_alarm_num desc
+)
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="Time Range" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="yesterday,yesterday">
+    </Condition>
+	<Condition Name="Time granularity" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True" 
+              DefaultValue="1" sqlId = "Select_AlmRpt_StandardRatio_CondSumLevel">
+      day,1|week,2|month,3
+    </Condition> 
+    <Condition Name="Military district" Flag="areaID" RelateFlag="#regionID#" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+      zoneLevel="2" sqlId = "Select_AlmRpt_StandardRatio_CondAreaID">
+      select distinct province_name as text,province_id as value from region_city_local union all select   'Unknown' as text,99999999 as value from dual order by text asc 
+    </Condition>
+    <Condition Name="Vendor" Flag="vendor" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+            sqlId = "Select_AlmRpt_StandardRatio_CondVendor">
+      select distinct zh_name as text,type as value from vendor_name 
+    </Condition>
+    <Condition Name="NE. type" Flag="eqp_object_class" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+            sqlId = "Select_AlmRpt_StandardRatio_CondEqpclass">
+      select distinct txt as text,id as value from tia_alarm_dict where type =9 and valid = 1
+    </Condition>
+    <!--例子 End-->
+
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+ 
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+    <ColumnItem FieldName="w1" DisplayName="Datetime" IsSort="true"  width="140"></ColumnItem>
+    <ColumnItem FieldName="w2" DisplayName="Area name" IsSort="true"  Width="100"></ColumnItem>
+    <ColumnItem FieldName="w3" DisplayName="Level 1 network type" IsSort="true"  Width="120"></ColumnItem>
+    <ColumnItem FieldName="w4" DisplayName="Vendor" IsSort="true"   width="100"></ColumnItem>
+    <ColumnItem FieldName="w5" DisplayName="NE. type" IsSort="true"   width="100"></ColumnItem>
+    <ColumnItem FieldName="w6" DisplayName="Nonstandard alarms" IsSort="true"  Width="160" IsHasDetail="true" DetailWhereCondition=" and 1=1" ></ColumnItem>
+  </Columns>
+  
+  
+ <!--****************查询详情所用sql（如果不需要查看详情，可以忽略）*******************-->
+
+  <!--**六**查询详情示例sql-->
+  <!--DetailDbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--oracle的查询示例sql-->
+ <detailSql DetailDbName="nmosdb">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (
+select  
+tpa_alarm_unstandard_tc_detail.province_name    w1,
+vendor_name.zh_name   w2,
+tia_alarm_dict2.txt  w3,
+tpa_alarm_unstandard_tc_detail.ne_label   w4,
+tia_alarm_dict3.txt w5,
+tpa_alarm_unstandard_tc_detail.eqp_label   w6,
+tpa_alarm_unstandard_tc_detail.alarm_title_text   w7,
+tia_alarm_dict4.txt   w8,
+to_char(tpa_alarm_unstandard_tc_detail.event_time,'yyyy-mm-dd hh24:mi:ss')   w9,
+to_char(tpa_alarm_unstandard_tc_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w10,
+tpa_alarm_unstandard_tc_detail.alarm_text0||tpa_alarm_unstandard_tc_detail.alarm_text1||tpa_alarm_unstandard_tc_detail.alarm_text2||tpa_alarm_unstandard_tc_detail.alarm_text3||tpa_alarm_unstandard_tc_detail.alarm_text4||tpa_alarm_unstandard_tc_detail.alarm_text5||tpa_alarm_unstandard_tc_detail.alarm_text6||tpa_alarm_unstandard_tc_detail.alarm_text7||tpa_alarm_unstandard_tc_detail.alarm_text8||tpa_alarm_unstandard_tc_detail.alarm_text9||tpa_alarm_unstandard_tc_detail.alarm_text10||tpa_alarm_unstandard_tc_detail.alarm_text11||tpa_alarm_unstandard_tc_detail.alarm_text12||tpa_alarm_unstandard_tc_detail.alarm_text13||tpa_alarm_unstandard_tc_detail.alarm_text14||tpa_alarm_unstandard_tc_detail.alarm_text15   w12
+from 
+tpa_alarm_unstandard_tc_detail tpa_alarm_unstandard_tc_detail
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict2
+on tia_alarm_dict2.id = tpa_alarm_unstandard_tc_detail.object_class
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict3
+on  tpa_alarm_unstandard_tc_detail.eqp_object_class =tia_alarm_dict3.id
+left join
+(select id,txt from tia_alarm_dict where type = 6) tia_alarm_dict4
+on tpa_alarm_unstandard_tc_detail.org_severity = tia_alarm_dict4.id
+left join 
+vendor_name vendor_name
+on tpa_alarm_unstandard_tc_detail.vendor_id = vendor_name.type
+where  tpa_alarm_unstandard_tc_detail.first_result &gt;= to_date('@w1@','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_detail.first_result &lt; to_date('@w1_2@','yyyy-mm-dd hh24:mi:ss') 
+and  tpa_alarm_unstandard_tc_detail.province_id =@ne_id@ 
+  and tpa_alarm_unstandard_tc_detail.eqp_object_class =@eqp_object_class@
+  and tpa_alarm_unstandard_tc_detail.vendor_id = @vendor_id@   
+    {0}
+  order by tpa_alarm_unstandard_tc_detail.event_time
+
+    )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </detailSql>
+
+
+  <!--**七**详情汇总sql-->
+
+  <!--oracle的汇总示例sql-->
+  <detailCountSql DetailDbName="nmosdb">
+    select count(*)
+    from
+    (
+select  
+tpa_alarm_unstandard_tc_detail.province_name    w1,
+vendor_name.zh_name   w2,
+tia_alarm_dict2.txt  w3,
+tpa_alarm_unstandard_tc_detail.ne_label   w4,
+tia_alarm_dict3.txt w5,
+tpa_alarm_unstandard_tc_detail.eqp_label   w6,
+tpa_alarm_unstandard_tc_detail.alarm_title_text   w7,
+tia_alarm_dict4.txt   w8,
+to_char(tpa_alarm_unstandard_tc_detail.event_time,'yyyy-mm-dd hh24:mi:ss')   w9,
+to_char(tpa_alarm_unstandard_tc_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w10,
+tpa_alarm_unstandard_tc_detail.alarm_text0||tpa_alarm_unstandard_tc_detail.alarm_text1||tpa_alarm_unstandard_tc_detail.alarm_text2||tpa_alarm_unstandard_tc_detail.alarm_text3||tpa_alarm_unstandard_tc_detail.alarm_text4||tpa_alarm_unstandard_tc_detail.alarm_text5||tpa_alarm_unstandard_tc_detail.alarm_text6||tpa_alarm_unstandard_tc_detail.alarm_text7||tpa_alarm_unstandard_tc_detail.alarm_text8||tpa_alarm_unstandard_tc_detail.alarm_text9||tpa_alarm_unstandard_tc_detail.alarm_text10||tpa_alarm_unstandard_tc_detail.alarm_text11||tpa_alarm_unstandard_tc_detail.alarm_text12||tpa_alarm_unstandard_tc_detail.alarm_text13||tpa_alarm_unstandard_tc_detail.alarm_text14||tpa_alarm_unstandard_tc_detail.alarm_text15   w12
+from 
+tpa_alarm_unstandard_tc_detail tpa_alarm_unstandard_tc_detail
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict2
+on tia_alarm_dict2.id = tpa_alarm_unstandard_tc_detail.object_class
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict3
+on  tpa_alarm_unstandard_tc_detail.eqp_object_class =tia_alarm_dict3.id
+left join
+(select id,txt from tia_alarm_dict where type = 6) tia_alarm_dict4
+on tpa_alarm_unstandard_tc_detail.org_severity = tia_alarm_dict4.id
+left join 
+vendor_name vendor_name
+on tpa_alarm_unstandard_tc_detail.vendor_id = vendor_name.type
+where  tpa_alarm_unstandard_tc_detail.first_result &gt;= to_date('@w1@','yyyy-mm-dd hh24:mi:ss')
+and tpa_alarm_unstandard_tc_detail.first_result &lt; to_date('@w1_2@','yyyy-mm-dd hh24:mi:ss') 
+and  tpa_alarm_unstandard_tc_detail.province_id =@ne_id@ 
+  and tpa_alarm_unstandard_tc_detail.eqp_object_class =@eqp_object_class@
+  and tpa_alarm_unstandard_tc_detail.vendor_id = @vendor_id@
+      {0}
+  order by tpa_alarm_unstandard_tc_detail.event_time
+    )
+  </detailCountSql>
+  
+  
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+
+  <!--多级表头例子-->
+  <DetailColumns>
+    
+    <DetailColumnItem FieldName="w1" DisplayName="Military distict" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w2" DisplayName="Vendor" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w5" DisplayName="NE. Type" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w6" DisplayName="NE. Name" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w3" DisplayName="Object type" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w4" DisplayName="Object name" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w7" DisplayName="Alarm title" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w8" DisplayName="Severity" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w9" DisplayName="Event Time" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w12" DisplayName="Alarm text" IsSort="true"  Width="600"></DetailColumnItem>
+    <DetailColumnItem FieldName="w10" DisplayName="Cancel Time" IsSort="true" Width="160"></DetailColumnItem>
+  </DetailColumns>
+  
+</root>

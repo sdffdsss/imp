@@ -1,0 +1,146 @@
+.online-users-container {
+    width: 298px;
+    height: 378px;
+    padding: 7px 10px;
+    background-color: rgba(8, 74, 138, 0.9);
+    border: 1px solid rgba(0, 165, 255, 1);
+    border-radius: 2px;
+    backdrop-filter: blur(7px);
+    .online-header {
+        margin-bottom: 6px;
+        text-align: center;
+        border-bottom: 0.67px solid rgba(205, 202, 202, 0.31);
+    }
+
+    .online-header h1 {
+        color: rgba(255, 255, 255, 1);
+        font-weight: 400;
+        font-size: 14px;
+        font-family: HYQiHei;
+        line-height: 17px;
+        text-align: left;
+    }
+
+    .online-table-container {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        margin: 0 auto;
+        border-collapse: collapse;
+    }
+
+    th {
+        height: 28px;
+        padding: 6px 4px;
+        color: rgba(255, 255, 255, 1);
+        font-weight: 400;
+        font-size: 14px;
+        font-family: 'HYQiHei';
+        line-height: 17px;
+        text-align: center;
+        background-color: rgba(9, 114, 195, 1);
+    }
+
+    td {
+        height: 28px;
+        overflow: hidden;
+        color: rgba(255, 255, 255, 1);
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 28px;
+        white-space: nowrap;
+        text-align: center;
+        text-overflow: ellipsis;
+    }
+
+    tbody {
+        display: block;
+        max-height: 300px; /* 6行的高度，可根据需要调整 */
+        overflow-y: auto;
+    }
+
+    thead,
+    tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(9, 114, 195, 1) !important;
+    }
+
+    tr:hover {
+        background-color: rgba(9, 114, 195, 0.3) !important;
+        transition: background-color 0.2s;
+    }
+
+    .custom-tooltip {
+        z-index: 1000;
+        max-width: 300px;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    .instructions {
+        margin: 20px 0;
+        padding: 15px 20px;
+        background-color: #e8f4fc;
+        border-left: 4px solid #3498db;
+        border-radius: 0 8px 8px 0;
+    }
+
+    /* 滚动条样式 */
+    tbody::-webkit-scrollbar {
+        width: 3px;
+        background: #105793 !important;
+        // height: 90%;
+        border-radius: 1.5px;
+    }
+
+    tbody::-webkit-scrollbar-track {
+        background-color: #003d7a !important;
+        border-radius: 1em;
+    }
+
+    tbody::-webkit-scrollbar-thumb {
+        width: 3px;
+        background: rgba(51, 158, 240, 0.65) !important;
+        // height: 90%;
+        border-radius: 1.5px;
+    }
+
+    .footer {
+        margin-top: 20px;
+        color: #7f8c8d;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    .scroll-hint {
+        display: none;
+        margin-top: 5px;
+        color: #95a5a6;
+        font-size: 12px;
+        text-align: center;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            padding: 15px;
+        }
+
+        th,
+        td {
+            padding: 10px 5px;
+            font-size: 14px;
+        }
+
+        .online-header h1 {
+            font-size: 20px;
+        }
+    }
+}

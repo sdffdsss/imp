@@ -1,0 +1,105 @@
+.large-screen-console-page-container {
+    width: 100%;
+    height: 100%;
+    padding: 30px 22px 0;
+    overflow: auto;
+    user-select: none;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.group-wrapper {
+    margin-bottom: 18px;
+}
+
+.group-name-wrapper {
+    position: relative;
+    height: 42px;
+    margin-bottom: 25px;
+}
+
+.group-name {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 42px;
+    padding-left: 80px;
+    color: #fff;
+    font-size: 24px;
+    font-family: HYQiHei;
+    line-height: 42px;
+    background: linear-gradient(90deg, rgba(0, 153, 255, 0), rgba(24, 112, 214, 0.22));
+    border-top-right-radius: 42px;
+}
+
+.bg-slash {
+    height: 100%;
+    margin: 0 10px 0 20px;
+    background-repeat: repeat-x;
+    background-position: left top;
+    background-size: 12px 64px;
+    transform: skewX(40deg);
+    opacity: 0.4;
+}
+
+.group-suffix {
+    position: absolute;
+    left: 20px;
+    width: 205px;
+}
+
+.children {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+}
+.large-screen-console-screen-item {
+    width: calc((100% - 40px) / 3);
+    height: 422px;
+    // margin-bottom: 50px;
+    padding: 30px 35px 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 100% 100%;
+
+    // &:not(:nth-child(3n)) {
+    //     margin-right: 20px;
+    // }
+
+    &-title {
+        overflow: hidden;
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 24px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+    &-thumbnail {
+        position: relative;
+        margin: 48px 0 30px;
+        padding-bottom: 28%;
+
+        &-img {
+            position: absolute;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    &-description {
+        position: relative;
+        display: -webkit-box;
+        overflow: hidden;
+        color: #fff;
+        font-size: 16px;
+        line-height: 30px;
+
+        word-break: break-all;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
+}

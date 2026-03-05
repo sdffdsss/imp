@@ -1,0 +1,117 @@
+.template-item-wrapper {
+    position: relative;
+    padding-right: 60px;
+    padding-left: 4px;
+    text-align: initial;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+
+    .template-item-button-wrapper {
+        position: absolute;
+        top: 50%;
+        right: 0;
+        display: none;
+        transform: translateY(-50%);
+
+        .template-item-button {
+            color: #10a7f0;
+            cursor: pointer;
+        }
+    }
+
+    &:hover {
+        .template-item-button-wrapper {
+            display: block;
+        }
+    }
+
+    .template-item-content {
+        // overflow: hidden;
+        display: inline-flex;
+        // flex-flow: row wrap;
+        width: 100%;
+        padding-top: 8px;
+        overflow-x: auto;
+        line-height: 28px;
+
+        .template-item-item-wrapper {
+            position: relative;
+            margin-right: 16px;
+            margin-bottom: 8px;
+            .template-item-item-delete {
+                position: absolute;
+                top: -7px;
+                right: -7px;
+                color: #f00;
+                font-size: 14px;
+                cursor: pointer;
+            }
+            .template-item-item-drag {
+                position: absolute;
+                top: 0;
+                right: -12px;
+                display: none;
+                align-items: center;
+                justify-content: center;
+                width: 12px;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.05);
+                border-radius: 3px;
+                cursor: move;
+                .template-item-item-drag-icon {
+                    font-size: 12px;
+                }
+            }
+
+            &:hover {
+                .template-item-item-drag {
+                    display: flex;
+                }
+            }
+        }
+
+        .template-item-item-wrapper-no-margin {
+            margin-bottom: 8px;
+        }
+
+        .template-item-item-wrapper-block {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+    }
+
+    .template-item-content-paddingRight {
+        min-height: 44px;
+        padding-right: 30px;
+    }
+}
+
+.template-item-wrapper-no-button {
+    padding-right: 0;
+}
+
+.template-item-wrapper-last {
+    border-bottom: none;
+}
+
+.default-template {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    &-item {
+        margin-top: 20px;
+        &-children {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 10px;
+        }
+    }
+
+    .drag-item {
+        padding: 5px;
+        border: 1px dashed black;
+        .drag-item-element {
+            pointer-events: none;
+        }
+    }
+}

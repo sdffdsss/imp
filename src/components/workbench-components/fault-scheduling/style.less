@@ -1,0 +1,146 @@
+.fault-scheduling-page {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    &-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 17px;
+        padding-top: 3vh;
+        font-size: 1vw;
+        &-title {
+            padding-left: 1vh;
+            font-weight: 500;
+            font-size: 16px;
+            font-family: 'PingFangSC-Regular, PingFang SC';
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: center;
+            vertical-align: top;
+        }
+        &-more {
+            padding-left: 1vh;
+            font-weight: 400;
+            font-size: 12px;
+            font-family: 'PingFangSC-Regular, PingFang SC';
+            line-height: normal;
+            letter-spacing: normal;
+            text-align: right;
+            vertical-align: top;
+        }
+    }
+    &-body {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 5px;
+        &-tody {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 70px;
+            background-color: #fff1e7;
+            border-radius: 5px;
+            .img {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 46px;
+                height: 46px;
+                font-size: 1.5vw;
+                background-color: #ffdabf;
+                border-radius: 43px;
+                .anticon {
+                    color: #fff;
+                    font-size: 36px;
+                }
+            }
+            .txt {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                border-radius: 43px;
+                .title {
+                    margin-left: 2vh;
+                    font-weight: 500;
+                    font-size: 16px;
+                }
+                .value {
+                    margin-left: 2vh;
+                    color: #ff7215;
+                    font-weight: 500;
+                    font-size: 24px;
+                    cursor: pointer;
+                }
+            }
+        }
+        &-complete {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            margin-left: 0.5vh;
+            background-color: #f1f6ff;
+            border-radius: 5px;
+            .img {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 46px;
+                height: 46px;
+                font-size: 1.5vw;
+                background-color: #c5d9ff;
+                border-radius: 43px;
+                .anticon {
+                    color: #fff;
+                    font-size: 36px;
+                }
+            }
+            .txt {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                border-radius: 43px;
+                .title {
+                    margin-left: 2vh;
+                    font-weight: 400;
+                    font-size: 14px;
+                }
+                .value {
+                    margin-left: 2vh;
+                    color: #3079e6;
+                    font-weight: 500;
+                    font-size: 20px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    &-table {
+        display: flex;
+        flex: 1;
+        align-items: top;
+        width: 100%;
+        overflow-y: auto;
+        .fault-scheduling-page-table-img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            cursor: pointer;
+            .anticon {
+                font-size: 24px;
+            }
+        }
+    }
+}

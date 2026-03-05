@@ -1,0 +1,23 @@
+.segmentation-box {
+  align-self: stretch;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 64px;
+    .segmentation-line {
+      height: 100%;
+      width: 1px;
+      background-color: #e6e6e6;
+    }
+    .segmentation-icon {
+      position: absolute;
+      background-color: #fff;
+        img {
+            width: 64px;
+            height: 64px;
+            -webkit-user-drag: none;
+        }
+    }
+}

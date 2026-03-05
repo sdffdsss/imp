@@ -1,0 +1,59 @@
+.fault-list-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  .fault-list-table-cell-alarm {
+    display: flex;
+    justify-content: center;
+    width: 36px;
+    background-color: aqua;
+    border-radius: 3px;
+  }
+
+  &-tab {
+    display: flex;
+    flex: 1;
+    margin-bottom: 12px;
+    padding: 0 20px;
+    line-height: 1;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+
+    &-item {
+      position: relative;
+      display: flex;
+      margin-right: 40px;
+      margin-bottom: 4px;
+      cursor: pointer;
+
+      &-title {
+        margin-top: 1px;
+        margin-right: 2px;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 14px;
+      }
+
+      &-count {
+        display: flex;
+        align-items: flex-start;
+        color: rgb(255, 104, 104);
+        font-size: 16px;
+      }
+
+      &-tag {
+        position: absolute;
+        bottom: -7px;
+        left: 50%;
+        width: 15.77px;
+        height: 1.65px;
+        background: rgb(24, 144, 255);
+        border-radius: 1.5px;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .oss-web-common-virtual-table-page {
+    height: 280px !important;
+  }
+}

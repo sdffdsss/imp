@@ -1,0 +1,53 @@
+.base-info-continer {
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 10px;
+    overflow-y: auto;
+    .oss-ui-row {
+        margin-bottom: 5px;
+    }
+    &-title {
+        height: 40px;
+        line-height: 40x;
+        text-align: end;
+    }
+    &-card:hover {
+        overflow-y: auto !important;
+    }
+    &-card {
+        display: flex;
+        flex-wrap: wrap;
+        min-height: 40x;
+        max-height: 60px;
+        overflow-y: hidden;
+        &-mod1 {
+            width: 30%;
+            height: 20px;
+            margin: 4px 1%;
+            overflow: hidden;
+            color: #3ac1fe;
+            text-align: center;
+            text-overflow: ellipsis;
+            background-color: #eaf4fc;
+            border-radius: 4px;
+        }
+
+        &-mod2 {
+            width: 30%;
+            height: 20px;
+            margin: 4px 1%;
+            overflow: hidden;
+            color: #ff6c2a;
+            text-align: center;
+            text-overflow: ellipsis;
+            background-color: #fff2ec;
+            border-radius: 4px;
+        }
+    }
+    &-middle {
+        text-align: center;
+    }
+    &-time {
+        line-height: 2;
+    }
+}

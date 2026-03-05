@@ -1,0 +1,156 @@
+.order-list-page {
+    display: flex;
+    flex-direction: column;
+    width: calc(50% - 5px);
+    height: 347px;
+    background: #fff;
+    border-radius: 8px;
+
+    &:nth-of-type(2) {
+        margin-left: 10px;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 15px;
+        padding: 0 20px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        &:hover {
+            &::-webkit-scrollbar {
+                display: block;
+            }
+        }
+
+        .filed-order {
+            background: rgba(0, 0, 0, 0.02);
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &-item {
+            display: flex;
+            flex: 1;
+            box-sizing: border-box;
+            padding-top: 8px;
+            border-bottom: 1px solid #f2f2f2;
+
+            &-left {
+                margin-right: 5px;
+            }
+
+            &-right {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                width: calc(100% - 14px);
+                line-height: 1;
+
+                &-title {
+                    color: rgba(0, 0, 0, 0.85);
+                    font-size: 14px;
+                    line-height: 20px;
+                    word-break: break-all;
+                }
+
+                &-number {
+                    margin-top: 2px;
+                    cursor: pointer;
+                }
+
+                &-number,
+                &-time {
+                    margin-bottom: 5px;
+                    color: rgba(0, 0, 0, 0.45);
+                    font-size: 12px;
+                }
+                &-info {
+                    position: absolute;
+                    right: 0;
+                    bottom: 8px;
+                    display: flex;
+                    padding: 5px 8px;
+                    border: 1px solid rgb(186, 231, 255);
+                    border-radius: 4px;
+
+                    @media (max-width: 1366px) {
+                        bottom: 2px;
+                        padding: 2px 6px;
+                    }
+
+                    > span {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        color: rgb(24, 144, 255);
+                        font-size: 12px;
+
+                        &:nth-of-type(1) {
+                            margin-right: 5px;
+
+                            @media (max-width: 1366px) {
+                                margin-right: 3px;
+                            }
+                        }
+                    }
+                }
+                &-bottom {
+                    position: absolute;
+                    right: 0;
+                    bottom: 8px;
+                    &-province {
+                        display: flex;
+                        float: left;
+                        margin-right: 10px;
+                        padding: 5px 8px;
+                        border: 1px solid rgb(186, 231, 255);
+                        border-radius: 4px;
+                        @media (max-width: 1366px) {
+                            bottom: 2px;
+                            padding: 2px 6px;
+                        }
+
+                        > span {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: rgb(24, 144, 255);
+                            font-size: 12px;
+                        }
+                    }
+                    &-application {
+                        display: flex;
+                        float: right;
+                        padding: 5px 8px;
+                        border: 1px solid rgb(186, 231, 255);
+                        border-radius: 4px;
+                        @media (max-width: 1366px) {
+                            bottom: 2px;
+                            padding: 2px 6px;
+                        }
+
+                        > span {
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            color: rgb(24, 144, 255);
+                            font-size: 12px;
+
+                            &:nth-of-type(1) {
+                                margin-right: 5px;
+
+                                @media (max-width: 1366px) {
+                                    margin-right: 3px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

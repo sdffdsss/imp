@@ -1,0 +1,12 @@
+.alarm-column-multi-select-checkbox-all {
+  width: '100%';
+  display: flex;
+  margin: 5px 0 0 10px;
+}
+.alarm-column-multi-select-checkbox {
+  margin: 5px 0 5px 10px;
+}
+.alarm-column-multi-select-checkbox-group {
+  max-height: 150px;
+  overflow-y: auto;
+}

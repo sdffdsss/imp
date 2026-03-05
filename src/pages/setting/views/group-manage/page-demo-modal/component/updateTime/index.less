@@ -1,0 +1,21 @@
+.header-update {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(0, 0, 0, 0.25);
+    font-size: 12px;
+    .update-time {
+        margin-left: 5px;
+    }
+    .update-icon-btn {
+        background-color: transparent;
+        border: 0px;
+        transform: rotate(360deg);
+        cursor: pointer;
+        transition: 0.5s;
+        &:active {
+            transform: rotate(0deg);
+            transition: 0s;
+        }
+    }
+}

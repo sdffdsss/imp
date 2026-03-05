@@ -1,0 +1,106 @@
+.large-screen-console-screen-item-desc-tooltip {
+    position: relative;
+    max-width: 500px;
+    border: 1px solid rgb(97, 206, 255);
+    backdrop-filter: blur(20px);
+    .oss-ui-tooltip-inner {
+        // min-width: 540px;
+        font-size: 16px;
+        line-height: 30px;
+        background-color: transparent;
+    }
+
+    // &::before {
+    //     position: absolute;
+    //     top: 0;
+    //     left: 0;
+    //     display: block;
+    //     width: 100%;
+    //     height: 100%;
+    //     filter: blur(5px);
+    //     content: ' ';
+    // }
+    .oss-ui-tooltip-arrow {
+        display: none;
+    }
+
+    // &.mobile-network {
+    //     top: 55px !important;
+    //     left: 95px !important;
+    // }
+
+    // &.holiday {
+    //     top: 55px !important;
+    //     left: 95px !important;
+    // }
+
+    // &.production-operation {
+    //     top: 55px !important;
+    //     left: -95px !important;
+    // }
+
+    // &.wireless {
+    //     top: 55px !important;
+    //     left: 95px !important;
+    // }
+
+    // &.broadband {
+    //     top: 55px !important;
+    //     left: 95px !important;
+    // }
+
+    // &.cloud-network {
+    //     top: 55px !important;
+    //     left: -95px !important;
+    // }
+}
+
+.large-screen-console-page-spinning {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    > div:first-child {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        .oss-ui-spin-spinning {
+            max-height: unset;
+        }
+    }
+    .oss-ui-spin-container {
+        height: 100%;
+    }
+}
+
+.framework-tab-large-screen-console-page-item {
+    background-color: rgb(1, 31, 65) !important;
+    .oss-ui-tabs-nav {
+        background-color: rgb(10, 55, 107) !important;
+
+        &:before {
+            border: 1px solid rgb(10, 55, 107) !important;
+        }
+
+        .oss-ui-tabs-nav-list .oss-ui-tabs-tab {
+            background-color: rgb(10, 55, 107) !important;
+            border: 1px solid rgb(29, 88, 156) !important;
+
+            &-active {
+                .oss-ui-tabs-tab-btn {
+                    color: rgb(159, 221, 255) !important;
+                }
+            }
+
+            &:not(.oss-ui-tabs-tab-active) {
+                .oss-ui-tabs-tab-btn {
+                    color: #fff !important;
+                }
+            }
+
+            .oss-ui-tabs-tab-remove {
+                color: rgb(1, 173, 255) !important;
+            }
+        }
+    }
+}

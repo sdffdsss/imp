@@ -1,0 +1,34 @@
+.send-sms {
+    display: flex;
+    height: 100%;
+    .send-sms-tabs {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        .oss-ui-tabs-nav {
+            .oss-ui-tabs-nav-wrap {
+                .oss-ui-tabs-nav-list {
+                    .oss-ui-tabs-tab {
+                        margin: 5px !important;
+                    }
+                }
+            }
+        }
+        .oss-ui-tabs-content-holder {
+            margin: 5px;
+            border: 1px #d9d9d9 solid;
+        }
+        >.oss-ui-tabs-content-holder {
+            flex: 1;
+            overflow: hidden;
+
+            >.oss-ui-tabs-content {
+                height: 100%;
+
+                >.oss-ui-tabs-tabpane {
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

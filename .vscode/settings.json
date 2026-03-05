@@ -1,0 +1,6 @@
+{
+    "eggHelper.serverPort": 50714,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "never"
+    }
+}

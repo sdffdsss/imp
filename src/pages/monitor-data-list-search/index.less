@@ -1,0 +1,378 @@
+.home-unicon-monitor-date-container {
+    display: flex;
+    height: 100%;
+    .oss-ui-picker-cell-disabled {
+        // background-color: @disabled-bg;
+        // color: @disabled-color;
+        pointer-events: auto;
+        .date-info {
+            // color: @disabled-color!important;
+            font-weight: 700;
+            font-size: 12px;
+        }
+    }
+    .oss-ui-picker-calendar {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        .form-container {
+            box-sizing: content-box;
+            padding: 15px 15px 15px 15px !important;
+        }
+        .oss-ui-picker-panel {
+            flex: 1;
+            padding: 0 20px 0 70px;
+            .oss-ui-picker-date-panel {
+                height: 100%;
+                .oss-ui-picker-body {
+                    height: 100%;
+                    .oss-ui-picker-content {
+                        height: calc(100% - 20px);
+                        overflow-y: scroll;
+                        & > thead {
+                            tr {
+                                position: relative;
+                                display: flex;
+                                justify-content: space-between;
+                                &::before {
+                                    position: absolute;
+                                    left: -56px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    box-sizing: border-box;
+                                    width: 56px;
+                                    height: 40px;
+                                    color: #000;
+                                    border: 1px solid rgb(210, 221, 240);
+                                    content: '';
+                                }
+                                th {
+                                    width: 100%;
+                                    padding: 10px;
+                                    text-align: center;
+                                    border: 1px solid rgb(210, 221, 240);
+                                    &::before {
+                                        display: inline-block;
+                                        color: #000;
+                                        content: '星期';
+                                    }
+                                    &:nth-of-type(6) {
+                                        background-color: rgb(253, 248, 245);
+                                    }
+                                    &:nth-of-type(7) {
+                                        background-color: rgb(253, 248, 245);
+                                    }
+                                }
+                            }
+                        }
+                        & > tbody {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            height: 100%;
+                            & > tr {
+                                display: flex;
+                                // flex: 1;
+                                // margin-bottom: 2px;
+                                justify-content: space-between;
+                                border: 1px solid rgb(210, 221, 240);
+                                &:nth-last-of-type(1) {
+                                    margin-bottom: 0;
+                                }
+                                & > td {
+                                    flex: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .schedule-list {
+                // display: flex;
+                // height: calc(100% - 6px);
+                // margin: 2px;
+                // border-radius: 4px;
+                // box-shadow: 0px -2px 7px 0px rgba(219, 219, 219, 0.5);
+                position: relative;
+                // overflow: hidden;
+                // z-index: 9;
+                display: flex;
+                width: 100%;
+                height: 100%;
+                min-height: 92px;
+                border-right: 1px solid rgb(210, 221, 240);
+                &:hover {
+                    box-shadow: 4px -8px 28px 4px rgba(219, 219, 219, 0.7);
+                    box-shadow: 0, -2, 11, 0 rgba(75, 75, 75, 0.5);
+                    transition: all 0.3s;
+                }
+                .left-edge {
+                    position: absolute;
+                    top: -1px;
+                    left: -57px;
+                    z-index: 10;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    // border-left: 2px solid rgb(210, 221, 240);
+                    box-sizing: border-box;
+                    width: 57px;
+                    height: calc(100% + 2px);
+                    color: rgb(51, 51, 51);
+                    font-weight: 700;
+                    font-size: 12px;
+                    border: 1px solid rgb(210, 221, 240);
+                    &-shift {
+                        display: flex;
+                        flex: 1;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 0 4px;
+                        text-align: center;
+                    }
+                }
+                .schedule-info-wrap {
+                    flex: 1;
+
+                    .schedule-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        height: 100%;
+                        & > section {
+                            display: flex;
+                            flex: 1;
+                            align-items: center;
+                            justify-content: flex-start;
+                            border-bottom: 1px dashed @border-color-base;
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                            & > span {
+                                font-size: 14px;
+                                &:nth-of-type(1) {
+                                    // color: @disabled-color;
+                                }
+                                &:nth-of-type(2) {
+                                    // flex: 1;
+                                    // max-width: 7vw;
+                                    // padding-right: 1vw;
+                                    // padding-left: 8px;
+                                    // overflow: hidden;
+                                    // white-space: nowrap;
+                                    // text-align: center;
+                                    // text-overflow: ellipsis;
+                                }
+                            }
+                        }
+                        .schedule-info-wrap-field {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            // min-height: 72px;
+                            padding: 4px;
+                            color: rgb(126, 126, 126);
+                            span {
+                                display: inline-block;
+                                max-width: 100%;
+                                margin: 1px 2px;
+                                // padding: 0 7px;
+                                font-size: 12px;
+                                text-align: center;
+                                background-color: rgba(140, 185, 237, 0.15);
+                            }
+                        }
+                    }
+                }
+                .date-info {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    //width: 25%;
+                    padding: 10px 6px;
+                    // color: @primary-color;
+                    font-weight: 700;
+                    font-size: 12px;
+                    line-height: 22px;
+                    text-align: center;
+                    border-right: 1px solid @border-color-base;
+                }
+            }
+            .weekend {
+                background-color: rgb(253, 248, 245);
+                .schedule-info-wrap-field {
+                    span {
+                        background-color: rgba(233, 181, 125, 0.15) !important;
+                    }
+                }
+            }
+            .curDay {
+                border: 1px solid rgb(24, 144, 255);
+                border-radius: 4px;
+                .date-info {
+                    color: #fff !important;
+                    background-color: rgb(24, 144, 255);
+                }
+                .schedule-info-wrap-field {
+                    span {
+                        color: rgb(24, 144, 255) !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.area-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    section {
+        font-size: 14px;
+    }
+}
+
+.select-style {
+    width: 100px;
+}
+
+.setting-info-container {
+    display: flex;
+    .group-list {
+        width: 300px;
+        &-button {
+            margin-bottom: 6px;
+        }
+        .group-list-container {
+            height: 380px;
+            overflow: scroll;
+        }
+        .group-item {
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+            line-height: 40px;
+            white-space: nowrap;
+            text-align: center;
+            text-overflow: ellipsis;
+            border-top: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            border-left: 1px solid #ccc;
+            cursor: pointer;
+            &:nth-last-of-type(1) {
+                border-bottom: 1px solid #ccc;
+            }
+            .oss-ui-input-group-addon {
+                border: none;
+            }
+        }
+        .group-item-choosed {
+            color: #fff;
+            background: #236fab;
+        }
+        .group-eidt-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            padding: 0 20px;
+
+            .group-operation {
+                margin-left: 5px;
+            }
+
+            .edit-name-ipt {
+                flex: 1;
+            }
+        }
+    }
+    .user-table {
+        flex: 1;
+    }
+}
+
+.tree-data-container {
+    position: relative;
+    padding: 60px 0 0 0;
+    &-search {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+    }
+}
+
+.duty-group-name {
+    margin: 8px 0;
+    font-size: 14px;
+    text-align: center;
+}
+.group-view-container {
+    position: relative;
+    .columns-sort-drag-search-title {
+        display: none;
+    }
+    .columns-sort-drag-content-right {
+        padding-top: 28px;
+    }
+    .view-search {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: calc(50% - 30px);
+    }
+}
+.monitor-transfer-container {
+    .oss-ui-transfer-list-header {
+        display: none;
+    }
+}
+.calendar-tooltip {
+    .oss-ui-tooltip-inner {
+        padding: 20px 0 4px 30px;
+        font-size: 16px;
+        line-height: 30px;
+        background-color: #fff;
+        .tooltip-content {
+            width: 288px;
+            min-height: 160px;
+            > div {
+                display: flex;
+                align-items: baseline;
+                h3 {
+                    max-width: 115px;
+                }
+                .content-loginId {
+                    margin-left: 10px;
+                    color: rgb(153, 153, 153);
+                    font-weight: 400;
+                    font-size: 12px;
+                }
+            }
+            .content-item {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                img {
+                    width: 16px;
+                    height: 16px;
+                    margin-right: 9px;
+                }
+                div {
+                    display: inline-block;
+                    max-width: 180px;
+                    min-height: 42px;
+                    font-size: 12px;
+                    line-height: 16px;
+                }
+            }
+        }
+    }
+
+    .oss-ui-tooltip-arrow {
+        display: none;
+    }
+}

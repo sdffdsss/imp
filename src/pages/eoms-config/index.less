@@ -1,0 +1,37 @@
+.gray-manage-wrapper {
+    height: 100%;
+}
+.gray-top-select {
+    padding: 10px;
+    background-color: @component-background;
+    .oss-ui-form-item {
+        margin-bottom: 0px;
+    }
+    .oss-ui-radio-button-wrapper {
+        background: none;
+        border: none;
+        &:not(:first-child):before {
+            width: 0;
+        }
+    }
+    .oss-ui-radio-button-wrapper-checked {
+        background: #fff;
+    }
+    .oss-ui-radio-button-wrapper {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:last-child {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:first-child {
+        border-radius: 20px;
+    }
+}
+.gray-top-select-row {
+    margin-top: 6px;
+}
+.gray-top-select {
+    .oss-ui-checkbox-wrapper + .oss-ui-checkbox-wrapper {
+        margin-left: 0px;
+    }
+}

@@ -1,0 +1,180 @@
+.duty-calendar-container {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    .oss-ui-picker-cell-disabled {
+        // background-color: @disabled-bg;
+        // color: @disabled-color;
+        pointer-events: auto;
+        .date-info {
+            // color: @disabled-color!important;
+            font-weight: 700;
+            font-size: 12px;
+        }
+    }
+    .oss-ui-picker-calendar {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        height: 100%;
+        .form-container {
+            box-sizing: content-box;
+            padding-right: 1vh !important;
+            .form-container-month {
+                float: left;
+                width: 100%;
+                margin-left: 40px;
+                font-weight: bold;
+                font-size: 3.2vh;
+            }
+            .oss-ui-form-item-control-input-content {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-items: center;
+            }
+        }
+        .oss-ui-picker-panel {
+            flex: 1;
+            .oss-ui-picker-date-panel {
+                height: 100%;
+                .oss-ui-picker-body {
+                    height: 100%;
+                    .oss-ui-picker-content {
+                        height: calc(100% - 20px);
+                        overflow-y: scroll;
+                        & > thead {
+                            tr {
+                                display: flex;
+                                justify-content: space-around;
+                                th {
+                                    padding: 10px;
+                                    &::before {
+                                        display: inline-block;
+                                        color: #000;
+                                        content: '星期';
+                                    }
+                                }
+                            }
+                        }
+                        & > tbody {
+                            display: flex;
+                            flex-direction: column;
+                            width: 100%;
+                            height: 100%;
+                            & > tr {
+                                display: flex;
+                                flex: 1;
+                                margin-bottom: 2px;
+                                &:nth-last-of-type(1) {
+                                    margin-bottom: 0;
+                                }
+                                & > td {
+                                    flex: 1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .schedule-list {
+                display: flex;
+                height: calc(100% - 6px);
+                margin: 2px;
+                border-radius: 4px;
+                box-shadow: 0px -2px 7px 0px rgba(219, 219, 219, 0.5);
+                &:hover {
+                    box-shadow: 4px -8px 28px 4px rgba(219, 219, 219, 0.7);
+                    box-shadow: 0, -2, 11, 0 rgba(75, 75, 75, 0.5);
+                    transition: all 0.3s;
+                }
+                .schedule-info-wrap {
+                    flex: 1;
+
+                    .schedule-info {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        height: 100%;
+                        & > section {
+                            display: flex;
+                            flex: 1;
+                            align-items: center;
+                            justify-content: flex-start;
+                            border-bottom: 1px dashed @border-color-base;
+                            &:last-child {
+                                border-bottom: none;
+                            }
+                            & > span {
+                                font-size: 14px;
+                                &:nth-of-type(1) {
+                                    // color: @disabled-color;
+                                }
+                                &:nth-of-type(2) {
+                                    // flex: 1;
+                                    // max-width: 5vw;
+                                    // padding-left: 5px;
+                                    // overflow: hidden;
+                                    // white-space: nowrap;
+                                    // text-align: center;
+                                    // text-overflow: ellipsis;
+                                }
+                            }
+                        }
+                        .schedule-info-wrap-field {
+                            display: flex;
+                            flex-wrap: wrap;
+                            align-items: flex-start;
+                            justify-content: flex-start;
+                            // min-height: 72px;
+                            padding: 4px;
+                            color: rgb(126, 126, 126);
+                            span {
+                                display: inline-block;
+                                max-width: 100%;
+                                margin: 1px 2px;
+                                padding: 0 7px;
+                                font-size: 12px;
+                                text-align: center;
+                                background-color: rgba(140, 185, 237, 0.15);
+                            }
+                        }
+                        .schedule-info-wrap-field-check {
+                            padding: 0 4px 0 4px;
+                            color: #70f439;
+                            background-color: @component-background;
+                        }
+
+                        .schedule-info-wrap-field-before {
+                            color: @text-color;
+                            background-color: @component-background;
+                        }
+                        .schedule-info-wrap-field-after {
+                            color: @disabled-color;
+                            background-color: @component-background;
+                        }
+                    }
+                }
+                .date-info {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    // width: 25%;
+                    padding: 10px 4px;
+                    color: @primary-color;
+                    font-weight: bold;
+                    font-size: 22px;
+                    text-align: center;
+                    border-right: 1px solid @border-color-base;
+                }
+            }
+        }
+    }
+}
+.duty-title-calendar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1vh;
+}

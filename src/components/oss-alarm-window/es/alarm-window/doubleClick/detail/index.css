@@ -1,0 +1,33 @@
+.image-border {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+}
+.image-border1 {
+  top: 0;
+  left: 0;
+  border-left: 2px solid #4fbd2a;
+  border-top: 2px solid #4fbd2a;
+}
+.image-border2 {
+  top: 0;
+  right: -2px;
+  border-right: 2px solid #4fbd2a;
+  border-top: 2px solid #4fbd2a;
+}
+.image-border3 {
+  bottom: 10px;
+  left: 0;
+  border-bottom: 2px solid #4fbd2a;
+  border-left: 2px solid #4fbd2a;
+}
+.image-border4 {
+  bottom: 10px;
+  right: -2px;
+  border-right: 2px solid #4fbd2a;
+  border-bottom: 2px solid #4fbd2a;
+}
+.detail-desc .oss-ui-descriptions-item-label,
+.detail-desc .oss-ui-descriptions-item-content {
+  padding: 3px 10px;
+}

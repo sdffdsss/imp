@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="资源覆盖率核查报表" />
+
+  <!--查询sql-->
+  <!--例子Start-->
+  <sql dbName="nmosdb_mysql" sqlId="Select_AlmRpt_CompressionRatio_Unicom_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+  </sql>
+  <!--例子End-->
+
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId="Select_AlmRpt_CompressionRatio_Unicom_Count">
+  </countsql>
+  <!--例子End-->
+
+  <!--查询条件-->
+  <Conditions >
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    <!--DefaultValue： 控件的默认值，目前时间控件提供：当月（当前时间所在月第一天）；当周（当前时间所在周第一天）；当日（当前时间所在天）；上月（当前时间所在月的上月第一天）-->
+    <!--例子 Start-->
+    <!--省份-->
+    <Condition Name="省份" Flag="province" Authority="province_id"  ControlType="MutiDropDown" DbName="nmosdb_mysql"
+            FirstOptionSelected=""
+            sqlId = "Select_AlmRpt_CompressionRatio_Unicom_CondProvince">
+    </Condition>
+    <!--专业-->
+    <Condition Name="专业" Flag="profession"  ControlType="ComboBox" DbName="nmosdb_mysql" DefaultValue="8"
+            sqlId = "Select_AlmRpt_CompressionRatio_Unicom_CondProfession">
+    </Condition>
+   
+    <!--字段
+    <Condition Name="字段" Flag="filed"  ControlType="MutiDropDown" DbName="nrmdb" DefaultValue="90,138,4"
+            sqlId = "Select_AlmRpt_CompressionRatio_Unicom_CondProfiled">
+    </Condition>-->
+    <!--时间范围-->
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="昨日,昨日">
+    </Condition>
+
+
+  </Conditions>
+
+  <!--显示列-->
+  <Columns Authority="region_id|province_id"  ColumnsDisplay = 'province_name,professional,date_time,alarm_total,region_id_rate,city_id_rate,vendor_id_rate,object_class_rate,eqp_object_class_rate,special_field0_rate,sheet_status_rate,ems_id_rate'>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+<ColumnItem FieldName="province_name" DisplayName="省份" Width='75'></ColumnItem>
+<ColumnItem FieldName="professional" DisplayName="专业" Width='75' ></ColumnItem>
+<ColumnItem FieldName="date_time" DisplayName="日期" Width='100'></ColumnItem>
+<ColumnItem FieldName="alarm_total" DisplayName="告警总数" Width='80' ></ColumnItem>
+<ColumnItem FieldName="region_id_rate" DisplayName="地市覆盖率" Width='80' ></ColumnItem>
+<ColumnItem FieldName="city_id_rate" DisplayName="区县覆盖率" Width='80'></ColumnItem>
+<ColumnItem FieldName="vendor_id_rate" DisplayName="设备厂家覆盖率" Width='135'></ColumnItem>
+<ColumnItem FieldName="active_status_rate" DisplayName="告警清除状态覆盖率" Width='150' ></ColumnItem>
+<ColumnItem FieldName="alarm_resource_status_rate" DisplayName="告警工程状态覆盖率" Width='150'></ColumnItem>
+<ColumnItem FieldName="sheet_send_status_rate" DisplayName="派单状态覆盖率" Width='135'></ColumnItem>
+<ColumnItem FieldName="sheet_status_rate" DisplayName="工单状态覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="org_severity_rate" DisplayName="网管告警级别覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="standard_flag_rate" DisplayName="告警标准化标识覆盖率" Width='150'></ColumnItem>
+<ColumnItem FieldName="ack_flag_rate" DisplayName="告警确认状态覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="object_class_rate" DisplayName="对象类型覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="eqp_object_class_rate" DisplayName="设备类型覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="event_time_rate" DisplayName="告警发生时间覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="cancel_time_rate" DisplayName="告警清除时间覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="omc_alarm_id_rate" DisplayName="原始告警流水号覆盖率" Width='160'></ColumnItem>
+<ColumnItem FieldName="alarm_title_text_rate" DisplayName="厂家告警标题覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="vendor_severity_rate" DisplayName="厂家原始告警级别覆盖率" Width='160'></ColumnItem>
+<ColumnItem FieldName="vendor_type_rate" DisplayName="厂家原始告警类型覆盖率" Width='160'></ColumnItem>
+<ColumnItem FieldName="probable_cause_txt_rate" DisplayName="告警可能原因覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="probable_cause_rate" DisplayName="厂家告警号覆盖率" Width='150'></ColumnItem>
+<ColumnItem FieldName="ne_label_rate" DisplayName="对象名称覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="eqp_label_rate" DisplayName="网元名称覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field0_rate" DisplayName="机房名称覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field1_rate" DisplayName="传输设备级别覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="china_tower_site_no_rate" DisplayName="所属局站覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="proj_name_rate" DisplayName="工程名覆盖率" Width='100'></ColumnItem>
+<ColumnItem FieldName="proj_oa_file_id_rate" DisplayName="工程编号覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="sheet_no_rate" DisplayName="工单号覆盖率" Width='100'></ColumnItem>
+<ColumnItem FieldName="sheet_send_person_rate" DisplayName="工单派发人覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="standard_alarm_name_rate" DisplayName="告警标准名覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="standard_alarm_id_rate" DisplayName="网管告警ID覆盖率" Width='150'></ColumnItem>
+<ColumnItem FieldName="effect_ne_rate" DisplayName="该事件对设备的影响覆盖率" Width='150'></ColumnItem>
+<ColumnItem FieldName="effect_service_rate" DisplayName="该事件对业务的影响覆盖率" Width='180'></ColumnItem>
+<ColumnItem FieldName="ems_id_rate" DisplayName="EMSID覆盖率" Width='90'></ColumnItem>
+<ColumnItem FieldName="ack_time_rate" DisplayName="告警确认时间覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="ack_user_rate" DisplayName="告警确认人覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="admin_grid_id_rate" DisplayName="网格覆盖率" Width='80'></ColumnItem>
+<ColumnItem FieldName="alarm_abnormal_type_rate" DisplayName="异常告警类型覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="alarm_act_count_rate" DisplayName="活动告警计数覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="alarm_check_rate" DisplayName="告警监测点覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="alarm_content_rate" DisplayName="告警内容覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="alarm_eqp_status_rate" DisplayName="设备工程细分状态覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="alarm_explanation_addition_rate" DisplayName="告警解释辅助字段覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="alarm_explanation_rate" DisplayName="告警解释覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="alarm_important_level_rate" DisplayName="重点区域网元告警级别覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="alarm_ne_status_rate" DisplayName="告警对象工程细分状态覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="alarm_origin_rate" DisplayName="关联告警标志覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="alarm_reason_rate" DisplayName="断站告警原因覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="alarm_source_rate" DisplayName="告警来源覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="alarm_title_rate" DisplayName="告警标题Id覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="alarm_unit_rate" DisplayName="告警源覆盖率" Width='90'></ColumnItem>
+<ColumnItem FieldName="alarm_value_rate" DisplayName="告警价值覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="alert_status_rate" DisplayName="网格类型覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="attachment_rate" DisplayName="附件覆盖率" Width='80'></ColumnItem>
+<ColumnItem FieldName="board_type_rate" DisplayName="板卡类型覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="business_layer_rate" DisplayName="业务层次覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="business_region_ids_rate" DisplayName="业务覆盖区域覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="business_regions_rate" DisplayName="业务覆盖区域名覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="business_system_rate" DisplayName="业务系统覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="cancel_user_rate" DisplayName="告警清除人覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="channel_num_rate" DisplayName="采集通道号覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="channel_type_rate" DisplayName="采集方式覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="circuit_fault_location_rate" DisplayName="电路故障位置覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="circuit_id_rate" DisplayName="电路ID覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="circuit_no_rate" DisplayName="电路代号覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="corr_str_rate" DisplayName="对应字符串覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="correlate_alarm_flag_rate" DisplayName="对告标志覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="dal_action_rate" DisplayName="采集过滤覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="department_process_flag_rate" DisplayName="部门受理标志覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="eqp_alias_rate" DisplayName="网元别名覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="eqp_idn_rate" DisplayName="告警对象标识覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="eqp_int_id_rate" DisplayName="归属设备网元ID覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="eqp_object_class_text_rate" DisplayName="设备网元类型(text)覆盖率" Width='230'></ColumnItem>
+<ColumnItem FieldName="eqp_version_rate" DisplayName="网元版本覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="event_cat_rate" DisplayName="事件类型覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="event_id_rate" DisplayName="事件唯一标识覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="extra_id1_rate" DisplayName="划小ID覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="extra_id2_rate" DisplayName="是否室分覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="extra_id3_rate" DisplayName="通用的数值扩展字段3覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="extra_string1_rate" DisplayName="通用的字符串扩展字段1覆盖率" Width='210'></ColumnItem>
+<ColumnItem FieldName="extra_string2_rate" DisplayName="重保标签覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="extra_string3_rate" DisplayName="通用的字符串扩展字段3覆盖率" Width='210'></ColumnItem>
+<ColumnItem FieldName="fail_reason_rate" DisplayName="预处理结果覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="gcss_client_grade_mgt_rate" DisplayName="集客客户管理属性覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="gcss_client_grade_rate" DisplayName="集客客户属性覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_client_level_rate" DisplayName="集客客户级别覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_client_name_rate" DisplayName="集客客户名称覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_client_num_rate" DisplayName="集客客户数量覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_client_rate" DisplayName="集客客户覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="gcss_service_level_rate" DisplayName="集客业务级别覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_service_num_rate" DisplayName="集客业务数量覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="gcss_service_rate" DisplayName="集客业务覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="gcss_service_type_rate" DisplayName="集客产品覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="grid_name_rate" DisplayName="网格名称覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="group_id_rate" DisplayName="通用组ID覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="group_severity_rate" DisplayName="集团级别覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="idn_rate" DisplayName="告警设备标识覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="int_id_rate" DisplayName="告警定位对象ID覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="interrupt_circuit_state_rate" DisplayName="电路中断状态覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="is_send_soundbrand_rate" DisplayName="是否发送告警牌覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="last_event_time_rate" DisplayName="告警最新发生时间覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="layer_rate_rate" DisplayName="层速率覆盖率" Width='90'></ColumnItem>
+<ColumnItem FieldName="link_office_rate" DisplayName="关联局向覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="locate_info_rate" DisplayName="定位信息描述覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="locate_name_rate" DisplayName="定位区分字段覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="logic_alarm_type_rate" DisplayName="告警逻辑分类覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="logic_sub_alarm_type_rate" DisplayName="告警逻辑子类覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="machine_room_info_rate" DisplayName="铁塔站址名称覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="maintain_group_rate" DisplayName="网格维护责任人覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="ne_admin_status_rate" DisplayName="告警对象管理状态覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="ne_alias_rate" DisplayName="告警对象别名覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="ne_ip_rate" DisplayName="网元IP覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="ne_location_rate" DisplayName="网元定位信息覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="ne_model_rate" DisplayName="网元型号覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="ne_status_rate" DisplayName="告警对象工程状态覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="ne_sub_type_rate" DisplayName="物理设备类型覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="network_type_rate" DisplayName="网络类型覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="network_type_top_rate" DisplayName="一级网络类型覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="nms_alarm_id_rate" DisplayName="告警流水号覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="nms_name_rate" DisplayName="专业网管名称覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="object_class_text_rate" DisplayName="网元类型(text)覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="object_level_rate" DisplayName="告警对象重要级别覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="omc_id_rate" DisplayName="告警源系统名称覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="org_type_rate" DisplayName="告警类别覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="parent_int_id_rate" DisplayName="归属设备网元ID（将来废弃）覆盖率" Width='260'></ColumnItem>
+<ColumnItem FieldName="parent_object_class_rate" DisplayName="归属设备网元类型（将来废弃）覆盖率" Width='260'></ColumnItem>
+<ColumnItem FieldName="port_num_rate" DisplayName="采集号端口覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="preprocess_flag_rate" DisplayName="预处理状态覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="province_process_flag_rate" DisplayName="省市受理标志覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="redefine_severity_rate" DisplayName="重定义告警级别覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="redefine_type_rate" DisplayName="重定义告警类型覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="region_name_rate" DisplayName="（告警）地市名称覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="region_severity_rate" DisplayName="地市级别覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="related_tkgp_rate" DisplayName="相关中继群ID覆盖率" Width='155'></ColumnItem>
+<ColumnItem FieldName="remark_exist_rate" DisplayName="告警是否备注覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_eqp_alias_rate" DisplayName="对端设备别名覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_eqp_city_rate" DisplayName="对端设备区县覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_eqp_label_rate" DisplayName="对端设备名称覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_eqp_level_rate" DisplayName="对端设备级别覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_eqp_region_rate" DisplayName="对端设备地市覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_int_id_rate" DisplayName="对端设备网元ID覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="remote_object_class_rate" DisplayName="对端设备类型覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="remote_proj_sub_status_rate" DisplayName="对端设备工程细分状态覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="remote_resource_status_rate" DisplayName="对端设备工程状态覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="resource_status_rate" DisplayName="设备工程状态覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="rlocate_ne_int_id_rate" DisplayName="告警远端对象ID覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="rlocate_ne_name_rate" DisplayName="告警远端对象名称覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="rlocate_ne_type_rate" DisplayName="告警远端对象类型覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="send_jt_flag_rate" DisplayName="是否需要上报集团覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="severity_keycode_rate" DisplayName="级别关键字覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="signal_rate_rate" DisplayName="端口速率带宽覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="site_no_rate" DisplayName="设备机房ID覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="site_property_unit_rate" DisplayName="站址归属覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="site_type_rate" DisplayName="站址类型覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field10_rate" DisplayName="告警对象ID（告警）覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field11_rate" DisplayName="告警细分通用字段11覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field12_rate" DisplayName="告警细分通用字段12覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field13_rate" DisplayName="告警细分通用字段13覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field14_rate" DisplayName="告警细分通用字段14覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field15_rate" DisplayName="告警细分通用字段15覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field16_rate" DisplayName="告警细分通用字段16覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field17_rate" DisplayName="告警细分通用字段17覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field18_rate" DisplayName="告警细分通用字段18覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field19_rate" DisplayName="告警细分通用字段19覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field2_rate" DisplayName="EMS时间覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="special_field20_rate" DisplayName="告警细分通用字段20覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field21_rate" DisplayName="告警细分通用字段21覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field22_rate" DisplayName="告警细分通用字段22覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field23_rate" DisplayName="告警细分通用字段23覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field24_rate" DisplayName="告警细分通用字段24覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field25_rate" DisplayName="告警细分通用字段25覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field26_rate" DisplayName="告警细分通用字段26覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field27_rate" DisplayName="告警细分通用字段27覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field28_rate" DisplayName="告警细分通用字段28覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field29_rate" DisplayName="告警细分通用字段29覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field3_rate" DisplayName="网络层次覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field30_rate" DisplayName="告警细分通用字段30覆盖率" Width='200'></ColumnItem>
+<ColumnItem FieldName="special_field31_rate" DisplayName="影响用户数覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="special_field4_rate" DisplayName="基站代维归属覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="special_field5_rate" DisplayName="机房产权属性覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="special_field6_rate" DisplayName="机房等级覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field7_rate" DisplayName="所属传输系统覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="special_field8_rate" DisplayName="所属场馆覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="special_field9_rate" DisplayName="设备属性覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="stp_cat_rate" DisplayName="STP类型覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="sub_alarm_type_rate" DisplayName="告警子类型覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="sys_vendor_id_rate" DisplayName="系统厂家覆盖率" Width='110'></ColumnItem>
+<ColumnItem FieldName="time_stamp_c_rate" DisplayName="清除告警采集时间覆盖率" Width='170'></ColumnItem>
+<ColumnItem FieldName="time_stamp_rate" DisplayName="告警发现时间覆盖率" Width='140'></ColumnItem>
+<ColumnItem FieldName="tmsc_cat_rate" DisplayName="MSC类型覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="type_keycode_rate" DisplayName="类别关键字覆盖率" Width='120'></ColumnItem>
+<ColumnItem FieldName="vendor_name_rate" DisplayName="设备厂家名称覆盖率" Width='140'></ColumnItem>
+  </Columns>
+</root>

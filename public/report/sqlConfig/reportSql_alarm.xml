@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+   
+   <!--    告警报表sql开始        -->
+	<!-- 专业告警统计分析 -->
+	
+   <select id="Select_AlmRpt_NettypeAlm_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num
+    from (
+		select tfa_alarm_last_sum.first_result g1, 
+				tfa_alarm_last_sum.ne_type g2,
+				max(tfa_alarm_last_sum.ne_name) g3,                       
+				tfa_alarm_last_sum.network_type_top g4,
+				sum(tfa_alarm_last_sum.total_alarm_num)	g5,
+				sum(tfa_alarm_last_sum.total_alarm_num)	g6,
+				sum(tfa_alarm_last_sum.final_sheet_num)	g7,
+				sum(tfa_alarm_last_sum.final_sheet_num)	g8,
+				sum(tfa_alarm_last_sum.accord_rule_alarm_num) g9,
+				sum(tfa_alarm_last_sum.accord_rule_alarm_num) g10,
+				sum(tfa_alarm_last_sum.total_alarm_time) g11,
+				round(sum(tfa_alarm_last_sum.total_alarm_time)/sum(tfa_alarm_last_sum.total_alarm_num),2) g12,
+				sum(tfa_alarm_last_sum.final_sheet_time) g13,
+				round(sum(tfa_alarm_last_sum.final_sheet_time)/sum(tfa_alarm_last_sum.total_alarm_num),2) g14,
+				sum(tfa_alarm_last_sum.accord_rule_alarm_time) g15,
+				round(sum(tfa_alarm_last_sum.accord_rule_alarm_time)/sum(tfa_alarm_last_sum.total_alarm_num),2) g16,
+				tfa_alarm_last_sum.sum_level g17,
+				tfa_alarm_last_sum.ne_id g18
+		from tfa_alarm_last_sum tfa_alarm_last_sum
+		where tfa_alarm_last_sum.first_result &gt;= to_date(#{time1}, 'yyyy-mm-dd hh24:mi:ss') 
+			and tfa_alarm_last_sum.first_result &lt;= to_date(#{time2}, 'yyyy-mm-dd hh24:mi:ss') 
+			and (tfa_alarm_last_sum.ne_id in (${areaID}) or '-1' in  (${areaID}) )
+			and (tfa_alarm_last_sum.network_type_top in (${professional}) or '-1' in  (${professional}) )
+			and tfa_alarm_last_sum.sum_level = #{sum_level}
+		group by tfa_alarm_last_sum.first_result,tfa_alarm_last_sum.ne_id,tfa_alarm_last_sum.ne_type,tfa_alarm_last_sum.network_type_top,tfa_alarm_last_sum.sum_level 
+	)
+   </select>	
+   
+  <select id="Select_AlmRpt_NettypeAlm_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		select *
+		  from (select a.*, rowNum m_rowNum
+				  from (select tfa_alarm_last_sum.first_result g1,
+							   tfa_alarm_last_sum.ne_type g2,
+							   max(tfa_alarm_last_sum.ne_name) g3,
+							   tfa_alarm_last_sum.network_type_top g4,
+							   sum(tfa_alarm_last_sum.total_alarm_num) g5,
+							   sum(tfa_alarm_last_sum.total_alarm_num) g6,
+							   sum(tfa_alarm_last_sum.final_sheet_num) g7,
+							   sum(tfa_alarm_last_sum.final_sheet_num) g8,
+							   sum(tfa_alarm_last_sum.accord_rule_alarm_num) g9,
+							   sum(tfa_alarm_last_sum.accord_rule_alarm_num) g10,
+							   sum(tfa_alarm_last_sum.total_alarm_time) g11,
+							   round(sum(tfa_alarm_last_sum.total_alarm_time) /
+									 sum(tfa_alarm_last_sum.total_alarm_num),
+									 2) g12,
+							   sum(tfa_alarm_last_sum.final_sheet_time) g13,
+							   round(sum(tfa_alarm_last_sum.final_sheet_time) /
+									 sum(tfa_alarm_last_sum.total_alarm_num),
+									 2) g14,
+							   sum(tfa_alarm_last_sum.accord_rule_alarm_time) g15,
+							   round(sum(tfa_alarm_last_sum.accord_rule_alarm_time) /
+									 sum(tfa_alarm_last_sum.total_alarm_num),
+									 2) g16,
+							   tfa_alarm_last_sum.sum_level g17,
+							   tfa_alarm_last_sum.ne_id g18
+						  from tfa_alarm_last_sum tfa_alarm_last_sum
+						where tfa_alarm_last_sum.first_result &gt;= to_date(#{time1}, 'yyyy-mm-dd hh24:mi:ss') 
+							and tfa_alarm_last_sum.first_result &lt;= to_date(#{time2}, 'yyyy-mm-dd hh24:mi:ss') 
+							and (tfa_alarm_last_sum.ne_id in (${areaID}) or '-1' in  (${areaID}) )
+							and (tfa_alarm_last_sum.network_type_top in (${professional}) or '-1' in  (${professional}) )
+							and tfa_alarm_last_sum.sum_level = #{sum_level}  
+						   group by tfa_alarm_last_sum.first_result,
+								  tfa_alarm_last_sum.ne_id,
+								  tfa_alarm_last_sum.ne_type,
+								  tfa_alarm_last_sum.network_type_top,
+								  tfa_alarm_last_sum.sum_level) a) 
+						 Where m_rowNum &gt; #{BegeinIndex} and m_rowNum &lt;= #{EndIndex}
+   </select>
+   
+   <select id="Select_AlmRpt_NettypeAlm_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   
+   <select id="Select_AlmRpt_NettypeAlm_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct province_name as txt, province_id as id
+		  from region_city_local
+		union all
+		select distinct region_name as txt, region_id as id
+		  from region_city_local
+   </select>
+   
+   <select id="Select_AlmRpt_NettypeAlm_CondProfessional"  parameterType="java.util.Map" resultType="java.util.Map">
+		Select ID , txt From TIA_ALARM_DICT where Type = 1317
+   </select>
+   
+   <!-- 告警压缩率  -->
+   
+   <select id="Select_AlmRpt_CompressionRatio_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	  select count(*) num
+    from (select to_char(tfa_alarm_ssr_jt_sum.first_result,'yyyy-mm-dd hh24:mi:ss') w1,
+       tfa_alarm_ssr_jt_sum.ne_name w2,
+       sum(tfa_alarm_ssr_jt_sum.final_sheet_num) w4,
+       sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num) w5,
+        tia_alarm_dict.txt  w8,
+		sum(tfa_alarm_ssr_jt_sum.total_alarm_num) W9,
+		(100-round(decode(sum(tfa_alarm_ssr_jt_sum.total_alarm_num),0,0,sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num)/sum(tfa_alarm_ssr_jt_sum.total_alarm_num)*100),2))||'%' W12
+  from nmosdb.tfa_alarm_ssr_jt_sum tfa_alarm_ssr_jt_sum,
+       nmosdb.tia_alarm_dict           tia_alarm_dict     
+ where tfa_alarm_ssr_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.sum_level= #{sum_level}
+   and (tfa_alarm_ssr_jt_sum.ne_id in (${province}) or '-1' in  (${province}))
+   and (tfa_alarm_ssr_jt_sum.Region_id in (${region_id}) or '-1' in  (${region_id}))
+   and tfa_alarm_ssr_jt_sum.network_type_top = tia_alarm_dict.id
+   and tia_alarm_dict.type = 1001
+   and tfa_alarm_ssr_jt_sum.send_rule ='专业'
+ group by tfa_alarm_ssr_jt_sum.first_result,tfa_alarm_ssr_jt_sum.ne_name,tia_alarm_dict.txt   
+ )	
+   </select>
+  <select id="Select_AlmRpt_CompressionRatio_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_ssr_jt_sum.first_result,'yyyy-mm-dd hh24:mi:ss') w1,
+       tfa_alarm_ssr_jt_sum.ne_name w2,
+       sum(tfa_alarm_ssr_jt_sum.final_sheet_num) w4,
+       sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num) w5,
+        tia_alarm_dict.txt  w8,
+		sum(tfa_alarm_ssr_jt_sum.total_alarm_num) W9,
+		(100-round(decode(sum(tfa_alarm_ssr_jt_sum.total_alarm_num),0,0,sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num)/sum(tfa_alarm_ssr_jt_sum.total_alarm_num)*100),2))||'%' W12
+  from nmosdb.tfa_alarm_ssr_jt_sum tfa_alarm_ssr_jt_sum,
+       nmosdb.tia_alarm_dict           tia_alarm_dict     
+ where tfa_alarm_ssr_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.sum_level= #{sum_level} 
+   and (tfa_alarm_ssr_jt_sum.ne_id in (${province}) or '-1' in  (${province}))
+   and (tfa_alarm_ssr_jt_sum.Region_id in (${region_id}) or '-1' in  (${region_id}))
+   and tfa_alarm_ssr_jt_sum.network_type_top = tia_alarm_dict.id
+   and tia_alarm_dict.type = 1001
+   and tfa_alarm_ssr_jt_sum.send_rule ='专业'
+ group by tfa_alarm_ssr_jt_sum.first_result,tfa_alarm_ssr_jt_sum.ne_name,tia_alarm_dict.txt   
+   )a
+    )
+    Where m_rowNum &gt; #{BegeinIndex}  and m_rowNum &lt;= #{EndIndex}
+   </select>
+   
+   <select id="Select_AlmRpt_CompressionRatio_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   
+   <select id="Select_AlmRpt_CompressionRatio_CondProvince"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select distinct province_id id,province_name txt from region_city order by province_name
+   </select>
+   
+   <!-- 工程标注效能分析 -->
+   
+   <select id="Select_AlmRpt_ProjectMark_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		   select count(*)
+    from (select
+		to_char(tfa_alarm_project_sum.first_result,'yyyy-mm-dd hh24:mi:ss')  w1,
+		tfa_alarm_project_sum.ne_name w2,
+		tfa_alarm_project_sum.ne_id ne_id,
+		tia_alarm_dict.txt  w3,
+		tfa_alarm_project_sum.network_type_top network_type_top,
+		tfa_alarm_project_sum.alarm_proj_num w4
+		from
+		tfa_alarm_project_sum  tfa_alarm_project_sum,
+		tia_alarm_dict  tia_alarm_dict
+	where
+		tfa_alarm_project_sum.network_type_top=tia_alarm_dict.id
+		and tia_alarm_dict.type=1317
+		and tfa_alarm_project_sum.first_result =to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		and tfa_alarm_project_sum.sum_level=#{sum_level} 
+		and tfa_alarm_project_sum.ne_id in (${areaID})
+  
+    )
+   </select>
+   
+   <select id="Select_AlmRpt_ProjectMark_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+		(   select
+			to_char(tfa_alarm_project_sum.first_result,'yyyy-mm-dd hh24:mi:ss')  w1,
+			tfa_alarm_project_sum.ne_name w2,
+			tfa_alarm_project_sum.ne_id ne_id,
+			tia_alarm_dict.txt  w3,
+			tfa_alarm_project_sum.network_type_top network_type_top,
+			tfa_alarm_project_sum.alarm_proj_num w4
+		from
+			tfa_alarm_project_sum  tfa_alarm_project_sum,
+			tia_alarm_dict  tia_alarm_dict
+		where
+			tfa_alarm_project_sum.network_type_top=tia_alarm_dict.id
+			and tia_alarm_dict.type=1317
+			and tfa_alarm_project_sum.first_result =to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+			and tfa_alarm_project_sum.sum_level=#{sum_level} 
+			and tfa_alarm_project_sum.ne_id in (${areaID})
+  )a
+    )
+   </select>
+   
+    <select id="Select_AlmRpt_ProjectMark_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+   </select>
+   
+   <select id="Select_AlmRpt_ProjectMark_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select distinct province_name as txt,province_id as id from region_city_local union all select distinct region_name as text, region_id as value from region_city_local
+   </select>
+   
+   <!-- 告警关联有效性分析 -->
+	<select id="Select_AlmRpt_RelationRule_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		select count(*) num
+		from (
+		 select  to_char(first_result ,'yyyy-mm-dd hh24:mi:ss')   w1, 
+		  to_char(first_result,'yyyy-mm-dd hh24:mi:ss') w2,   
+		   ac_rule_name w3,
+		   case when relation_type =4 then '衍生关联' when relation_type =1 then '主次关联' else '-' end  w4,
+		   case when in_user_flag='1' then '是' else '否' end w5,
+		   parent_alarm_num w6,
+		   sub_alarm_num w7,
+		   parent_alarm_num w8,
+		   case when org_alarm_event_time is null then '-' else rtrim(to_char(org_alarm_event_time,'yyyy-mm-dd hh24:mi:ss')) end w9,
+		   '正常' w10
+	  from tpa_alarmrelation_jt_sum 
+	where 
+			tpa_alarmrelation_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		and tpa_alarmrelation_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+		and sum_level=#{sum_level}
+)
+   </select>
+
+    <select id="Select_AlmRpt_RelationRule_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+			select  * from
+			(select  a.*,rowNum m_rowNum  from
+			(
+			select  to_char(first_result ,'yyyy-mm-dd hh24:mi:ss')   w1, 
+			  to_char(first_result,'yyyy-mm-dd hh24:mi:ss') w2,   
+			   ac_rule_name w3,
+			   case when relation_type =4 then '衍生关联' when relation_type =1 then '主次关联' else '-' end  w4,
+			   case when in_user_flag='1' then '是' else '否' end w5,
+			   parent_alarm_num w6,
+			   sub_alarm_num w7,
+			   parent_alarm_num w8,
+			   case when org_alarm_event_time is null then '-' else rtrim(to_char(org_alarm_event_time,'yyyy-mm-dd hh24:mi:ss')) end w9,
+			   '正常' w10
+		  from tpa_alarmrelation_jt_sum 
+		where 
+		tpa_alarmrelation_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		and tpa_alarmrelation_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+		and sum_level=#{sum_level}
+		   )a
+			)
+			Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+   <select id="Select_AlmRpt_RelationRule_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   
+   <!-- 告警派单有效性分析 -->
+  <select id="Select_AlmRpt_SendRule_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+    select count(*) num
+    from (
+		select 
+			to_char(tfa_alarm_sheetsendrule_a_sum.first_result,'yyyy-mm-dd hh24:mi:ss')   w1,
+			tfa_alarm_sheetsendrule_a_sum.sendrule_name   w2,
+			nvl(tfa_alarm_sheetsendrule_a_sum.sendrule_effective_nums,0) w3,
+			tfa_alarm_sheetsendrule_a_sum.latest_time w4,
+			nvl(tfa_alarm_sheetsendrule_a_sum.accord_rule_alarm_num,0)    w5,
+			nvl(tfa_alarm_sheetsendrule_a_sum.final_sheet_num,0)    w6,
+			nvl(tfa_alarm_sheetsendrule_a_sum.notnull_sheet_num,0)    w7,
+			nvl(tfa_alarm_sheetsendrule_a_sum.auto_sheet_num,0)   w8,
+			tfa_alarm_sheetsendrule_a_sum.is_use_flag   w9
+		from 
+			tfa_alarm_sheetsendrule_a_sum  tfa_alarm_sheetsendrule_a_sum
+		where 
+			tfa_alarm_sheetsendrule_a_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+			and tfa_alarm_sheetsendrule_a_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+			and tfa_alarm_sheetsendrule_a_sum.sum_level=#{sum_level}
+			order by tfa_alarm_sheetsendrule_a_sum.sendrule_effective_nums desc
+		)
+   </select>
+   <select id="Select_AlmRpt_SendRule_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+		(
+			select 
+				to_char(tfa_alarm_sheetsendrule_a_sum.first_result,'yyyy-mm-dd hh24:mi:ss')   w1,
+				tfa_alarm_sheetsendrule_a_sum.sendrule_name   w2,
+				nvl(tfa_alarm_sheetsendrule_a_sum.sendrule_effective_nums,0) w3,
+				tfa_alarm_sheetsendrule_a_sum.latest_time w4,
+				nvl(tfa_alarm_sheetsendrule_a_sum.accord_rule_alarm_num,0)    w5,
+				nvl(tfa_alarm_sheetsendrule_a_sum.final_sheet_num,0)    w6,
+				nvl(tfa_alarm_sheetsendrule_a_sum.notnull_sheet_num,0)    w7,
+				nvl(tfa_alarm_sheetsendrule_a_sum.auto_sheet_num,0)   w8,
+				tfa_alarm_sheetsendrule_a_sum.is_use_flag   w9
+			from 
+				tfa_alarm_sheetsendrule_a_sum  tfa_alarm_sheetsendrule_a_sum
+			where 
+				tfa_alarm_sheetsendrule_a_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+				and tfa_alarm_sheetsendrule_a_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+				and tfa_alarm_sheetsendrule_a_sum.sum_level=#{sum_level}
+			order by tfa_alarm_sheetsendrule_a_sum.sendrule_effective_nums desc
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+    <select id="Select_AlmRpt_SendRule_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   
+   
+   <!-- 标准化有效性分析 -->
+   <select id="Select_AlmRpt_UnstandSituation_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	 select count(*) num
+		from (
+	  select to_char(tfa_alarm_nostandard_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+		tfa_alarm_nostandard_detail.eqp_object_class eqp_object_class,
+		tfa_alarm_nostandard_detail.prj_flag prj_flag,
+		tfa_alarm_nostandard_detail.board_type board_type,
+		tfa_alarm_nostandard_detail.layer_rate layer_rate,
+		tfa_alarm_nostandard_detail.network_type network_type,
+		   tia_alarm_dict3.txt              g2,
+		   tfa_alarm_nostandard_detail.vendor_name          g3,
+		   tia_alarm_dict1.txt                               g4,
+		   tfa_alarm_nostandard_detail.alarm_title          g5,
+		   tfa_alarm_nostandard_detail.unstandard_alarm_num g6,
+		   tfa_alarm_nostandard_detail.probable_cause       g7,
+		   tfa_alarm_standard_dic.txt           g8,
+		   tia_alarm_dict2.txt                              g9
+	  from tfa_alarm_nostandard_detail tfa_alarm_nostandard_detail 
+	  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+	  on tfa_alarm_nostandard_detail.eqp_object_class =  tia_alarm_dict1.id
+	  left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict2
+	  on tfa_alarm_nostandard_detail.board_type =  tia_alarm_dict2.id
+	  left join  (select id,txt from tia_alarm_dict where type = 110701)   tfa_alarm_standard_dic
+	  on tfa_alarm_nostandard_detail.layer_rate =  tfa_alarm_standard_dic.id
+	  left join  (select id,txt from tia_alarm_dict where type = 1037)     tia_alarm_dict3
+	  on tfa_alarm_nostandard_detail.network_type =  tia_alarm_dict3.id
+	  where tfa_alarm_nostandard_detail.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		and tfa_alarm_nostandard_detail.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	   	and (prj_flag in (${prj_flag}) or '-1' in (${prj_flag}) )
+	   )
+   </select>
+   
+   <select id="Select_AlmRpt_UnstandSituation_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		select  * from
+		(select  a.*,rowNum m_rowNum  from
+			(select to_char(tfa_alarm_nostandard_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+				tfa_alarm_nostandard_detail.eqp_object_class eqp_object_class,
+				tfa_alarm_nostandard_detail.prj_flag prj_flag,
+				tfa_alarm_nostandard_detail.board_type board_type,
+				tfa_alarm_nostandard_detail.layer_rate layer_rate,
+				tfa_alarm_nostandard_detail.network_type network_type,
+				   tia_alarm_dict3.txt              g2,
+				   tfa_alarm_nostandard_detail.vendor_name          g3,
+				   tia_alarm_dict1.txt                               g4,
+				   tfa_alarm_nostandard_detail.alarm_title          g5,
+				   tfa_alarm_nostandard_detail.unstandard_alarm_num g6,
+				   tfa_alarm_nostandard_detail.probable_cause       g7,
+				   tfa_alarm_standard_dic.txt           g8,
+				   tia_alarm_dict2.txt                              g9
+			  from tfa_alarm_nostandard_detail tfa_alarm_nostandard_detail 
+			  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+			  on tfa_alarm_nostandard_detail.eqp_object_class =  tia_alarm_dict1.id
+			  left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict2
+			  on tfa_alarm_nostandard_detail.board_type =  tia_alarm_dict2.id
+			  left join  (select id,txt from tia_alarm_dict where type = 110701)   tfa_alarm_standard_dic
+			  on tfa_alarm_nostandard_detail.layer_rate =  tfa_alarm_standard_dic.id
+			  left join  (select id,txt from tia_alarm_dict where type = 1037)     tia_alarm_dict3
+			  on tfa_alarm_nostandard_detail.network_type =  tia_alarm_dict3.id
+			  where tfa_alarm_nostandard_detail.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+				and tfa_alarm_nostandard_detail.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+			   and (prj_flag in (${prj_flag}) or '-1' in (${prj_flag}) )
+		   )a
+		)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+    <select id="Select_AlmRpt_UnstandSituation_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+   </select>
+    <select id="Select_AlmRpt_UnstandSituation_CondPrjFlag"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '工程' as txt, 0 as id
+		  from dual
+		union
+		select '非工程' as txt, 1 as id from dual
+   </select>
+   
+    <select id="Select_AlmRpt_UnstandSituation_DetailCount"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num 
+				from
+				(select  
+			tfa_alarm_nostandard_detail2.fp0 w1,
+			tia_alarm_dict1.txt w2,
+			tia_alarm_dict2.txt  w3,
+			tfa_alarm_nostandard_detail2.eqp_label  w4,
+			tia_alarm_dict3.txt  w5,
+			tfa_alarm_nostandard_detail2.ne_label   w6,
+			tfa_alarm_nostandard_detail2.alarm_title_text   w7,
+			tfa_alarm_nostandard_detail2.probable_cause   w8,
+			tfa_alarm_nostandard_detail2.org_severity   w9,
+			tfa_alarm_nostandard_detail2.alarm_resource_status   w10,
+			tia_alarm_dict5.txt   w11,
+			tfa_alarm_nostandard_detail2.province_name   w12,
+			tfa_alarm_nostandard_detail2.region_name   w13,
+			tfa_alarm_nostandard_detail2.city_name   w14,
+			tfa_alarm_nostandard_detail2.standard_alarm_id   w15,
+			to_char(tfa_alarm_nostandard_detail2.event_time,'yyyy-mm-dd hh24:mi:ss')   w16,
+			to_char(tfa_alarm_nostandard_detail2.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w17,
+			tfa_alarm_nostandard_detail2.vendor_name   w18,
+			tia_alarm_dict4.txt   w19
+			from 
+			tfa_alarm_nostandard_detail2 tfa_alarm_nostandard_detail2
+			left join 
+			(select id,txt from tia_alarm_dict where type =1037) tia_alarm_dict1
+			on tfa_alarm_nostandard_detail2.network_type = tia_alarm_dict1.id
+			left join 
+			(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict2
+			on tfa_alarm_nostandard_detail2.eqp_object_class = tia_alarm_dict2.id
+			left join 
+			(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict3
+			on tfa_alarm_nostandard_detail2.object_class = tia_alarm_dict3.id
+			left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict4
+			  on tfa_alarm_nostandard_detail2.board_type =  tia_alarm_dict4.id
+			left join  (select id,txt from tia_alarm_dict where type = 110701)   tia_alarm_dict5
+			  on tfa_alarm_nostandard_detail2.layer_rate =  tia_alarm_dict5.id
+			where 
+			 tfa_alarm_nostandard_detail2.event_time &gt;= to_date(#{g1},'yyyy-mm-dd hh24:mi:ss')
+			and tfa_alarm_nostandard_detail2.event_time &lt;to_date(#{g1},'yyyy-mm-dd hh24:mi:ss') +1
+			and tfa_alarm_nostandard_detail2.alarm_title_text = #{g5}
+			and tfa_alarm_nostandard_detail2.eqp_object_class = #{eqp_object_class}
+			and tfa_alarm_nostandard_detail2.network_type = #{network_type}
+			and tfa_alarm_nostandard_detail2.vendor_name = #{g3}
+			and tfa_alarm_nostandard_detail2.probable_cause = #{g7}
+			and tfa_alarm_nostandard_detail2.layer_rate = #{layer_rate}
+			and tfa_alarm_nostandard_detail2.board_type = #{board_type}
+			and tfa_alarm_nostandard_detail2.alarm_resource_status = #{prj_flag}   
+			${DetailWhereCondition}
+			)
+   </select>
+    <select id="Select_AlmRpt_UnstandSituation_DetailByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+				(select  a.*,rowNum m_rowNum  from
+				(select  
+			tfa_alarm_nostandard_detail2.fp0 w1,
+			tia_alarm_dict1.txt w2,
+			tia_alarm_dict2.txt  w3,
+			tfa_alarm_nostandard_detail2.eqp_label  w4,
+			tia_alarm_dict3.txt  w5,
+			tfa_alarm_nostandard_detail2.ne_label   w6,
+			tfa_alarm_nostandard_detail2.alarm_title_text   w7,
+			tfa_alarm_nostandard_detail2.probable_cause   w8,
+			tfa_alarm_nostandard_detail2.org_severity   w9,
+			tfa_alarm_nostandard_detail2.alarm_resource_status   w10,
+			tia_alarm_dict5.txt   w11,
+			tfa_alarm_nostandard_detail2.province_name   w12,
+			tfa_alarm_nostandard_detail2.region_name   w13,
+			tfa_alarm_nostandard_detail2.city_name   w14,
+			tfa_alarm_nostandard_detail2.standard_alarm_id   w15,
+			to_char(tfa_alarm_nostandard_detail2.event_time,'yyyy-mm-dd hh24:mi:ss')   w16,
+			to_char(tfa_alarm_nostandard_detail2.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w17,
+			tfa_alarm_nostandard_detail2.vendor_name   w18,
+			tia_alarm_dict4.txt   w19
+			from 
+			tfa_alarm_nostandard_detail2 tfa_alarm_nostandard_detail2
+			left join 
+			(select id,txt from tia_alarm_dict where type =1037) tia_alarm_dict1
+			on tfa_alarm_nostandard_detail2.network_type = tia_alarm_dict1.id
+			left join 
+			(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict2
+			on tfa_alarm_nostandard_detail2.eqp_object_class = tia_alarm_dict2.id
+			left join 
+			(select id,txt from tia_alarm_dict where type =9) tia_alarm_dict3
+			on tfa_alarm_nostandard_detail2.object_class = tia_alarm_dict3.id
+			left join  (select id,txt from tia_alarm_dict where type = 1314)     tia_alarm_dict4
+			  on tfa_alarm_nostandard_detail2.board_type =  tia_alarm_dict2.id
+			left join  (select id,txt from tia_alarm_dict where type = 110701)   tia_alarm_dict5
+			  on tfa_alarm_nostandard_detail2.layer_rate =  tia_alarm_dict5.id
+			where 
+				 tfa_alarm_nostandard_detail2.event_time &gt;= to_date(#{g1},'yyyy-mm-dd hh24:mi:ss')
+				and tfa_alarm_nostandard_detail2.event_time &lt;to_date(#{g1},'yyyy-mm-dd hh24:mi:ss') +1
+				and tfa_alarm_nostandard_detail2.alarm_title_text = #{g5}
+				and tfa_alarm_nostandard_detail2.eqp_object_class = #{eqp_object_class}
+				and tfa_alarm_nostandard_detail2.network_type = #{network_type}
+				and tfa_alarm_nostandard_detail2.vendor_name = #{g3}
+				and tfa_alarm_nostandard_detail2.probable_cause = #{g7}
+				and tfa_alarm_nostandard_detail2.layer_rate = #{layer_rate}
+				and tfa_alarm_nostandard_detail2.board_type = #{board_type}
+				and tfa_alarm_nostandard_detail2.alarm_resource_status = #{prj_flag}   
+				${DetailWhereCondition}
+				)a
+			)
+			Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+   
+   
+   <!-- R_LOSS告警长时间告警未恢复统计 -->
+   
+   <select id="Select_AlmRpt_RLoss_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+    select count(*) num
+		from (select to_char(tpa_rloss_overlong_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+		tpa_rloss_overlong_detail.region_name g2,
+		tpa_rloss_overlong_detail.vendor_name g3,
+		tia_alarm_dict1.txt g4,
+		tpa_rloss_overlong_detail.eqp_label g5,
+		tia_alarm_dict2.txt g6,
+		tpa_rloss_overlong_detail.ne_label g7,
+		tpa_rloss_overlong_detail.alarm_title_text g8,
+		tpa_rloss_overlong_detail.org_severity          g9,
+		to_char(tpa_rloss_overlong_detail.event_time,'yyyy-mm-dd hh24:mi:ss') g10,
+		to_char(tpa_rloss_overlong_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss') g11
+	from tpa_rloss_overlong_detail tpa_rloss_overlong_detail 
+	  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+	  on tpa_rloss_overlong_detail.eqp_object_class =  tia_alarm_dict1.id
+	  left join  (select id,txt from tia_alarm_dict where type =9)     tia_alarm_dict2
+	  on tpa_rloss_overlong_detail.object_class =  tia_alarm_dict2.id 
+	where tpa_rloss_overlong_detail.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		and tpa_rloss_overlong_detail.first_result &lt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	   and (tpa_rloss_overlong_detail.region_id in (${areaID}) or '-1' in (${areaID}) )
+   )
+   </select>   
+   <select id="Select_AlmRpt_RLoss_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+		(select  a.*,rowNum m_rowNum  from
+			(select to_char(tpa_rloss_overlong_detail.first_result,'yyyy-mm-dd hh24:mi:ss')         g1,
+			tpa_rloss_overlong_detail.region_name g2,
+			tpa_rloss_overlong_detail.vendor_name g3,
+			tia_alarm_dict1.txt g4,
+			tpa_rloss_overlong_detail.eqp_label g5,
+			tia_alarm_dict2.txt g6,
+			tpa_rloss_overlong_detail.ne_label g7,
+			tpa_rloss_overlong_detail.alarm_title_text g8,
+			tpa_rloss_overlong_detail.org_severity          g9,
+			to_char(tpa_rloss_overlong_detail.event_time,'yyyy-mm-dd hh24:mi:ss') g10,
+			to_char(tpa_rloss_overlong_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss') g11
+		  from tpa_rloss_overlong_detail tpa_rloss_overlong_detail 
+		  left join  (select id,txt from tia_alarm_dict where type =9)   tia_alarm_dict1
+		  on tpa_rloss_overlong_detail.eqp_object_class =  tia_alarm_dict1.id
+		  left join  (select id,txt from tia_alarm_dict where type =9)     tia_alarm_dict2
+		  on tpa_rloss_overlong_detail.object_class =  tia_alarm_dict2.id
+		where tpa_rloss_overlong_detail.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+			and tpa_rloss_overlong_detail.first_result &lt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		   and (tpa_rloss_overlong_detail.region_id in (${areaID}) or '-1' in (${areaID}) )
+	   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+   <select id="Select_AlmRpt_RLoss_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct region_name as txt, region_id as id
+		from region_city_local
+   </select>
+   
+   <!-- VNF告警统计报表 -->
+   <select id="Select_AlmRpt_VhfUnic_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		select count(*) num
+		from (select to_char(tfa_alarm_vnf_sum.first_result,'yyyy-mm-dd') first_result,
+		   vendor_name.zh_name g1,
+		   meta_objects.object_name g2,
+		   tfa_alarm_vnf_sum.ne_name g3,
+		   tfa_alarm_vnf_sum.vm_alarm_num g6,
+		   cast(round(tfa_alarm_vnf_sum.vm_alarm_num/tfa_alarm_vnf_sum.vnf_total_alarm_num*100,2) as varchar2(8)) g7,
+		   tfa_alarm_vnf_sum.vm_alarm_during g4,
+		   tfa_alarm_vnf_sum.pr_alarm_num g8,
+		   cast(round(tfa_alarm_vnf_sum.pr_alarm_num/tfa_alarm_vnf_sum.vnf_total_alarm_num*100,2) as varchar2(8))  g9,
+		   tfa_alarm_vnf_sum.vnf_total_alarm_num g10,
+		   tfa_alarm_vnf_sum.pr_alarm_during g5
+	 from tfa_alarm_vnf_sum tfa_alarm_vnf_sum ,vendor_name vendor_name,meta_objects meta_objects
+	where tfa_alarm_vnf_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_vnf_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_vnf_sum.sum_level=#{sum_level}
+	  and tfa_alarm_vnf_sum.vendor_id = vendor_name.type(+)
+	  and tfa_alarm_vnf_sum.ne_type = meta_objects.object_class(+)
+	  order by tfa_alarm_vnf_sum.first_result,tfa_alarm_vnf_sum.ne_name asc
+	)
+   </select>
+   <select id="Select_AlmRpt_VhfUnic_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_vnf_sum.first_result,'yyyy-mm-dd') first_result,
+       vendor_name.zh_name g1,
+       meta_objects.object_name g2,
+       tfa_alarm_vnf_sum.ne_name g3,
+       tfa_alarm_vnf_sum.vm_alarm_num g6,
+       cast(round(tfa_alarm_vnf_sum.vm_alarm_num/tfa_alarm_vnf_sum.vnf_total_alarm_num*100,2) as varchar2(8)) g7,
+       tfa_alarm_vnf_sum.vm_alarm_during g4,
+       tfa_alarm_vnf_sum.pr_alarm_num g8,
+       cast(round(tfa_alarm_vnf_sum.pr_alarm_num/tfa_alarm_vnf_sum.vnf_total_alarm_num*100,2) as varchar2(8))  g9,
+       tfa_alarm_vnf_sum.vnf_total_alarm_num g10,
+       tfa_alarm_vnf_sum.pr_alarm_during g5
+ from tfa_alarm_vnf_sum tfa_alarm_vnf_sum ,vendor_name vendor_name,meta_objects meta_objects
+	where tfa_alarm_vnf_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_vnf_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_vnf_sum.sum_level=#{sum_level}
+  and tfa_alarm_vnf_sum.vendor_id = vendor_name.type(+)
+  and tfa_alarm_vnf_sum.ne_type = meta_objects.object_class(+)
+  order by tfa_alarm_vnf_sum.first_result,tfa_alarm_vnf_sum.ne_name asc
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+	<select id="Select_AlmRpt_VhfUnic_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+
+   <!-- VIM告警统计报表 -->
+   
+   	<select id="Select_AlmRpt_VimUnic_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+    select count(*) num
+    from (select to_char(tfa_alarm_vim_sum.first_result,'yyyy-mm-dd') first_result,
+       tfa_alarm_vim_sum.omc_name g1,
+       meta_objects.zh_name g2,
+       tfa_alarm_vim_sum.ne_nums g3,
+       tfa_alarm_vim_sum.total_alarm_nums g4,
+       case when tfa_alarm_vim_sum.ne_nums=0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_nums/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g5,
+       case when tfa_alarm_vim_sum.ne_nums =0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_duration/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g6,
+       tfa_alarm_vim_sum.alarm_nums_level1 g7,
+       case when tfa_alarm_vim_sum.alarm_nums_level1=0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level1/tfa_alarm_vim_sum.alarm_nums_level1,2) as varchar2(8))end g8,
+       tfa_alarm_vim_sum.alarm_nums_level2 g9,
+       case when tfa_alarm_vim_sum.alarm_nums_level2 =0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level2/tfa_alarm_vim_sum.alarm_nums_level2,2) as varchar2(8))end g10
+ from tfa_alarm_vim_sum tfa_alarm_vim_sum ,meta_objects meta_objects
+where tfa_alarm_vim_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.sum_level=#{sum_level}
+  and tfa_alarm_vim_sum.object_class = meta_objects.object_class(+)
+  order by tfa_alarm_vim_sum.first_result,tfa_alarm_vim_sum.omc_name,meta_objects.zh_name asc
+)
+   </select>
+   
+   	<select id="Select_AlmRpt_VimUnic_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_vim_sum.first_result,'yyyy-mm-dd') first_result,
+       tfa_alarm_vim_sum.omc_name g1,
+       meta_objects.zh_name g2,
+       tfa_alarm_vim_sum.ne_nums g3,
+       tfa_alarm_vim_sum.total_alarm_nums g4,
+       case when tfa_alarm_vim_sum.ne_nums=0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_nums/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g5,
+       case when tfa_alarm_vim_sum.ne_nums =0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_duration/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g6,
+       tfa_alarm_vim_sum.alarm_nums_level1 g7,
+       case when tfa_alarm_vim_sum.alarm_nums_level1=0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level1/tfa_alarm_vim_sum.alarm_nums_level1,2) as varchar2(8))end g8,
+       tfa_alarm_vim_sum.alarm_nums_level2 g9,
+       case when tfa_alarm_vim_sum.alarm_nums_level2 =0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level2/tfa_alarm_vim_sum.alarm_nums_level2,2) as varchar2(8))end g10
+ from tfa_alarm_vim_sum tfa_alarm_vim_sum ,meta_objects meta_objects
+where tfa_alarm_vim_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.sum_level=#{sum_level}
+  and tfa_alarm_vim_sum.object_class = meta_objects.object_class(+)
+  order by tfa_alarm_vim_sum.first_result,tfa_alarm_vim_sum.omc_name,meta_objects.zh_name asc
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+   	<select id="Select_AlmRpt_VimUnic_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   
+   <!-- Alarm Frequency Report -->
+   <select id="Select_AlmRpt_Frequency_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+    select count(*) num
+		from (
+	   select
+		   to_char(tpa_alarm_statistics_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+		   case when ${sum_level}=1 then to_char(tpa_alarm_statistics_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=3 then  to_char(add_months(tpa_alarm_statistics_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=2 then to_char(tpa_alarm_statistics_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+		   tpa_alarm_statistics_tc_sum.ne_name w2,
+		   tpa_alarm_statistics_tc_sum.ne_id ne_id,
+		   tpa_alarm_statistics_tc_sum.vendor_id vendor_id,
+		   vendor_name.zh_name vendor_name,
+		   tia_alarm_dict3.txt w3_1,
+		   tpa_alarm_statistics_tc_sum.eqp_label w4_1,
+		   tpa_alarm_statistics_tc_sum.eqp_object_class eqp_object_class,
+		   tpa_alarm_statistics_tc_sum.org_severity org_severity,
+		   tpa_alarm_statistics_tc_sum.alarm_title_text w5,
+		   tia_alarm_dict2.txt w6,
+		   tpa_alarm_statistics_tc_sum.total_alarm_num w8
+		   from tpa_alarm_statistics_tc_sum tpa_alarm_statistics_tc_sum
+		   left join
+		   (select id,txt from tia_alarm_dict where type =9 ) tia_alarm_dict3
+		   on tpa_alarm_statistics_tc_sum.eqp_object_class = tia_alarm_dict3.id
+		   left join
+		   (select id,txt from tia_alarm_dict where type =6 ) tia_alarm_dict2
+		   on tpa_alarm_statistics_tc_sum.org_severity = tia_alarm_dict2.id
+		   left join vendor_name vendor_name
+		   on tpa_alarm_statistics_tc_sum.vendor_id = vendor_name.type
+	   where tpa_alarm_statistics_tc_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		   and tpa_alarm_statistics_tc_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+		   and tpa_alarm_statistics_tc_sum.sum_level=#{sum_level}
+		   and (tpa_alarm_statistics_tc_sum.ne_id in (${areaID}) or '-1' in (${areaID}) )
+		   and tpa_alarm_statistics_tc_sum.ne_type =10000
+		   and (tpa_alarm_statistics_tc_sum.org_severity in (${severity}) or '-1' in (${severity}) )
+		   and (tpa_alarm_statistics_tc_sum.eqp_object_class in (${eqp_object_class}) or '-1' in ${eqp_object_class} )
+	   order by tpa_alarm_statistics_tc_sum.first_result,tpa_alarm_statistics_tc_sum.ne_name,vendor_name.zh_name,tpa_alarm_statistics_tc_sum.eqp_label  ,tpa_alarm_statistics_tc_sum.total_alarm_num desc
+	)
+   </select>
+   <select id="Select_AlmRpt_Frequency_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (
+   select
+   to_char(tpa_alarm_statistics_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+   case when #sum_level#=1 then to_char(tpa_alarm_statistics_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when #sum_level#=3 then  to_char(add_months(tpa_alarm_statistics_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when #sum_level#=2 then to_char(tpa_alarm_statistics_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+   tpa_alarm_statistics_tc_sum.ne_name w2,
+   tpa_alarm_statistics_tc_sum.ne_id ne_id,
+   tpa_alarm_statistics_tc_sum.vendor_id vendor_id,
+   vendor_name.zh_name vendor_name,
+   tia_alarm_dict3.txt w3_1,
+   tpa_alarm_statistics_tc_sum.eqp_label w4_1,
+   tpa_alarm_statistics_tc_sum.eqp_object_class eqp_object_class,
+   tpa_alarm_statistics_tc_sum.org_severity org_severity,
+   tpa_alarm_statistics_tc_sum.alarm_title_text w5,
+   tia_alarm_dict2.txt w6,
+   tpa_alarm_statistics_tc_sum.total_alarm_num w8
+   from tpa_alarm_statistics_tc_sum tpa_alarm_statistics_tc_sum
+   left join
+   (select id,txt from tia_alarm_dict where type =9 ) tia_alarm_dict3
+   on tpa_alarm_statistics_tc_sum.eqp_object_class = tia_alarm_dict3.id
+   left join
+   (select id,txt from tia_alarm_dict where type =6 ) tia_alarm_dict2
+   on tpa_alarm_statistics_tc_sum.org_severity = tia_alarm_dict2.id
+   left join vendor_name vendor_name
+   on tpa_alarm_statistics_tc_sum.vendor_id = vendor_name.type
+	where tpa_alarm_statistics_tc_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	   and tpa_alarm_statistics_tc_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	   and tpa_alarm_statistics_tc_sum.sum_level=#{sum_level}
+	   and (tpa_alarm_statistics_tc_sum.ne_id in (${areaID}) or '-1' in (${areaID}) )
+	   and tpa_alarm_statistics_tc_sum.ne_type =10000
+	   and (tpa_alarm_statistics_tc_sum.org_severity in (${severity}) or '-1' in (${severity}) )
+	   and (tpa_alarm_statistics_tc_sum.eqp_object_class in (${eqp_object_class}) or '-1' in ${eqp_object_class} )
+   order by tpa_alarm_statistics_tc_sum.first_result,tpa_alarm_statistics_tc_sum.ne_name,vendor_name.zh_name,tpa_alarm_statistics_tc_sum.eqp_label  ,tpa_alarm_statistics_tc_sum.total_alarm_num desc
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+   <select id="Select_AlmRpt_Frequency_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   <select id="Select_AlmRpt_Frequency_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct province_name as txt, province_id as id
+		  from region_city_local
+		union all
+		select 'Unknown' as txt, 99999999 as value from dual order by txt asc
+   </select>
+   <select id="Select_AlmRpt_Frequency_CondObjectClass"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct txt, id 
+		  from tia_alarm_dict
+		 where type = 9
+		   and valid = 1
+   </select>
+	<select id="Select_AlmRpt_Frequency_CondSeverity"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct txt , id 
+		  from tia_alarm_dict
+		 where type = 6
+		   and valid = 1
+   </select>
+   
+   <!-- Alarm Latency Report -->
+	<select id="Select_AlmRpt_Latency_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select count(*) num
+    from (select
+    to_char(tfa_alarm_delay_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  w1,
+    case when ${sum_level}=1 then to_char(tfa_alarm_delay_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=3 then  to_char(add_months(tfa_alarm_delay_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=2 then to_char(tfa_alarm_delay_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+    tfa_alarm_delay_sum.ne_name w2,
+    tfa_alarm_delay_sum.vendor_name w4,
+    tfa_alarm_delay_sum.vendor_id vendor_id,
+    tia_alarm_dict2.txt  w5,
+    trans_ems.userlabel  w6,
+    sum(tfa_alarm_delay_sum.total_alarm_sum)	  w7,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)	 w8,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w9,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)	 w10,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w11,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)	 w12,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w13,
+    round(sum(tfa_alarm_delay_sum.alarm_duration_max),2)  w14,
+    tfa_alarm_delay_sum.sum_level w15,
+    tfa_alarm_delay_sum.eqp_object_class eqp_object_class,
+    tfa_alarm_delay_sum.ne_id ne_id,
+    tfa_alarm_delay_sum.omc_id omc_id
+    from
+    tfa_alarm_delay_sum  tfa_alarm_delay_sum 
+    left join 
+    (select id,txt from tia_alarm_dict where type=9)  tia_alarm_dict2  
+    on  tfa_alarm_delay_sum.eqp_object_class=tia_alarm_dict2.id
+    left join 
+    (select distinct userlabel as userlabel,omc_id as omc_id from nrmdb.objects_trans where object_class = 2100) trans_ems
+    on tfa_alarm_delay_sum.omc_id = trans_ems.omc_id
+    where
+    tfa_alarm_delay_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.sum_level=#{sum_level}
+    and (tfa_alarm_delay_sum.ne_id in (${areaID}) or '-1' in (${areaID}) )
+    and tfa_alarm_delay_sum.ne_type =10000 
+    and (tfa_alarm_delay_sum.vendor_id in (${vendor}) or '-1' in (${vendor}) )
+    and (tfa_alarm_delay_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+    and (tfa_alarm_delay_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+    group by 
+    tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tfa_alarm_delay_sum.vendor_name ,
+    tfa_alarm_delay_sum.vendor_id ,
+    tia_alarm_dict2.txt  ,
+    tfa_alarm_delay_sum.sum_level ,
+    tfa_alarm_delay_sum.eqp_object_class ,
+    tfa_alarm_delay_sum.ne_id ,
+    tfa_alarm_delay_sum.omc_id,
+    trans_ems.userlabel
+    order by tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tia_alarm_dict2.txt  ,
+    trans_ems.userlabel
+)
+   </select>
+   <select id="Select_AlmRpt_Latency_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select
+    to_char(tfa_alarm_delay_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  w1,
+    case when ${sum_level}=1 then to_char(tfa_alarm_delay_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=3 then  to_char(add_months(tfa_alarm_delay_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=2 then to_char(tfa_alarm_delay_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+    tfa_alarm_delay_sum.ne_name w2,
+    tfa_alarm_delay_sum.vendor_name w4,
+    tfa_alarm_delay_sum.vendor_id vendor_id,
+    tia_alarm_dict2.txt  w5,
+    trans_ems.userlabel  w6,
+    sum(tfa_alarm_delay_sum.total_alarm_sum)	  w7,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)	 w8,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w9,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)	 w10,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w11,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)	 w12,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w13,
+    round(sum(tfa_alarm_delay_sum.alarm_duration_max),2)  w14,
+    tfa_alarm_delay_sum.sum_level w15,
+    tfa_alarm_delay_sum.eqp_object_class eqp_object_class,
+    tfa_alarm_delay_sum.ne_id ne_id,
+    tfa_alarm_delay_sum.omc_id omc_id
+    from
+    tfa_alarm_delay_sum  tfa_alarm_delay_sum 
+    left join 
+    (select id,txt from tia_alarm_dict where type=9)  tia_alarm_dict2  
+    on  tfa_alarm_delay_sum.eqp_object_class=tia_alarm_dict2.id
+    left join 
+    (select distinct userlabel as userlabel,omc_id as omc_id from nrmdb.objects_trans where object_class = 2100) trans_ems
+    on tfa_alarm_delay_sum.omc_id = trans_ems.omc_id
+    where
+    tfa_alarm_delay_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.sum_level=#{sum_level}
+    and (tfa_alarm_delay_sum.ne_id in (${areaID}) or '-1' in (${areaID}) )
+    and tfa_alarm_delay_sum.ne_type =10000 
+    and (tfa_alarm_delay_sum.vendor_id in (${vendor}) or '-1' in (${vendor}) )
+    and (tfa_alarm_delay_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+    and (tfa_alarm_delay_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+    group by 
+    tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tfa_alarm_delay_sum.vendor_name ,
+    tfa_alarm_delay_sum.vendor_id ,
+    tia_alarm_dict2.txt  ,
+    tfa_alarm_delay_sum.sum_level ,
+    tfa_alarm_delay_sum.eqp_object_class ,
+    tfa_alarm_delay_sum.ne_id ,
+    tfa_alarm_delay_sum.omc_id,
+    trans_ems.userlabel
+    order by tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tia_alarm_dict2.txt  ,
+    trans_ems.userlabel
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+	 <select id="Select_AlmRpt_Latency_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+	</select>
+   <select id="Select_AlmRpt_Latency_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct province_name as txt, province_id as id
+		  from region_city_local
+		union all
+		select 'Unknown' as txt, 99999999 as value from dual order by txt asc
+   </select>
+   <select id="Select_AlmRpt_Latency_CondVendor"  parameterType="java.util.Map" resultType="java.util.Map">
+	select distinct zh_name as txt, type as id
+		from vendor_name
+	 where type in (select distinct vendor_id from tfa_alarm_delay_sum)
+   </select>
+   <select id="Select_AlmRpt_Latency_CondEqpclass"  parameterType="java.util.Map" resultType="java.util.Map">
+		select id , txt 
+		from tia_alarm_dict
+	 where tia_alarm_dict.type = 9
+	   and id in (select distinct eqp_object_class from tfa_alarm_delay_sum)
+   </select>
+   <select id="Select_AlmRpt_Latency_CondOmcid"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct userlabel as text, omc_id as value
+		  from nrmdb.objects_trans
+		 where object_class = 2100
+   </select>
+   
+   <!-- Alarm Standard Ratio Report -->
+		<select id="Select_AlmRpt_StandardRatio_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+		      select count(*)
+				from (
+			  select
+			  to_char(tpa_alarm_unstandard_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+				case when ${sum_level}=1 then to_char(tpa_alarm_unstandard_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=3 then  to_char(add_months(tpa_alarm_unstandard_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=2 then to_char(tpa_alarm_unstandard_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+			  tpa_alarm_unstandard_tc_sum.ne_name w2,
+			  tia_alarm_dict1.txt  w3,
+			  vendor_name.zh_name  w4,
+			  tia_alarm_dict2.txt w5,
+			  tpa_alarm_unstandard_tc_sum.unstandard_alarm_num w6,
+			  tpa_alarm_unstandard_tc_sum.ne_id ne_id,
+			  tpa_alarm_unstandard_tc_sum.eqp_object_class eqp_object_class,
+			  tpa_alarm_unstandard_tc_sum.network_type_top network_type_top,
+			  tpa_alarm_unstandard_tc_sum.vendor_id  vendor_id
+			from nmosdb.tpa_alarm_unstandard_tc_sum tpa_alarm_unstandard_tc_sum
+			left join 
+				(select id,txt from nmosdb.tia_alarm_dict where type =1317) tia_alarm_dict1
+			on tpa_alarm_unstandard_tc_sum.network_type_top=tia_alarm_dict1.id
+			left join
+				 (select id,txt from nmosdb.tia_alarm_dict where type =9) tia_alarm_dict2
+			on tpa_alarm_unstandard_tc_sum.eqp_object_class=tia_alarm_dict2.id
+			left join 
+				 vendor_name vendor_name
+			on tpa_alarm_unstandard_tc_sum.vendor_id=vendor_name.type
+			where 
+			tpa_alarm_unstandard_tc_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+			and tpa_alarm_unstandard_tc_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+			and tpa_alarm_unstandard_tc_sum.sum_level=#{sum_level}
+			and (tpa_alarm_unstandard_tc_sum.vendor_id in (${vendor}) or '-1' in (${vendor}))
+			and (tpa_alarm_unstandard_tc_sum.eqp_object_class in (${eqp_object_class})  or '-1' in (${eqp_object_class}))
+			   and (tpa_alarm_unstandard_tc_sum.ne_id in (${areaID})  or '-1' in (${areaID}))
+			   and tpa_alarm_unstandard_tc_sum.ne_type =10000
+			   order by tpa_alarm_unstandard_tc_sum.first_result,tpa_alarm_unstandard_tc_sum.ne_name,vendor_name.zh_name,tia_alarm_dict2.txt,tpa_alarm_unstandard_tc_sum.unstandard_alarm_num desc
+			)
+	   </select>
+	   <select id="Select_AlmRpt_StandardRatio_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+	      select  * from
+			(select  a.*,rowNum m_rowNum  from
+			(
+			select
+		  to_char(tpa_alarm_unstandard_tc_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') w1,
+				case when ${sum_level}=1 then to_char(tpa_alarm_unstandard_tc_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=3 then  to_char(add_months(tpa_alarm_unstandard_tc_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when ${sum_level}=2 then to_char(tpa_alarm_unstandard_tc_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+		  tpa_alarm_unstandard_tc_sum.ne_name w2,
+		  tia_alarm_dict1.txt  w3,
+		  vendor_name.zh_name  w4,
+		  tia_alarm_dict2.txt w5,
+		  tpa_alarm_unstandard_tc_sum.unstandard_alarm_num w6,
+		  tpa_alarm_unstandard_tc_sum.ne_id ne_id,
+		  tpa_alarm_unstandard_tc_sum.eqp_object_class eqp_object_class,
+		  tpa_alarm_unstandard_tc_sum.network_type_top network_type_top,
+		  tpa_alarm_unstandard_tc_sum.vendor_id  vendor_id
+		from nmosdb.tpa_alarm_unstandard_tc_sum tpa_alarm_unstandard_tc_sum
+		left join 
+			(select id,txt from nmosdb.tia_alarm_dict where type =1317) tia_alarm_dict1
+		on tpa_alarm_unstandard_tc_sum.network_type_top=tia_alarm_dict1.id
+		left join
+			 (select id,txt from nmosdb.tia_alarm_dict where type =9) tia_alarm_dict2
+		on tpa_alarm_unstandard_tc_sum.eqp_object_class=tia_alarm_dict2.id
+		left join 
+			 vendor_name vendor_name
+		on tpa_alarm_unstandard_tc_sum.vendor_id=vendor_name.type
+		where 
+			tpa_alarm_unstandard_tc_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+			and tpa_alarm_unstandard_tc_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+			and tpa_alarm_unstandard_tc_sum.sum_level=#{sum_level}
+			and (tpa_alarm_unstandard_tc_sum.vendor_id in (${vendor}) or '-1' in (${vendor}))
+			and (tpa_alarm_unstandard_tc_sum.eqp_object_class in (${eqp_object_class})  or '-1' in (${eqp_object_class}))
+			   and (tpa_alarm_unstandard_tc_sum.ne_id in (${areaID})  or '-1' in (${areaID}))
+		   and tpa_alarm_unstandard_tc_sum.ne_type =10000
+		   order by tpa_alarm_unstandard_tc_sum.first_result,tpa_alarm_unstandard_tc_sum.ne_name,vendor_name.zh_name,tia_alarm_dict2.txt,tpa_alarm_unstandard_tc_sum.unstandard_alarm_num desc
+		   )a
+			)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+	   </select>
+   
+      <select id="Select_AlmRpt_StandardRatio_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+   <select id="Select_AlmRpt_StandardRatio_CondAreaID"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct province_name as txt, province_id as id
+		  from region_city_local
+		union all
+		select 'Unknown' as txt, 99999999 as value from dual order by txt asc
+   </select>
+   <select id="Select_AlmRpt_StandardRatio_CondVendor"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct zh_name as txt, type as id from vendor_name
+   </select>
+   <select id="Select_AlmRpt_StandardRatio_CondEqpclass"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct txt , id
+		  from tia_alarm_dict
+		 where type = 9
+		   and valid = 1
+   </select>
+   
+   
+   
+   <!-- 云平台告警量和超时告警统计报表 -->
+    <select id="Select_AlmRpt_CloudAlarmNumOvertime_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+    select count(*) num
+		from (select tfa_alarm_cpm_ql_sum.first_result first_result,
+		   tfa_alarm_cpm_ql_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   tfa_alarm_cpm_ql_sum.eqp_object_class eqp_object_class,
+		   nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g3,
+		   nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0) g4,
+		   nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0) g5,
+		   nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0) g6,
+		   nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g7,
+		   nvl( tfa_alarm_cpm_ql_sum.long_alarm_num_4h,0) g8 ,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_8h,0)  g9,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_12h,0)  g10,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_24h,0)  g11
+	from tfa_alarm_cpm_ql_sum 	tfa_alarm_cpm_ql_sum  left join 
+	(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+	on tfa_alarm_cpm_ql_sum.eqp_object_class=meta_objects.object_class
+	where tfa_alarm_cpm_ql_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_cpm_ql_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and (tfa_alarm_cpm_ql_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+	  and (tfa_alarm_cpm_ql_sum.eqp_object_class in (${eqp_object_class})  or '-1' in (${eqp_object_class}) )
+	  and tfa_alarm_cpm_ql_sum.sum_level = #{sum_level}
+	  )
+   </select>
+    <select id="Select_AlmRpt_CloudAlarmNumOvertime_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+		(select  a.*,rowNum m_rowNum  from
+		(select to_char(tfa_alarm_cpm_ql_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') first_result,
+		   tfa_alarm_cpm_ql_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   tfa_alarm_cpm_ql_sum.eqp_object_class eqp_object_class,
+		   nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g3,
+		   nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0) g4,
+		   nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0) g5,
+		   nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0) g6,
+		   nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g7,
+		   nvl( tfa_alarm_cpm_ql_sum.long_alarm_num_4h,0) g8 ,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_8h,0)  g9,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_12h,0)  g10,
+		   nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_24h,0)  g11
+	from tfa_alarm_cpm_ql_sum 	tfa_alarm_cpm_ql_sum  left join 
+		(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+		on tfa_alarm_cpm_ql_sum.eqp_object_class=meta_objects.object_class
+	where tfa_alarm_cpm_ql_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_cpm_ql_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and (tfa_alarm_cpm_ql_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+	  and (tfa_alarm_cpm_ql_sum.eqp_object_class in (${eqp_object_class})  or '-1' in (${eqp_object_class}) )
+	  and tfa_alarm_cpm_ql_sum.sum_level = #{sum_level}
+   )a
+    )
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+   
+  <select id="Select_AlmRpt_CloudAlarmNumOvertime_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+ 		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+  <select id="Select_AlmRpt_CloudAlarmNumOvertime_CondOmcid"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct nms_name as txt,omc_id as id 
+		from tfa_alarm_cpm_ql_sum
+   </select>
+  <select id="Select_AlmRpt_CloudAlarmNumOvertime_CondEqpType"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '虚拟机' as txt, 508 as id
+		  from dual
+		union all
+		select '宿主机' as txt, 1521 as id
+		  from dual
+		union all
+		select '物理机' as txt, 502 as id
+		  from dual
+		union all
+		select '交换机' as txt, 905 as id
+		  from dual
+		union all
+		select '防火墙' as txt, 901 as id
+		  from dual
+		union all
+		select '虚拟存储' as txt, 1514 as id
+		  from dual
+		union all
+		select '应用' as txt, 506 as id
+		  from dual
+		union all
+		select '服务' as txt, 1520 as id from dual
+   </select>
+   
+   <!-- 云平台高频告警统计报表 -->
+  <select id="Select_AlmRpt_HighRate_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	 select count(*) num
+		from (select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.g1 g1,
+		   tfa_alarm_cpm_hq_sum.g2 g2,
+		   tfa_alarm_cpm_hq_sum.eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.g3 g3,
+		   tfa_alarm_cpm_hq_sum.g4 g4,
+		   tfa_alarm_cpm_hq_sum.g5 g5
+		from 
+		(select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.eqp_label g3,
+		   tfa_alarm_cpm_hq_sum.alarm_title_text g4,
+		   tfa_alarm_cpm_hq_sum.alarm_num g5
+	from tfa_alarm_cpm_hq_sum   tfa_alarm_cpm_hq_sum  left join
+	(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+	on tfa_alarm_cpm_hq_sum.eqp_object_class=meta_objects.object_class
+	where tfa_alarm_cpm_hq_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_cpm_hq_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and (tfa_alarm_cpm_hq_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+	  and (tfa_alarm_cpm_hq_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+	  and tfa_alarm_cpm_hq_sum.sum_level=#{sum_level}
+	  order by tfa_alarm_cpm_hq_sum.alarm_num desc) tfa_alarm_cpm_hq_sum
+	  where  rownum &lt;= #{rows} or '-1' = #{rows} 
+	)
+   </select>
+     <select id="Select_AlmRpt_HighRate_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+		(select  a.*,rowNum m_rowNum  from
+		(select to_char(tfa_alarm_cpm_hq_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  first_result,
+		   tfa_alarm_cpm_hq_sum.g1 g1,
+		   tfa_alarm_cpm_hq_sum.g2 g2,
+		   tfa_alarm_cpm_hq_sum.eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.g3 g3,
+		   tfa_alarm_cpm_hq_sum.g4 g4,
+		   tfa_alarm_cpm_hq_sum.g5 g5
+		from 
+		(select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.eqp_label g3,
+		   tfa_alarm_cpm_hq_sum.alarm_title_text g4,
+		   tfa_alarm_cpm_hq_sum.alarm_num g5
+	from tfa_alarm_cpm_hq_sum   tfa_alarm_cpm_hq_sum  left join 
+	(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+	on tfa_alarm_cpm_hq_sum.eqp_object_class=meta_objects.object_class
+		where tfa_alarm_cpm_hq_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		  and tfa_alarm_cpm_hq_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+		  and (tfa_alarm_cpm_hq_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+		  and (tfa_alarm_cpm_hq_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+		  and tfa_alarm_cpm_hq_sum.sum_level=#{sum_level}
+	  order by tfa_alarm_cpm_hq_sum.alarm_num desc) tfa_alarm_cpm_hq_sum
+	  where  rownum &lt;=  #{rows} or '-1' = #{rows} 
+	   )a
+		)
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+  <select id="Select_AlmRpt_HighRate_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+ 		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id 
+		  from dual
+   </select>
+  <select id="Select_AlmRpt_HighRate_CondOmcid"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct nms_name as txt,omc_id as id 
+		from tfa_alarm_cpm_hq_sum
+   </select>
+  <select id="Select_AlmRpt_HighRate_CondEqpType"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '虚拟机' as txt, 508 as id
+		  from dual
+		union all
+		select '宿主机' as txt, 1521 as id
+		  from dual
+		union all
+		select '物理机' as txt, 502 as id
+		  from dual
+		union all
+		select '交换机' as txt, 905 as id
+		  from dual
+		union all
+		select '防火墙' as txt, 901 as id
+		  from dual
+		union all
+		select '虚拟存储' as txt, 1514 as id
+		  from dual
+		union all
+		select '应用' as txt, 506 as id
+		  from dual
+		union all
+		select '服务' as txt, 1520 as id from dual
+   </select>
+   <select id="Select_AlmRpt_HighRate_DetailCount"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num
+				from
+				(
+					select 
+					   tfa_alarm_cpm_hq_detail.first_result a_cloumn_00,
+					   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+					   meta_objects.ZH_NAME  a_cloumn_02,
+					   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+					   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+					   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+					   tfa_alarm_cpm_hq_detail.event_time a_cloumn_06,
+					   tfa_alarm_cpm_hq_detail.cancel_time   a_cloumn_07
+				  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+				 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				 ${DetailWhereCondition}
+				)
+   </select>
+   <select id="Select_AlmRpt_HighRate_DetailByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+			(select  a.*,rowNum m_rowNum  from
+			(select 
+			   to_char(tfa_alarm_cpm_hq_detail.first_result , 'yyyy-mm-dd hh24:mi:ss') a_cloumn_00,
+			   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+			   meta_objects.ZH_NAME  a_cloumn_02,
+			   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+			   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+			   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+			   to_char(tfa_alarm_cpm_hq_detail.event_time,'yyyy-mm-dd hh24:mi:ss') a_cloumn_06,
+			   to_char(tfa_alarm_cpm_hq_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   a_cloumn_07
+		  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+		 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				${DetailWhereCondition}
+			)a
+			)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+   <!--    告警报表sql结束        -->
+	<insert id="insertProduct" parameterType="java.util.Map" >
+         insert into test (name) values (#{name})
+    </insert>
+   
+   <update id="updateProduct" parameterType="java.util.Map">
+		update test set name = (#{name})
+	</update>
+	
+	<delete id="deleteProduct" parameterType="java.util.Map">
+		delete from test where name = (#{name})
+	</delete>
+	
+</mapper>

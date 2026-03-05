@@ -1,0 +1,113 @@
+{
+  "dataModelDefinition": {
+    "name": "alarm-arPro",
+    "title": "告警流水右键-工程信息查看",
+    "icon": "",
+    "author": "郝营营",
+    "description": "呈现字段可根据资源服务配置改变而改变，默认呈现字段为：工程名称、工程状态、工程类型、EMOS ID、工程时间（开始时间和结束时间）、工程事件描述、工程操作人、操作人电话、标识设置人、工程预约时间、执行剩余时间",
+    "header": {
+      "dimensions": [],
+      "indicators": [
+        {
+          "dataType": "String",
+          "fieldLabel": "唯一主键",
+          "key": true,
+          "fieldName": "id",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程名称",
+          "fieldName": "partName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程状态",
+          "fieldName": "projectStatus",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程类型",
+          "fieldName": "projectType",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "EMOS ID",
+          "fieldName": "emos_id",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程时间",
+          "fieldName": "partTime",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程事件描述",
+          "fieldName": "projectContent",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程操作人",
+          "fieldName": "personInCharge",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "操作人电话",
+          "fieldName": "phone",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "标识设置人",
+          "fieldName": "personInOperation",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "工程预约时间",
+          "fieldName": "projectTime",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "执行剩余时间",
+          "fieldName": "remainTime",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        }
+      ]
+    },
+    "page": true,
+    "rowConfig": { "dimensionCount": "unknown", "isUseDimensionParams": true }
+  }
+}

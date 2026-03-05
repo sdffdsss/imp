@@ -1,0 +1,84 @@
+.validate-step {
+    padding: 20px 0;
+
+    .hint {
+        color: #f00;
+        margin-left: 10px;
+    }
+}
+
+.add-simulation-modal {
+
+    .oss-ui-btn+.oss-ui-btn {
+        margin-left: 10px;
+    }
+
+    .add-simulation {
+        margin-bottom: 2px;
+        &-header {
+            line-height: 30px;
+            padding: 0 10px;
+            background: #4990e2;
+            color: #fff;
+            border-radius: 2px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        &-content {
+            padding: 10px;
+
+            .content-title {
+                line-height: 20px;
+                padding-left: 5px;
+                border-left: 5px solid #4990e2;
+            }
+
+            .content-col {
+                display: flex;
+                margin-bottom: 10px;
+            }
+
+            .content-label {
+                width: 92px;
+                text-align: right;
+                &:after {
+                    margin-right: 5px;
+                    content: ':';
+                }
+            }
+
+            .content-value {
+                flex: 1;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .content-form-label {
+                &:after {    
+                    content: ':';
+                    position: relative;
+                    top: -0.5px;
+                    margin: 0 8px 0 2px;
+                }
+            }
+
+            .flex-form-item {
+                .oss-ui-form-item-control-input-content {
+                    display: flex;
+                    >span {
+                        width: 100%;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.hidebox {
+    display: none;
+}

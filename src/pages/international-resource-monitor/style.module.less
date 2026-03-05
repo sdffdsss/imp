@@ -1,0 +1,41 @@
+.reesource-monitor-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background-image: url(./img/background.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    header {
+        width: 100%;
+        height: 66px;
+        color: #3377ff;
+        font-weight: 700;
+        font-size: 36px;
+        font-family: 微软雅黑;
+        line-height: 66px;
+        text-align: center;
+    }
+    .content {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        width: 100%;
+        height: calc(100% - 66px);
+        nav {
+            width: 32px;
+        }
+        section {
+            position: relative;
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+        }
+    }
+    .nav-list {
+        margin-top: 22px;
+        > div {
+            margin-bottom: 10px;
+        }
+    }
+}

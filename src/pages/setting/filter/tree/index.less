@@ -1,0 +1,36 @@
+.filter-tree-mode-wrapper {
+    position: relative;
+    height: 100%;
+    .oss-ui-spin-nested-loading {
+        height: 100% !important;
+        .oss-ui-spin-container {
+            height: 100%;
+        }
+    }
+    .func-list {
+        text-align: right;
+    }
+    .tree-mode-content-wrapper {
+        display: flex;
+        margin-top: 5px;
+        height: calc(100% - 62px);
+
+        .filter-tree-list {
+            flex: 0 0 320px;
+            padding: 10px;
+            margin-right: 5px;
+            display: flex;
+            flex-direction: column;
+            .oss-ui-tree {
+                margin-top: 10px;
+                // height: calc(100% - 48px);
+                flex: auto;
+                overflow: auto;
+            }
+        }
+
+        .filter-info-wrapper {
+            flex: 1;
+        }
+    }
+}

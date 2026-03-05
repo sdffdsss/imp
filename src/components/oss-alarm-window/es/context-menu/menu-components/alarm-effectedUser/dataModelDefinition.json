@@ -1,0 +1,73 @@
+{
+  "dataModelDefinition": {
+    "name": "alarm-effectedUser",
+    "title": "告警流水右键-影响用户范围",
+    "icon": "",
+    "author": "郝营营",
+    "description": "呈现字段为：地市、区县、地址、小区名称、OLT名称、用户名称、开户账号",
+    "header": {
+      "dimensions": [],
+      "indicators": [
+        {
+          "dataType": "String",
+          "fieldLabel": "唯一主键",
+          "fieldName": "intId",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "地市",
+          "fieldName": "regionName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "区县",
+          "fieldName": "cityName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+
+        {
+          "dataType": "String",
+          "fieldLabel": "小区名称",
+          "fieldName": "cellName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "OLT名称",
+          "fieldName": "OLTName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "用户名称",
+          "fieldName": "userName",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        },
+        {
+          "dataType": "String",
+          "fieldLabel": "开户账号",
+          "fieldName": "account",
+          "fieldUnit": "",
+          "list": "false",
+          "rowProperties": ["format"]
+        }
+      ]
+    },
+    "page": true,
+    "rowConfig": { "dimensionCount": "unknown", "isUseDimensionParams": true }
+  }
+}

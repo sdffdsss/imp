@@ -1,0 +1,44 @@
+{
+    "dataModelDefinition": {
+        "name": "alarm-Count",
+        "title": "告警双击-频次告警",
+        "icon": "",
+        "author": "徐潞园",
+        "description": "告警双击-频次告警",
+        "header": {
+            "dimensions": [],
+            "indicators": [
+                {
+                    "dataType": "String",
+                    "fieldLabel": "序号",
+                    "fieldName": "index",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "告警发生时间",
+                    "fieldName": "eventTime",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "告警对象管理状态",
+                    "fieldName": "neAdminStatus",
+                    "fieldUnit": "",
+                    "list": "false"
+                },
+                {
+                    "dataType": "String",
+                    "fieldLabel": "告警频次",
+                    "fieldName": "alarmActCount",
+                    "fieldUnit": "",
+                    "list": "false"
+                }
+            ]
+        },
+        "page": true,
+        "rowConfig": { "dimensionCount": "unknown", "isUseDimensionParams": true }
+    }
+}

@@ -1,0 +1,45 @@
+.simulation-validation-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+
+    .form-item-title {
+        color: #4990e2;
+        line-height: 15px;
+        padding-left: 5px;
+        border-left: 5px solid #4990e2;
+    }
+
+    .oss-ui-pro-table-alert {
+        display: none;
+    }
+
+    .oss-ui-form-item-label {
+        font-weight: bold;
+    }
+
+    .simulation-form {
+        padding-left: 24px !important;
+        background: @component-background;
+        padding: 10px;
+        padding-bottom: 0;
+    }
+
+    .simulation-table-wrapper {
+        flex: 1;
+        overflow: hidden;
+    }
+}
+
+.result-wrapper {
+    span + span {
+        margin-left: 10px;
+    }
+    .success-text {
+        color: #4990e2;
+    }
+    .fail-text {
+        color: #ff4d4f;
+    }
+}

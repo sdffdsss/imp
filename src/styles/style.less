@@ -1,0 +1,350 @@
+// .oss-ui-table-tr-bg-single {
+//     background-color: #02305d;
+// }
+// .oss-ui-table-tr-bg-double {
+//     background-color: #012a52;
+// }
+@import '~oss-ui/es/style/themes/default.less';
+// @import '~oss-alarm-window/themeConfig/light-color.less';
+
+.oss-ui-pro-table-search {
+    margin-bottom: 10px;
+    padding: 24px 10px 0px 10px;
+}
+.oss-ui-btn-link {
+    height: auto;
+    padding: 0;
+}
+.oss-ui-pro-table-toolbar {
+    height: 58px;
+    padding: 0 10px;
+}
+.oss-ui-pro-table .oss-ui-pagination {
+    padding: 0;
+}
+.oss-ui-table-wrapper {
+    padding: 0 10px;
+
+    .oss-ui-table-thead > tr > th {
+        font-weight: 700;
+    }
+}
+
+.model-define-tree-list {
+    .oss-ui-tree {
+        height: 100%;
+    }
+}
+.oss-imp-alart-common-bg {
+    background-color: @component-background;
+}
+.oss-ui-tabs-nav {
+    background-color: @component-background;
+}
+.oss-ui-tabs-left > .oss-ui-tabs-content-holder > .oss-ui-tabs-content > .oss-ui-tabs-tabpane {
+    padding-left: 10px;
+}
+.filter-tree-list {
+    background-color: @component-background;
+}
+// .oss-ui-pro-table-column-setting-list {
+//     max-height: 350px;
+//     overflow-y: auto;
+// }
+.tree-mode-content-wrapper {
+    .oss-ui-card-body {
+        // padding: 0;
+        height: 100%;
+    }
+}
+.filter-show-content .filter-condition-show {
+    border: 1px solid @border-color-base;
+}
+.monitor-view-manager-content {
+    .oss-ui-card-body {
+        padding: 13px 10px;
+    }
+}
+
+.volume-title {
+    // font-family: inherit;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 22px;
+    // line-height: 1.1;
+    .volume-form-box {
+        display: inline-block;
+        width: 4px;
+        height: 18px;
+        margin-right: 7px;
+        vertical-align: -3px;
+        background-color: @menu-highlight-color;
+    }
+}
+
+// .anticon.anticon-close {
+//     color: @modal-close-color;
+// }
+
+.oss-imp-alarm-protable-search {
+    .oss-ui-pro-table {
+        height: 100%;
+        .oss-ui-card {
+            height: calc(100% - 80px - 10px) !important;
+        }
+    }
+}
+.oss-imp-alarm-protable-no-search {
+    .oss-ui-pro-table {
+        height: 100%;
+        .oss-ui-card {
+            height: 100%;
+        }
+    }
+}
+
+.share-subscription-form-title-line > span {
+    font-size: 14px !important;
+    background-color: #005a97 !important;
+}
+
+.share-subscription-form-title-line {
+    border-bottom: 1px solid #005a97 !important;
+}
+
+//FIXME:
+.oss-ui-modal-confirm .oss-ui-modal-confirm-btns {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    width: 50%;
+    min-width: 140px;
+    margin-top: 20px;
+    text-align: center;
+    transform: translateX(-50%);
+}
+
+//不带centered的 modal头部38，modalFooter32,modalFooter内边距10*2，底部外边距24，top100，共262
+.oss-ui-modal-wrap .oss-ui-modal-content > .oss-ui-modal-body {
+    max-height: calc(100vh - 214px);
+    overflow-y: auto;
+}
+
+//centered-modal头部38，预留上下边距24*2，modalFooter32,modalFooter内边距10*2，底部外边距24，共162
+.oss-ui-modal-wrap.oss-ui-modal-centered .oss-ui-modal-content > .oss-ui-modal-body {
+    max-height: calc(100vh - 162px);
+    overflow-y: auto;
+}
+
+//confirm-modal预留上下边距24*2，内边距32+24，modalFooter32,modalFooter内边距10*2，top100,共256
+.oss-ui-modal.oss-ui-modal-confirm.oss-ui-modal-confirm-confirm .oss-ui-modal-content > .oss-ui-modal-body {
+    max-height: inherit;
+    overflow-y: inherit;
+}
+.oss-ui-modal.oss-ui-modal-confirm.oss-ui-modal-confirm-confirm .oss-ui-modal-content > .oss-ui-modal-body .oss-ui-modal-confirm-body {
+    max-height: calc(100vh - 256px);
+    overflow-y: auto;
+}
+
+//confirm-centered-modal预留上下边距24*2，内边距32+24，modalFooter32,modalFooter内边距10*2，共156
+.oss-ui-modal-wrap.oss-ui-modal-confirm-centered.oss-ui-modal-centered .oss-ui-modal-content > .oss-ui-modal-body {
+    max-height: inherit;
+    overflow-y: inherit;
+}
+.oss-ui-modal-wrap.oss-ui-modal-confirm-centered.oss-ui-modal-centered .oss-ui-modal-content > .oss-ui-modal-body .oss-ui-modal-confirm-body {
+    max-height: calc(100vh - 156px);
+    overflow-y: auto;
+}
+
+.filter-condition-line {
+    background-color: @blue-base;
+}
+
+.noReadRowStyle {
+    font-weight: 900 !important;
+}
+
+.clearRowStyle {
+    background-color: @alarm-flow-window-table-clear-alarm-row-color !important;
+}
+
+.clickRowStyle > td {
+    font-weight: normal;
+    background-color: @alarm-flow-window-table-selected-row-color !important;
+}
+
+.clickRowStyls {
+    color: #33ccff !important;
+    background-color: #5499e44c !important;
+}
+
+.volume-divider {
+    border-color: rgba(77, 101, 135, 1);
+    border-width: 1px;
+}
+
+.alarm-window-title-active {
+    color: @alarm-flow-window-collapse-header-show-color;
+    .alarm-window-title-icon {
+        color: @alarm-flow-window-collapse-header-show-color;
+    }
+}
+
+.alarm-window-title-hide {
+    color: @alarm-flow-window-collapse-header-hide-color;
+    .alarm-window-title-icon {
+        color: @alarm-flow-window-collapse-header-hide-color;
+    }
+}
+
+.json-container {
+    color: #000000;
+}
+
+.topAlarmStyle {
+    border-bottom: 3px solid #ccc;
+}
+
+.oss-ui-tabs-tab {
+    margin: 0px;
+}
+.oss-ui-tabs-tab + .oss-ui-tabs-tab {
+    margin: 0 0 0 32px;
+}
+.oss-ui-input[disabled],
+.oss-ui-input-number-disabled,
+.oss-ui-select-disabled,
+.oss-ui-picker-input > input[disabled] {
+    // 这里的样式会影响集中存档的查看详情页面，暂时去掉
+    // color: #000;
+    // background: #f0f0f0;
+    .oss-ui-select-selection-item {
+        // 先去掉了，这里的样式会影响调度工作台->通报设置->选择用户->省份选择框的样式
+        // color: #000;
+        // background: #f0f0f0;
+    }
+}
+
+//联通天宫项目样式间距优化，临时方案
+.unicom-spaicing-style {
+    .oss-ui-modal-body {
+        padding: 12px;
+        .oss-ui-form {
+            .oss-ui-form-item {
+                margin-bottom: 0px;
+            }
+        }
+    }
+    .oss-ui-pro-table-search {
+        padding-top: 12px;
+        .oss-ui-form-item {
+            margin-bottom: 12px;
+        }
+    }
+    .oss-ui-pro-table-list-toolbar-container {
+        padding: 12px 0;
+    }
+    // .oss-ui-card-body {
+    //     height: 100%;
+    //     .oss-ui-table-wrapper {
+    //         height: calc(100% - 56px);
+    //         .oss-ui-spin-nested-loading {
+    //             height: 100%;
+    //             .oss-ui-spin-container {
+    //                 height: 100%;
+    //             }
+    //         }
+    //     }
+    //     .oss-ui-table {
+    //         height: calc(100% - 56px);
+    //         .oss-ui-table-container {
+    //             height: 100%;
+    //         }
+    //     }
+    // }
+    .filter-info-wrapper {
+        .oss-ui-card-body {
+            padding: 12px;
+            .oss-ui-form-item {
+                margin-bottom: 6px;
+            }
+        }
+        .oss-ui-divider-horizontal {
+            margin: 12px;
+        }
+    }
+}
+.virtualTable-form-setting {
+    .oss-ui-col-4 {
+        padding-right: 6px !important;
+        padding-left: 6px !important;
+    }
+}
+
+.unicom-spaicing-style .oss-ui-pro-table-list-toolbar-container {
+    padding: 7px 0;
+}
+
+.pro-form-query-filter-actions {
+    .oss-ui-form-item-label {
+        flex: 0;
+    }
+}
+
+.oss-ui-table-tbody .oss-ui-typography.oss-ui-typography-ellipsis {
+    width: 100%;
+}
+.virtual-table-page-table-empty {
+    .oss-imp-alarm-empty {
+        display: none;
+    }
+}
+//无数据提示
+.oss-imp-alarm-protable-empty-show {
+    .oss-imp-alarm-empty {
+        p.oss-imp-alarm-empty-show {
+            display: block !important;
+        }
+    }
+}
+body.unicom-page-body {
+    .oss-ui-menu-vertical .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-vertical-left .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-vertical-right .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-inline .oss-ui-menu-item:not(:last-child) {
+        margin-bottom: 0px;
+    }
+    .oss-ui-menu-vertical .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-vertical-left .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-vertical-right .oss-ui-menu-item:not(:last-child),
+    .oss-ui-menu-inline .oss-ui-menu-item:not(:last-child) {
+        margin-bottom: 0px;
+    }
+    ul.oss-ui-menu {
+        // background-color: #eee;
+        border: 1px solid rgb(6, 65, 124);
+        li {
+            margin: 0;
+            margin-bottom: 0px;
+            color: #fff;
+            background: rgb(6, 33, 71);
+            div.oss-ui-menu-submenu-title {
+                margin: 0;
+            }
+        }
+        .oss-ui-menu-submenu-expand-icon {
+            top: 70%;
+            right: 0px;
+            color: rgb(123, 190, 222);
+        }
+        li:nth-child(odd) {
+            margin: 0;
+            margin-bottom: 0px;
+            background: rgb(17, 51, 89);
+        }
+        .oss-ui-menu-item-disabled,
+        .oss-ui-menu-submenu-disabled {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+    }
+}

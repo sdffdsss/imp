@@ -1,0 +1,126 @@
+.detail-content-box {
+    display: flex;
+    flex-direction: column;
+    height: 530px;
+    padding: 20px 10px;
+    .detail-btn-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        .btn-image {
+            flex: 1;
+            margin-right: 1px;
+        }
+        &-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 145px;
+            height: 48px;
+            border: none;
+            border-radius: 8px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0.9;
+            .btn-content {
+                flex: 1;
+                margin-left: 7px;
+                font-size: 14px;
+                &-num {
+                    color: rgb(24, 144, 255);
+                    font-weight: 700;
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+    .detail-image-box {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+    .detail-tree-box {
+        display: flex;
+        width: 100%;
+        padding: 19px 12px;
+        background: rgba(24, 144, 255, 0);
+        border: 2px dashed rgba(24, 144, 255, 0.8);
+        border-radius: 9px;
+        &-left {
+            display: flex;
+            flex: 1;
+            height: 100%;
+            margin-right: 16px;
+            background: rgb(255, 255, 255);
+            border: 1px dashed rgb(205, 209, 217);
+            border-radius: 8px;
+            .tree-content-box {
+                display: flex;
+                flex: 1;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                max-height: 243px;
+                padding: 10px 0 5px;
+                overflow: auto;
+            }
+        }
+        &-right {
+            display: flex;
+            flex: 1;
+            height: 100%;
+            background: rgb(255, 255, 255);
+            border: 1px dashed rgb(205, 209, 217);
+            border-radius: 8px;
+            .tree-content-box {
+                display: flex;
+                flex: 1;
+                flex-wrap: wrap;
+                align-content: flex-start;
+                padding: 5px;
+                overflow: auto;
+            }
+        }
+        .left-title,
+        .right-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            height: 100%;
+
+            background: rgb(243, 247, 255);
+            border-radius: 8px;
+            > span {
+                color: rgb(39, 42, 45);
+                font-size: 14px;
+                font-family: Microsoft YaHei, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+                    'Helvetica Neue', sans-serif;
+                text-orientation: upright;
+                writing-mode: vertical-rl;
+            }
+        }
+        .add-team-or-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            .click-add-box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 100px;
+                cursor: pointer;
+                > span {
+                    margin-top: 10px;
+                    color: rgb(24, 144, 255);
+                    font-weight: 400;
+                    font-size: 12px;
+                    font-family: Microsoft YaHei, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+                        'Open Sans', 'Helvetica Neue', sans-serif;
+                }
+            }
+        }
+    }
+}

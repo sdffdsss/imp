@@ -1,0 +1,23 @@
+@import '~oss-ui/es/style/themes/default.less';
+
+.filter-edit-container-card {
+    .oss-ui-spin-nested-loading {
+        height: 100% !important;
+        .oss-ui-spin-container {
+            height: 100%;
+        }
+    }
+    .oss-ui-form-item-label > label.oss-ui-form-item-required:not(.oss-ui-form-item-required-mark-optional)::before {
+        color: #ff4d4f !important;
+    }
+}
+.rightContent_edit {
+    height: 100%;
+    padding: 16px;
+    overflow: auto;
+    // border: @table-border;
+    border: 1px solid @border-color-split;
+    .oss-ui-form-item {
+        margin-bottom: 5px !important;
+    }
+}

@@ -1,0 +1,48 @@
+@import '~oss-ui/es/style/themes/default.less';
+.alarm-search-window {
+	height: 100%;
+	.oss-ui-pro-table {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		.oss-ui-table-row-expand-icon {
+			z-index: 1;
+		}
+	}
+	.search-alarm-window-container {
+		flex-grow: 1;
+		overflow: hidden;
+		margin-bottom: 10px;
+		background-color: @component-background;
+	}
+
+	/** 这里是偏移的时候显示的竖线，只有表头有竖线; /** 这里是偏移的时候显示的竖线，只有表头有竖线;
+    如果需要联通表格请自行修改高度，1000倍表头高度，然后超出表格隐藏什么的（自行研究） */
+	.react-resizable-handle.active::before {
+		content: '';
+		position: absolute;
+		left: 50%;
+		top: 0;
+		bottom: 0;
+		border-left: solid 1px black;
+	}
+
+	.alarm-window-alarm-text {
+		.oss-ui-descriptions-item-label {
+			width: 158px;
+		}
+	}
+
+	.alarm-window-operation-bar-right {
+		display: flex;
+		align-items: inherit;
+	}
+
+	.alarm-query-data-blank {
+		position: fixed;
+		width: 100%;
+		left: 50%;
+		top: 50%;
+		z-index: 1;
+	}
+}

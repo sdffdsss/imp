@@ -1,0 +1,110 @@
+.workbench-top-right-notice {
+    height: 130px;
+    // padding: 10px 18px 10px 26px;
+    background-color: #fff;
+    .oss-ui-card-head {
+        border-bottom: none;
+        .oss-ui-card-head-title {
+            // padding-top: 10px;
+            // padding-bottom: 10px;
+            span {
+                line-height: 24px;
+            }
+        }
+    }
+
+    .oss-ui-card-body {
+        height: 86px;
+        padding: 0;
+    }
+    .view-component-home-card {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        padding: 0 10px 0 14px;
+        font-weight: bold;
+        font-size: 14px;
+        // .management-btn {
+        //     color: rgba(0, 0, 0, 0.25);
+        //     font-size: 12px;
+        //     cursor: pointer;
+        // }
+        // .dnd-dropdown {
+        //     display: flex;
+        //     align-items: flex-start;
+        // }
+    }
+
+    .work-bench-timeline {
+        .oss-ui-timeline-item-tail {
+            display: none;
+        }
+        .time-line-header {
+            position: absolute;
+            top: 10px;
+            left: -18px;
+            width: 17px;
+            height: 16px;
+        }
+        .notice-timeline-time {
+            margin-left: 10px;
+            padding-top: 5px;
+            color: #0081ff;
+            font-weight: 400;
+            font-size: 12px;
+            text-align: left;
+        }
+        .oss-ui-timeline-item-head {
+            display: none;
+            width: 12px;
+            height: 12px;
+            margin-top: 3px;
+        }
+    }
+    .notcie-auto-scroll {
+        height: 85px;
+        padding: 0 25px 0 25px;
+        font-size: 14px;
+    }
+    .workbench-tools-config {
+        .workbench-tools-config-button {
+            color: #ccc !important;
+            font-size: 12px;
+            border: none;
+        }
+
+        .workbench-tools-dropdown {
+            position: absolute;
+            top: 40px;
+            right: 10px;
+            z-index: 30;
+            width: 150px;
+            height: 300px;
+            padding: 5px;
+            overflow: hidden;
+            background: @component-background;
+            box-shadow: 0 0 3px #ccc;
+            transition: 0.3s;
+            .workbench-tools-dropdown-select {
+                height: 200px;
+                overflow-y: auto;
+                font-weight: 400;
+                text-align: left;
+                .oss-ui-checkbox-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+            }
+            .workbench-tools-dropdown-footer {
+                height: 90px;
+                padding-top: 10px;
+                text-align: center;
+            }
+        }
+        .hidden {
+            height: 0;
+            padding: 0;
+            box-shadow: none;
+        }
+    }
+}

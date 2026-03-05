@@ -1,0 +1,95 @@
+@import '~antd/es/style/themes/default.less';
+
+// .maintain-failure-sheet-top-wrapper {
+    // display: flex;
+    // flex-direction: column;
+    // height: 60%;
+// }
+
+// .maintain-failure-sheet-end-wrapper {
+    // display: flex;
+    // flex-direction: column;
+// }
+.failure-sheet-continer{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    .alarm-window {
+        .alarm-window-operation-bar {
+            margin: 0;
+            border: none;
+        }
+
+        .alarm-window-operation-bar-right {
+            max-width: none;
+        }
+
+        .oss-ui-table-body {
+            height: 132px !important;
+        }
+    }
+    .failure-sheet-top-container{
+        // flex: 1;
+        height: calc(100% - 135px);
+    }
+    .failure-sheet-bottom-container{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+        flex: 0 0 auto;
+        height: 215px;
+        overflow: auto;
+        z-index: 1;
+        .@{ant-prefix}-grid-content{
+            overflow: auto;
+            .oss-imp-alarm-protable-search{
+                width: 100%!important;
+            }
+        }
+        .failure-sheet-bottom-container-close{
+            position: absolute;
+            top: 1px;
+            left: 9px;
+            cursor: pointer;
+            z-index: 1;
+        }
+    }
+}
+.failure-sheet-top-select {
+    padding:0 10px 10px 10px;
+    background-color: @component-background;
+    margin: 10px 0px;
+    .oss-ui-form-item {
+        margin-bottom: 0px;
+    }
+    .oss-ui-radio-button-wrapper{
+        border: none;
+    &:not(:first-child):before {
+        width: 0;
+    }
+    background: none;
+    }
+    .oss-ui-radio-button-wrapper-checked{
+        background: #fff;
+    }
+    .oss-ui-radio-button-wrapper {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:last-child {
+        border-radius: 20px;
+    }
+    .oss-ui-radio-button-wrapper:first-child {
+        border-radius: 20px;
+    }
+    
+}
+.failure-sheet-top-select{
+    .oss-ui-checkbox-wrapper + .oss-ui-checkbox-wrapper{
+        margin-left: 0px;
+    }
+}
+
+.oss-ui-table-pagination.oss-ui-pagination {
+    margin: 0;
+}

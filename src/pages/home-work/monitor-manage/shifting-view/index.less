@@ -1,0 +1,72 @@
+.shifting-view-container {
+    width: 100%;
+    height: 100%;
+    .data-list-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px solid @border-color-base;
+        border-top: 1px solid @border-color-base;
+        .data-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            section {
+                flex: 1;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-right: 1px solid @border-color-base;
+                border-bottom: 1px solid @border-color-base;
+
+                .left-num {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-right: 5px;
+                }
+
+                .right-num {
+                    margin-left: 5px;
+                }
+            }
+
+            .specail-section {
+                box-sizing: border-box;
+                justify-content: space-between !important;
+
+                > span {
+                    margin: 0 10px;
+                }
+            }
+        }
+        .data-header {
+            background-color: @table-header-bg;
+            section {
+                &:nth-of-type(1) {
+                    background-color: @table-header-bg;
+                    flex-grow: 0.5;
+                }
+                &:nth-of-type(2) {
+                    display: flex;
+                    justify-content: space-evenly;
+                    flex-grow: 1.4;
+                }
+            }
+        }
+        .data-body {
+            section {
+                &:nth-of-type(1) {
+                    background-color: @table-header-bg;
+                    flex-grow: 0.5;
+                    flex-shrink: 0;
+                }
+                &:nth-of-type(2) {
+                    display: flex;
+                    justify-content: space-evenly;
+                    flex-grow: 1.4;
+                }
+            }
+        }
+    }
+}

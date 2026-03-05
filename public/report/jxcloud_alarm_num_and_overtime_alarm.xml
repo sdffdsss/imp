@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="云平台告警量和超时告警统计报表" />
+  
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库写成 to_date(#time1#,'%Y-%m-%d') 或to_date(#time1#,'%Y-%m-%d %H:%M:%S')-->
+
+  <!--informix的查询示例sql-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_CloudAlarmNumOvertime_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_cpm_ql_sum.first_result, 'yyyy-mm-dd hh24:mi:ss') first_result,
+       tfa_alarm_cpm_ql_sum.nms_name g1,
+       meta_objects.ZH_NAME g2,
+       tfa_alarm_cpm_ql_sum.eqp_object_class eqp_object_class,
+       nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g3,
+       nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0) g4,
+       nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0) g5,
+       nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0) g6,
+       nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g7,
+       nvl( tfa_alarm_cpm_ql_sum.long_alarm_num_4h,0) g8 ,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_8h,0)  g9,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_12h,0)  g10,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_24h,0)  g11
+from tfa_alarm_cpm_ql_sum 	tfa_alarm_cpm_ql_sum  left join 
+(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+on tfa_alarm_cpm_ql_sum.eqp_object_class=meta_objects.object_class
+where tfa_alarm_cpm_ql_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_cpm_ql_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_cpm_ql_sum.omc_id in (#omcid#)
+  and tfa_alarm_cpm_ql_sum.eqp_object_class in(#eqp_type#)
+  and tfa_alarm_cpm_ql_sum.sum_level=#sum_level#
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+
+
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_CloudAlarmNumOvertime_Count">
+    select count(*)
+    from (select tfa_alarm_cpm_ql_sum.first_result first_result,
+       tfa_alarm_cpm_ql_sum.nms_name g1,
+       meta_objects.ZH_NAME g2,
+       tfa_alarm_cpm_ql_sum.eqp_object_class eqp_object_class,
+       nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0)+nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g3,
+       nvl(tfa_alarm_cpm_ql_sum.level1_alarm_num,0) g4,
+       nvl(tfa_alarm_cpm_ql_sum.level2_alarm_num,0) g5,
+       nvl(tfa_alarm_cpm_ql_sum.level3_alarm_num,0) g6,
+       nvl(tfa_alarm_cpm_ql_sum.level4_alarm_num,0) g7,
+       nvl( tfa_alarm_cpm_ql_sum.long_alarm_num_4h,0) g8 ,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_8h,0)  g9,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_12h,0)  g10,
+       nvl(tfa_alarm_cpm_ql_sum.long_alarm_num_24h,0)  g11
+from tfa_alarm_cpm_ql_sum 	tfa_alarm_cpm_ql_sum  left join 
+(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+on tfa_alarm_cpm_ql_sum.eqp_object_class=meta_objects.object_class
+where tfa_alarm_cpm_ql_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_cpm_ql_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_cpm_ql_sum.omc_id in (#omcid#)
+  and tfa_alarm_cpm_ql_sum.eqp_object_class in(#eqp_type#)
+  and tfa_alarm_cpm_ql_sum.sum_level=#sum_level#
+)
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange"  DefaultValue="当日,当日">
+    </Condition>
+    <Condition Name="时间粒度" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True" 
+              DefaultValue="1" sqlId = "Select_AlmRpt_CloudAlarmNumOvertime_CondSumLevel">
+      日,1|周,2|月,3
+    </Condition> 
+    <Condition Name="资源池" Flag="omcid" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+              sqlId = "Select_AlmRpt_CloudAlarmNumOvertime_CondOmcid">
+      select distinct nms_name as text,omc_id as value from tfa_alarm_cpm_ql_sum
+    </Condition>
+    <Condition Name="对象类型" Flag="eqp_object_class" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"
+              sqlId = "Select_AlmRpt_CloudAlarmNumOvertime_CondEqpType">
+      select  '虚拟机' as text,508 as value from dual union all select  '宿主机' as text,1521 as value from dual  union all select  '物理机' as text,502 as value from dual union all select  '交换机' as text,905 as value from dual union all select  '防火墙' as text,901 as value from dual union all select  '虚拟存储' as text,1514 as value from dual   union all select  '应用' as text,506 as value from dual    union all select  '服务' as text,1520 as value from dual  
+    </Condition>
+    <!--例子 End-->
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+ 
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+      <ColumnItem FieldName="first_result" DisplayName="时间" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g1" DisplayName="资源池名称" IsSort="false" ></ColumnItem>   
+      <ColumnItem FieldName="g2" DisplayName="对象类型" IsSort="false" ></ColumnItem>   
+        <ColumnItem FieldName="g3" DisplayName="告警总量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and org_severity in(1,2,3,4) and detail_data_flag is null"></ColumnItem>   
+        <ColumnItem FieldName="g4" DisplayName="一级告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and org_severity=1 and detail_data_flag is null"></ColumnItem>   
+     	  <ColumnItem FieldName="g5" DisplayName="二级告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and org_severity=2 and detail_data_flag is null"></ColumnItem>   
+     	  <ColumnItem FieldName="g6" DisplayName="三级告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and org_severity=3 and detail_data_flag is null "></ColumnItem>   
+       	<ColumnItem FieldName="g7" DisplayName="四级告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and org_severity=4 and detail_data_flag is null"></ColumnItem>   
+     	<ColumnItem FieldName="g8" DisplayName="超4小时告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and detail_data_flag=1 and 1=1"></ColumnItem>   
+     	<ColumnItem FieldName="g9" DisplayName="超8小时告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and detail_data_flag=2 and 1=1"></ColumnItem>   
+     	<ColumnItem FieldName="g10" DisplayName="超12小时告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and detail_data_flag=3 and 1=1"></ColumnItem>   
+     	<ColumnItem FieldName="g11" DisplayName="超24小时告警量" IsSort="false" IsHasDetail="true" DetailWhereCondition="and detail_data_flag=4 and 1=1"></ColumnItem>   
+  </Columns>
+
+ <!--****************查询详情所用sql（如果不需要查看详情，可以忽略）*******************-->
+
+  <!--**六**查询详情示例sql-->
+  <!--DetailDbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--oracle的查询示例sql-->
+  
+  <detailSql DetailDbName="nmosdb">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select 
+       to_char(tfa_alarm_cpm_ql_detail.first_result, 'yyyy-mm-dd hh24:mi:ss') a_cloumn_00,
+       tfa_alarm_cpm_ql_detail.nms_name a_cloumn_01,
+       meta_objects.ZH_NAME  a_cloumn_02,
+       tfa_alarm_cpm_ql_detail.eqp_label a_cloumn_03,
+       tfa_alarm_cpm_ql_detail.org_severity a_cloumn_04,
+       tfa_alarm_cpm_ql_detail.alarm_title_text   a_cloumn_05,
+       to_char(tfa_alarm_cpm_ql_detail.event_time, 'yyyy-mm-dd hh24:mi:ss') a_cloumn_06,
+       to_char(tfa_alarm_cpm_ql_detail.cancel_time, 'yyyy-mm-dd hh24:mi:ss')   a_cloumn_07
+  from tfa_alarm_cpm_ql_detail tfa_alarm_cpm_ql_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+ where tfa_alarm_cpm_ql_detail.first_result =to_date('@first_result@','yyyy-MM-dd HH24:mi:ss')
+ and tfa_alarm_cpm_ql_detail.eqp_object_class =@eqp_object_class@
+ and tfa_alarm_cpm_ql_detail.nms_name = '@g1@'
+ and tfa_alarm_cpm_ql_detail.eqp_object_class =meta_objects.object_class
+ {0}
+    )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </detailSql>
+
+
+  <!--**七**详情汇总sql-->
+
+  <!--oracle的汇总示例sql-->
+  <detailCountSql>
+    select count(*)
+    from
+    (select 
+       tfa_alarm_cpm_ql_detail.first_result a_cloumn_00,
+       tfa_alarm_cpm_ql_detail.nms_name a_cloumn_01,
+       meta_objects.ZH_NAME  a_cloumn_02,
+       tfa_alarm_cpm_ql_detail.eqp_label a_cloumn_03,
+       tfa_alarm_cpm_ql_detail.org_severity a_cloumn_04,
+       tfa_alarm_cpm_ql_detail.alarm_title_text   a_cloumn_05,
+       tfa_alarm_cpm_ql_detail.event_time a_cloumn_06,
+       tfa_alarm_cpm_ql_detail.cancel_time   a_cloumn_07
+  from tfa_alarm_cpm_ql_detail tfa_alarm_cpm_ql_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+ where tfa_alarm_cpm_ql_detail.first_result =to_date('@first_result@','yyyy-MM-dd HH24:mi:ss')
+ and tfa_alarm_cpm_ql_detail.eqp_object_class =@eqp_object_class@
+ and tfa_alarm_cpm_ql_detail.nms_name = '@g1@'
+ and tfa_alarm_cpm_ql_detail.eqp_object_class =meta_objects.object_class
+ {0}
+    )
+  </detailCountSql>
+
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+  
+  <!--多级表头例子-->
+  <DetailColumns>
+    <DetailColumnItem FieldName="a_cloumn_00" DisplayName="时间" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_01" DisplayName="资源池名称" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_02" DisplayName="对象类型" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_03" DisplayName="对象名称" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_04" DisplayName="告警级别" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_05" DisplayName="告警标题" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_06" DisplayName="告警开始时间" IsSort="false"></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_07" DisplayName="告警结束时间" IsSort="false"></DetailColumnItem>
+  </DetailColumns>
+     
+
+</root>

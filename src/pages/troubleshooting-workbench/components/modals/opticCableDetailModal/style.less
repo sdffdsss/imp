@@ -1,0 +1,99 @@
+.optic-cable-detail-modal {
+    .oss-ui-modal-content {
+        overflow: hidden;
+        background-color: #0c3d6e;
+        border-radius: 6px;
+    }
+    .oss-ui-modal-close {
+        width: 40px;
+        height: 40px;
+    }
+    .oss-ui-modal-header {
+        height: 40px;
+        line-height: 40px;
+        background: #15579a;
+        .oss-ui-modal-title {
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+        }
+    }
+    .oss-ui-modal-body {
+        background-color: #0c3d6e;
+    }
+
+    .oss-ui-table {
+        background: #1f4476;
+
+        .oss-ui-table-body{
+            height: 440px;
+        }
+
+        .oss-ui-table-thead > tr > th {
+            color: #fff;
+            background: #15579a;
+            border: none;
+            box-shadow: none;
+        }
+
+        .oss-ui-table-body::-webkit-scrollbar {
+                display: none; /* Chrome Safari */
+        }
+
+        .oss-ui-table-tbody > tr,
+        .oss-ui-table-tbody > tr > td {
+            color: #fff;
+            background: #1e4476;
+            border: none;
+        }
+        .oss-ui-table-tbody > .fault-line,
+        .oss-ui-table-tbody > .fault-line > td {
+            background: #8f4256;
+            transition: all 0.5s;
+        }
+
+        .oss-ui-table-tbody > tr.oss-ui-table-row:hover > td,
+        .oss-ui-table-tbody > tr > td.oss-ui-table-cell-row-hover {
+            background: none;
+            opacity: 0.8;
+        }
+    }
+
+    .oss-ui-pagination {
+        .oss-ui-pagination-item a {
+            color: #fff;
+        }
+        .oss-ui-pagination-total-text {
+            color: #fff;
+        }
+
+        .oss-ui-pagination-item-ellipsis {
+            color: #fff;
+        }
+
+        .oss-ui-pagination-item {
+            background-color: #0c3d6e;
+            border-color: #0c3d6e;
+        }
+
+        .oss-ui-pagination-item-active {
+            background-color: #2e659d;
+
+            .oss-ui-pagination-item-link {
+                background-color: #2e659d;
+                border-color: #1890ff;
+
+                .anticon {
+                    color: #fff;
+                }
+            }
+        }
+
+        .oss-ui-pagination-prev .oss-ui-pagination-item-link,
+        .oss-ui-pagination-next .oss-ui-pagination-item-link {
+            color: #fff;
+            background-color: #2e659d;
+            border-color: #0c3d6e;
+        }
+    }
+}

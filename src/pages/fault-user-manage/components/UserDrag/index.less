@@ -1,0 +1,98 @@
+.columns-sort-drag-old {
+    height: 600px;
+    border: 1px solid #f1f4f7;
+    padding: 10px;
+    overflow: hidden;
+    //background-color: #00356b;
+
+    .columns-sort-drag-list {
+        padding: 8px;
+        border: 1px solid #f1f4f7;
+        height: calc(100% - 35px - 40px);
+        margin-top: 3px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        box-sizing: border-box;
+    }
+    .columns-sort-drag-header {
+        box-sizing: border-box;
+        display: flex;
+        min-width: 100%;
+        width: max-content;
+    }
+    .columns-sort-drag-header-num {
+        width: 50px;
+        padding: 5px;
+    }
+    .columns-sort-drag-header-num-empty {
+        width: 36px;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .columns-sort-drag-header-field {
+        display: flex;
+        flex: 1;
+        min-width: 0;
+    }
+    .columns-sort-drag-header-field-info {
+        padding: 5px;
+        white-space: nowrap;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        flex: 0 0 auto;
+    }
+    .columns-sort-drag-list-content {
+        height: calc(100% - 32px);
+        overflow-y: auto;
+        overflow-x: hidden;
+        min-width: 100%;
+        width: max-content;
+    }
+
+    .columns-sort-drag-list-content > div {
+        min-width: 100%;
+        width: max-content;
+    }
+    .columns-sort-drag-search {
+        display: flex;
+    }
+    .columns-sort-drag-search-title {
+        font-weight: bold;
+        margin-right: 8px;
+        line-height: 32px;
+    }
+
+    .ant-pagination {
+        margin-top: 8px;
+        position: relative;
+        z-index: 1;
+    }
+    .columns-sort-drag-header-color {
+        background: #c8e1f5;
+        //color: #fff;
+    }
+    
+    // 复选框相关样式
+    .columns-sort-drag-header-num-empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        min-height: 32px;
+    }
+    
+    // 移动按钮区域样式
+    .columns-sort-drag-direction {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 0 8px;
+        
+        .ant-btn {
+            margin: 4px 0;
+        }
+    }
+}

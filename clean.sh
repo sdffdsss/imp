@@ -1,0 +1,2 @@
+#!/bin/bash
+npm cache clean --force && rm -rf node_modules &&  rm -rf package-lock.json && npm install &&  rm -rf ./node_modules/less-bundle-promise && cp -r less-bundle-promise.zip node_modules && cd node_modules &&  unzip  less-bundle-promise.zip && rm -rf less-bundle-promise.zip && cd ..

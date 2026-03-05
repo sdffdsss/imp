@@ -1,0 +1,39 @@
+.content {
+    position: relative;
+    width: 160px;
+    height: 300px;
+    padding: 5px;
+    overflow: hidden;
+    background: @component-background;
+    box-shadow: 0 0 3px #ccc;
+    transition: 0.3s;
+    .group {
+        height: 225px;
+        margin-top: 8px;
+        overflow-y: auto;
+        .left {
+            :global {
+                .oss-ui-checkbox-wrapper {
+                    margin-left: 0;
+                }
+            }
+        }
+        .right {
+            :global {
+                .oss-ui-checkbox-wrapper {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+    .button {
+        position: absolute;
+        bottom: 5px;
+        left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    .checkbox {
+        text-align: left;
+    }
+}

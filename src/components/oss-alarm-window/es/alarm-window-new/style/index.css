@@ -1,0 +1,105 @@
+.noReadRowStyle {
+  font-weight: 600 !important;
+}
+.alarm-window-new.light .alarm-window-operation-bar {
+  background-color: #edf4fc;
+  border: 1px solid #fff;
+}
+.alarm-window-new.light .oss-ui-table table {
+  color: #000;
+}
+.alarm-window-new.light .clearRowStyle {
+  background-color: #f7f7f7 !important;
+  color: #a1a1a1 !important;
+}
+.alarm-window-new.light .clickRowStyle {
+  border: 0px !important;
+  line-height: 20px !important;
+  border-top: 2px solid #549cec !important;
+  border-bottom: 2px solid #549cec !important;
+  background-color: #dbecff !important;
+}
+.alarm-window-new.light .relationAlarm {
+  background-color: #f7f7f7 !important;
+}
+.alarm-window-new.light .alamr-window-statistics-bar-value {
+  color: #252631;
+}
+.alarm-window-new.light .oss-ui-table-body::-webkit-scrollbar-thumb {
+  background-color: #c1c1c1;
+}
+.alarm-window-new.light .oss-ui-table-body .oss-ui-table-row-expand-icon {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+.alarm-window-new.light .secondaryFilterWrong {
+  color: #a1a1a1 !important;
+}
+.alarm-window-new.dark .alarm-window-operation-bar {
+  background-color: #141414;
+  border: 1px solid #434343;
+}
+.alarm-window-new.dark .oss-ui-table table {
+  color: #ffffff;
+}
+.alarm-window-new.dark .clearRowStyle {
+  background-color: #3a3a3a !important;
+  color: #9d9d9d !important;
+}
+.alarm-window-new.dark .clickRowStyle {
+  border: 0px !important;
+  line-height: 20px !important;
+  border-top: 2px solid #8f8f8f !important;
+  border-bottom: 2px solid #8f8f8f !important;
+  background-color: #585858 !important;
+}
+.alarm-window-new.dark .relationAlarm {
+  background-color: #4c5969 !important;
+}
+.alarm-window-new.dark .alamr-window-statistics-bar-value {
+  color: #ffffff;
+}
+.alarm-window-new.dark .oss-ui-table-body::-webkit-scrollbar-thumb {
+  background-color: #3e3e3e;
+}
+.alarm-window-new.dark .oss-ui-table-body .oss-ui-table-row-expand-icon {
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+}
+.alarm-window-new.dark .secondaryFilterWrong {
+  color: #9d9d9d !important;
+}
+.alarm-window-new.darkblue .alarm-window-operation-bar {
+  background-color: #0d467c;
+  border: 1px solid #00619e;
+}
+.alarm-window-new.darkblue .oss-ui-table table {
+  color: #fff;
+}
+.alarm-window-new.darkblue .clearRowStyle {
+  background-color: #33475b !important;
+  color: #8299b2 !important;
+}
+.alarm-window-new.darkblue .clickRowStyle {
+  border: 0px !important;
+  line-height: 20px !important;
+  border-top: 2px solid #5fa7f1 !important;
+  border-bottom: 2px solid #5fa7f1 !important;
+  background-color: #03549e !important;
+}
+.alarm-window-new.darkblue .relationAlarm {
+  background-color: #0b518f !important;
+}
+.alarm-window-new.darkblue .alamr-window-statistics-bar-value {
+  color: #ffffff;
+}
+.alarm-window-new.darkblue .oss-ui-table-body::-webkit-scrollbar-thumb {
+  background-color: #105793;
+}
+.alarm-window-new.darkblue .oss-ui-table-body .oss-ui-table-row-expand-icon {
+  color: #fff !important;
+  border-color: #fff !important;
+}
+.alarm-window-new.darkblue .secondaryFilterWrong {
+  color: #8299b2 !important;
+}

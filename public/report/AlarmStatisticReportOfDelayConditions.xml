@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="Alarm Latency Report" />
+  
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库写成 to_date(#time1#,'%Y-%m-%d') 或to_date(#time1#,'%Y-%m-%d %H:%M:%S')-->
+
+  <!--informix的查询示例sql-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_Latency_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select
+    to_char(tfa_alarm_delay_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  w1,
+    case when #sum_level#=1 then to_char(tfa_alarm_delay_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when #sum_level#=3 then  to_char(add_months(tfa_alarm_delay_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when #sum_level#=2 then to_char(tfa_alarm_delay_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+    tfa_alarm_delay_sum.ne_name w2,
+    tfa_alarm_delay_sum.vendor_name w4,
+    tfa_alarm_delay_sum.vendor_id vendor_id,
+    tia_alarm_dict2.txt  w5,
+    trans_ems.userlabel  w6,
+    sum(tfa_alarm_delay_sum.total_alarm_sum)	  w7,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)	 w8,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w9,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)	 w10,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w11,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)	 w12,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w13,
+    round(sum(tfa_alarm_delay_sum.alarm_duration_max),2)  w14,
+    tfa_alarm_delay_sum.sum_level w15,
+    tfa_alarm_delay_sum.eqp_object_class eqp_object_class,
+    tfa_alarm_delay_sum.ne_id ne_id,
+    tfa_alarm_delay_sum.omc_id omc_id
+    from
+    tfa_alarm_delay_sum  tfa_alarm_delay_sum 
+    left join 
+    (select id,txt from tia_alarm_dict where type=9)  tia_alarm_dict2  
+    on  tfa_alarm_delay_sum.eqp_object_class=tia_alarm_dict2.id
+    left join 
+    (select distinct userlabel as userlabel,omc_id as omc_id from nrmdb.objects_trans where object_class = 2100) trans_ems
+    on tfa_alarm_delay_sum.omc_id = trans_ems.omc_id
+    where
+    tfa_alarm_delay_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.sum_level=#sum_level#
+    and tfa_alarm_delay_sum.ne_id in (#areaID#) 
+    and tfa_alarm_delay_sum.ne_type =10000
+    and tfa_alarm_delay_sum.vendor_id in (#vendor#)
+    and tfa_alarm_delay_sum.omc_id in (#omcid#)
+    and tfa_alarm_delay_sum.eqp_object_class in (#eqpclass#)
+    group by 
+    tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tfa_alarm_delay_sum.vendor_name ,
+    tfa_alarm_delay_sum.vendor_id ,
+    tia_alarm_dict2.txt  ,
+    tfa_alarm_delay_sum.sum_level ,
+    tfa_alarm_delay_sum.eqp_object_class ,
+    tfa_alarm_delay_sum.ne_id ,
+    tfa_alarm_delay_sum.omc_id,
+    trans_ems.userlabel
+    order by tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tia_alarm_dict2.txt  ,
+    trans_ems.userlabel
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+
+
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_Latency_Count">
+    select count(*)
+    from (select
+    to_char(tfa_alarm_delay_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  w1,
+    case when #sum_level#=1 then to_char(tfa_alarm_delay_sum.first_result+1,'yyyy-mm-dd hh24:mi:ss') when #sum_level#=3 then  to_char(add_months(tfa_alarm_delay_sum.first_result,1),'yyyy-mm-dd hh24:mi:ss') when #sum_level#=2 then to_char(tfa_alarm_delay_sum.first_result+7,'yyyy-mm-dd hh24:mi:ss') else '' end w1_2,
+    tfa_alarm_delay_sum.ne_name w2,
+    tfa_alarm_delay_sum.vendor_name w4,
+    tfa_alarm_delay_sum.vendor_id vendor_id,
+    tia_alarm_dict2.txt  w5,
+    trans_ems.userlabel  w6,
+    sum(tfa_alarm_delay_sum.total_alarm_sum)	  w7,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)	 w8,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt180s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w9,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)	 w10,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt300s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w11,
+    sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)	 w12,
+    round(decode(sum(tfa_alarm_delay_sum.total_alarm_sum),0,0,sum(tfa_alarm_delay_sum.alarm_delay_gt600s_num)/sum(tfa_alarm_delay_sum.total_alarm_sum))*100,2) w13,
+    round(sum(tfa_alarm_delay_sum.alarm_duration_max),2)  w14,
+    tfa_alarm_delay_sum.sum_level w15,
+    tfa_alarm_delay_sum.eqp_object_class eqp_object_class,
+    tfa_alarm_delay_sum.ne_id ne_id,
+    tfa_alarm_delay_sum.omc_id omc_id
+    from
+    tfa_alarm_delay_sum  tfa_alarm_delay_sum 
+    left join 
+    (select id,txt from tia_alarm_dict where type=9)  tia_alarm_dict2  
+    on  tfa_alarm_delay_sum.eqp_object_class=tia_alarm_dict2.id
+    left join 
+    (select distinct userlabel as userlabel,omc_id as omc_id from nrmdb.objects_trans where object_class = 2100) trans_ems
+    on tfa_alarm_delay_sum.omc_id = trans_ems.omc_id
+    where
+    tfa_alarm_delay_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+    and tfa_alarm_delay_sum.sum_level=#sum_level#
+    and tfa_alarm_delay_sum.ne_id in (#areaID#) 
+    and tfa_alarm_delay_sum.ne_type =10000
+    and tfa_alarm_delay_sum.vendor_id in (#vendor#)
+    and tfa_alarm_delay_sum.omc_id in (#omcid#)
+    and tfa_alarm_delay_sum.eqp_object_class in (#eqpclass#)
+    group by 
+    tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tfa_alarm_delay_sum.vendor_name ,
+    tfa_alarm_delay_sum.vendor_id ,
+    tia_alarm_dict2.txt  ,
+    tfa_alarm_delay_sum.sum_level ,
+    tfa_alarm_delay_sum.eqp_object_class ,
+    tfa_alarm_delay_sum.ne_id ,
+    tfa_alarm_delay_sum.omc_id,
+    trans_ems.userlabel
+    order by tfa_alarm_delay_sum.first_result  ,
+    tfa_alarm_delay_sum.ne_name ,
+    tia_alarm_dict2.txt  ,
+    trans_ems.userlabel
+)
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="Time Range" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="yesterday,yesterday">
+    </Condition>
+    <Condition Name="Time granularity" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True"   
+                DefaultValue="1" sqlId = "Select_AlmRpt_Latency_CondSumLevel">
+                
+      day,1|week,2|month,3
+    </Condition> 
+    <Condition Name="Military district" Flag="areaID" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb"  zoneLevel="2"
+                sqlId = "Select_AlmRpt_Latency_CondAreaID">
+      select distinct province_name as text,province_id as value from region_city_local union all select   'Unknown' as text,99999999 as value from dual order by text asc 
+    </Condition>
+    <Condition Name="Vendor" Flag="vendor" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb" FieldName="w4" 
+              IsDefaultChecked="True" sqlId = "Select_AlmRpt_Latency_CondVendor">
+      select distinct zh_name as text,type as value from vendor_name where type in(select distinct vendor_id from tfa_alarm_delay_sum)
+    </Condition>
+    <Condition Name="NE. type" Flag="eqp_object_class" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb" FieldName="w5"  
+              IsDefaultChecked="True" sqlId = "Select_AlmRpt_Latency_CondEqpclass">
+      select id value,txt text from tia_alarm_dict where tia_alarm_dict.type=9 and id in(select distinct eqp_object_class from tfa_alarm_delay_sum)
+    </Condition>
+    <Condition Name="EMS" Flag="omcid" BindType="sql" ControlType="MutiDropDown" DbName="nmosdb" FieldName="w6" 
+               IsDefaultChecked="True" sqlId = "Select_AlmRpt_Latency_CondOmcid">
+      select distinct userlabel as text,omc_id as value from nrmdb.objects_trans where object_class = 2100
+    </Condition>
+    <!--例子 End-->
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+ 
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+    <ColumnItem FieldName="w1" DisplayName="Datetime" IsSort="true"  Width="140" IsDimention="true"></ColumnItem>
+    <ColumnItem FieldName="w2" DisplayName="Area name" IsSort="true"   ></ColumnItem>
+    <ColumnItem FieldName="w4" DisplayName="Vendor" IsSort="true" ></ColumnItem>
+    <ColumnItem FieldName="w5" DisplayName="NE. type" IsSort="true" ></ColumnItem>
+    <ColumnItem FieldName="w6" DisplayName="EMS" IsSort="true" ></ColumnItem>
+    <ColumnItem FieldName="w7" DisplayName="Amount of total alarm" IsSort="true" ></ColumnItem>
+    <ColumnItem FieldName="w8" DisplayName="Amount of alarm over 3 minutes" IsSort="true"  IsHasDetail="true" DetailWhereCondition=" and data_detail_flag in(1,2,3)"></ColumnItem>
+    <ColumnItem FieldName="w9" DisplayName="Rate of alarm over 3 minutes (%)"   IsSort="true"  ></ColumnItem>
+    <ColumnItem FieldName="w10" DisplayName="Amount of alarm over 5 minutes" IsSort="true"  IsHasDetail="true" DetailWhereCondition=" and data_detail_flag in(2,3)"></ColumnItem>
+    <ColumnItem FieldName="w11" DisplayName="Rate of alarm over 5 minutes (%)"   IsSort="true"  ></ColumnItem>
+    <ColumnItem FieldName="w12" DisplayName="Amount of alarm over 10 minutes" IsSort="true"  IsHasDetail="true" DetailWhereCondition=" and data_detail_flag =3"></ColumnItem>
+    <ColumnItem FieldName="w13" DisplayName="Rate of alarm over 10 minutes (%)" IsSort="true"   ></ColumnItem>
+    <ColumnItem FieldName="w14" DisplayName="Maximum delay (minutes)" IsSort="true" Width="120" ></ColumnItem>
+  </Columns>
+ <!--****************查询详情所用sql（如果不需要查看详情，可以忽略）*******************-->
+
+  <!--**六**查询详情示例sql-->
+  <!--DetailDbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--oracle的查询示例sql-->
+  
+  <detailSql DetailDbName="nmosdb">
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select  
+tfa_alarm_delay_detail.province_name   w1,
+vendor_name.zh_name   w2,
+tia_alarm_dict2.txt  w3,
+tfa_alarm_delay_detail.ne_label   w4,
+tia_alarm_dict3.txt w5,
+tfa_alarm_delay_detail.eqp_label   w6,
+tfa_alarm_delay_detail.alarm_title_text   w7,
+tia_alarm_dict4.txt   w8,
+to_char(tfa_alarm_delay_detail.event_time,'yyyy-mm-dd hh24:mi:ss')   w9,
+to_char(tfa_alarm_delay_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w10,
+to_char(to_date('1970-01-01 01:00:00','yyyy-mm-dd hh24:mi:ss')+tfa_alarm_delay_detail.time_stamp/24/60/60,'yyyy-mm-dd hh24:mi:ss')  w11,
+tfa_alarm_delay_detail.alarm_text0||tfa_alarm_delay_detail.alarm_text1||tfa_alarm_delay_detail.alarm_text2||tfa_alarm_delay_detail.alarm_text3||tfa_alarm_delay_detail.alarm_text4||tfa_alarm_delay_detail.alarm_text5||tfa_alarm_delay_detail.alarm_text6||tfa_alarm_delay_detail.alarm_text7||tfa_alarm_delay_detail.alarm_text8||tfa_alarm_delay_detail.alarm_text9||tfa_alarm_delay_detail.alarm_text10||tfa_alarm_delay_detail.alarm_text11||tfa_alarm_delay_detail.alarm_text12||tfa_alarm_delay_detail.alarm_text13||tfa_alarm_delay_detail.alarm_text14||tfa_alarm_delay_detail.alarm_text15   w12
+from 
+tfa_alarm_delay_detail tfa_alarm_delay_detail
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict2
+on tia_alarm_dict2.id = tfa_alarm_delay_detail.object_class
+left join
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict3
+on tia_alarm_dict3.id = tfa_alarm_delay_detail.eqp_object_class
+   left join
+   (select id,txt from tia_alarm_dict where type =6 ) tia_alarm_dict4
+   on tfa_alarm_delay_detail.org_severity = tia_alarm_dict4.id
+left join 
+vendor_name vendor_name
+on tfa_alarm_delay_detail.vendor_id = vendor_name.type
+where  tfa_alarm_delay_detail.first_result &gt;= to_date('@w1@','yyyy-mm-dd hh24:mi:ss')
+and tfa_alarm_delay_detail.first_result &lt; to_date('@w1_2@','yyyy-mm-dd hh24:mi:ss') 
+and tfa_alarm_delay_detail.province_id=@ne_id@
+and tfa_alarm_delay_detail.vendor_id = @vendor_id@
+and tfa_alarm_delay_detail.eqp_object_class = @eqp_object_class@
+and tfa_alarm_delay_detail.omc_id = @omc_id@
+    {0}
+    order by tfa_alarm_delay_detail.event_time
+
+    )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+  </detailSql>
+
+
+  <!--**七**详情汇总sql-->
+
+  <!--oracle的汇总示例sql-->
+  <detailCountSql>
+    select count(*)
+    from
+    (select  
+tfa_alarm_delay_detail.province_name   w1,
+vendor_name.zh_name   w2,
+tia_alarm_dict2.txt  w3,
+tfa_alarm_delay_detail.ne_label   w4,
+tia_alarm_dict3.txt w5,
+tfa_alarm_delay_detail.eqp_label   w6,
+tfa_alarm_delay_detail.alarm_title_text   w7,
+tia_alarm_dict4.txt   w8,
+to_char(tfa_alarm_delay_detail.event_time,'yyyy-mm-dd hh24:mi:ss')   w9,
+to_char(to_date('1970-01-01 01:00:00','yyyy-mm-dd hh24:mi:ss')+tfa_alarm_delay_detail.time_stamp/24/60/60,'yyyy-mm-dd hh24:mi:ss')  w11,
+to_char(tfa_alarm_delay_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   w10,
+tfa_alarm_delay_detail.alarm_text0||tfa_alarm_delay_detail.alarm_text1||tfa_alarm_delay_detail.alarm_text2||tfa_alarm_delay_detail.alarm_text3||tfa_alarm_delay_detail.alarm_text4||tfa_alarm_delay_detail.alarm_text5||tfa_alarm_delay_detail.alarm_text6||tfa_alarm_delay_detail.alarm_text7||tfa_alarm_delay_detail.alarm_text8||tfa_alarm_delay_detail.alarm_text9||tfa_alarm_delay_detail.alarm_text10||tfa_alarm_delay_detail.alarm_text11||tfa_alarm_delay_detail.alarm_text12||tfa_alarm_delay_detail.alarm_text13||tfa_alarm_delay_detail.alarm_text14||tfa_alarm_delay_detail.alarm_text15   w12
+from 
+tfa_alarm_delay_detail tfa_alarm_delay_detail
+left join 
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict2
+on tia_alarm_dict2.id = tfa_alarm_delay_detail.object_class
+left join
+(select id,txt from tia_alarm_dict where type = 9) tia_alarm_dict3
+on tia_alarm_dict3.id = tfa_alarm_delay_detail.eqp_object_class
+   left join
+   (select id,txt from tia_alarm_dict where type =6 ) tia_alarm_dict4
+   on tfa_alarm_delay_detail.org_severity = tia_alarm_dict4.id
+left join 
+vendor_name vendor_name
+on tfa_alarm_delay_detail.vendor_id = vendor_name.type
+where  tfa_alarm_delay_detail.first_result &gt;= to_date('@w1@','yyyy-mm-dd hh24:mi:ss')
+and tfa_alarm_delay_detail.first_result &lt; to_date('@w1_2@','yyyy-mm-dd hh24:mi:ss') 
+and tfa_alarm_delay_detail.province_id=@ne_id@
+and tfa_alarm_delay_detail.vendor_id = @vendor_id@
+and tfa_alarm_delay_detail.eqp_object_class = @eqp_object_class@
+and tfa_alarm_delay_detail.omc_id = @omc_id@
+    {0}
+    order by tfa_alarm_delay_detail.event_time
+    )
+  </detailCountSql>
+
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+  
+  <!--多级表头例子-->
+  <DetailColumns>
+    <DetailColumnItem FieldName="w1" DisplayName="Area name " IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w2" DisplayName="Vendor" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w5" DisplayName="NE. Type" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w6" DisplayName="NE. Name" IsSort="true" Width="120"></DetailColumnItem>
+    <DetailColumnItem FieldName="w3" DisplayName="Object type" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w4" DisplayName="Object name" IsSort="true" Width="140"></DetailColumnItem>
+    <DetailColumnItem FieldName="w7" DisplayName="Alarm title" IsSort="true" Width="140"></DetailColumnItem>
+    <DetailColumnItem FieldName="w8" DisplayName="Severity" IsSort="true"></DetailColumnItem>
+    <DetailColumnItem FieldName="w9" DisplayName="Event Time" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w11" DisplayName="INMS receive time" IsSort="true" Width="160"></DetailColumnItem>
+    <DetailColumnItem FieldName="w12" DisplayName="Alarm text" IsSort="true"  Width="600"></DetailColumnItem>
+    <DetailColumnItem FieldName="w10" DisplayName="Cancel Time" IsSort="true" Width="160"></DetailColumnItem>
+  </DetailColumns>
+    
+
+</root>

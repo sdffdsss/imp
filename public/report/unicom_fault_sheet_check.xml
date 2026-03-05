@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="故障派单核查报表" />
+
+  <!--**二**查询sql-->
+  <!--dbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库写成 to_date(#time1#,'%Y-%m-%d') 或to_date(#time1#,'%Y-%m-%d %H:%M:%S')-->
+
+  <!--informix的查询示例sql-->
+  <sql dbName="nmosdb_mysql" sqlId="Select_AlmRpt_HighRate_Unicom_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  </sql>
+  <!--例子End-->
+
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_HighRate_Unicom_Count">
+
+  </countsql>
+  <!--例子End-->
+
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+
+    <!--省份-->
+    <Condition watch='1' Name="省份" Flag="province" Authority="province_id" ControlType="MutiDropDown" DbName="nmosdb_mysql"
+   					FirstOptionSelected=""
+            sqlId = "Select_AlmRpt_CompressionRatio_Unicom_CondProvince">
+    </Condition>
+    <!--地市-->
+    <Condition Name="地市" Flag="region" Authority="region_id"  ControlType="ComboBox" DbName="nmosdb_mysql" 
+            effect="province|id|province_id"
+            sqlId="Select_AlmRpt_CompressionRatio_Unicom_CondRegion">
+    </Condition>
+    <!--专业-->
+    <Condition Name="专业" Flag="profession"  ControlType="ComboBox" DbName="nmosdb_mysql" DefaultValue="8"
+            sqlId = "Select_AlmRpt_CompressionRatio_Unicom_CondProfession">
+    </Condition>
+    <!--派单规则-->
+    派单规则：<Condition Name="派单规则"  Flag="rules"  ControlType="textbox" >
+    </Condition>
+    <!--时间范围-->
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="昨日,昨日">
+    </Condition>
+
+
+
+
+
+  </Conditions>
+
+
+
+  <!--显示列-->
+  <Columns Authority="region_id|province_id" SearchCollapsed='true'>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+      <ColumnItem FieldName="province_name" DisplayName="省份" Width='150' ></ColumnItem>
+      <ColumnItem FieldName="region_name" DisplayName="地市" Width='150'></ColumnItem>
+      <ColumnItem FieldName="professional_name" DisplayName="专业" Width='150'></ColumnItem>
+      <ColumnItem FieldName="rule" DisplayName="派单规则" Width='250'></ColumnItem>
+      <ColumnItem FieldName="date_time" DisplayName="日期" Width='200'></ColumnItem>
+      <ColumnItem FieldName="alarm_total" DisplayName="派发告警数" Width='150'></ColumnItem>
+      <ColumnItem FieldName="sheet_total" DisplayName="派发工单数" Width='150'></ColumnItem>
+      <!-- <ColumnItem FieldName="g4" DisplayName="告警标题"  IsHasDetail="true" DetailWhereCondition="and 1=1"></ColumnItem>
+      <ColumnItem FieldName="g5" DisplayName="发生次数"  IsHasDetail="true" DetailWhereCondition="and 1=1"></ColumnItem> -->
+     </Columns>
+
+ <!--****************查询详情所用sql（如果不需要查看详情，可以忽略）*******************-->
+
+  <!--**六**查询详情示例sql-->
+  <!--DetailDbName：填写数据库实例(必填)-->
+  <!--当是informix时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+  <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+
+  <!--oracle的查询示例sql-->
+
+
+  <!--**八**显示列-->
+  <!--FieldName  ：与<detailSql>中的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+  <!--IsSort     ：排序图标（false不进行排序-可以不写，true进行排序）-->
+
+  <!--多级表头例子-->
+  <!-- <DetailColumns Title="详情1" Parent='g4' DetailDbName="nmosdb_mysql"
+                  DetailSqlId = "Select_AlmRpt_HighRate_Unicom_DetailByPage" DetailCountSqlId = "Select_AlmRpt_HighRate_Unicom_DetailCount">
+    <DetailColumnItem FieldName="a_cloumn_00"  DisplayName="时间"  Width="200" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_05" DisplayName="告警标题" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_06" DisplayName="告警开始时间" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_07" DisplayName="告警结束时间" ></DetailColumnItem>
+  </DetailColumns>-->
+  <!-- 多级表头例子-->
+  <!--<DetailColumns Title="详情2" Parent='g5' DetailDbName="nmosdb_mysql"
+                  DetailSqlId = "Select_AlmRpt_HighRate_Unicom_DetailByPage" DetailCountSqlId = "Select_AlmRpt_HighRate_Unicom_DetailCount" >
+    <DetailColumnItem FieldName="a_cloumn_00"  DisplayName="g5-时间"  Width="200" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_01" DisplayName="g5-资源池名称" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_02" DisplayName="g5-对象类型" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_03" DisplayName="g5-对象名称" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_04" DisplayName="g5-告警级别" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_05" DisplayName="g5-告警标题" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_06" DisplayName="g5-告警开始时间" ></DetailColumnItem>
+    <DetailColumnItem FieldName="a_cloumn_07" DisplayName="g5-告警结束时间" ></DetailColumnItem>
+  </DetailColumns> -->
+
+</root>

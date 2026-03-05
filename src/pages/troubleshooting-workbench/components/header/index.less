@@ -1,0 +1,92 @@
+.dispatch-workbench-common-header {
+    display: flex;
+    height: 124px;
+    padding: 8px;
+    .background {
+        background: linear-gradient(180deg, rgba(8.14, 73.58, 137.75, 0.5), rgba(8.14, 73.58, 137.75, 0) 100%);
+        border-radius: 6px;
+        backdrop-filter: blur(7px);
+    }
+    &-left {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 0 12px;
+        .user-info {
+            margin-left: 32px;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+            font-family: Microsoft YaHei;
+            .user-depart {
+                color: rgb(153, 201, 255);
+                font-weight: 400;
+                font-size: 16px;
+                font-family: Microsoft YaHei;
+            }
+            .on-duty {
+                margin: 8px 0;
+                font-size: 14px;
+                &-des {
+                    margin: 0 8px;
+                }
+                &-content {
+                    color: rgb(153, 201, 255);
+                    font-weight: 400;
+                    font-size: 16px;
+                    font-family: Microsoft YaHei;
+                }
+            }
+        }
+    }
+    &-center {
+        display: flex;
+        flex: 1.5;
+        align-items: center;
+        justify-content: center;
+        margin: 0 13px;
+        padding: 0 32px;
+        .btns-item {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            text-align: center;
+            &-title {
+                width: 84px;
+            }
+        }
+    }
+    &-right {
+        flex: 2;
+        max-width: 800px;
+
+        .group-time-line {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            color: white;
+            .time-line-header {
+                width: 18px;
+                margin-right: 10px;
+            }
+            .notice-detail {
+                color: rgba(255, 255, 255, 0.8) !important;
+            }
+            .group-notice-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                width: 100%;
+
+                .notice-timeline-time {
+                    color: rgb(153, 201, 255);
+                }
+            }
+        }
+    }
+}

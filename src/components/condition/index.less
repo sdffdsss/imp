@@ -1,0 +1,175 @@
+.condition-edit-wrapper {
+    display: flex;
+    height: 100%;
+
+    .condition-main-content {
+        flex: auto;
+        overflow: auto;
+        .edit-filter-wrapper {
+            width: 100%;
+            padding: 0 20px 0 0;
+            position: relative;
+
+            .logic-select {
+                width: 60px;
+                position: absolute;
+                left: 0;
+                top: 50%;
+                transform: translateY(-32px);
+
+                .oss-ui-select {
+                    width: 100%;
+                }
+            }
+
+            &.has-logic {
+                padding-left: 90px;
+            }
+
+            .condition-group-wrapper {
+                margin: 0 0 8px 0;
+                .condition-group-wrapper-inner {
+                    background: @card-background;
+                    border: 1px solid #d9d9d9;
+                    padding-top: 5px;
+                    .oss-ui-form-item {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            .drop-target {
+                // width: 420px;
+                width: 90%;
+                margin: 0 auto 15px;
+                padding-left: 12px;
+                line-height: 32px;
+                // color: rgba(13, 19, 38, 0.3);
+                border: 1px solid #d9d9d9;
+
+                &.active {
+                    border: 1px dashed #597ef7;
+                    transform: scale(1.03);
+                    transition: transform 0.3s;
+                    color: #597ef7;
+                }
+            }
+
+            .condition-group {
+                padding: 0 0 0 16px;
+
+                .conditions-wrapper {
+                    position: relative;
+                    padding: 16px 16px 16px 0;
+
+                    &.has-logic {
+                        padding-left: 90px;
+                    }
+
+                    .logic-select {
+                        transform: translateY(-16px);
+                    }
+                }
+
+                .condition-wrapper {
+                    display: flex;
+                    justify-content: space-between;
+                    padding-left: 16px;
+                    align-items: center;
+
+                    &.empty {
+                        padding-left: 0;
+                    }
+
+                    .condition-label {
+                        // color: #0d1326;
+                        line-height: 32px;
+                        width: 85px;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                    }
+
+                    .condition-operator-value {
+                        display: flex;
+                        flex: 1 1 auto;
+                        // flex-wrap: no-wrap;
+
+                        .condition-operator-value-inner {
+                            width: 100%;
+                            display: flex;
+                            margin-top: 8px;
+                            align-items: center;
+                            &:first-child {
+                                margin-top: 0;
+                            }
+
+                            .condition-operator {
+                                flex: 0 0 100px;
+                                margin-left: 8px;
+                            }
+                            .condition-value {
+                                overflow: hidden;
+                                margin-left: 8px;
+                                flex: 1 1 auto;
+                                display: flex;
+                                align-items: center;
+                                //select组件
+                                .oss-ui-select {
+                                    flex: auto;
+                                }
+                                .group-select-input,
+                                .edit-input {
+                                    flex: auto;
+                                }
+                                .oss-ui-picker {
+                                    flex: auto;
+                                }
+                                .condition-value-textarea {
+                                    height: 84px;
+                                    resize: none;
+                                }
+
+                                //inputNumber组件
+                                .oss-ui-input-number {
+                                    flex: auto;
+                                    margin-right: 8px;
+
+                                    &:last-child {
+                                        margin-right: 0;
+                                    }
+
+                                    &:only-child {
+                                        margin-right: 0;
+                                    }
+                                }
+                            }
+                        }
+                        .condition-operator-value-input {
+                            width: calc(100% - 116px);
+                        }
+                        .condition-operator-wrapper {
+                            width: 100px;
+                            flex: 0 0 auto;
+                            margin-left: 8px;
+                        }
+                    }
+
+                    .condition-action {
+                        flex: 0 0 auto;
+                        align-self: center;
+
+                        .more-operation {
+                            line-height: 30px;
+                            // color: #b6b9c1;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .condition-right-content {
+        flex: 0 0 260px;
+    }
+}

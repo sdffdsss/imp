@@ -1,0 +1,92 @@
+.centralized-archive-report {
+    height: 100%;
+    .centralized-archive-report-header {
+        margin-bottom: 10px;
+    }
+    .centralized-archive-report-body {
+        height: calc(100% - 74px);
+        .headerCell {
+            position: relative;
+            width: 0px;
+            height: 0px;
+            margin: 0 auto;
+            border-top: 43px solid transparent;
+            border-left: 237px solid transparent;
+            .title {
+                position: absolute;
+                z-index: 10;
+                font-weight: 700;
+                font-size: 12px;
+                white-space: nowrap;
+            }
+            .afer {
+                top: -56px;
+                left: -170px;
+                width: 30px;
+                text-wrap: auto;
+            }
+            .before {
+                top: -45px;
+                left: -240px;
+                width: 60px;
+            }
+            .end {
+                top: -5px;
+                left: -243px;
+                width: 60px;
+            }
+            // 伪元素画分割线
+            &::after {
+                position: absolute;
+                top: -140px;
+                left: -168px;
+                z-index: 5;
+                display: block;
+                width: 1px;
+                height: 237px;
+                background-color: lightblue;
+                transform: rotate(-38deg);
+                content: '';
+            }
+
+            // 伪元素画分割线
+            &::before {
+                position: absolute;
+                top: -150px;
+                left: -230px;
+                z-index: 5;
+                display: block;
+                width: 1px;
+                height: 260px;
+                background-color: lightblue;
+                transform: rotate(-68deg);
+                content: '';
+            }
+        }
+        .totalHeader {
+            background-color: lightsteelblue;
+        }
+        .spin-container {
+            width: 100%;
+            height: 100%;
+            .oss-ui-spin-container {
+                width: 100% !important;
+                height: 100% !important;
+            }
+            .table-header-title {
+                color: blue;
+                .sec-span {
+                    margin-left: 20px;
+                }
+            }
+            .oss-ui-table .oss-ui-table-thead > tr > th {
+                border: 0.5px solid lightblue !important;
+            }
+            .oss-ui-table.oss-ui-table-bordered > .oss-ui-table-container > .oss-ui-table-body > table > tbody > tr > td {
+                border-right: 1px solid lightblue !important;
+                border-bottom: 1px solid lightblue !important;
+                border-left: 1px solid lightblue !important;
+            }
+        }
+    }
+}

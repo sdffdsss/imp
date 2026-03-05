@@ -1,0 +1,72 @@
+.group-workbench-province-select-wrapper {
+    position: absolute;
+    top: 320px;
+    left: 30px;
+
+    .deco-button {
+        width: 154px;
+        height: 50px;
+        padding: 7px 0 0 37px;
+        color: #fff;
+        font-size: 14px;
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: 100% 100%;
+        cursor: pointer;
+
+        b {
+            font-size: 18px;
+        }
+    }
+
+    .show-online-province-count-wrapper {
+        position: absolute;
+        margin-bottom: 8px;
+        background-image: url(../../../img/bg_online_province.png);
+    }
+
+    .province-select-btn-wrapper {
+        position: absolute;
+        left: 162px;
+        display: flex;
+        justify-content: space-between;
+        font-size: 18px;
+        background-image: url(../../../img/bg_select_province.png);
+        .cur-province-text {
+            font-weight: 700;
+            font-size: 14px;
+            line-height: 30px;
+            letter-spacing: 2px;
+        }
+        .switch-icon {
+            display: inline-block;
+            width: 32px;
+            height: 28px;
+            margin-right: 20px;
+        }
+
+        .group-workbench-province-list-wrapper {
+            width: 117px;
+            height: 172px;
+            overflow: auto;
+            background: rgba(8, 74, 138, 0.5);
+            border-radius: 0 0 6px 6px;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            .province-item {
+                padding-left: 17px;
+                overflow: hidden;
+                color: #fff;
+                font-size: 14px;
+                line-height: 28px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                &:hover,
+                &:active {
+                    background: rgb(20, 92, 166);
+                }
+            }
+        }
+    }
+}

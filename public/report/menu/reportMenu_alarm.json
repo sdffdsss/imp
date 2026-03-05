@@ -1,0 +1,53 @@
+﻿{
+    "menuItem": [
+        {
+            "fileName": "告警报表",
+            "menuItem": [
+                { "fileName": "告警压缩率", "textName": "CompressionRatio" },
+                { "fileName": "专业告警统计分析", "textName": "NetworktypeAlarm" },
+                { "fileName": "工程标注效能分析(无表)", "textName": "ProjectMark" },
+                { "fileName": "告警关联有效性分析", "textName": "RelationRule" },
+                { "fileName": "告警派单有效性分析", "textName": "SendRule" },
+                { "fileName": "标准化有效性分析", "textName": "UnstandardizationSituation" },
+                {
+                    "fileName": "R_LOSS告警长时间告警未恢复统计(无表)",
+                    "textName": "R_loss"
+                }
+            ]
+        },
+        {
+            "fileName": "告警报表",
+            "menuItem": [
+                { "fileName": "VNF告警统计报表", "textName": "VNF_UNIC" },
+                { "fileName": "VIM告警统计报表", "textName": "VIM_UNIC" }
+            ]
+        },
+        {
+            "fileName": "report menu",
+            "menuItem": [
+                {
+                    "fileName": "Alarm Frequency Report",
+                    "textName": "AlarmStatisticReportOfFrequencyConditions"
+                },
+                {
+                    "fileName": "Alarm Latency Report",
+                    "textName": "AlarmStatisticReportOfDelayConditions"
+                },
+                {
+                    "fileName": "Alarm Standard Ratio Report",
+                    "textName": "AlarmStatisticReportOfUnstandardizationSituation"
+                }
+            ]
+        },
+        {
+            "fileName": "告警报表",
+            "menuItem": [
+                {
+                    "fileName": "云平台告警量和超时告警统计报表",
+                    "textName": "jxcloud_alarm_num_and_overtime_alarm"
+                },
+                { "fileName": "云平台高频告警统计报表", "textName": "jxcloud_high_rate_alarm", "active": true }
+            ]
+        }
+    ]
+}

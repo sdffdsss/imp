@@ -1,0 +1,138 @@
+.international-resource-monitor-alarm-list-wrapper {
+    position: relative;
+
+    .custom-toolbar-wrapper {
+        img {
+            height: 20px;
+            cursor: pointer;
+            opacity: 0.3;
+
+            &:hover {
+                opacity: 1;
+            }
+
+            &.disabled {
+                opacity: 0.3 !important;
+            }
+        }
+        &.history-mode {
+            transform: translateX(0);
+        }
+    }
+
+    .alarm-delete-icon {
+        height: 28px;
+        transform: translateY(2px);
+        cursor: pointer;
+        fill: #c9d0db;
+
+        &:hover {
+            fill: #3377ff;
+        }
+    }
+
+    .anticon-setting {
+        width: 20px;
+        height: 20px;
+        background-image: url(./img/icon-14.png);
+        background-size: 100% 100%;
+        opacity: 0.3;
+        &:hover {
+            opacity: 1;
+        }
+        svg {
+            opacity: 0;
+        }
+    }
+
+    .oss-ui-table-wrapper {
+        padding: 0;
+    }
+
+    .oss-ui-table-tbody > tr.oss-ui-table-row-selected > td {
+        color: rgba(0, 0, 0, 0.85);
+        background-color: #fff;
+    }
+
+    .oss-ui-table-body {
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
+    }
+
+    .oss-ui-card-body {
+        padding: 0;
+    }
+
+    .request-next-page-loading {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        z-index: 10;
+    }
+
+    table {
+        thead {
+            // th:first-child {
+            //     text-align: left;
+            // }
+        }
+        tbody {
+            // td:first-child {
+            //     text-align: left;
+            // }
+
+            .oss-ui-table-placeholder {
+                .oss-ui-table-expanded-row-fixed {
+                    width: 100% !important;
+                }
+            }
+
+            .oss-ui-table-expanded-row {
+                > td {
+                    padding: 0 !important;
+                }
+            }
+
+            .oss-ui-table-expanded-row-fixed {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+    }
+
+    .oss-ui-pro-table-list-toolbar-left {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .oss-ui-pro-table-list-toolbar-right {
+        position: absolute;
+        right: 0;
+        background: white;
+    }
+
+    .open-list {
+        td {
+            color: #6c6c6c;
+            background: rgba(51, 119, 255, 0.1);
+        }
+    }
+
+    .select-list {
+        td {
+            // border-top: 1.72px solid #fff;
+            color: #ffffff !important;
+            background-color: #3377ff !important;
+        }
+        .alarm-delete-icon {
+            fill: #fff;
+        }
+    }
+}
+
+.oss-ui-tree-list-holder {
+    div {
+        overflow-y: visible;
+    }
+}

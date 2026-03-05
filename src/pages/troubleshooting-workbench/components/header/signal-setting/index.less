@@ -1,0 +1,263 @@
+.signal-setting-title {
+    // position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: rgb(21, 87, 154);
+    // border-radius: 6px 6px 0px 0px;
+}
+.signal-setting-title-content {
+    // position: absolute;
+    top: 9px;
+    left: 16px;
+    width: 53px;
+    height: 22px;
+    color: rgb(255, 255, 255);
+    letter-spacing: -1px;
+}
+
+.signal-setting-logo-left {
+    // position: absolute;
+    top: 88px;
+    left: 70px;
+    width: 64px;
+    height: 89px;
+    background: linear-gradient(180deg, rgba(16.04, 108.51, 176.45, 0.41), rgba(30.28, 91.56, 151.41, 0.45) 74.83%, rgba(58, 155, 255, 1) 100%);
+    border-radius: 6px;
+    opacity: 0.92;
+}
+.signal-setting-logo-right {
+    // position: absolute;
+    top: 88px;
+    left: 194px;
+    width: 64px;
+    height: 89px;
+    background: linear-gradient(180deg, rgba(16.04, 108.51, 176.45, 0.41), rgba(30.28, 91.56, 151.41, 0.45) 74.83%, rgba(58, 155, 255, 1) 100%);
+    border-radius: 6px;
+    opacity: 0.92;
+}
+.signal-setting-switch-left {
+    /* PC/按钮/开关按钮 */
+    // position: absolute;
+    top: 153px;
+    left: 87px;
+    width: 30px;
+    height: 16px;
+}
+.signal-setting-switch-right {
+    /* PC/按钮/开关按钮 */
+    // position: absolute;
+    top: 153px;
+    left: 211px;
+    width: 30px;
+    height: 16px;
+}
+.signal-setting-content-left {
+    /* 声音开关 */
+    // position: absolute;
+    top: 183px;
+    left: 75px;
+    width: 53px;
+    height: 22px;
+    margin-right: 4px;
+    color: rgb(255, 255, 255);
+    letter-spacing: -1px;
+}
+.signal-setting-content-right {
+    /* 光信号开关 */
+    // position: absolute;
+    top: 183px;
+    left: 192.5px;
+    width: 66px;
+    height: 22px;
+    margin-right: 4px;
+    color: rgb(255, 255, 255);
+    letter-spacing: -1px;
+}
+.signal-setting-detail-left {
+    // position: absolute;
+    top: 61.67%;
+    left: 37.63%;
+    width: 16px;
+    height: 16px;
+}
+.signal-setting-detail-right {
+    // position: absolute;
+    top: 61.67%;
+    left: 76.57%;
+    width: 16px;
+    height: 16px;
+}
+.signal-setting-modal {
+    color: #fff;
+    .oss-ui-modal-close-x {
+        color: #fff;
+    }
+    .oss-ui-modal-title {
+        color: #fff;
+    }
+    .oss-ui-modal-header {
+        background: rgb(21, 87, 154);
+        border-bottom: unset;
+    }
+    .oss-ui-modal-footer {
+        background: rgb(12, 61, 110);
+        border-top: unset;
+        .oss-ui-btn {
+            color: #fff;
+            background: #1890ff;
+            border-color: #1890ff;
+        }
+        .oss-ui-btn-ghost {
+            color: #fff;
+            background: transparent;
+            border: 1px solid rgb(34, 128, 219);
+        }
+    }
+    .oss-ui-btn,
+    // .oss-ui-btn:hover,
+    .oss-ui-btn:focus,
+    .oss-ui-btn:active {
+        color: #fff;
+        background: #0087f9;
+        border: 1px solid #0087f9;
+
+        &.oss-ui-btn-link {
+            color: #1890ff;
+            background: transparent;
+            border-color: transparent;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+    }
+    .oss-ui-btn-default {
+        // border-color: #d9d9d9;
+        background: transparent;
+    }
+
+    .oss-ui-btn-ghost {
+        background: transparent;
+    }
+    .soundAndLight {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .alertModal {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        margin-top: 16px;
+        .alertChoose {
+            flex: 1;
+            .switch {
+                width: 32px;
+                margin: 0 12px;
+            }
+            .oss-ui-checkbox-group-item {
+                margin-bottom: 8px;
+                color: #fff;
+            }
+            .oss-ui-checkbox-wrapper {
+                width: 30%;
+                color: #fff;
+            }
+            .oss-ui-checkbox-wrapper-disabled {
+                color: #fff;
+                opacity: 0.9;
+            }
+            .oss-ui-checkbox-disabled {
+                color: #fff;
+                opacity: 0.9;
+            }
+            .oss-ui-checkbox-disabled + span {
+                color: #fff;
+                opacity: 0.9;
+            }
+            .checkAll {
+                margin-bottom: 12px;
+                img {
+                    width: 16px;
+                    height: 16px;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .notice-title {
+        width: 120px;
+        margin-right: 12px;
+        color: #fff;
+        text-align: right;
+    }
+    .sound,
+    .light {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 24px;
+        .switch {
+            position: relative;
+            top: -20px;
+            left: 16px;
+            width: 32px;
+        }
+    }
+    .oss-ui-modal-content {
+        border-radius: 8px;
+        .oss-ui-modal-body {
+            // border-radius: 6px;
+            .title {
+                border-radius: 6px 6px 0 0;
+            }
+            .signal-setting-detail-left {
+                cursor: pointer;
+                img {
+                    // position: absolute;
+                    width: 16px;
+                    height: 16px;
+                }
+                .signal-setting-tooltip-text {
+                    bottom: -33px;
+                    left: -109px;
+                }
+                &:hover {
+                    .signal-setting-tooltip-text {
+                        display: block;
+                    }
+                }
+            }
+            .signal-setting-detail-right {
+                cursor: pointer;
+                img {
+                    // position: absolute;
+                    width: 16px;
+                    height: 16px;
+                }
+                .signal-setting-tooltip-text {
+                    bottom: -33px;
+                    left: -237px;
+                }
+                &:hover {
+                    .signal-setting-tooltip-text {
+                        display: block;
+                    }
+                }
+            }
+            .signal-setting-tooltip-text {
+                // position: absolute;
+                display: none;
+                box-sizing: border-box;
+                width: 300px;
+                height: 28px;
+                color: #fff;
+                line-height: 26px;
+                text-align: center;
+                background: rgba(34, 128, 219, 0.35);
+                border: 1px solid #2280db;
+                backdrop-filter: blur(8px);
+            }
+        }
+    }
+}

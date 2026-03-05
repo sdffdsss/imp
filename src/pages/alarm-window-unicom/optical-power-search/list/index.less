@@ -1,0 +1,46 @@
+.optical-power-search-list-table-wrapper {
+    .oss-ui-pro-table-search {
+        padding-top: 0 !important;
+
+        .optical-power-search-list-table-search-form {
+            .oss-ui-row {
+                .oss-ui-col-6:nth-child(2),
+                .oss-ui-col-6:nth-child(3),
+                .oss-ui-col-6:nth-child(4) {
+                    flex: 0 0 251px !important;
+                    max-width: unset;
+                }
+                .oss-ui-col-6:first-child,
+                .oss-ui-col-6:nth-child(5),
+                .oss-ui-col-6:nth-child(6),
+                .oss-ui-col-6:nth-child(7) {
+                    flex: 0 0 374px !important;
+                    max-width: unset;
+                    padding: 0 6px !important;
+                }
+
+                .oss-ui-col-6:last-child {
+                    flex: 0 0 135px !important;
+                    max-width: unset;
+                    padding: 0 !important;
+                }
+            }
+        }
+    }
+
+    .max-show-two-rows {
+        display: -webkit-box;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        word-break: break-all;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+    .back-to-list {
+        position: absolute;
+        top: -10px;
+        left: 0;
+    }
+}

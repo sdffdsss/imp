@@ -1,0 +1,38 @@
+.fault-report-detail-layout-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    // margin-top: 10px;
+    div {
+        // font-size: 14px;
+        color: @text-color;
+        font-weight: 400;
+        font-family: 'ArialMT', 'Arial', sans-serif;
+        font-style: normal;
+    }
+    &-name {
+        flex-shrink: 0;
+        color: rgba(0, 0, 0, 0.847058823529412);
+        font-weight: 400;
+        font-size: 14px;
+        font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+        font-style: normal;
+        text-align: left;
+        &::after {
+            content: '：';
+        }
+    }
+    &-value {
+        flex: 1;
+        overflow: visible;
+        color: @text-color;
+        font-weight: 400;
+        font-size: 14px;
+        font-family: 'ArialMT', 'Arial', sans-serif;
+        font-style: normal;
+        white-space: pre-wrap;
+        text-overflow: unset;
+        word-break: break-word;
+        // margin-bottom : 10px;
+    }
+}

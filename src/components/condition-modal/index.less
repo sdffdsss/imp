@@ -1,0 +1,38 @@
+.condition-modal-wrapper {
+    .condition-wrapper {
+        display: flex;
+    }
+
+    .condition-list {
+        height: 300px;
+        margin-top: 8px;
+        overflow: auto;
+
+        .condition-item {
+            .name {
+                margin-left: 8px;
+                cursor: pointer;
+
+                &.active {
+                    color: #2267d6;
+                }
+            }
+        }
+    }
+    .right-value-wrapper {
+        height: 100%;
+        .oss-ui-spin-nested-loading {
+            height: 100%;
+            .oss-ui-spin-container {
+                height: 100%;
+            }
+        }
+    }
+    .filter-empty {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+}

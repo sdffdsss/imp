@@ -1,0 +1,47 @@
+.international-resource-monitor-alarm-list-sub-box {
+    .oss-ui-pro-table {
+        margin: 0 !important;
+    }
+    .oss-ui-pro-table-list-toolbar {
+        display: none;
+    }
+
+    .oss-ui-table-content {
+        &::-webkit-scrollbar {
+            width: 0px;
+        }
+    }
+
+    .sub-table {
+        thead {
+            :first-child {
+                text-align: right;
+            }
+            tr {
+                th {
+                    background-color: #ffefdb;
+                }
+                .sub-box-actions {
+                    color: transparent;
+                    user-select: none;
+                }
+            }
+        }
+        tbody {
+            :first-child {
+                text-align: right;
+            }
+            tr {
+                td {
+                    background-color: #fffcf8;
+                }
+            }
+        }
+
+        .oss-ui-table-cell-fix-left,
+        .oss-ui-table-cell-fix-right {
+            right: initial !important;
+            z-index: 0;
+        }
+    }
+}

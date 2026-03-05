@@ -1,0 +1,41 @@
+.fault-info-item {
+    .fault-info-item-context {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: flex-start;
+        justify-content: flex-start;
+        &-box {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: flex-start;
+            justify-content: flex-start;
+            // margin-left: -20px;
+            div {
+                display: inline-block;
+                padding-right: 30px;
+                padding-bottom: 5px;
+                color: @text-color;
+                font-weight: 400;
+                font-size: 14px;
+                font-family: 'PingFangSC-Regular', 'PingFang SC', sans-serif;
+                font-style: normal;
+            }
+            &-type {
+                flex-shrink: 0;
+                min-width: 50px;
+            }
+            &-name {
+                flex-shrink: 0;
+                // min-width: 50px;
+            }
+            &-time {
+                flex-shrink: 0;
+                min-width: 130px;
+            }
+        }
+    }
+    .fault-info-item-context-box-remark {
+        display: block;
+        margin-bottom: 10px;
+    }
+}

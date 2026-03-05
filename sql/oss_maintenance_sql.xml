@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+	<!--班组管理-班组列表-总数-->
+	<select id="selectMaintainTeamByCount" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		SELECT
+		count(*) total
+		FROM
+		(
+		SELECT DISTINCT
+		province_id,
+		province_name
+		FROM
+		region_city_local) a,
+		(
+		SELECT
+		a.*,
+		b.user_name
+		FROM
+		tfp_maintain_team_info a
+		LEFT JOIN
+		tau_user b
+		ON
+		a.OWNER_ID=b.user_id) b
+		LEFT JOIN
+		tau_user c
+		ON
+		b.MODIFY_USER_ID=c.user_id
+		WHERE
+		a.province_id=b.province_id
+		]]>
+		<if test="professionalType != null">
+			and b.professional_id=${professionalType}
+		</if>
+		<if test="provinceId != null">
+			and b.PROVINCE_ID=${provinceId}
+		</if>
+		<if test="mteamId != null">
+			and b.MTEAM_ID=${mteamId}
+		</if>
+		<if test="mteamName != null">
+			and b.MTEAM_NAME=${mteamName}
+		</if>
+	</select>
+	<!--班组管理-班组列表-分页记录数-->
+	<select id="selectMaintainTeamByPage" parameterType="java.util.Map" resultType="java.util.Map">
+
+		<![CDATA[
+                SELECT
+                    concat(b.PROVINCE_ID,':',b.MTEAM_ID) as row_key,
+                    b.MTEAM_ID,
+                    b.PROVINCE_ID,
+                    b.PROFESSIONAL_ID,
+                    b.professional_name,
+                    a.province_name,
+                    b.MTEAM_NAME,
+                    b.DIMENSIONS,
+                    b.ALARMS_FIELDS_COND,
+                    b.user_name creator,
+                    b.CREATE_TIME,
+                    c.user_name  modifier,
+                    b.LATEST_TIME,
+                    b.RELATED_RULE_ID
+                FROM
+                    (
+                        SELECT DISTINCT
+                            province_id,
+                            province_name
+                        FROM
+                            region_city_local) a,
+                    (
+                        SELECT
+                            a.*,
+                             b.user_name
+                        FROM
+                            tfp_maintain_team_info a
+                        LEFT JOIN
+                            tau_user b
+                        ON
+                            a.OWNER_ID=b.user_id) b
+                LEFT JOIN
+                    tau_user c
+                ON
+                    b.MODIFY_USER_ID=c.user_id
+                WHERE
+                    a.province_id=b.province_id
+                  
+               
+        ]]>
+		<if test="professionalType != null"> and b.professional_id=${professionalType}</if>
+		<if test="provinceId != null"> and b.PROVINCE_ID=${provinceId} </if>
+		<![CDATA[ 
+          order by LATEST_TIME , CREATE_TIME  desc
+
+           limit ${startNum}, ${endNum}
+        ]]>
+	</select>
+	<delete id="deletetMaintainTeamById" parameterType="java.util.Map">
+		<![CDATA[
+		delete from tfp_maintain_team_info   where PROVINCE_ID=${provinceId}  and  MTEAM_ID =${mteamId}
+		]]>
+	</delete>
+
+	<!--班组管理-专业类型枚举-->
+	<select id="selectProfessionalEnum2Maintenance" parameterType="java.util.Map" resultType="java.util.Map">
+		select id status ,txt text from tia_alarm_dict where type=1001
+	</select>
+	<!--班组管理-省份枚举-->
+	<select id="selectProvinceEnum2Maintenance" parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct province_id status,province_name text from region_city
+	</select>
+	<!--班组管理-班组维度 枚举-->
+	<select id="selectMteamEnum2Maintenance" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT id , txt , txt_en FROM tia_alarm_dict WHERE type=1037068 AND txt NOT IN ( SELECT DISTINCT DIMENSIONS from tfp_maintain_team_info WHERE PROVINCE_ID = ${provinceId})
+	</select>
+	<insert id="insertMaintainTeam" parameterType="java.util.Map">
+		INSERT INTO tfp_maintain_team_info ( PROVINCE_ID , MTEAM_ID, MTEAM_NAME, PROFESSIONAL_ID, professional_name, DIMENSIONS, ALARMS_FIELDS_COND, RELATED_RULE_ID, CREATE_TIME, OWNER_ID ) VALUES ( ${provinceId} , ${mteamId}, '${mteamName}', ${professionalId}, '${professionalName}', '${dimensions}', '${alarmFiledsCond}', ${relatedRuledId}, sysdate(), ${userId} )
+	</insert>
+	<update id="updateMaintainTeam" parameterType="java.util.Map">
+		Update tfp_maintain_team_info set MTEAM_NAME = '${mteamName}', PROFESSIONAL_ID = ${professionalId}, professional_name = '${professionalName}' , DIMENSIONS = '${dimensions}', ALARMS_FIELDS_COND = '${alarmFiledsCond}' , RELATED_RULE_ID = ${relatedRuledId}, LATEST_TIME = sysdate(), MODIFY_USER_ID = ${userId} where PROVINCE_ID = ${provinceId} and MTEAM_ID = ${mteamId}
+	</update>
+	<!-- 查询值班表人员信息 -->
+	<select id="selectMaintenanceUserinfo" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		SELECT a.user_id, a.zh_name,a.mobilephone,a.email,b.dept_id,b.dept_name FROM tai_userinfo a,tai_deptinfo b WHERE a.dept_id=b.dept_id
+		]]>
+		<if test="provinceId != null">
+			<![CDATA[
+			and b.province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and b.region_id= ${regionId}
+			]]>
+		</if>
+	</select>
+	<!-- 查询值班表部门信息 -->
+	<select id="selectMaintenanceDeptInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+	    select * from tai_deptinfo 
+        where 1=1
+        ]]>
+		<if test="provinceId != null">
+			<![CDATA[
+            and province_id= ${provinceId}
+            ]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and region_id= ${regionId}
+			]]>
+		</if>
+	</select>
+	<!-- 查询值班表专业 -->
+	<select id="selectMaintenanceProfessional" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		select id,txt from tia_alarm_dict where type=1001
+		]]>
+	</select>
+	<!-- 查询值班表省份地市 省级用户 地市用户 -->
+	<select id="selectMaintenanceLocal" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		SELECT DISTINCT region_id,province_id,province_name,region_name FROM region_city_local
+		where 1=1
+		]]>
+		<if test="provinceId != null">
+			<![CDATA[
+			and province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and region_id= ${regionId}
+			]]>
+		</if>
+	</select>
+	<!-- 查询值班表 班组信息，返回数据 可按找省份过滤 -->
+	<select id="selectMaintenanceTeamInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		select distinct mteam_id,mteam_name,professional_id,professional_name ,province_id,related_rule_id from tfp_maintain_team_info
+		where 1=1
+		]]>
+		<if test="provinceId != null">
+			<![CDATA[
+			and province_id= ${provinceId}
+			]]>
+		</if>
+	</select>
+	<!-- 查询值班表总数 值班信息，返回数据 按照省份，地市过滤，专业，班组，排班时间过滤， -->
+	<select id="selectMaintenanceInfoTotal" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		SELECT count(*) total FROM tfa_alarmresourcebyeoms
+		where 1=1
+		]]>
+		<if test="provinceId != null">
+			<![CDATA[
+			and province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and region_id= ${regionId}
+			]]>
+		</if>
+		<if test="dateTime != null">
+			<![CDATA[
+			and date_time= "${dateTime}"
+			]]>
+		</if>
+		<if test="ruleType != null">
+			<![CDATA[
+			and rule_type= "${ruleType}"
+			]]>
+		</if>
+		<if test="professionalType != null">
+			<![CDATA[
+			and professional_type= ${professionalType}
+			]]>
+		</if>
+		<if test="curDate != null">
+			<![CDATA[
+			AND  DATE_TIME=DATE_SUB(CURDATE(),INTERVAL 0 DAY)
+			]]>
+		</if>
+	</select>
+	<!-- 查询值班表 值班信息，返回数据 按照省份，地市过滤，专业，班组，排班时间过滤， -->
+	<select id="selectMaintenanceInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		select province_id,unique_rdn,date_time,professional_type,rule_type,object_class,ems_name,ne_label,
+		int_id,region_name,region_id,city_name,city_id,machine_room,site_no,insert_db_time,operate_user,
+		accept_id,accept_name,accept_dept_id,accept_dept_name,accept_tel,accept_night_id,accept_night_name,accept_night_dept_id,accept_night_dept_name,accept_night_tel,
+		agent_id,agent_name,agent_dept_id,agent_dept_name,agent_tel,copy_id,copy_name,copy_dept_id,copy_dept_name,copy_tel,
+		sms_id,sms_name,sms_dept_id,sms_dept_name,sms_tel,child_id,child_name,child_dept_id,child_dept_name,child_tel,
+		audit_id,audit_name,audit_dept_id,audit_dept_name,audit_tel from tfa_alarmresourcebyeoms
+		where 1=1
+		]]>
+		<if test="provinceId != null">
+			<![CDATA[
+			and province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and region_id= ${regionId}
+			]]>
+		</if>
+		<if test="dateTime != null">
+			<![CDATA[
+			and date_time= "${dateTime}"
+			]]>
+		</if>
+		<if test="ruleType != null">
+			<![CDATA[
+			and rule_type= "${ruleType}"
+			]]>
+		</if>
+		<if test="professionalType != null">
+			<![CDATA[
+			and professional_type= ${professionalType}
+			]]>
+		</if>
+		<if test="curDate != null">
+			<![CDATA[
+			AND  DATE_TIME=DATE_SUB(CURDATE(),INTERVAL 0 DAY)
+			]]>
+		</if>
+		<![CDATA[
+		order by date_time  DESC
+		limit ${startNum}, ${endNum}
+		]]>
+	</select>
+	<!-- 插入值班表 值班信息，返回数据 按照省份，地市过滤，专业，班组，排班时间过滤， -->
+	<insert id="insertMaintenanceInfo" parameterType="java.util.Map">
+		<![CDATA[
+		insert into tfa_alarmresourcebyeoms(
+		province_id,unique_rdn,date_time,professional_type,rule_type,object_class,ems_name,ne_label,
+		int_id,region_name,region_id,city_name,city_id,machine_room,site_no,insert_db_time,operate_user,
+		accept_id,accept_name,accept_dept_id,accept_dept_name,accept_tel,accept_night_id,accept_night_name,accept_night_dept_id,accept_night_dept_name,accept_night_tel,
+		agent_id,agent_name,agent_dept_id,agent_dept_name,agent_tel,copy_id,copy_name,copy_dept_id,copy_dept_name,copy_tel,
+		sms_id,sms_name,sms_dept_id,sms_dept_name,sms_tel,child_id,child_name,child_dept_id,child_dept_name,child_tel,
+		audit_id,audit_name,audit_dept_id,audit_dept_name,audit_tel)
+		values(${provinceId},${uniqueRdn},to_date(${dateTime},'yyyy-mm-dd hh24:mi:ss'),${professionalType},${ruleType},${objectClass},${emsName},${neLabel},
+		${intId},${regionName},${regionId},${cityName},${cityId},${machineRoom},${siteNo},to_date(${insertDbTime},'yyyy-mm-dd hh24:mi:ss'),${operateUser},
+		${acceptId},${acceptName},${acceptDeptId},${acceptDeptName},${acceptTel},${acceptNightId},${acceptNightName},${acceptNightDeptId},${acceptNightDeptName},${acceptNightTel},
+		${agentId},${agentName},${agentDeptId},${agentDeptName},${agentTel},${copyId},${copyName},${copyDeptId},${copyDeptName},${copyTel},
+		${smsId},${smsName},${smsDeptId},${smsDeptName},${smsTel},${childId},${childName},${childDeptId},${childDeptName},${childTel},
+		${auditId},${auditName},${auditDeptId},${auditDeptName},${auditTel})
+		]]>
+	</insert>
+	<!-- 更新值班表 值班信息，返回数据 按照省份，地市过滤，专业，班组，排班时间过滤， -->
+	<update id="updateMaintenanceInfoByRdn" parameterType="java.util.Map">
+		<![CDATA[
+		update tfa_alarmresourcebyeoms set
+		accept_id="${acceptId}",
+		accept_name="${acceptName}",
+		accept_dept_id="${acceptDeptId}",
+		accept_dept_name="${acceptDeptName}",
+		accept_tel="${acceptTel}",
+		accept_night_id="${acceptNightId}",
+		accept_night_name="${acceptNightName}",
+		accept_night_dept_id="${acceptNightDeptId}",
+		accept_night_dept_name="${acceptNightDeptName}",
+		accept_night_tel="${acceptNightTel}",
+		agent_id="${agentId}",
+		agent_name="${agentName}",
+		agent_dept_id="${agentDeptId}",
+		agent_dept_name="${agentDeptName}",
+		agent_tel="${agentTel}",
+		copy_id="${copyId}",
+		copy_name="${copyName}",
+		copy_dept_id="${copyDeptId}",
+		copy_dept_name="${copyDeptName}",
+		copy_tel="${copyTel}",
+		sms_id="${smsId}",
+		sms_name="${smsName}",
+		sms_dept_id="${smsDeptId}",
+		sms_dept_name="${smsDeptName}",
+		sms_tel="${smsTel}",
+		child_id="${childId}",
+		child_name="${childName}",
+		child_dept_id="${childDeptId}",
+		child_dept_name="${childDeptName}",
+		child_tel="${childTel}",
+		audit_id="${auditId}",
+		audit_name="${auditName}",
+		audit_dept_id="${auditDeptId}",
+		audit_dept_name="${auditDeptName}",
+		audit_tel="${auditTel}"
+		where unique_rdn="${uniqueRdn}"
+		]]>
+	</update>
+	<!--维护值班表快捷查询-->
+	<select id="selectMaintenanceQuickQueryDataInfo" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[ SELECT b.txt professional_type,a.province_id,a.unique_rdn,a.date_time,a.professional_type,a.rule_type,a.object_class,a.ems_name,a.ne_label,
+		a.int_id,a.region_name,a.region_id,a.city_name,a.city_id,a.machine_room,a.site_no,a.insert_db_time,a.operate_user,
+		a.accept_id,a.accept_name,a.accept_dept_id,a.accept_dept_name,a.accept_tel,a.accept_night_id,a.accept_night_name,a.accept_night_dept_id,a.accept_night_dept_name,a.accept_night_tel,
+		a.agent_id,a.agent_name,a.agent_dept_id,a.agent_dept_name,a.agent_tel,a.copy_id,a.copy_name,a.copy_dept_id,a.copy_dept_name,copy_tel,
+		a.sms_id,a.sms_name,a.sms_dept_id,a.sms_dept_name,a.sms_tel,a.child_id,a.child_name,a.child_dept_id,a.child_dept_name,a.child_tel,
+		a.audit_id,a.audit_name,a.audit_dept_id,a.audit_dept_name,a.audit_tel
+		FROM TFA_ALARMRESOURCEBYEOMS a,(SELECT id,txt FROM tia_alarm_dict WHERE TYPE=1001) b 
+		WHERE a.professional_type=b.id AND a.DATE_TIME=DATE_SUB(CURDATE(),INTERVAL 0 DAY) AND ((b.txt LIKE '%${selectVal}%') OR (a.region_name LIKE '%${selectVal}%') 
+		OR (a.rule_type LIKE '%${selectVal}%') OR (a.ne_label LIKE '%${selectVal}%') OR (a.accept_name LIKE '%${selectVal}%') 
+		OR (a.accept_night_name LIKE '%${selectVal}%') OR (a.agent_name LIKE '%${selectVal}%') OR (a.copy_name LIKE '%${selectVal}%') 
+		OR (a.sms_name LIKE '%${selectVal}%') OR (a.child_name LIKE '%${selectVal}%') OR (a.audit_name LIKE '%${selectVal}%')) ]]>
+		<if test="professionalType != null">
+			<![CDATA[
+			and a.professional_type= '${professionalType}'
+			]]>
+		</if>
+		<if test="provinceId != null">
+			<![CDATA[
+			and a.province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and a.region_id= ${regionId}
+			]]>
+		</if>
+		<![CDATA[
+		limit ${startNum}, ${endNum}
+		]]>
+	</select>
+	<!--维护值班表快捷查询查询总数-->
+	<select id="selectMaintenanceQuickQueryDataInfoTotal" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[ SELECT count(*) total FROM TFA_ALARMRESOURCEBYEOMS a,(SELECT id,txt FROM tia_alarm_dict WHERE TYPE=1001) b WHERE a.professional_type=b.id  AND ((b.txt LIKE '%${selectVal}%') OR (a.region_name LIKE '%${selectVal}%') OR (a.rule_type LIKE '%${selectVal}%') OR (a.ne_label LIKE '%${selectVal}%') OR (a.accept_name LIKE '%${selectVal}%') OR (a.accept_night_name LIKE '%${selectVal}%') OR (a.agent_name LIKE '%${selectVal}%') OR (a.copy_name LIKE '%${selectVal}%') OR (a.sms_name LIKE '%${selectVal}%') OR (a.child_name LIKE '%${selectVal}%') OR (a.audit_name LIKE '%${selectVal}%')) ]]>
+		<if test="professionalType != null">
+			<![CDATA[
+			and a.professional_type= '${professionalType}'
+			]]>
+		</if>
+		<if test="provinceId != null">
+			<![CDATA[
+			and a.province_id= ${provinceId}
+			]]>
+		</if>
+		<if test="regionId != null">
+			<![CDATA[
+			and a.region_id= ${regionId}
+			]]>
+		</if>
+	</select>
+	<!-- 查询字典表数据 -->
+	<select id="selectTiaAlarmDic" parameterType="java.util.Map" resultType="java.util.Map">
+		<![CDATA[
+		select id,txt,type from tia_alarm_dict where valid = 1 
+		]]>
+		<if test="type != null">
+			<![CDATA[
+			and type in (${type})
+			]]>
+		</if>
+	</select>
+</mapper>

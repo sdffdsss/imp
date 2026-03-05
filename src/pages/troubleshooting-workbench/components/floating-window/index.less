@@ -1,0 +1,57 @@
+.floating-window-container {
+    position: absolute;
+    z-index: 8;
+    width: 435px;
+    padding: 15px 30px 15px 20px;
+    color: #fff;
+    font-size: 14px;
+    font-family: '思源黑体';
+    background: linear-gradient(180deg, rgb(8, 74, 138), rgba(8, 74, 138, 0) 100%);
+    border: 1px solid rgb(0, 165, 255);
+    border-radius: 6px;
+    box-shadow: 0px 4px 7px 0px rgba(0, 0, 0, 0.25);
+    .close-image-button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 20px;
+        cursor: pointer;
+    }
+    .floating-window-system {
+        display: flex;
+        margin-bottom: 5px;
+        &-label {
+            width: 100px;
+        }
+        &-content {
+            width: calc(100% - 100px);
+        }
+    }
+    .floating-window-NE {
+        display: flex;
+        margin-bottom: 5px;
+        &-label {
+            width: 75px;
+        }
+        &-content {
+            width: calc(100% - 75px);
+        }
+    }
+    .floating-window-reuse {
+        display: flex;
+        margin-bottom: 5px;
+        &-label {
+            width: 85px;
+        }
+        &-content {
+            width: calc(100% - 85px);
+        }
+    }
+    .overflow-content {
+        display: -webkit-box;
+        overflow: hidden;
+        word-break: break-all;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* 这里是超出几行省略 */
+    }
+}

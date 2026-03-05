@@ -1,0 +1,87 @@
+.alarm-window-page-container {
+    width: 100%;
+    overflow: hidden;
+    .alarm-window-page-container-box {
+        display: flex;
+        // &.double {
+        width: 200%;
+        // width: 100%;
+        height: 100%;
+        // }
+    }
+    .left-btn {
+        position: absolute;
+        top: 50%;
+        left: -9px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 40px;
+        margin-top: -30px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(90deg);
+        cursor: pointer;
+    }
+    .right-btn {
+        position: absolute;
+        top: 50%;
+        right: -8px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px;
+        height: 40px;
+        margin-top: -30px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(270deg);
+        cursor: pointer;
+    }
+    .alarm-window-grid-layout {
+        .react-grid-item {
+            .oss-ui-card {
+                height: 100%;
+                .oss-ui-card-head {
+                    height: 30px;
+                    min-height: 30px;
+                    padding: 0 12px;
+                    line-height: 30px;
+                    .oss-ui-card-head-wrapper {
+                        .oss-ui-card-head-title {
+                            padding: 0;
+                            font-weight: 600;
+                        }
+                        .oss-ui-card-extra {
+                            padding: 0;
+                        }
+                    }
+                }
+                .oss-ui-card-body {
+                    height: calc(100% - 30px);
+                    padding: 8px;
+                    overflow: auto;
+                    .oss-ui-collapse {
+                        height: 100%;
+                        .oss-ui-collapse-item {
+                            .oss-ui-collapse-header {
+                                padding: 8px 16px 8px 40px;
+                            }
+                            .oss-ui-collapse-content {
+                                border-top: none;
+                                .oss-ui-collapse-content-box {
+                                    padding: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

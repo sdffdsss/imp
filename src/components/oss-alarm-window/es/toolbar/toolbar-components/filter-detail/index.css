@@ -1,0 +1,11 @@
+.toolbar-filter-info-new .filter-info-card .filter-info-section .oss-ui-card-head {
+  margin-left: -6px;
+  padding: 0;
+}
+.toolbar-filter-info-new .filter-info-card .filter-info-section .oss-ui-card-body {
+  padding: 0;
+}
+.toolbar-filter-info-new .filter-info-card {
+  height: calc(100vh - 250px);
+  margin-top: 20px !important;
+}

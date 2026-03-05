@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boco.gutil.database.mapper.custom.CustomSqlMapper">
+
+   <!--    告警报表sql开始        -->
+
+   <!-- 告警压缩率  -->
+
+   <select id="Select_AlmRpt_CompressionRatio_Test_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	  select count(*) num
+    from (select to_char(tfa_alarm_ssr_jt_sum.first_result,'yyyy-mm-dd hh24:mi:ss') w1,
+       tfa_alarm_ssr_jt_sum.ne_name w2,
+       sum(tfa_alarm_ssr_jt_sum.final_sheet_num) w4,
+       sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num) w5,
+        tia_alarm_dict.txt  w8,
+		sum(tfa_alarm_ssr_jt_sum.total_alarm_num) W9,
+		(100-round(decode(sum(tfa_alarm_ssr_jt_sum.total_alarm_num),0,0,sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num)/sum(tfa_alarm_ssr_jt_sum.total_alarm_num)*100),2))||'%' W12
+  from nmosdb.tfa_alarm_ssr_jt_sum tfa_alarm_ssr_jt_sum,
+       nmosdb.tia_alarm_dict           tia_alarm_dict
+ where tfa_alarm_ssr_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.sum_level= #{sum_level}
+   and (tfa_alarm_ssr_jt_sum.ne_id in (${province}) or '-1' in  (${province}))
+   and tfa_alarm_ssr_jt_sum.network_type_top = tia_alarm_dict.id
+   and tia_alarm_dict.type = 1001
+   and tfa_alarm_ssr_jt_sum.send_rule ='专业'
+ group by tfa_alarm_ssr_jt_sum.first_result,tfa_alarm_ssr_jt_sum.ne_name,tia_alarm_dict.txt
+ )
+   </select>
+  <select id="Select_AlmRpt_CompressionRatio_Test_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_ssr_jt_sum.first_result,'yyyy-mm-dd hh24:mi:ss') w1,
+       tfa_alarm_ssr_jt_sum.ne_name w2,
+       sum(tfa_alarm_ssr_jt_sum.final_sheet_num) w4,
+       sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num) w5,
+        tia_alarm_dict.txt  w8,
+		sum(tfa_alarm_ssr_jt_sum.total_alarm_num) W9,
+		(100-round(decode(sum(tfa_alarm_ssr_jt_sum.total_alarm_num),0,0,sum(tfa_alarm_ssr_jt_sum.notnull_sheet_num)/sum(tfa_alarm_ssr_jt_sum.total_alarm_num)*100),2))||'%' W12
+  from nmosdb.tfa_alarm_ssr_jt_sum tfa_alarm_ssr_jt_sum,
+       nmosdb.tia_alarm_dict           tia_alarm_dict
+ where tfa_alarm_ssr_jt_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+   and tfa_alarm_ssr_jt_sum.sum_level= #{sum_level}
+   and (tfa_alarm_ssr_jt_sum.ne_id in (${province}) or '-1' in  (${province}))
+   and (tfa_alarm_ssr_jt_sum.Region_id in (${region_id}) or '-1' in  (${region_id}))
+   and tfa_alarm_ssr_jt_sum.network_type_top = tia_alarm_dict.id
+   and tia_alarm_dict.type = 1001
+   and tfa_alarm_ssr_jt_sum.send_rule ='专业'
+ group by tfa_alarm_ssr_jt_sum.first_result,tfa_alarm_ssr_jt_sum.ne_name,tia_alarm_dict.txt
+   )a
+    )
+    Where m_rowNum &gt; #{BegeinIndex}  and m_rowNum &lt;= #{EndIndex}
+   </select>
+
+   <select id="Select_AlmRpt_CompressionRatio_Test_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '月' as txt, 3 id
+		  from dual
+   </select>
+
+  <select id="Select_AlmRpt_CompressionRatio_Test_CondProvince"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select distinct province_id id,province_name txt from region_city order by province_name
+   </select>
+   <select id="Select_AlmRpt_CompressionRatio_Test_CondRegion"  parameterType="java.util.Map" resultType="java.util.Map">
+		 select distinct region_id id,region_name txt from region_city
+     where (province_id in (${province_id}) or '-1' in  (${province_id}))
+     order by region_name
+   </select>
+
+   <!-- 云平台高频告警统计报表 -->
+  <select id="Select_AlmRpt_HighRate_Test_Count"  parameterType="java.util.Map" resultType="java.util.Map">
+	 select count(*) num
+		from (select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.g1 g1,
+		   tfa_alarm_cpm_hq_sum.g2 g2,
+		   tfa_alarm_cpm_hq_sum.eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.g3 g3,
+		   tfa_alarm_cpm_hq_sum.g4 g4,
+		   tfa_alarm_cpm_hq_sum.g5 g5
+		from
+		(select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.eqp_label g3,
+		   tfa_alarm_cpm_hq_sum.alarm_title_text g4,
+		   tfa_alarm_cpm_hq_sum.alarm_num g5
+	from tfa_alarm_cpm_hq_sum   tfa_alarm_cpm_hq_sum  left join
+	(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+	on tfa_alarm_cpm_hq_sum.eqp_object_class=meta_objects.object_class
+	where tfa_alarm_cpm_hq_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+	  and tfa_alarm_cpm_hq_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+	  and (tfa_alarm_cpm_hq_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+	  and (tfa_alarm_cpm_hq_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+	  and tfa_alarm_cpm_hq_sum.sum_level=#{sum_level}
+	  order by tfa_alarm_cpm_hq_sum.alarm_num desc) tfa_alarm_cpm_hq_sum
+	  where  rownum &lt;= #{rows} or '-1' = #{rows}
+	)
+   </select>
+     <select id="Select_AlmRpt_HighRate_Test_ByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+    select  * from
+		(select  a.*,rowNum m_rowNum  from
+		(select to_char(tfa_alarm_cpm_hq_sum.first_result, 'yyyy-mm-dd hh24:mi:ss')  first_result,
+		   tfa_alarm_cpm_hq_sum.g1 g1,
+		   tfa_alarm_cpm_hq_sum.g2 g2,
+		   tfa_alarm_cpm_hq_sum.eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.g3 g3,
+		   tfa_alarm_cpm_hq_sum.g4 g4,
+		   tfa_alarm_cpm_hq_sum.g5 g5
+		from
+		(select tfa_alarm_cpm_hq_sum.first_result first_result,
+		   tfa_alarm_cpm_hq_sum.nms_name g1,
+		   meta_objects.ZH_NAME g2,
+		   eqp_object_class eqp_object_class,
+		   tfa_alarm_cpm_hq_sum.eqp_label g3,
+		   tfa_alarm_cpm_hq_sum.alarm_title_text g4,
+		   tfa_alarm_cpm_hq_sum.alarm_num g5
+	from tfa_alarm_cpm_hq_sum   tfa_alarm_cpm_hq_sum  left join
+	(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+	on tfa_alarm_cpm_hq_sum.eqp_object_class=meta_objects.object_class
+		where tfa_alarm_cpm_hq_sum.first_result &gt;=to_date(#{time1},'yyyy-mm-dd hh24:mi:ss')
+		  and tfa_alarm_cpm_hq_sum.first_result &lt;=to_date(#{time2},'yyyy-mm-dd hh24:mi:ss')
+		  and (tfa_alarm_cpm_hq_sum.omc_id in (${omcid}) or '-1' in (${omcid}) )
+		  and (tfa_alarm_cpm_hq_sum.eqp_object_class in (${eqp_object_class}) or '-1' in (${eqp_object_class}) )
+		  and tfa_alarm_cpm_hq_sum.sum_level=#{sum_level}
+	  order by tfa_alarm_cpm_hq_sum.alarm_num desc) tfa_alarm_cpm_hq_sum
+	  where  rownum &lt;=  #{rows} or '-1' = #{rows}
+	   )a
+		)
+	Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+  <select id="Select_AlmRpt_HighRate_Test_CondSumLevel"  parameterType="java.util.Map" resultType="java.util.Map">
+ 		select '日' as txt, 1 id
+		  from dual
+		union all
+		select '周' as txt, 2 id
+		  from dual
+		union all
+		select '月' as txt, 3 id
+		  from dual
+   </select>
+  <select id="Select_AlmRpt_HighRate_Test_CondOmcid"  parameterType="java.util.Map" resultType="java.util.Map">
+		select distinct nms_name as txt,omc_id as id
+		from tfa_alarm_cpm_hq_sum
+   </select>
+  <select id="Select_AlmRpt_HighRate_Test_CondEqpType"  parameterType="java.util.Map" resultType="java.util.Map">
+		select '虚拟机' as txt, 508 as id
+		  from dual
+		union all
+		select '宿主机' as txt, 1521 as id
+		  from dual
+		union all
+		select '物理机' as txt, 502 as id
+		  from dual
+		union all
+		select '交换机' as txt, 905 as id
+		  from dual
+		union all
+		select '防火墙' as txt, 901 as id
+		  from dual
+		union all
+		select '虚拟存储' as txt, 1514 as id
+		  from dual
+		union all
+		select '应用' as txt, 506 as id
+		  from dual
+		union all
+		select '服务' as txt, 1520 as id from dual
+   </select>
+   <select id="Select_AlmRpt_HighRate_Test_DetailCount"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select count(*) num
+				from
+				(
+					select
+					   tfa_alarm_cpm_hq_detail.first_result a_cloumn_00,
+					   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+					   meta_objects.ZH_NAME  a_cloumn_02,
+					   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+					   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+					   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+					   tfa_alarm_cpm_hq_detail.event_time a_cloumn_06,
+					   tfa_alarm_cpm_hq_detail.cancel_time   a_cloumn_07
+				  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+				 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				 ${DetailWhereCondition}
+				)
+   </select>
+   <select id="Select_AlmRpt_HighRate_Test_DetailByPage"  parameterType="java.util.Map" resultType="java.util.Map">
+		    select  * from
+			(select  a.*,rowNum m_rowNum  from
+			(select
+			   to_char(tfa_alarm_cpm_hq_detail.first_result , 'yyyy-mm-dd hh24:mi:ss') a_cloumn_00,
+			   tfa_alarm_cpm_hq_detail.nms_name a_cloumn_01,
+			   meta_objects.ZH_NAME  a_cloumn_02,
+			   tfa_alarm_cpm_hq_detail.eqp_label a_cloumn_03,
+			   tfa_alarm_cpm_hq_detail.org_severity a_cloumn_04,
+			   tfa_alarm_cpm_hq_detail.alarm_title_text   a_cloumn_05,
+			   to_char(tfa_alarm_cpm_hq_detail.event_time,'yyyy-mm-dd hh24:mi:ss') a_cloumn_06,
+			   to_char(tfa_alarm_cpm_hq_detail.cancel_time,'yyyy-mm-dd hh24:mi:ss')   a_cloumn_07
+		  from tfa_alarm_cpm_hq_detail tfa_alarm_cpm_hq_detail,(select ZH_NAME,OBJECT_CLASS from meta_objects where object_class in(508,1521,502,905,901,1514,506,1520)) meta_objects
+				 where first_result =to_date(#{first_result},'yyyy-MM-dd HH24:mi:ss')
+				 and eqp_object_class = #{eqp_object_class}
+				 and nms_name =  #{g1}
+				 and eqp_label =  #{g3}
+				 and alarm_title_text = #{g4}
+		 and tfa_alarm_cpm_hq_detail.eqp_object_class =meta_objects.object_class
+				${DetailWhereCondition}
+			)a
+			)
+		Where m_rowNum &gt; ${BegeinIndex} and m_rowNum &lt;= ${EndIndex}
+   </select>
+
+   <!--    告警报表sql结束        -->
+	<insert id="insertProduct" parameterType="java.util.Map" >
+         insert into test (name) values (#{name})
+    </insert>
+
+   <update id="updateProduct" parameterType="java.util.Map">
+		update test set name = (#{name})
+	</update>
+
+	<delete id="deleteProduct" parameterType="java.util.Map">
+		delete from test where name = (#{name})
+	</delete>
+
+</mapper>

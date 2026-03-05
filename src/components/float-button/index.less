@@ -1,0 +1,29 @@
+.float-button {
+    position: absolute;
+    top: 400px;
+    right: 0;
+    z-index: 2147483640;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 8rem;
+    cursor: pointer;
+    & > .float-action {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        background: rgba(29, 89, 172, 0.42);
+        border: 4px solid #3366a8;
+        border-radius: 50%;
+        opacity: 0.78;
+        & > .float-icon {
+            color: #52c1f9;
+            font-size: 30px;
+        }
+    }
+    & .float-menu-item {
+        margin-top: 5px;
+    }
+}

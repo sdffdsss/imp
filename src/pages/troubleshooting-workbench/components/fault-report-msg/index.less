@@ -1,0 +1,50 @@
+.group-workbench-fault-report-msg-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    .new-msg-item {
+        position: relative;
+        box-sizing: border-box;
+        width: 410px;
+        margin-bottom: 10px;
+        padding: 14px;
+        padding-right: 43px;
+        overflow: hidden;
+        color: #fff;
+        font-size: 14px;
+        line-height: 22px;
+        background: rgba(4, 97, 189, 0.6);
+        border: 1px solid rgb(0, 165, 255);
+        border-radius: 6px;
+        backdrop-filter: blur(10px);
+        animation: NewMsg 0.45s linear;
+
+        .specialty-name {
+            color: rgb(255, 165, 44);
+        }
+
+        .close-icon {
+            position: absolute;
+            top: 50%;
+            right: 14px;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background: url(../../img/icon_close-new-msg.png) left top/100% 100% no-repeat;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        @keyframes NewMsg {
+            0% {
+                top: 30px;
+                opacity: 0;
+            }
+            100% {
+                top: 0;
+                opacity: 1;
+            }
+        }
+    }
+}

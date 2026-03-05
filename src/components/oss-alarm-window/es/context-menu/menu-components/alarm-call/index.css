@@ -1,0 +1,20 @@
+.alarm-call-message {
+  display: flex;
+  justify-content: space-between;
+  line-height: 26px;
+}
+.alarm-call-user-select {
+  margin-top: 16px;
+}
+.alarm-call-user-tag {
+  margin-top: 16px;
+}
+.alarm-call-user-tag .alarm-call-user-tag-dom {
+  margin-top: 8px;
+}
+.alarm-call-user-input {
+  margin-top: 16px;
+}
+.alarm-call-user-input .alarm-call-user-input-dom {
+  margin-top: 8px;
+}

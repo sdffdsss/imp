@@ -1,0 +1,32 @@
+.customFilters-dom {
+  min-width: 250px;
+  max-width: 550px;
+  padding: 10px;
+}
+.customFilters-dom .customFilters-filter-dom {
+  width: 100%;
+}
+.customFilters-dom .customFilters-button-dom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+.alarm-window-custom-filters.light .alarm-window-custom-filters-background {
+  min-width: 250px;
+  max-width: 450px;
+  padding: 10px;
+  background: #ffffff;
+}
+.alarm-window-custom-filters.dark .alarm-window-custom-filters-background {
+  min-width: 250px;
+  max-width: 450px;
+  padding: 10px;
+  background: #1f1f1f;
+}
+.alarm-window-custom-filters.darkblue .alarm-window-custom-filters-background {
+  min-width: 250px;
+  max-width: 450px;
+  padding: 10px;
+  background: #0e305f;
+}

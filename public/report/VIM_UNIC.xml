@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!--报表标题-->
+  <ReportTitle title="VIM告警统计报表" />
+  
+  <!--查询sql-->
+  <!--例子Start-->
+  <sql dbName="nmosdb" sqlId = "Select_AlmRpt_VimUnic_ByPage">
+    <!--当是informax时：#BegeinIndex#表示分页起点位置（即skip的条数）,#Count#取的条数；当是oracle时：#BegeinIndex#表示分页起点位置，#EndIndex#表示分页结束的位置-->
+    <!--如果是oracle库，时间格式写成to_date(#Time#,'yyyy-MM-dd HH24:mi:ss'),informix库就不需要修改-->
+    select  * from
+    (select  a.*,rowNum m_rowNum  from
+    (select to_char(tfa_alarm_vim_sum.first_result,'yyyy-mm-dd') first_result,
+       tfa_alarm_vim_sum.omc_name g1,
+       meta_objects.zh_name g2,
+       tfa_alarm_vim_sum.ne_nums g3,
+       tfa_alarm_vim_sum.total_alarm_nums g4,
+       case when tfa_alarm_vim_sum.ne_nums=0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_nums/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g5,
+       case when tfa_alarm_vim_sum.ne_nums =0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_duration/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g6,
+       tfa_alarm_vim_sum.alarm_nums_level1 g7,
+       case when tfa_alarm_vim_sum.alarm_nums_level1=0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level1/tfa_alarm_vim_sum.alarm_nums_level1,2) as varchar2(8))end g8,
+       tfa_alarm_vim_sum.alarm_nums_level2 g9,
+       case when tfa_alarm_vim_sum.alarm_nums_level2 =0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level2/tfa_alarm_vim_sum.alarm_nums_level2,2) as varchar2(8))end g10
+ from tfa_alarm_vim_sum tfa_alarm_vim_sum ,meta_objects meta_objects
+where tfa_alarm_vim_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.sum_level=#sum_level#
+  and tfa_alarm_vim_sum.object_class = meta_objects.object_class(+)
+  order by tfa_alarm_vim_sum.first_result,tfa_alarm_vim_sum.omc_name,meta_objects.zh_name asc
+   )a
+    )
+    Where m_rowNum &gt; #BegeinIndex# and m_rowNum &lt;= #EndIndex#
+
+
+  </sql>
+  <!--例子End-->
+  
+  <!--汇总sql-->
+  <!--例子Start-->
+  <countsql sqlId = "Select_AlmRpt_VimUnic_Count">
+    select count(*)
+    from (select to_char(tfa_alarm_vim_sum.first_result,'yyyy-mm-dd') first_result,
+       tfa_alarm_vim_sum.omc_name g1,
+       meta_objects.zh_name g2,
+       tfa_alarm_vim_sum.ne_nums g3,
+       tfa_alarm_vim_sum.total_alarm_nums g4,
+       case when tfa_alarm_vim_sum.ne_nums=0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_nums/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g5,
+       case when tfa_alarm_vim_sum.ne_nums =0 then '0' else cast(round(tfa_alarm_vim_sum.total_alarm_duration/tfa_alarm_vim_sum.ne_nums,2) as varchar2(8)) end g6,
+       tfa_alarm_vim_sum.alarm_nums_level1 g7,
+       case when tfa_alarm_vim_sum.alarm_nums_level1=0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level1/tfa_alarm_vim_sum.alarm_nums_level1,2) as varchar2(8))end g8,
+       tfa_alarm_vim_sum.alarm_nums_level2 g9,
+       case when tfa_alarm_vim_sum.alarm_nums_level2 =0 then '0' else cast(round(tfa_alarm_vim_sum.alarm_duration_level2/tfa_alarm_vim_sum.alarm_nums_level2,2) as varchar2(8))end g10
+ from tfa_alarm_vim_sum tfa_alarm_vim_sum ,meta_objects meta_objects
+where tfa_alarm_vim_sum.first_result &gt;=to_date('#time1#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.first_result &lt;=to_date('#time2#','yyyy-mm-dd hh24:mi:ss')
+  and tfa_alarm_vim_sum.sum_level=#sum_level#
+  and tfa_alarm_vim_sum.object_class = meta_objects.object_class(+)
+  order by tfa_alarm_vim_sum.first_result,tfa_alarm_vim_sum.omc_name,meta_objects.zh_name asc
+)
+  </countsql>
+  <!--例子End-->
+  
+  <!--查询条件-->
+  <Conditions>
+   <!--Name：控件说明，Flag：唯一标示不允许重复并与上面sql中where条件未知参数相同，BindType：绑定类型（sql|enmu|time），ControlType：标准控件名称,DbName:数据库名称-->
+    <!--ControlType说明  （时间：DatePicker||单选下拉框:ComboBox||文本框：textbox||多选下拉框：MutiDropDown）-->
+    <!--BindType说明  （BindType=sql中字段别名采用text ,value||BindType=enmu 前面是显示文本，后面是ID||BindType="" 不需要初始化数据）-->
+    
+    <!--例子 Start-->
+    <Condition Name="起止时间" Flag="timeRange"  ControlType="DatePickerRange" DefaultValue="当日,当日">
+    </Condition>
+    <Condition Name="时间粒度" Flag="sum_level" BindType="enmu" ControlType="ComboBox" TriggerEvent="True" 
+               DefaultValue="1" sqlId = "Select_AlmRpt_VimUnic_CondSumLevel">
+      日,1|周,2|月,3
+    </Condition> 
+    <!--例子 End-->
+  </Conditions>
+  
+  <!--显示列-->
+  <Columns>
+    <!--FieldName与上面的sql字段的别名相同（除了包含子级的父节点），不可以重复,包含子节点的Column节点中的FieldName字段不重复-->
+    <!--IsSort 排序图标（false不进行排序-可以不写，true进行排序）-->
+ 
+    <!--多级表头例子-->
+    <!--例子 Start-->
+    <!--不分级列-->
+      <ColumnItem FieldName="first_result" DisplayName="时间" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g1" DisplayName="VIM" IsSort="false" ></ColumnItem>      
+      <ColumnItem FieldName="g2" DisplayName="类型" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g3" DisplayName="网元数量" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g4" DisplayName="告警总数" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g5" DisplayName="平均告警数" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g6" DisplayName="平均告警历时(分钟)" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g7" DisplayName="一级告警数" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g8" DisplayName="一级告警平均历时(分钟)" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g9" DisplayName="二级告警数" IsSort="false" ></ColumnItem>
+      <ColumnItem FieldName="g10" DisplayName="二级告警平均历时(分钟)" IsSort="false" ></ColumnItem>
+     </Columns>
+     
+</root>

@@ -1,0 +1,19 @@
+.warning-remarks-label {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  line-height: 26px;
+}
+.alarm-remark-textarea {
+  margin-top: 16px;
+}
+.alarm-remark-table .oss-ui-table-wrapper {
+  padding: 0;
+}
+.alarm-remark-label {
+  margin-bottom: 8px;
+}
+.alarm-remark-tips {
+  margin-top: 16px;
+  text-align: center;
+}

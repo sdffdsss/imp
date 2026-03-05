@@ -1,0 +1,43 @@
+.template-modal {
+    width: 800px;
+    height: 500px;
+
+    .template-input-textarea {
+        height: 410px;
+        .input-header {
+            display: flex;
+            justify-content: space-between;
+            width: 800px;
+            padding: 0 0px 5px 0px;
+            font-size: 12px;
+            .input-textarea-title {
+                &::before {
+                    display: inline-block;
+                    margin-right: 4px;
+                    color: #ff4d4f;
+                    font-size: 12px;
+                    font-family: SimSun, sans-serif;
+                    line-height: 1;
+                    content: '*';
+                }
+            }
+            .input-textarea-tip {
+                color: #2c99ec;
+                &.danger {
+                    color: red;
+                }
+            }
+            .clear-icon {
+                font-size: 19px;
+                cursor: pointer;
+            }
+        }
+    }
+    .template-modal-footer {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        width: 800px;
+        height: 40px;
+    }
+}

@@ -1,0 +1,39 @@
+@import '~oss-ui/es/style/themes/default.less';
+.alarm-detial-container {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+    .drawer-left-bar {
+        position: absolute;
+        width: 12px;
+        height: 70px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+        z-index: 2;
+        background-color: @primary-2;
+    }
+
+    .oss-ui-drawer-body {
+        padding: 8px;
+    }
+
+    .drawer-left-bar-unfold {
+        right: 20%;
+    }
+
+    .drawer-left-bar-fold {
+        right: 0;
+    }
+
+    .drawer-left-bar-icon {
+        line-height: 70px !important;
+    }
+
+    .alarm-drawer-title {
+        display: flex;
+        justify-content: space-between;
+    }
+}

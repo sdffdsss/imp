@@ -1,0 +1,31 @@
+.condition-modal-wrapper {
+    .condition-wrapper {
+        display: flex;
+
+        > .oss-ui-space-item {
+            width: 50%;
+
+            .condition-list {
+                height: 300px;
+                overflow: auto;
+                margin-top: 8px;
+
+                .condition-item {
+                    .name {
+                        margin-left: 8px;
+                        cursor: pointer;
+
+                        &.active {
+                            color: #2267d6;
+                        }
+                    }
+                }
+            }
+        }
+
+        .right-value-wrapper {
+            height: 340px;
+            overflow: hidden;
+        }
+    }
+}

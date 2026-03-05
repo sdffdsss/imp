@@ -1,0 +1,49 @@
+.container {
+  margin: 0px 10px;
+  height: 25px;
+  display: inline-flex;
+}
+.circle {
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+}
+.stat-item {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  cursor: pointer;
+}
+.stat-item-checked {
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 22px;
+  background: rgba(0, 39, 75, 0.35);
+  border: 1px solid #73c1ff;
+}
+.filter-info {
+  white-space: nowrap;
+}
+.title {
+  display: inline;
+}
+.value {
+  display: inline;
+}
+.red {
+  background: #eb3223;
+}
+.yellow {
+  background: #fffd56;
+}
+.orange {
+  background: #f1a83c;
+}
+.blue {
+  background: #54b3ff;
+}
+.green {
+  background: url('../assets/Alarm/state/ack_flag_1.png') no-repeat center center;
+  background-size: 100% 100%;
+}

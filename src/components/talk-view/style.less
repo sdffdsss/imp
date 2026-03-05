@@ -1,0 +1,204 @@
+.talk-view-page-Modal {
+    .oss-ui-modal-title {
+        height: 22px;
+    }
+    .oss-ui-modal-body {
+        max-height: none !important;
+        padding: 0px;
+        overflow: hidden;
+    }
+    .talk-view-page-chatops-title {
+        width: 80%;
+    }
+    .talk-view-page {
+        height: 470px;
+        .talk-view-content {
+            height: 100%;
+            padding: 5px 10px;
+            overflow-y: auto;
+            &-field {
+                padding: 5px 0;
+                &-name {
+                    max-width: 50%;
+                }
+                &-area {
+                    display: inline-block;
+                    max-width: 50%;
+                    padding: 10px;
+                    background-color: rgb(227, 231, 235);
+                    border-radius: 3px;
+                    &-file {
+                        width: 200px;
+                        height: 65px;
+                        padding: 10px;
+                        background-color: #fff;
+                        border: 1px solid #f0f0f0;
+                        cursor: pointer;
+                        &-content {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            &-status {
+                                width: 145px;
+                                &-name {
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-align: left;
+                                    text-overflow: ellipsis;
+                                }
+                                &-size {
+                                    margin-top: 5px;
+                                    color: #6a6f7b;
+                                    text-align: left;
+                                }
+                            }
+
+                            &-img {
+                                width: 30px;
+                                height: 30px;
+                                font-size: 30px;
+                                line-height: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+            .my-talk {
+                width: 100%;
+                text-align: right;
+                .talk-view-content-field-area {
+                    background-color: rgb(196, 229, 252);
+                }
+            }
+        }
+        &-add {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        &-person {
+            padding: 10px;
+            overflow-y: auto;
+            height: calc(100% - 41px);
+            &-field {
+                display: flex;
+                align-items: center;
+                font-size: 14px;
+                .icon {
+                    margin-right: 5px;
+                }
+            }
+        }
+    }
+
+    .my-component {
+        height: 100%;
+        .bf-container {
+            height: calc(100% - 38px);
+        }
+        .bf-controlbar .control-item {
+            height: 20px;
+        }
+        .bf-dropdown .dropdown-handler {
+            height: 20px;
+        }
+        .bf-dropdown .dropdown-handler > span i {
+            height: 20px;
+            line-height: 20px;
+        }
+        .bf-dropdown .dropdown-content {
+            top: auto;
+            bottom: calc(100% + 10px);
+        }
+        .bf-dropdown .dropdown-content .dropdown-arrow {
+            top: 97%;
+        }
+        .bf-content {
+            height: calc(100% - 30px);
+        }
+        .bf-container .public-DraftEditor-content {
+            padding: 5px;
+        }
+        .bf-controlbar .separator-line {
+            height: 10px;
+        }
+        .oss-ui-upload.oss-ui-upload-select {
+            height: 20px;
+        }
+        .component-wrapper {
+            float: left;
+        }
+    }
+}
+.talk-view-page-person-Modal {
+    .oss-ui-modal-body {
+        padding: 0px;
+    }
+    .talk-view-person-page {
+        display: flex;
+        height: 400px;
+        &-user {
+            width: calc(50% - 0.5px);
+            padding: 5px 0;
+            border-right: 1px solid #f0f0f0;
+            .oss-ui-spin-nested-loading {
+                height: 100%;
+            }
+            .oss-ui-spin-container {
+                height: 100%;
+            }
+            &-list {
+                width: 100%;
+                height: calc(100% - 28px);
+                padding: 5px 10px;
+                overflow-y: auto;
+                &-field {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+        }
+
+        &-action {
+            width: calc(50% - 0.5px);
+            padding: 10px;
+            &-list {
+                width: 100%;
+                height: calc(100% - 50px);
+                margin-bottom: 5px;
+                padding: 5px 10px;
+                overflow-y: auto;
+                &-field {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                }
+            }
+            &-button {
+                text-align: right;
+            }
+        }
+    }
+}
+.talk-view-page-Modal-list {
+    .oss-ui-modal {
+        top: 0;
+        width: 100% !important;
+        max-width: 100vw;
+        height: 100%;
+        padding: 0;
+        .oss-ui-modal-content {
+            height: 100%;
+            .oss-ui-modal-body {
+                height: calc(100vh - 45px);
+                max-height: max-content;
+                .talk-view-page {
+                    height: 100%;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+.tree-mode-wrapper {
+    height: 100%;
+    .func-list {
+        text-align: right;
+    }
+    .tree-mode-content-wrapper {
+        display: flex;
+        margin-top: 5px;
+        height: calc(100% - 62px);
+
+        .filter-tree-list {
+            flex: 0 0 320px;
+            padding: 10px;
+            margin-right: 5px;
+            .oss-ui-tree {
+                margin-top: 10px;
+                height: calc(100% - 48px);
+                overflow: auto;
+            }
+        }
+
+        .filter-info-wrapper {
+            overflow: auto;
+            flex: 1;
+        }
+    }
+}

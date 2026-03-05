@@ -1,0 +1,225 @@
+import moment from 'moment';
+import { _ } from 'oss-web-toolkits';
+/**
+ * 通过Id获取表单元素初始值
+ * @param {规则动作} data
+ * @param {规则动作Key} key
+ */
+const getInitValueBykey = (data, key) => {
+    const itemdata = data.find((item) => item.key === key);
+    if (_.isEmpty(itemdata)) {
+        return false;
+    }
+    return itemdata.value;
+};
+/**
+ *获取表单编辑回填值
+ * @param {*} props
+ */
+export const getEditValues = (initialValues) => {
+    let newValues = {};
+    if (initialValues && Array.isArray(initialValues)) {
+        newValues = {
+            ...newValues,
+            // 工程抑制派单，删除
+            // restrainProjectAlarm:
+            //     getInitValueBykey(initialValues, 'restrain_projectalarm') === '1' ? true : false,
+            prehandle: getInitValueBykey(initialValues, 'prehandle') === '1',
+            mainclearSubsendSwitch: getInitValueBykey(initialValues, 'switch') === '1',
+            relatedAction: Number.parseInt(getInitValueBykey(initialValues, 'related')),
+            alarmHandleLevel: Number.parseInt(
+                getInitValueBykey(initialValues, 'alarmHandleLevel') ? getInitValueBykey(initialValues, 'alarmHandleLevel') : 5,
+            ),
+        };
+        const timeperiod = getInitValueBykey(initialValues, 'timeperiod');
+        if (timeperiod) {
+            newValues = {
+                ...newValues,
+                dispatchTimerangeSwitch: true,
+                forwardTime: [moment(timeperiod.split('~')[0], 'HH:mm:ss'), moment(timeperiod.split('~')[1], 'HH:mm:ss')],
+                nonForwardProcess: Number.parseInt(getInitValueBykey(initialValues, 'nonForwardProcess')),
+            };
+        }
+        const dayperiod = getInitValueBykey(initialValues, 'Dayperiod');
+        if (dayperiod) {
+            const arr = dayperiod.split('~');
+            if (arr[1] === '9999-12-31') {
+                newValues = {
+                    ...newValues,
+                    noEndDate: 1,
+                    startUseDate: moment(arr[0], 'YYYY-MM-DD'),
+                    endUseDate: null,
+                };
+            } else {
+                newValues = {
+                    ...newValues,
+                    noEndDate: 0,
+                    startUseDate: moment(arr[0], 'YYYY-MM-DD'),
+                    endUseDate: moment(arr[1], 'YYYY-MM-DD'),
+                };
+            }
+            newValues = {
+                ...newValues,
+                dayPeriodSwitch: true,
+            };
+        }
+
+        const alarmType = getInitValueBykey(initialValues, 'alarmType');
+
+        if (alarmType) {
+            newValues = {
+                ...newValues,
+                mainclearSubsendSwitch: true,
+                alarmType,
+            };
+        }
+        const rulePriority = getInitValueBykey(initialValues, 'rule_priority');
+        if (rulePriority) {
+            newValues = {
+                ...newValues,
+                rulePrioritySwitch: true,
+                rulePriority: Number.parseInt(rulePriority),
+            };
+        }
+
+        const delayseconds = getInitValueBykey(initialValues, 'Delayseconds');
+        if (delayseconds) {
+            newValues = {
+                ...newValues,
+                // delayTime: 0,//删除了花名册及资源时延，仅保留延时时间设置。
+                delayseconds: Number.parseInt(delayseconds),
+            };
+        }
+
+        const dayOfWeek = getInitValueBykey(initialValues, 'dayOfWeek');
+
+        if (dayOfWeek) {
+            newValues = {
+                ...newValues,
+                dayOfWeek: dayOfWeek.split(',').map((item) => Number.parseInt(item)),
+            };
+        }
+        const holidays = getInitValueBykey(initialValues, 'holidays');
+
+        if (holidays) {
+            newValues = {
+                ...newValues,
+                holidays: holidays.split(',').map((item) => Number.parseInt(item)),
+            };
+        }
+        const alarmHandleTime = getInitValueBykey(initialValues, 'alarmHandleTime');
+
+        if (alarmHandleTime) {
+            newValues = {
+                ...newValues,
+                alarmHandleTime: Number.parseInt(alarmHandleTime),
+            };
+        }
+        const synchroFilter = getInitValueBykey(initialValues, 'synchroFilter');
+        if (synchroFilter) {
+            newValues = {
+                ...newValues,
+                synchroFilter: synchroFilter === 'true' ? true : false,
+            };
+        }
+        const copyLocal = getInitValueBykey(initialValues, 'copyLocal');
+        if (copyLocal) {
+            newValues = {
+                ...newValues,
+                copyLocal: copyLocal === 'true',
+            };
+        }
+        const ruleSwitch = getInitValueBykey(initialValues, 'ruleSwitch');
+        if (ruleSwitch) {
+            newValues = {
+                ...newValues,
+                ruleSwitch: ruleSwitch === 1,
+            };
+        }
+        const ruleType = getInitValueBykey(initialValues, 'ruleType');
+        if (ruleType) {
+            newValues = {
+                ...newValues,
+                ruleType,
+            };
+        }
+
+        const filterIdType = getInitValueBykey(initialValues, 'filterIdType');
+        if (filterIdType) {
+            newValues = {
+                ...newValues,
+                filterIdType: filterIdType === 'true' ? true : false,
+            };
+        }
+
+        const faultType = getInitValueBykey(initialValues, 'faultType');
+        if (faultType) {
+            newValues = {
+                ...newValues,
+                faultType: faultType,
+            };
+        }
+        const dispatchProfession = getInitValueBykey(initialValues, 'dispatchProfession');
+        if (dispatchProfession) {
+            newValues = {
+                ...newValues,
+                dispatchProfession: dispatchProfession * 1,
+            };
+        }
+
+        const alarm_recovery = getInitValueBykey(initialValues, 'alarm_recovery');
+        // eslint-disable-next-line no-nested-ternary
+        newValues.alarm_recovery = alarm_recovery === 'false' ? false : alarm_recovery === 'true' ? true : alarm_recovery;
+
+        const alarm_recovery_time_end = getInitValueBykey(initialValues, 'alarm_recovery_time_end');
+        if (alarm_recovery_time_end?.toString() !== '当天') {
+            newValues.alarm_recovery_time_end = 0;
+            newValues.alarm_recovery_time_end_real = Number(alarm_recovery_time_end);
+        } else {
+            //  newValues.alarm_recovery_time_end = Number(alarm_recovery_time_end);
+            newValues.alarm_recovery_time_end = '当天';
+        }
+
+        const alarm_recovery_condition = getInitValueBykey(initialValues, 'alarm_recovery_condition');
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        typeof alarm_recovery_condition === 'string' && (newValues.alarm_recovery_condition = alarm_recovery_condition.split(','));
+    }
+
+    return newValues;
+};
+
+// 页面初始值
+export const initialValues = {
+    // 派单时间段
+    forwardTime: [moment('08:00:00', 'HH:mm:ss'), moment('18:00:00', 'HH:mm:00')],
+    // 非派单时间段处理
+    nonForwardProcess: 0,
+
+    startUseDate: moment(), // 启用日期-开始时间
+    endUseDate: moment().add(1, 'days'), // 启用日期-结束时间
+    // 无结束日
+    noEndDate: false,
+    // 规则设置
+    delayTime: 0,
+    // 延迟时间-规则设置
+    delayseconds: 0,
+    // 主告警清除后子告警派单功能
+    switch: false,
+    alarmType: 'main_mainclear_subsend',
+
+    // 规则优先级
+    rulePriority: 2,
+    // 关联关系动作
+    relatedAction: 0,
+    // 故障处理级别
+    alarmHandleLevel: 5,
+    synchroFilter: false,
+    filterIdType: true,
+    ruleSwitch: false,
+    alarm_recovery: false,
+    alarm_recovery_time_end: '当天',
+    alarm_recovery_condition: [],
+    faultType: '-1',
+    dispatchProfession: 1,
+    // faultType: '',
+};

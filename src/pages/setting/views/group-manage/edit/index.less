@@ -1,0 +1,36 @@
+.user-list {
+    height: 70px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    span {
+        margin: 5px;
+    }
+}
+.group-view-container {
+    // position: absolute;
+    width: 100%;
+    .columns-sort-drag-search-title {
+        display: none;
+    }
+    .columns-sort-drag-content-right {
+        padding-top: 28px;
+    }
+    .view-search {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: calc(50% - 30px);
+    }
+}
+.group-view-alarm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 3px;
+    // border: solid 1px;
+    .oss-ui-radio-group {
+        display: flex;
+        justify-content: space-between;
+        width: 69%;
+    }
+}

@@ -1,0 +1,95 @@
+.msg-modal {
+    .oss-ui-modal-content {
+        border-radius: 6px;
+        .oss-ui-modal-close {
+            color: #fff;
+        }
+        .oss-ui-modal-header {
+            height: 40px;
+            background: rgb(21, 87, 154);
+            border-bottom: 0;
+
+            .oss-ui-modal-title {
+                color: rgb(255, 255, 255);
+                font-weight: 700;
+                font-size: 14px;
+                font-family: Noto Sans SC;
+                line-height: 22px;
+                letter-spacing: -1px;
+            }
+        }
+        .oss-ui-modal-body {
+            padding: 25px 40px;
+            background: rgb(12, 61, 110);
+        }
+        .oss-ui-modal-footer {
+            padding: 20px;
+            background: rgb(12, 61, 110);
+            border-top: 0;
+        }
+    }
+
+    &-footer {
+        text-align: center;
+        &-button {
+            width: 60px;
+            height: 30px;
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+            font-size: 14px;
+            font-family: Noto Sans SC;
+            line-height: 30px;
+            background: rgba(34, 128, 219, 0.31);
+            border: 1px solid rgb(34, 128, 219);
+            border-radius: 4px;
+            &:hover {
+                color: rgb(255, 255, 255);
+                background: rgba(34, 128, 219, 0.31);
+                border-radius: 4px;
+            }
+        }
+    }
+
+    .msg-modal-timeline {
+        margin-left: -120px;
+        .oss-ui-timeline-item-label {
+            padding-right: 21px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 400;
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            line-height: 24px;
+        }
+        .oss-ui-timeline-item-tail {
+            border-left: 2px solid rgba(153, 201, 255, 0.5);
+        }
+        .oss-ui-timeline-item-head {
+            width: 14px;
+            height: 14px;
+            margin-left: -6px;
+            background: rgb(255, 255, 255);
+            border: 4px solid rgb(153, 201, 255);
+        }
+        .oss-ui-timeline-item-content {
+            padding-left: 18px;
+        }
+        &-name {
+            display: inline-block;
+            margin-right: 5px;
+            color: rgb(153, 201, 255);
+            // padding-left: 18px;
+            font-weight: 400;
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            line-height: 24px;
+        }
+        &-notice {
+            display: inline-block;
+            color: rgb(255, 255, 255);
+            font-weight: 400;
+            font-size: 14px;
+            font-family: Microsoft YaHei;
+            line-height: 24px;
+        }
+    }
+}

@@ -1,0 +1,61 @@
+.workbench-top-info-setting-view-page {
+    position: relative;
+    height: 85px;
+    padding: 0px 25px 0 25px;
+    overflow: hidden;
+    font-size: 14px;
+    .workbench-tool-item {
+        display: flex !important;
+        justify-content: center;
+        .item-content-wrapper {
+            display: flex !important;
+            flex-direction: column;
+            align-items: center;
+            justify-self: center;
+            width: 95%;
+            padding: 5px 0;
+            .workbench-top-info-setting-view-page-field-content {
+                margin-top: 5px;
+                font-size: 14px;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+            // img {
+            //     margin-bottom: 2px;
+            // }
+        }
+    }
+    .left-btn {
+        position: absolute;
+        top: 50%;
+        left: -8px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 30px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(90deg) translateX(-25px);
+        cursor: pointer;
+    }
+    .right-btn {
+        position: absolute;
+        top: 50%;
+        right: -5px;
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 30px;
+        background: #ffffff;
+        border-radius: 6px;
+        box-shadow: 0px -6px 13px 0px rgba(0, 0, 0, 0.06);
+        transform: rotate(270deg) translateX(25px);
+        cursor: pointer;
+    }
+}
